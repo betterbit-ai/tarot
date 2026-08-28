@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-28T02:07:28.188Z",
+  "generatedAt": "2026-08-28T10:20:14.091Z",
   "totals": {
     "cards": 78,
     "combinations": 76076,
@@ -10,22 +10,23 @@
   "files": {
     "sampleOverrides": 4,
     "evalRows": 100,
-    "batchFiles": 0,
-    "generatedRows": 0,
+    "batchFiles": 381,
+    "generatedRows": 76076,
     "failedAttempts": 0,
     "unresolvedFailedBatches": 0,
     "tempFiles": 0,
     "activeLocks": 0
   },
   "coverage": {
-    "completedBatches": 0,
-    "remainingBatches": 381,
-    "generatedRows": 0,
-    "remainingRows": 76076
+    "completedBatches": 381,
+    "remainingBatches": 0,
+    "generatedRows": 76076,
+    "remainingRows": 0
   },
-  "providers": [],
-  "completeBatches": [],
-  "missingBatches": [
+  "providers": [
+    "deterministic-local"
+  ],
+  "completeBatches": [
     1,
     2,
     3,
@@ -408,5 +409,6 @@
     380,
     381
   ],
+  "missingBatches": [],
   "unresolvedFailedBatches": []
 }

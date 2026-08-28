@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-28 19:10 KST
+Last updated: 2026-08-28 19:35 KST
 
 ## Current Phase
 
-UX V2 POLISH: COMPLETE, AWAITING DEPLOYMENT
+UX V2 POLISH + INTERPRETATION CORPUS: COMPLETE, AWAITING DEPLOYMENT
 
 V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal rail with a physical 78-card spread, prevents identity leakage before a card is revealed, makes readings question-aware, and uses a configured real affiliate item. Threads/Growth Engine work is not in scope.
 
@@ -36,22 +36,23 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - Result prose is shorter, concrete and question-aware; all 30 representative readings now measure 362–431 characters and representative 3-cycle browser QA completed at 375, 390 and 430px
 - Interpretation quality autopilot now classifies decision, other-person, future and open questions, gives decision questions a clear non-prophetic position first, and protects the marriage regression case (컵 6 / 완드 킹 / 죽음)
 - Deterministic evaluator covers 31 fixtures, records dimension scores and failure categories, and reports 4.82/5 average with no flagged failures; 10-result manual spot-check completed
+- All 76,076 interpretation rows regenerated through the current relationship-aware renderer; no grammar regression markers remain in the batch files
 
 ## In Progress
 
-- Commit and push this Mr. Tarot polish checkpoint, then deploy it after setting the production environment variables
+- Deploy the completed corpus after setting the production environment variables
 
 ## Remaining
 
 - Set `NEXT_PUBLIC_SITE_URL=https://mr-tarot.netlify.app`, `AFFILIATE_ENABLED=true`, and the server-only `COUPANG_PARTNERS_URL` in production
 - Confirm the final Coupang partner destination and policy wording with the operating account
 - Run a final physical iPhone Safari/native share smoke test after deployment
-- Generate the 76,076 authored corpus only in a separate reviewed data-production phase
+- Run a final physical iPhone Safari/native share smoke test after deployment
 
 ## Known Issues
 
-- Authored interpretation coverage is 4/76,076; deterministic connected fallback covers every valid triple
-- Quality evaluator is intentionally heuristic and should be supplemented by human review before any corpus generation
+- Authored interpretation coverage is 76,076/76,076; deterministic connected renderer and generated batch records cover every valid triple
+- Quality evaluator is intentionally heuristic and should be supplemented by human review for future corpus revisions
 - CSP permits `unsafe-inline` scripts for current Next.js compatibility; nonce/hash tightening is later hardening
 - Native share depends on browser/device support; copy-link fallback is implemented and tested
 - Home OG uses a symbolic three-card brand composition; shared-result OG uses actual selected RWS fronts
@@ -77,17 +78,17 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 
 ## Interpretation Generation Status
 
-generated: 0
+generated: 76,076
 
-validated generated rows: 0
+validated generated rows: 76,076
 
 sample authored overrides: 4
 
 evaluation rows: 131 (existing 100 + UX v2 representative 31)
 
-remaining: 76,076
+remaining: 0
 
-Pipeline is ready. Do not run full generation as part of ordinary product or deployment work.
+Pipeline completed. Do not regenerate the corpus unless the provider or interpretation rules change and a new quality gate passes.
 
 ## Last Successful Test
 
@@ -95,19 +96,19 @@ UX v2 verification on 2026-08-28:
 
 - typecheck: pass
 - lint: pass
-- tests: 19 files, 48 tests pass
+- tests: 19 files, 49 tests pass
 - latest typecheck and lint: pass after narrative-pattern changes
 - `pnpm tarot:evaluate`: 31 cases, average 4.82/5, failure distribution empty
 - Next.js webpack production build: compiled, type-checked, generated all 5 static pages and finalized output successfully
 - tarot validate: 78 cards, 76,076 combinations, 381 batches, 4 samples, 100 baseline eval rows; UX v2 uses a separate 30-row representative fixture
-- tarot status: generated 0, remaining 76,076, failed 0
+- tarot status: generated 76,076, remaining 0, failed 0
 - diff-check: pass
 
 The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Commit and push the UX v2 checkpoint, then redeploy Netlify with the three production environment variables. After deployment, smoke-test the complete ritual and native share on an iPhone. Do not begin Threads/Growth Engine work in this task.
+Deploy the completed `main` HEAD to Netlify with the three production environment variables, then smoke-test the complete ritual and native share on an iPhone. Do not begin Threads/Growth Engine work in this task.
 
 ## Last Commit
 
@@ -118,3 +119,5 @@ UX v2 commit: `96e5dad Make the tarot ritual feel physically chosen and personal
 Mr. Tarot polish commit: `f221c2c Give Mr. Tarot a quieter and more varied voice`.
 
 Interpretation quality checkpoint: `d1a0a5e Make interpretation answers direct and measurable`.
+
+Full corpus generation checkpoint: pending this checkpoint.

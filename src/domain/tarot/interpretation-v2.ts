@@ -262,7 +262,7 @@ function finalCardLine(card: TarotCard, finalMajor: boolean): string {
   };
   const specialLine = special[card.id];
   if (specialLine) return specialLine;
-  if (finalMajor) return `${card.name}까지 이어지면, 당장의 편안함보다 ${card.meaning.light}을 오래 지킬 수 있는지를 보라는 쪽이에요.`;
+  if (finalMajor) return `당장의 편안함보다 ${withObject(card.meaning.light)} 오래 지킬 수 있는지를 보라는 쪽이에요.`;
   if (card.suit === "pentacles") return "마지막에는 말보다 조건표, 돈, 시간처럼 손에 잡히는 기준이 답을 정해요.";
   if (card.suit === "swords") return "마지막에는 상대의 기대보다 내가 납득할 한 문장을 분명히 정해야 해요.";
   if (card.suit === "cups") return "마지막에는 옳은 선택보다 하고 난 뒤 마음이 오래 편할 선택을 보게 돼요.";
@@ -296,16 +296,16 @@ function narrativeLabels(pattern: NarrativePattern): NarrativeLabels {
 function adviceLead(pattern: NarrativePattern, card: TarotCard): string {
   switch (pattern) {
     case "conflict":
-      return `첫 장과 마지막 장이 엇갈리는데, 가운데 놓인 ${card.name}이 그 사이에서 멈춘 이유를 보여줘요.`;
+      return `첫 장과 마지막 장이 엇갈리는데, 가운데 놓인 ${withSubject(card.name)} 그 사이에서 멈춘 이유를 보여줘요.`;
     case "same-direction":
-      return `같은 무늬가 반복되는 가운데, ${card.name}이 지금 계속 돌아오는 문제를 가장 또렷하게 보여줘요.`;
+      return `같은 무늬가 반복되는 가운데, ${withSubject(card.name)} 지금 계속 돌아오는 문제를 가장 또렷하게 보여줘요.`;
     case "turn":
-      return `앞의 두 장 뒤에 마지막 장이 방향을 바꾸는데, 가운데 놓인 ${card.name}이 그 전환을 준비하게 해요.`;
+      return `앞의 두 장 뒤에 마지막 장이 방향을 바꾸는데, 가운데 놓인 ${withSubject(card.name)} 그 전환을 준비하게 해요.`;
     case "major":
-      return `이번 조합에서 가운데 놓인 ${card.name}은 기분보다 오래 가져갈 기준을 보라고 해요.`;
+      return `이번 조합에서 가운데 놓인 ${withSubject(card.name)} 기분보다 오래 가져갈 기준을 보라고 해요.`;
     case "middle":
     default:
-      return `가운데 놓인 ${card.name}이 자꾸 눈에 들어와요.`;
+      return `가운데 놓인 ${withSubject(card.name)} 자꾸 눈에 들어와요.`;
   }
 }
 
