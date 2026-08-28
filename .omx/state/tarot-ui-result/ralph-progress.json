@@ -1,0 +1,20 @@
+{
+  "score": 92,
+  "threshold": 90,
+  "threshold_passed": true,
+  "verdict": "pass",
+  "category_match": true,
+  "differences": [
+    "긴 리딩 본문은 첫 모바일 뷰포트 아래로 이어져 스크롤이 필요하다."
+  ],
+  "suggestions": [
+    "전체 corpus 생성 전에 sample readings의 문장 길이와 어미를 같은 기준으로 평가한다.",
+    "운영 데이터에서 headline과 story 길이 상한을 validation으로 계속 유지한다."
+  ],
+  "reasoning": "headline과 세 RWS 카드가 모바일 첫 결과 장면에 함께 들어오며, 리딩은 배경, 현재 긴장, 다음 방향과 현실 조언을 하나의 이야기로 연결한다. 카드명 조사 오류와 중복 문구도 제거되어 자연스러운 한국어 품질이 확보됐다.",
+  "next_actions": [
+    "필수 뷰포트 회귀 확인",
+    "전체 자동 검증",
+    "최종 독립 리뷰"
+  ]
+}

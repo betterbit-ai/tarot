@@ -1,0 +1,7 @@
+{
+  "provider": "deterministic-local",
+  "model": "built-in",
+  "promptVersion": "local-v1",
+  "generatedAt": "2026-08-27T00:00:00.000Z",
+  "notes": "Deterministic local provider checkpoint for offline tarot corpus tooling."
+}

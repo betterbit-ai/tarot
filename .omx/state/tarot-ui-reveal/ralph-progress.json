@@ -1,0 +1,21 @@
+{
+  "score": 90,
+  "threshold": 90,
+  "threshold_passed": true,
+  "verdict": "pass",
+  "category_match": true,
+  "differences": [
+    "긴 영문 카드명이 작은 모바일 카드에서 말줄임으로 끝난다.",
+    "숨겨진 두 앞면도 DOM에 있어 aria-hidden 보정 전에는 스크린리더가 먼저 읽을 수 있다."
+  ],
+  "suggestions": [
+    "영문 이름을 두 줄까지 자연스럽게 감싸고 글자 크기를 소폭 줄인다.",
+    "공개되지 않은 앞면 wrapper에 aria-hidden을 적용한다."
+  ],
+  "reasoning": "표준 flip 구조와 모바일 3열 배치로 세 장이 중앙에 모이고 한 장씩 열리는 핵심 연출이 작동한다. 실제 RWS 이미지와 녹색 카드 뒷면도 한 장면 안에서 자연스럽게 이어진다.",
+  "next_actions": [
+    "접근성 및 긴 영문명 보정",
+    "완료된 세 장과 결과 화면 확인",
+    "제휴 및 공유 흐름 검증"
+  ]
+}
