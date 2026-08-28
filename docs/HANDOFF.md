@@ -111,4 +111,4 @@ Checkpoint before UX v2: `44e3a28 Close V1 with reproducible verification and ha
 
 UX v2 commit: `96e5dad Make the tarot ritual feel physically chosen and personally read`.
 
-Mr. Tarot polish commit: pending this checkpoint.
+Mr. Tarot polish commit: `f221c2c Give Mr. Tarot a quieter and more varied voice`.
