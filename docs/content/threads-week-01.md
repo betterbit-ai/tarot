@@ -7,6 +7,7 @@
 ```bash
 pnpm threads:copy -- day-01 main
 pnpm threads:copy -- day-01 comments
+pnpm threads:copy -- day-01 comment-1
 pnpm threads:copy -- day-01 cta
 ```
 

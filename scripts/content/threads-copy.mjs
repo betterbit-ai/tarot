@@ -8,8 +8,8 @@ const printOnly = rest.includes("--print");
 const dayNumber = dayArg?.match(/\d+/)?.[0];
 const day = dayNumber ? `day-${dayNumber.padStart(2, "0")}` : "";
 
-if (!/^day-0[1-7]$/.test(day) || !["main", "comments", "cta", "all"].includes(part)) {
-  console.error("사용법: pnpm threads:copy -- day-01 main|comments|cta|all [--print]");
+if (!/^day-0[1-7]$/.test(day) || !["main", "comments", "cta", "all"].includes(part) && !/^comment-[1-5]$/.test(part)) {
+  console.error("사용법: pnpm threads:copy -- day-01 main|comment-1|comments|cta|all [--print]");
   process.exit(1);
 }
 
@@ -35,7 +35,8 @@ const main = between(["HOOK / MAIN POST:"], ["CARDS:", "CARDS FOR SAMPLE REPLIES
 const comments = between(["COMMENTS:", "SAMPLE REPLY COMMENTS:"], "CTA COMMENT:");
 const cta = between(["CTA COMMENT:"], "IMAGE:");
 const clean = (value) => value.replace(/^\s*\d+\.\s.*\n/gm, "").replace(/\n{3,}/g, "\n\n").trim();
-const output = part === "main" ? clean(main) : part === "comments" ? clean(comments) : part === "cta" ? clean(cta) : [clean(main), clean(comments), clean(cta)].filter(Boolean).join("\n\n---\n\n");
+const commentBlocks = clean(comments).split(/\n\n(?=\d+번|“)/).filter(Boolean);
+const output = part === "main" ? clean(main) : /^comment-/.test(part) ? commentBlocks[Number(part.slice("comment-".length)) - 1] ?? "" : part === "comments" ? clean(comments) : part === "cta" ? clean(cta) : [clean(main), clean(comments), clean(cta)].filter(Boolean).join("\n\n---\n\n");
 
 if (!printOnly) {
   const result = spawnSync("pbcopy", { input: output, encoding: "utf8" });

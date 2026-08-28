@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-28 20:45 KST
+Last updated: 2026-08-28 20:50 KST
 
 ## Current Phase
 
@@ -40,7 +40,7 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - Threads Week 01 calendar contains seven copy-paste-ready posts with varied formats, comments, CTAs, topics, hypotheses and metrics placeholders
 - Seven 1080x1350 SVG choice-card assets generated under `public/threads/week-01/`; Day 01 and Day 04 visual previews checked
 - All 23 referenced card IDs resolve against the real 78-card RWS catalog; no card fronts or affiliate assets were regenerated
-- `pnpm threads:copy -- day-01 main|comments|cta` helper copies each post section to the macOS clipboard; `docs/content/THREADS_QUICKSTART.md` documents the exact posting sequence
+- `pnpm threads:copy -- day-01 main|comment-1|comments|cta` helper copies the main post, an individual result comment, all comments, or CTA to the macOS clipboard; `docs/content/THREADS_QUICKSTART.md` documents the exact posting sequence
 - Seven PNG exports are available alongside the SVG source assets for direct Threads upload
 
 ## In Progress

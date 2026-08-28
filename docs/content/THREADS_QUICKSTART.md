@@ -26,10 +26,11 @@ Finder에서 다음 폴더를 열고 같은 DAY의 PNG를 Threads에 끌어놓�
 게시한 글 아래에 댓글을 달 때는 한 번에 하나씩 실행합니다.
 
 ```bash
-pnpm threads:copy -- day-01 comments
+pnpm threads:copy -- day-01 comment-1
+pnpm threads:copy -- day-01 comment-2
 ```
 
-출력된 전체 내용을 붙여넣거나, 댓글을 분리해야 하면 `--print`로 터미널에서 확인한 뒤 번호별로 복사합니다. 마지막 CTA는 별도로 복사합니다.
+댓글 전체를 확인하려면 `comments`를 사용하고, 마지막 CTA는 별도로 복사합니다.
 
 ```bash
 pnpm threads:copy -- day-01 cta
