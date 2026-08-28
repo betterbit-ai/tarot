@@ -141,4 +141,4 @@ Interpretation quality checkpoint: `d1a0a5e Make interpretation answers direct a
 
 Full corpus generation checkpoint: `c5b978d Finalize the full relationship-aware interpretation corpus`.
 
-Threads content checkpoint: `6ed18b4 Make the Threads week one pack one-command copyable`.
+Threads content checkpoint: `fc828e0 Add a browser dashboard for Threads posting`.
