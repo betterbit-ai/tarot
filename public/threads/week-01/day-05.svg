@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+  <rect width="1080" height="1350" fill="#0b1512"/>
+  <rect x="40" y="40" width="1000" height="1270" rx="32" fill="none" stroke="#8e7148" stroke-opacity=".42"/>
+  <text x="80" y="112" fill="#d3aa68" font-family="Arial, sans-serif" font-size="24" letter-spacing="6">MR. TAROT</text>
+  <text x="80" y="220" fill="#f2e7d5" font-family="Georgia, serif" font-size="58">왜 이렇게 답답할까</text>
+  <text x="80" y="278" fill="#cbbba3" font-family="Arial, sans-serif" font-size="28">먼저 눈에 들어오는 카드</text>
+  <g transform="translate(146 405) rotate(-4 120 190)">
+    <rect width="240" height="380" rx="20" fill="#10231d" stroke="#caa46a" stroke-width="3"/>
+    <rect x="14" y="14" width="212" height="352" rx="14" fill="none" stroke="#8e7148" stroke-width="2"/>
+    <path d="M32 32h176v316H32z" fill="none" stroke="#6c593d" stroke-width="1"/>
+    <circle cx="120" cy="190" r="62" fill="none" stroke="#caa46a" stroke-width="3"/>
+    <path d="M72 190h96M120 142v96M88 158l64 64M152 158l-64 64" stroke="#caa46a" stroke-width="2" opacity=".8"/>
+    <text x="120" y="292" text-anchor="middle" fill="#e7d4b0" font-family="Arial, sans-serif" font-size="32" letter-spacing="5">1</text>
+  </g>
+<g transform="translate(420 405) rotate(0 120 190)">
+    <rect width="240" height="380" rx="20" fill="#10231d" stroke="#caa46a" stroke-width="3"/>
+    <rect x="14" y="14" width="212" height="352" rx="14" fill="none" stroke="#8e7148" stroke-width="2"/>
+    <path d="M32 32h176v316H32z" fill="none" stroke="#6c593d" stroke-width="1"/>
+    <circle cx="120" cy="190" r="62" fill="none" stroke="#caa46a" stroke-width="3"/>
+    <path d="M72 190h96M120 142v96M88 158l64 64M152 158l-64 64" stroke="#caa46a" stroke-width="2" opacity=".8"/>
+    <text x="120" y="292" text-anchor="middle" fill="#e7d4b0" font-family="Arial, sans-serif" font-size="32" letter-spacing="5">2</text>
+  </g>
+<g transform="translate(694 405) rotate(4 120 190)">
+    <rect width="240" height="380" rx="20" fill="#10231d" stroke="#caa46a" stroke-width="3"/>
+    <rect x="14" y="14" width="212" height="352" rx="14" fill="none" stroke="#8e7148" stroke-width="2"/>
+    <path d="M32 32h176v316H32z" fill="none" stroke="#6c593d" stroke-width="1"/>
+    <circle cx="120" cy="190" r="62" fill="none" stroke="#caa46a" stroke-width="3"/>
+    <path d="M72 190h96M120 142v96M88 158l64 64M152 158l-64 64" stroke="#caa46a" stroke-width="2" opacity=".8"/>
+    <text x="120" y="292" text-anchor="middle" fill="#e7d4b0" font-family="Arial, sans-serif" font-size="32" letter-spacing="5">3</text>
+  </g>
+  <line x1="80" y1="1160" x2="1000" y2="1160" stroke="#8e7148" stroke-opacity=".45"/>
+  <text x="80" y="1220" fill="#a99478" font-family="Arial, sans-serif" font-size="24">카드 하나를 고르고, 결과는 댓글에서</text>
+  <text x="1000" y="1220" text-anchor="end" fill="#d3aa68" font-family="Arial, sans-serif" font-size="24">DAY 05</text>
+</svg>

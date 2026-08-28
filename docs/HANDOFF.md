@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-28 19:45 KST
+Last updated: 2026-08-28 20:10 KST
 
 ## Current Phase
 
-UX V2 POLISH + INTERPRETATION CORPUS: COMPLETE, AWAITING DEPLOYMENT
+PHASE 2 THREADS CONTENT: COMPLETE, AWAITING MANUAL POSTING
 
 V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal rail with a physical 78-card spread, prevents identity leakage before a card is revealed, makes readings question-aware, and uses a configured real affiliate item. Threads/Growth Engine work is not in scope.
 
@@ -37,17 +37,20 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - Interpretation quality autopilot now classifies decision, other-person, future and open questions, gives decision questions a clear non-prophetic position first, and protects the marriage regression case (컵 6 / 완드 킹 / 죽음)
 - Deterministic evaluator covers 31 fixtures, records dimension scores and failure categories, and reports 4.82/5 average with no flagged failures; 10-result manual spot-check completed
 - All 76,076 interpretation rows regenerated through the current relationship-aware renderer; no grammar regression markers remain in the batch files
+- Threads Week 01 calendar contains seven copy-paste-ready posts with varied formats, comments, CTAs, topics, hypotheses and metrics placeholders
+- Seven 1080x1350 SVG choice-card assets generated under `public/threads/week-01/`; Day 01 and Day 04 visual previews checked
+- All 23 referenced card IDs resolve against the real 78-card RWS catalog; no card fronts or affiliate assets were regenerated
 
 ## In Progress
 
-- Deploy the completed corpus after setting the production environment variables
+- Post the Week 01 Threads calendar manually, then record metrics in the calendar placeholders
 
 ## Remaining
 
 - Set `NEXT_PUBLIC_SITE_URL=https://mr-tarot.netlify.app`, `AFFILIATE_ENABLED=true`, and the server-only `COUPANG_PARTNERS_URL` in production
 - Confirm the final Coupang partner destination and policy wording with the operating account
 - Run a final physical iPhone Safari/native share smoke test after deployment
-- Run a final physical iPhone Safari/native share smoke test after deployment
+- Threads posting and metrics collection remain manual; no Meta API or auto-publishing was added
 
 ## Known Issues
 
@@ -56,6 +59,7 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - CSP permits `unsafe-inline` scripts for current Next.js compatibility; nonce/hash tightening is later hardening
 - Native share depends on browser/device support; copy-link fallback is implemented and tested
 - Home OG uses a symbolic three-card brand composition; shared-result OG uses actual selected RWS fronts
+- Threads assets are SVG source artwork for direct social export; export at 1080x1350 PNG only if the account requires raster uploads
 
 ## Current Tarot Asset Status
 
@@ -90,6 +94,14 @@ remaining: 0
 
 Pipeline completed. Do not regenerate the corpus unless the provider or interpretation rules change and a new quality gate passes.
 
+## Threads Content Status
+
+- Calendar: `docs/content/threads-week-01.md`
+- Assets: `public/threads/week-01/day-01.svg` through `day-07.svg`
+- Format mix: 4 selection posts, 1 relationship post, 1 work/money post, 1 conversation post
+- Card references: 23 (22 unique), all valid against the RWS catalog
+- Posting status: not posted; metrics placeholders are ready
+
 ## Last Successful Test
 
 UX v2 verification on 2026-08-28:
@@ -102,13 +114,15 @@ UX v2 verification on 2026-08-28:
 - Next.js webpack production build: compiled, type-checked, generated all 5 static pages and finalized output successfully
 - tarot validate: 78 cards, 76,076 combinations, 381 batches, 4 samples, 100 baseline eval rows; UX v2 uses a separate 30-row representative fixture
 - tarot status: generated 76,076, remaining 0, failed 0
+- `pnpm threads:assets`: generated 7 SVG social assets
+- Threads card-reference check: 23 valid references, 0 invalid
 - diff-check: pass
 
 The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Deploy the completed `main` HEAD to Netlify with the three production environment variables, then smoke-test the complete ritual and native share on an iPhone. Do not begin Threads/Growth Engine work in this task.
+Post the Week 01 Threads calendar manually and record metrics, then deploy the completed `main` HEAD to Netlify with the three production environment variables. Do not add auto-publishing or Meta API integration in this phase.
 
 ## Last Commit
 
@@ -121,3 +135,5 @@ Mr. Tarot polish commit: `f221c2c Give Mr. Tarot a quieter and more varied voice
 Interpretation quality checkpoint: `d1a0a5e Make interpretation answers direct and measurable`.
 
 Full corpus generation checkpoint: `c5b978d Finalize the full relationship-aware interpretation corpus`.
+
+Threads content checkpoint: pending this checkpoint.
