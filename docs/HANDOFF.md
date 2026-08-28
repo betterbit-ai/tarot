@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-28 20:30 KST
+Last updated: 2026-08-28 20:45 KST
 
 ## Current Phase
 
@@ -139,4 +139,4 @@ Interpretation quality checkpoint: `d1a0a5e Make interpretation answers direct a
 
 Full corpus generation checkpoint: `c5b978d Finalize the full relationship-aware interpretation corpus`.
 
-Threads content checkpoint: `0c4880f Prepare a varied seven-day Mr. Tarot Threads calendar`.
+Threads content checkpoint: `6ed18b4 Make the Threads week one pack one-command copyable`.
