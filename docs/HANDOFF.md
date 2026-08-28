@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-28 18:50 KST
+Last updated: 2026-08-28 19:10 KST
 
 ## Current Phase
 
@@ -34,6 +34,8 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - Reveal copy now varies only for detected card relationships: conflict, repeated suit, major-heavy, or a strong middle pause
 - Result narrative now selects one of five relationship-based label patterns instead of repeating three fixed report headings
 - Result prose is shorter, concrete and question-aware; all 30 representative readings now measure 362–431 characters and representative 3-cycle browser QA completed at 375, 390 and 430px
+- Interpretation quality autopilot now classifies decision, other-person, future and open questions, gives decision questions a clear non-prophetic position first, and protects the marriage regression case (컵 6 / 완드 킹 / 죽음)
+- Deterministic evaluator covers 31 fixtures, records dimension scores and failure categories, and reports 4.82/5 average with no flagged failures; 10-result manual spot-check completed
 
 ## In Progress
 
@@ -49,6 +51,7 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 ## Known Issues
 
 - Authored interpretation coverage is 4/76,076; deterministic connected fallback covers every valid triple
+- Quality evaluator is intentionally heuristic and should be supplemented by human review before any corpus generation
 - CSP permits `unsafe-inline` scripts for current Next.js compatibility; nonce/hash tightening is later hardening
 - Native share depends on browser/device support; copy-link fallback is implemented and tested
 - Home OG uses a symbolic three-card brand composition; shared-result OG uses actual selected RWS fronts
@@ -80,7 +83,7 @@ validated generated rows: 0
 
 sample authored overrides: 4
 
-evaluation rows: 130 (existing 100 + UX v2 representative 30)
+evaluation rows: 131 (existing 100 + UX v2 representative 31)
 
 remaining: 76,076
 
@@ -94,6 +97,7 @@ UX v2 verification on 2026-08-28:
 - lint: pass
 - tests: 19 files, 48 tests pass
 - latest typecheck and lint: pass after narrative-pattern changes
+- `pnpm tarot:evaluate`: 31 cases, average 4.82/5, failure distribution empty
 - Next.js webpack production build: compiled, type-checked, generated all 5 static pages and finalized output successfully
 - tarot validate: 78 cards, 76,076 combinations, 381 batches, 4 samples, 100 baseline eval rows; UX v2 uses a separate 30-row representative fixture
 - tarot status: generated 0, remaining 76,076, failed 0
@@ -112,3 +116,5 @@ Checkpoint before UX v2: `44e3a28 Close V1 with reproducible verification and ha
 UX v2 commit: `96e5dad Make the tarot ritual feel physically chosen and personally read`.
 
 Mr. Tarot polish commit: `f221c2c Give Mr. Tarot a quieter and more varied voice`.
+
+Interpretation quality checkpoint: pending this checkpoint.

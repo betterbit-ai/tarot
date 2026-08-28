@@ -19,6 +19,7 @@
     "tarot:validate": "node --import tsx scripts/tarot/validate.ts",
     "tarot:retry-failed": "node --import tsx scripts/tarot/retry-failed.ts",
     "tarot:status": "node --import tsx scripts/tarot/status.ts",
+    "tarot:evaluate": "node --import tsx scripts/tarot/evaluate-interpretations.ts",
     "tarot:assets": "node scripts/tarot/download-rws-assets.mjs"
   },
   "dependencies": {

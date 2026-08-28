@@ -30,9 +30,22 @@ describe("interpretation v2", () => {
 
     expect(reading.intent).toBe("career");
     expect(reading.story).toContain("지금 이직하는 게 맞을까요?");
-    expect(reading.story).toMatch(/당장 회사를|움직일 여지/);
+    expect(reading.story).toMatch(/당장 회사를|움직일 여지|해보는 쪽/);
     expect(reading.advice).toContain("펜타클 4");
     expect(reading.closing).toContain("이유 3개");
+  });
+
+  it("takes a clear but non-prophetic position on the marriage regression", () => {
+    const reading = interpretTarotV2([41, 35, 13], "결혼해도 되나요?");
+
+    expect(reading.questionType).toBe("decision");
+    expect(reading.intent).toBe("love");
+    expect(reading.story).toContain("결혼 자체를 말리는 카드는 아니에요");
+    expect(reading.story).toContain("지금 모습 그대로 서두르는 건 조금 걸립니다");
+    expect(reading.story).toContain("컵 6");
+    expect(reading.advice).toContain("완드 킹");
+    expect(reading.advice).toContain("죽음");
+    expect(reading.closing).toContain("미뤄둔 문제");
   });
 
   it("uses all three cards as a relationship instead of reusable keyword prose", () => {
@@ -47,7 +60,7 @@ describe("interpretation v2", () => {
   });
 
   it("keeps all representative evaluations concise, specific and free of banned AI copy", () => {
-    expect(evalCases).toHaveLength(30);
+    expect(evalCases).toHaveLength(31);
 
     for (const fixture of evalCases) {
       const reading = interpretTarotV2(fixture.cards, fixture.question);

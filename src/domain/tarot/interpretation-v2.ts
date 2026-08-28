@@ -2,6 +2,7 @@ import { getTarotCards } from "./cards";
 import { asCardTriple, type ReadingText, type Suit, type TarotCard } from "./types";
 
 export type ReadingIntent = "love" | "rest" | "career" | "money" | "energy" | "general";
+export type QuestionType = "decision" | "other-person" | "future" | "open";
 
 export type RelationshipSignals = {
   repeatedSuit: Suit | null;
@@ -23,6 +24,7 @@ export type InterpretationV2 = ReadingText & {
   characterCount: number;
   pattern: NarrativePattern;
   labels: NarrativeLabels;
+  questionType: QuestionType;
 };
 
 export type NarrativePattern = "middle" | "conflict" | "same-direction" | "turn" | "major";
@@ -40,6 +42,10 @@ const INTENT_KEYWORDS: Record<Exclude<ReadingIntent, "general">, readonly string
   money: ["돈", "재정", "연봉", "지출", "예산", "투자", "저축", "소비", "월급", "금전", "부채", "수입"],
   energy: ["의욕", "시작", "추진", "실행", "도전", "행동", "체력", "운동", "공부", "준비"],
 };
+
+const DECISION_PHRASES = ["해도 될까요", "결정해도", "선택해도", "선택할까요", "하는 게 맞", "옮겨도", "놓는 게", "그만둘", "계속해도", "남는 게", "기다리는 게", "이어가도", "믿어도", "시작해도", "고백해도", "연락해도", "결혼해도", "헤어질까"];
+const OTHER_PERSON_PHRASES = ["그 사람이", "상대는", "상대방", "저를 좋아", "마음이 있을", "연락이 올", "전 애인"];
+const FUTURE_PHRASES = ["올해", "언젠가", "할 수 있을까요", "될 수 있을까요", "생길까요"];
 
 const SUIT_LABELS: Record<Suit, string> = {
   wands: "완드",
@@ -129,6 +135,14 @@ export function classifyQuestion(question: string, cards: readonly TarotCard[] =
   return "general";
 }
 
+export function classifyQuestionType(question: string): QuestionType {
+  const normalized = normalizeQuestion(question);
+  if (DECISION_PHRASES.some((phrase) => normalized.includes(phrase))) return "decision";
+  if (OTHER_PERSON_PHRASES.some((phrase) => normalized.includes(phrase))) return "other-person";
+  if (FUTURE_PHRASES.some((phrase) => normalized.includes(phrase))) return "future";
+  return "open";
+}
+
 export function analyzeRelationships(cards: readonly TarotCard[]): RelationshipSignals {
   const suitCounts: Partial<Record<Suit, number>> = {};
   for (const card of cards) {
@@ -172,6 +186,22 @@ export function analyzeRelationships(cards: readonly TarotCard[]): RelationshipS
 function directAnswer(intent: ReadingIntent, question: string, signals: RelationshipSignals): string {
   const prefix = question ? `“${excerptQuestion(question)}”라는 질문으로 보면, ` : "질문 없이 고른 세 장은, 지금 가장 마음에 걸린 일을 기준으로 보면 ";
   const moving = signals.activeCount > signals.pauseCount && signals.supportiveCount >= signals.difficultCount;
+  const questionType = classifyQuestionType(question);
+
+  if (questionType === "decision") {
+    if (intent === "love" && /결혼/.test(question)) {
+      return `${prefix}결혼 자체를 말리는 카드는 아니에요. 다만 지금 모습 그대로 서두르는 건 조금 걸립니다.`;
+    }
+    if (moving) return `${prefix}해보는 쪽으로 기울어요. 다만 먼저 확인해야 할 조건 하나는 남아 있어요.`;
+    if (signals.pauseCount > signals.activeCount || signals.difficultCount > signals.supportiveCount) {
+      return `${prefix}지금 바로 밀어붙이지 않는 쪽으로 봐요. 하지 말라는 뜻보다, 걸리는 조건을 먼저 풀어야 한다는 쪽이에요.`;
+    }
+    return `${prefix}조건을 붙인 채 해보는 쪽에 가까워요. 마음만으로 결정하지 말고, 바꿀 수 없는 한 가지를 먼저 보세요.`;
+  }
+
+  if (questionType === "other-person") {
+    return `${prefix}카드상으로는 마음이 전혀 없는 쪽보다, 생각은 있지만 먼저 움직일 만큼 분명하지 않은 쪽에 가까워 보여요.`;
+  }
 
   if (intent === "career") {
     const moveQuestion = /(이직|퇴사|회사|직장)/.test(question);
@@ -191,7 +221,7 @@ function firstCardLine(card: TarotCard): string {
   if (card.suit === "wands") return `첫 카드 ${withObject(card.name)} 보면, 해보고 싶은 마음이 판단보다 한발 앞서 있어요.`;
   if (card.suit === "swords") return `첫 카드 ${withObject(card.name)} 보면, 장단점을 오래 따진 끝에 마음속 답은 어느 정도 정해 둔 것 같아요.`;
   if (card.suit === "pentacles") return `첫 카드 ${withObject(card.name)} 보면, 안전한 조건과 이미 가진 것을 잃지 않으려는 마음이 먼저 보여요.`;
-  return `첫 카드 ${card.name}에는 ${card.meaning.light} 쪽의 마음이 이미 배경에 깔려 있어요.`;
+  return `첫 카드 ${withObject(card.name)} 보면, ${card.meaning.light} 쪽의 마음이 이미 배경에 깔려 있어요.`;
 }
 
 function relationshipLine(cards: readonly TarotCard[], signals: RelationshipSignals): string {
@@ -279,8 +309,14 @@ function adviceLead(pattern: NarrativePattern, card: TarotCard): string {
   }
 }
 
-function actionLine(intent: ReadingIntent): string {
-  if (intent === "career") return "현재 회사를 떠나고 싶은 이유 3개와 새 자리에서 반드시 확인할 조건 3개를 나눠 적어 보세요.";
+function actionLine(intent: ReadingIntent, question: string, questionType: QuestionType): string {
+  if (intent === "career") {
+    if (questionType === "decision" && /남는|계속/.test(question)) return "남기로 한다면 꼭 지키고 싶은 조건 하나와, 더는 감당하지 않을 일 하나를 정해두세요.";
+    if (questionType === "decision") return "현재 회사를 떠나고 싶은 이유 3개와 새 자리에서 반드시 확인할 조건 3개를 나눠 적어 보세요.";
+    if (/면접/.test(question)) return "이번 면접에서 보여주고 싶은 강점 하나와 꼭 확인할 조건 하나만 정해두세요.";
+    return "지금 맡은 일에서 지키고 싶은 조건 하나와 바꾸고 싶은 조건 하나를 나눠 보세요.";
+  }
+  if (intent === "love" && questionType === "decision" && /놓는|헤어질/.test(question)) return "놓기로 한다면 마지막으로 확인할 사실 하나만 정하고, 그 뒤에는 같은 대화를 되풀이하지 마세요.";
   if (intent === "love") return "상대에게 확인하고 싶은 것을 한 문장으로 줄인 뒤, 추측 대신 실제로 한 번 물어보세요.";
   if (intent === "money") return "이번 결정에 쓸 수 있는 상한 금액과 잃어도 버틸 수 있는 금액을 각각 적어 보세요.";
   if (intent === "rest") return "오늘 일정에서 하나를 빼고, 30분 쉬는 시간을 먼저 달력에 넣어 두세요.";
@@ -296,22 +332,39 @@ export function interpretTarotV2(cardIds: readonly number[], question = ""): Int
   const [first, second, third] = cards;
   const pattern = chooseNarrativePattern(signals);
   const labels = narrativeLabels(pattern);
+  const questionType = classifyQuestionType(question);
+  const decisionLeansYes = signals.activeCount > signals.pauseCount && signals.supportiveCount >= signals.difficultCount;
 
   const headlines: Record<ReadingIntent, string> = {
     love: "마음보다 서로의 속도를 먼저 확인해 보세요.",
     rest: "더 버티기보다 하나를 덜어낼 때예요.",
-    career: signals.activeCount > signals.pauseCount ? "움직일 여지는 있어요." : "지금 당장 뛰쳐나가라는 쪽은 아니에요.",
+    career: "역할과 조건을 따로 봐야 해요.",
     money: "기대 수익보다 감당할 범위를 먼저 정하세요.",
     energy: "크게 벌이기보다 작은 시작이 맞아요.",
     general: "마음속 답과 현실 조건을 나눠 볼 때예요.",
   };
+  const headline =
+    questionType === "decision"
+      ? intent === "love" && /결혼/.test(question)
+        ? "결혼 자체를 말리는 카드는 아니에요."
+        : decisionLeansYes
+          ? "해보는 쪽으로 기울어요."
+          : "지금 바로 밀어붙이지 않는 쪽으로 봐요."
+      : questionType === "other-person"
+        ? "마음이 없다고 보기는 어려워요."
+        : headlines[intent];
   const reading: ReadingText = {
-    headline: headlines[intent],
+    headline,
     story: `${directAnswer(intent, question, signals)}\n\n${firstCardLine(first)} ${relationshipLine(cards, signals)}`,
     advice: `${adviceLead(pattern, second)} ${middleCardLine(second)}\n\n마지막 ${third.name}까지 이어지면, ${finalCardLine(third, signals.finalMajor)}`,
-    closing: actionLine(intent),
+    closing:
+      intent === "love" && /결혼/.test(question)
+        ? "결혼하면 저절로 풀릴 거라며 미뤄둔 문제가 있다면, 그 문제부터 두 사람이 말로 확인해보세요."
+        : questionType === "other-person"
+          ? "상대의 침묵을 답으로 해석하지 말고, 실제로 오간 말과 행동만 놓고 보세요."
+        : actionLine(intent, question, questionType),
   };
   const characterCount = [reading.headline, reading.story, reading.advice, reading.closing].join(" ").length;
 
-  return { ...reading, intent, signals, characterCount, pattern, labels };
+  return { ...reading, intent, signals, characterCount, pattern, labels, questionType };
 }

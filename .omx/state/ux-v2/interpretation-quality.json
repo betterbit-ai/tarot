@@ -1,0 +1,17 @@
+{
+  "cases": 31,
+  "average": 4.82,
+  "dimensions": {
+    "directness": 4.42,
+    "specificity": 4.84,
+    "cardCoherence": 5,
+    "humanness": 5,
+    "position": 4.32,
+    "nonTemplated": 5,
+    "clarity": 5,
+    "restraint": 5
+  },
+  "failureDistribution": {},
+  "manualSpotCheck": 10,
+  "bulkGenerationStarted": false
+}
