@@ -21,6 +21,7 @@
     "tarot:status": "node --import tsx scripts/tarot/status.ts",
     "tarot:evaluate": "node --import tsx scripts/tarot/evaluate-interpretations.ts",
     "threads:assets": "node scripts/content/generate-threads-assets.mjs",
+    "threads:copy": "node scripts/content/threads-copy.mjs",
     "tarot:assets": "node scripts/tarot/download-rws-assets.mjs"
   },
   "dependencies": {

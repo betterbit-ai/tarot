@@ -2,6 +2,16 @@
 
 계정: `@mr._.tarot`
 
+복붙 도우미: 자세한 순서는 [`THREADS_QUICKSTART.md`](./THREADS_QUICKSTART.md)를 참고하세요.
+
+```bash
+pnpm threads:copy -- day-01 main
+pnpm threads:copy -- day-01 comments
+pnpm threads:copy -- day-01 cta
+```
+
+각 명령은 해당 내용을 macOS 클립보드에 복사합니다. 실제 복사 없이 확인하려면 마지막에 `--print`를 붙이세요. 게시 이미지는 `public/threads/week-01/day-01.png`를 사용합니다.
+
 기간: Week 01
 
 모든 선택형 게시물은 본문에서 결과를 공개하지 않고, 댓글에만 결과를 둔다. 카드명은 프로젝트의 실제 Rider-Waite-Smith 카드 catalog 기준이다.
