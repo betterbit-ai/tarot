@@ -117,4 +117,4 @@ UX v2 commit: `96e5dad Make the tarot ritual feel physically chosen and personal
 
 Mr. Tarot polish commit: `f221c2c Give Mr. Tarot a quieter and more varied voice`.
 
-Interpretation quality checkpoint: pending this checkpoint.
+Interpretation quality checkpoint: `d1a0a5e Make interpretation answers direct and measurable`.
