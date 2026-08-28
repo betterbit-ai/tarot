@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-28 19:35 KST
+Last updated: 2026-08-28 19:45 KST
 
 ## Current Phase
 
@@ -120,4 +120,4 @@ Mr. Tarot polish commit: `f221c2c Give Mr. Tarot a quieter and more varied voice
 
 Interpretation quality checkpoint: `d1a0a5e Make interpretation answers direct and measurable`.
 
-Full corpus generation checkpoint: pending this checkpoint.
+Full corpus generation checkpoint: `c5b978d Finalize the full relationship-aware interpretation corpus`.
