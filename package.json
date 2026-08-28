@@ -12,13 +12,13 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "tarot:generate": "tsx scripts/tarot/generate.ts",
-    "tarot:validate": "tsx scripts/tarot/validate.ts",
-    "tarot:retry-failed": "tsx scripts/tarot/retry-failed.ts",
-    "tarot:status": "tsx scripts/tarot/status.ts",
+    "tarot:generate": "node --import tsx scripts/tarot/generate.ts",
+    "tarot:validate": "node --import tsx scripts/tarot/validate.ts",
+    "tarot:retry-failed": "node --import tsx scripts/tarot/retry-failed.ts",
+    "tarot:status": "node --import tsx scripts/tarot/status.ts",
     "tarot:assets": "node scripts/tarot/download-rws-assets.mjs"
   },
   "dependencies": {

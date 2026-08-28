@@ -1,6 +1,7 @@
 {
-  "active": true,
-  "current_phase": "validation",
+  "active": false,
+  "current_phase": "complete",
   "started_at": "2026-08-27T12:51:22Z",
-  "context_snapshot_path": ".omx/context/tarot-service-20260827T125122Z.md"
+  "context_snapshot_path": ".omx/context/tarot-service-20260827T125122Z.md",
+  "completed_at": "2026-08-28T02:03:00Z"
 }

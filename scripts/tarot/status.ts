@@ -3,14 +3,12 @@ import {
   formatManifestSummary,
   getProjectRoot,
   parseCliArgs,
-  writeJsonFileAtomic,
 } from "./shared";
 
 export async function statusMain(args: string[]): Promise<void> {
   const parsed = parseCliArgs(args);
   const root = getProjectRoot();
   const manifest = await deriveManifest(root);
-  await writeJsonFileAtomic(`${root}/data/readings/manifest.json`, manifest);
 
   if (parsed.json) {
     process.stdout.write(`${JSON.stringify(manifest, null, 2)}\n`);
