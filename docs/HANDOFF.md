@@ -41,6 +41,7 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - Seven 1080x1350 SVG choice-card assets generated under `public/threads/week-01/`; Day 01 and Day 04 visual previews checked
 - All 23 referenced card IDs resolve against the real 78-card RWS catalog; no card fronts or affiliate assets were regenerated
 - `pnpm threads:copy -- day-01 main|comment-1|comments|cta` helper copies the main post, an individual result comment, all comments, or CTA to the macOS clipboard; `docs/content/THREADS_QUICKSTART.md` documents the exact posting sequence
+- `/threads` browser dashboard now lets the user switch days, preview the PNG, and copy main/comments/CTA without keeping a terminal open
 - Seven PNG exports are available alongside the SVG source assets for direct Threads upload
 
 ## In Progress
@@ -104,6 +105,7 @@ Pipeline completed. Do not regenerate the corpus unless the provider or interpre
 - Card references: 23 (22 unique), all valid against the RWS catalog
 - Posting status: not posted; metrics placeholders are ready
 - Copy helper smoke test: day-01 main/comments/cta copied successfully; no external account action performed
+- Browser dashboard smoke test at 390px: DAY 02 switch, image href, copy toast and no overflow all passed; browser console errors: 0
 
 ## Last Successful Test
 
