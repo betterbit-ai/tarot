@@ -45,7 +45,7 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - All 23 referenced card IDs resolve against the real 78-card RWS catalog; no card fronts or affiliate assets were regenerated
 - `pnpm threads:copy -- day-01 main|comment-1|comments|cta` helper copies the main post, an individual result comment, all comments, or CTA to the macOS clipboard; `docs/content/THREADS_QUICKSTART.md` documents the exact posting sequence
 - `/threads` browser dashboard now lets the user switch days, preview the PNG, and copy main/comments/CTA without keeping a terminal open
-- Structured reading checkpoint: pending this checkpoint
+- Structured reading checkpoint: `a5567ab Separate tarot judgment from prose with hybrid skeletons`
 - Seven PNG exports are available alongside the SVG source assets for direct Threads upload
 
 ## In Progress
