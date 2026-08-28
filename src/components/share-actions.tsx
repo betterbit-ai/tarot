@@ -6,9 +6,10 @@ import { trackTarotEvent } from "@/lib/analytics/events";
 
 type ShareActionsProps = {
   cardIds: readonly number[];
+  tone?: "dark" | "light";
 };
 
-export function ShareActions({ cardIds }: ShareActionsProps) {
+export function ShareActions({ cardIds, tone = "dark" }: ShareActionsProps) {
   const [message, setMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -32,7 +33,7 @@ export function ShareActions({ cardIds }: ShareActionsProps) {
       >
         {isPending ? "준비 중" : "공유하기"}
       </button>
-      <p className="min-h-6 text-sm text-[#4d4337]" role="status" aria-live="polite">
+      <p className={`min-h-6 text-sm ${tone === "dark" ? "text-[#c7b69e]" : "text-[#4d4337]"}`} role="status" aria-live="polite">
         {message}
       </p>
     </div>

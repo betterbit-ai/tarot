@@ -63,9 +63,9 @@ describe("TarotRitual", () => {
   }
 
   function selectThreeCards() {
-    fireEvent.click(screen.getByRole("button", { name: "1번째 카드 선택" }));
-    fireEvent.click(screen.getByRole("button", { name: "2번째 카드 선택" }));
-    fireEvent.click(screen.getByRole("button", { name: "3번째 카드 선택" }));
+    fireEvent.click(screen.getByRole("button", { name: "펼쳐진 카드 1 선택" }));
+    fireEvent.click(screen.getByRole("button", { name: "펼쳐진 카드 2 선택" }));
+    fireEvent.click(screen.getByRole("button", { name: "펼쳐진 카드 3 선택" }));
   }
 
   async function advanceRitualTimers(cycles = 8) {
@@ -89,16 +89,18 @@ describe("TarotRitual", () => {
 
     fireEvent.change(screen.getByLabelText("지금 마음에 걸린 질문"), { target: { value: "지금 이 일의 흐름" } });
     await moveToSelection();
+    expect(screen.queryByText("바보")).toBeNull();
+    expect(screen.queryByText("The Fool")).toBeNull();
 
-    const confirmButton = screen.getByRole("button", { name: "세 장 펼쳐 보기" });
+    const confirmButton = screen.getByRole("button", { name: "세 장을 펼쳐볼게요" });
     expect((confirmButton as HTMLButtonElement).disabled).toBe(true);
 
     selectThreeCards();
-    expect((screen.getByRole("button", { name: "세 장 펼쳐 보기" }) as HTMLButtonElement).disabled).toBe(false);
+    expect((screen.getByRole("button", { name: "세 장을 펼쳐볼게요" }) as HTMLButtonElement).disabled).toBe(false);
 
-    fireEvent.click(screen.getByRole("button", { name: "2번째 카드, 2번째로 선택됨" }));
+    fireEvent.click(screen.getByRole("button", { name: "2번째로 고른 카드" }));
     expect((confirmButton as HTMLButtonElement).disabled).toBe(true);
-    expect(screen.queryByText("2/3 선택됨")).not.toBeNull();
+    expect(screen.queryByText("한 장만 더 골라보세요.")).not.toBeNull();
   });
 
   it("goes from reveal to result when affiliate is disabled", async () => {
@@ -106,12 +108,12 @@ describe("TarotRitual", () => {
 
     await moveToSelection();
     selectThreeCards();
-    fireEvent.click(screen.getByRole("button", { name: "세 장 펼쳐 보기" }));
+    fireEvent.click(screen.getByRole("button", { name: "세 장을 펼쳐볼게요" }));
 
     await advanceRitualTimers();
 
     expect(screen.queryByRole("button", { name: "공유하기" })).not.toBeNull();
-    expect(screen.queryByText("질문은 공유되지 않고, 카드 순서만 링크에 담깁니다.")).not.toBeNull();
+    expect(screen.queryByText("질문은 빼고, 세 장과 한 문장만 공유해요.")).not.toBeNull();
   });
 
   it("shows the affiliate interstitial and allows skip when enabled without a target url", async () => {
@@ -119,14 +121,14 @@ describe("TarotRitual", () => {
 
     await moveToSelection();
     selectThreeCards();
-    fireEvent.click(screen.getByRole("button", { name: "세 장 펼쳐 보기" }));
+    fireEvent.click(screen.getByRole("button", { name: "세 장을 펼쳐볼게요" }));
 
     await advanceRitualTimers();
 
     expect(screen.queryByRole("button", { name: "건너뛰고 결과 보기" })).not.toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "건너뛰고 결과 보기" }));
 
-    expect(screen.queryByText("질문은 공유되지 않고, 카드 순서만 링크에 담깁니다.")).not.toBeNull();
+    expect(screen.queryByText("질문은 빼고, 세 장과 한 문장만 공유해요.")).not.toBeNull();
   });
 
   it("falls back to copy sharing and restarts without reload", async () => {
@@ -135,7 +137,7 @@ describe("TarotRitual", () => {
     fireEvent.change(screen.getByLabelText("지금 마음에 걸린 질문"), { target: { value: "내일의 마음" } });
     await moveToSelection();
     selectThreeCards();
-    fireEvent.click(screen.getByRole("button", { name: "세 장 펼쳐 보기" }));
+    fireEvent.click(screen.getByRole("button", { name: "세 장을 펼쳐볼게요" }));
 
     await advanceRitualTimers();
 

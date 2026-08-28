@@ -1,6 +1,5 @@
-import { lookupReading, type ReadingSource } from "@/domain/tarot";
+import { createCanonicalCombinationKey, interpretTarotV2, type ReadingSource } from "@/domain/tarot";
 import { getCardsByIds, type TarotCard } from "@/lib/tarot/cards";
-import { SAMPLE_READING_OVERRIDES } from "@/lib/tarot/sample-readings";
 
 export type ReadingSection = {
   headline: string;
@@ -15,13 +14,24 @@ export type RitualReading = ReadingSection & {
   source: ReadingSource;
 };
 
-export function createRitualReading(ids: readonly number[]): RitualReading {
-  const result = lookupReading(ids, { overrides: SAMPLE_READING_OVERRIDES });
+function buildReading(ids: readonly number[], question: string): RitualReading {
+  const reading = interpretTarotV2(ids, question);
 
   return {
-    cards: getCardsByIds(result.orderedCards),
-    canonicalKey: result.combination,
-    source: result.source,
-    ...result.reading,
+    cards: getCardsByIds(ids),
+    canonicalKey: createCanonicalCombinationKey(ids),
+    source: "fallback",
+    headline: reading.headline,
+    story: reading.story,
+    advice: reading.advice,
+    closing: reading.closing,
   };
+}
+
+export function createRitualReading(ids: readonly number[]): RitualReading {
+  return buildReading(ids, "");
+}
+
+export function createQuestionAwareRitualReading(ids: readonly number[], question: string): RitualReading {
+  return buildReading(ids, question);
 }

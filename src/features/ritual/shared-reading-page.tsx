@@ -21,7 +21,7 @@ export function SharedReadingPage({ cardIds }: SharedReadingPageProps) {
           </p>
         </header>
 
-        <ResultPaper reading={reading} title="공유된 리딩" subtitle="세 장의 순서를 그대로 복원해 같은 흐름으로 읽었습니다." />
+        <ResultPaper reading={reading} title="누군가 고른 세 장" />
 
         <section className="rounded-[1.75rem] border border-[#c8aa7b]/18 bg-[#efe6d8] px-5 py-5 text-[#241d15] shadow-[0_24px_64px_rgba(0,0,0,0.18)]">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -29,7 +29,7 @@ export function SharedReadingPage({ cardIds }: SharedReadingPageProps) {
               <p className="text-sm text-[#5b5041]">이 카드 흐름을 그대로 다시 공유할 수도 있어요.</p>
               <p className="mt-1 text-sm text-[#5b5041]">질문은 링크에 포함되지 않습니다.</p>
             </div>
-            <ShareActions cardIds={cardIds} />
+            <ShareActions cardIds={cardIds} tone="light" />
           </div>
           <Link
             href="/"

@@ -1,6 +1,7 @@
 export * from "./cards";
 export * from "./combination";
 export * from "./deck";
+export * from "./interpretation-v2";
 export * from "./positions";
 export * from "./reading";
 export * from "./selection";

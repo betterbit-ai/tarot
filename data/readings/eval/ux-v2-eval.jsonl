@@ -1,0 +1,30 @@
+{"id":"career-move-pause","question":"지금 이직하는 게 맞을까요?","cards":[29,67,5],"facet":"active-attachment-final-major"}
+{"id":"career-move-active","question":"이번 제안을 받고 회사를 옮겨도 될까요?","cards":[7,50,19],"facet":"active-supportive-major"}
+{"id":"career-stay","question":"현재 회사에 더 남는 게 맞을까요?","cards":[9,53,11],"facet":"pause-swords-final-major"}
+{"id":"career-interview","question":"이번 면접에서 무엇을 조심해야 할까요?","cards":[1,60,4],"facet":"court-authority"}
+{"id":"career-courts","question":"새 팀에서 잘 적응할 수 있을까요?","cards":[32,60,77],"facet":"three-courts"}
+{"id":"love-contact","question":"그 사람에게 먼저 연락해도 될까요?","cards":[36,51,6],"facet":"emotion-indecision-final-major"}
+{"id":"love-reconcile","question":"이 관계를 다시 이어갈 수 있을까요?","cards":[41,40,17],"facet":"cups-conflict-supportive"}
+{"id":"love-release","question":"이 관계를 이제 놓는 게 맞을까요?","cards":[43,13,21],"facet":"release-final-major"}
+{"id":"love-same-suit","question":"상대는 이 관계를 어떻게 느끼고 있을까요?","cards":[37,42,48],"facet":"same-suit-court"}
+{"id":"love-difficult","question":"계속 기다리는 게 맞을까요?","cards":[18,57,12],"facet":"uncertainty-pause"}
+{"id":"money-invest","question":"지금 이 투자에 돈을 넣어도 될까요?","cards":[64,51,11],"facet":"money-indecision-justice"}
+{"id":"money-spend","question":"지금 큰 지출을 해도 괜찮을까요?","cards":[72,67,14],"facet":"security-attachment-temperance"}
+{"id":"money-debt","question":"빚을 먼저 갚는 게 맞을까요?","cards":[68,69,4],"facet":"pentacles-authority"}
+{"id":"money-progression","question":"수입을 늘리려면 어디부터 손대야 할까요?","cards":[64,66,71],"facet":"ascending-pentacles"}
+{"id":"rest-burnout","question":"지금 쉬어야 할까요, 더 버텨야 할까요?","cards":[31,9,14],"facet":"burden-pause-balance"}
+{"id":"rest-anxiety","question":"요즘 불안한 이유가 뭘까요?","cards":[58,18,53],"facet":"swords-moon-rest"}
+{"id":"rest-recovery","question":"어떻게 해야 다시 회복할 수 있을까요?","cards":[40,14,17],"facet":"difficult-to-supportive"}
+{"id":"energy-start","question":"미뤄둔 일을 지금 시작해도 될까요?","cards":[22,29,7],"facet":"same-suit-active"}
+{"id":"energy-study","question":"이번 공부 계획을 끝까지 해낼 수 있을까요?","cards":[24,31,71],"facet":"wands-burden-pentacles"}
+{"id":"energy-slow","question":"지금 속도를 올리는 게 맞을까요?","cards":[33,12,70],"facet":"active-passive"}
+{"id":"no-question-majors","question":"","cards":[8,21,17],"facet":"supportive-major-heavy"}
+{"id":"no-question-difficult","question":"","cards":[16,52,68],"facet":"difficult-mixed"}
+{"id":"no-question-minor","question":"","cards":[23,38,55],"facet":"minor-only-transition"}
+{"id":"no-question-same-suit","question":"","cards":[50,54,62],"facet":"same-suit-court"}
+{"id":"no-question-progression","question":"","cards":[36,38,40],"facet":"ascending-cups"}
+{"id":"final-hierophant","question":"지금 결정을 내려도 될까요?","cards":[44,67,5],"facet":"attachment-final-hierophant"}
+{"id":"final-world","question":"오래 끌어온 일을 끝내도 될까요?","cards":[30,59,21],"facet":"burden-final-world"}
+{"id":"final-tower","question":"지금 계획을 계속 믿어도 될까요?","cards":[70,51,16],"facet":"stability-indecision-tower"}
+{"id":"court-conflict","question":"함께 일하는 사람과 어떻게 풀어야 할까요?","cards":[34,62,46],"facet":"three-courts-conflict"}
+{"id":"mixed-positive","question":"올해 가장 신경 써야 할 일은 뭘까요?","cards":[19,72,20],"facet":"supportive-mixed-major"}

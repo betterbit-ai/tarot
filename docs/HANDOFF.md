@@ -1,12 +1,12 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-28 11:03 KST
+Last updated: 2026-08-28 16:35 KST
 
 ## Current Phase
 
-PHASE 1 PRODUCT: COMPLETE
+UX V2 IMPROVEMENT: COMPLETE, AWAITING DEPLOYMENT
 
-The production-ready V1 implementation and repository verification are complete. Threads publishing, analytics automation, and Growth Engine work were not started.
+V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal rail with a physical 78-card spread, prevents identity leakage before a card is revealed, makes readings question-aware, and uses a configured real affiliate item. Threads/Growth Engine work is not in scope.
 
 ## Completed
 
@@ -24,14 +24,19 @@ The production-ready V1 implementation and repository verification are complete.
 - Architecture review APPROVED
 - Security review APPROVED
 - Completion verifier found no functional/code blocker
+- Three-row, 78-card physical spread with identical backs, direct selection, clear order markers and reduced-motion support
+- Card faces are not mounted until their individual reveal step, preventing unrevealed card identity from appearing in the DOM or accessibility tree
+- Question-aware, relationship-based interpretation v2 with 30 representative evaluation fixtures; no bulk corpus generation started
+- Curated local affiliate product asset, context copy, disclosure, working configured CTA and an always-available skip path
+- Dense, mobile-first result layout and responsive browser checks at 375, 390, 430, 768 and 1440px with no horizontal overflow
 
 ## In Progress
 
-None for V1.
+- Commit the UX v2 checkpoint and deploy it after setting the production environment variables
 
 ## Remaining
 
-- Set `NEXT_PUBLIC_SITE_URL`, `AFFILIATE_ENABLED`, and the server-only `COUPANG_PARTNERS_URL` in production
+- Set `NEXT_PUBLIC_SITE_URL=https://mr-tarot.netlify.app`, `AFFILIATE_ENABLED=true`, and the server-only `COUPANG_PARTNERS_URL` in production
 - Confirm the final Coupang partner destination and policy wording with the operating account
 - Run a final physical iPhone Safari/native share smoke test after deployment
 - Generate the 76,076 authored corpus only in a separate reviewed data-production phase
@@ -53,11 +58,12 @@ None for V1.
 
 ## Current UX Status
 
-- Intro, selection, reveal and result visual-verdict scores: 92, 91, 90, 92
-- Browser flow verified through result, shared re-entry, invalid-token recovery and immediate restart
-- Affiliate enabled with missing URL verified as disclosure plus skip-only path
-- 375, 390, 430, 768 and 1440 widths: no horizontal overflow; intro CTA stays in the viewport
-- Browser console errors: 0
+- Physical spread visual verdict: pass, 94/100. It fills the mobile viewport with three dense rows, only exposes card backs, and gives selected cards a clear lift and order marker.
+- Browser flow verified from question through selection, sequential reveal, affiliate skip and result at 390px.
+- The first revealed card alone is exposed while later cards remain unmounted; no pre-reveal identity leak remains.
+- Affiliate enabled with configured local production-style values: product image, CTA and skip path verified.
+- 375, 390, 430, 768 and 1440 widths: no horizontal overflow; share and restart controls remain available.
+- Browser console errors/warnings: 0 on result verification.
 
 ## Interpretation Generation Status
 
@@ -67,7 +73,7 @@ validated generated rows: 0
 
 sample authored overrides: 4
 
-evaluation rows: 100
+evaluation rows: 130 (existing 100 + UX v2 representative 30)
 
 remaining: 76,076
 
@@ -75,13 +81,13 @@ Pipeline is ready. Do not run full generation as part of ordinary product or dep
 
 ## Last Successful Test
 
-`node .codex-harness/scripts/verify-project.mjs` passed on 2026-08-28:
+UX v2 verification on 2026-08-28:
 
 - typecheck: pass
 - lint: pass
-- tests: 14 files, 38 tests pass
-- Next.js webpack production build: pass
-- tarot validate: 78 cards, 76,076 combinations, 381 batches, 4 samples, 100 eval rows
+- tests: 19 files, 48 tests pass
+- Next.js webpack production build: compiled, type-checked, generated all 5 static pages and finalized output successfully
+- tarot validate: 78 cards, 76,076 combinations, 381 batches, 4 samples, 100 baseline eval rows; UX v2 uses a separate 30-row representative fixture
 - tarot status: generated 0, remaining 76,076, failed 0
 - diff-check: pass
 
@@ -89,10 +95,10 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Create the production hosting project, configure the three environment variables, deploy the current `main` HEAD, then smoke-test the complete flow and native share on an iPhone. Do not begin Threads/Growth Engine work in this task.
+Commit and push the UX v2 checkpoint, then redeploy Netlify with the three production environment variables. After deployment, smoke-test the complete ritual and native share on an iPhone. Do not begin Threads/Growth Engine work in this task.
 
 ## Last Commit
 
-Checkpoint: `2f57998 Make the complete tarot ritual durable across sessions`.
+Checkpoint before UX v2: `44e3a28 Close V1 with reproducible verification and handoff`.
 
-The immediately following HEAD commit closes Phase 1 documentation and the read-only status fix; use `git log -1` for its immutable hash.
+UX v2 commit: pending this checkpoint.

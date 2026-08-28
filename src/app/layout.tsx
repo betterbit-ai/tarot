@@ -18,6 +18,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ko">
+      <head>
+        <link rel="preload" as="image" href="/images/tarot-card-back.png" />
+      </head>
       <body>{children}</body>
     </html>
   );

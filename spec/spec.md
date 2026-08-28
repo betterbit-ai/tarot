@@ -1,5 +1,57 @@
 # Executable Product Spec
 
+## Active iteration: UX v2
+
+### Outcome
+
+기존 리추얼과 자산을 보존하면서 카드 선택은 실제 테이블 spread처럼 빠르고 촘촘하게 만들고, reveal 전 카드 정체를 완전히 숨기며, 입력한 질문에 직접 답하는 연결형 리딩과 실제 curated 상품 추천을 제공한다.
+
+### Required behavior
+
+1. 선택 장면은 78장의 동일한 card-back을 한 화면 안의 두 겹 사선/부채꼴 spread로 배치한다. 긴 horizontal list 탐색이 주 interaction이 되면 안 된다.
+2. spread는 CSS transform과 opacity 중심으로 0.5-1.2초 안에 한 번에 펼쳐진다. card-back 한 자산만 사용하고 front image는 reveal 전 로드하지 않는다.
+3. 선택 전/후 카드명, id, suit, meaning을 visible 또는 accessibility tree에 노출하지 않는다. 선택 상태는 첫 번째/두 번째/세 번째와 1/2/3 marker만 알린다.
+4. 질문이 있으면 reading 본문이 질문 유형과 실제 문장을 직접 언급해 답한다. 질문이 없으면 지금 가장 마음에 걸린 일을 기준으로 읽는다.
+5. interpretation은 reinforcement/contradiction, suit transition, active/passive, attachment/release, major/minor balance, repeated suit, rank progression, court cards를 사용해 세 장을 하나의 주장으로 연결한다.
+6. 결과는 350-650자 수준을 우선하며 `카드를 같이 보면`, `특히 걸리는 건`, `그래서 이 질문에는`, `지금 해볼 것`의 짧은 문단 구조를 사용한다.
+7. 20-50개 representative evaluation combinations를 repository에 고정하고 질문 응답성, 자연스러운 한국어, 카드 연결, 구체성, 무작위 조합 재사용 가능성을 평가한다. 전체 76,076 생성은 실행하지 않는다.
+8. Affiliate는 curated product config를 통해 상품 이미지, 이름, 카드/질문과 연결되는 한 문장, CTA, disclosure를 보여준다. 가격은 검증된 데이터가 없으므로 표시하지 않는다.
+9. `쿠팡에서 보기`와 `건너뛰고 결과 보기`를 모두 제공하며 URL이 없거나 유효하지 않아도 결과를 막지 않는다.
+10. 결과 화면은 세 카드가 가장 먼저 보이고, 긴 아이보리 문서/상태 박스보다 짧은 리딩과 구체 행동이 중심이 된다.
+
+### Acceptance criteria and evidence
+
+| Criterion | Evidence |
+| --- | --- |
+| 375/390/430px에서 많은 카드가 동시에 보임 | browser screenshots and visible-card count |
+| 선택 화면 진입 후 spread가 1.2초 안에 보임 | browser timing measurement |
+| 긴 horizontal scroll 의존 제거 | layout metrics and interaction inspection |
+| reveal 전 identity 0건 | DOM/a11y snapshot and tests |
+| 선택/해제/1-2-3 marker 정상 | component and browser tests |
+| 질문이 결과에 직접 반영됨 | deterministic interpretation tests with question fixtures |
+| 세 카드 relationship 분석 | representative evaluation tests |
+| 결과 길이와 금칙어 준수 | automated content validation |
+| 상품 visual/name/reason/CTA/disclosure 존재 | component and browser tests |
+| skip/missing URL safety | integration tests |
+| RWS assets와 generation 0 유지 | tarot validate/status |
+
+### Constraints
+
+- Reader, card back, Public Domain RWS 78장, share routes, domain catalog, generation pipeline을 보존한다.
+- 새로운 이미지 생성이나 76,076개 대량 해석 생성을 하지 않는다.
+- 상품 가격은 신뢰할 수 있는 live source가 없으므로 표시하지 않는다.
+- 질문 원문은 URL, share token, analytics에 넣지 않는다.
+
+### Exclusions
+
+- Coupang Product API, live price synchronization, personalization accounts
+- Threads publishing, Threads analytics, Growth Engine
+- Full authored corpus generation
+
+### Rollback
+
+Spread, interpretation v2, affiliate products는 기존 reducer/domain/share contracts 뒤의 독립 component/module로 둔다. 문제가 생기면 각 adapter를 이전 UI로 되돌릴 수 있으며 RWS asset/data migration은 없다.
+
 ## Outcome
 
 방문자가 모바일에서 질문을 떠올리고 78장 중 세 장을 직접 골라, 끊김 없이 하나의 한국어 리딩을 보고 공유하거나 새 질문으로 다시 시작한다.

@@ -1,0 +1,20 @@
+{
+  "score": 94,
+  "threshold": 90,
+  "threshold_passed": true,
+  "verdict": "pass",
+  "category_match": true,
+  "differences": [
+    "세 번째 행의 마지막 카드들이 약간 더 넓게 보이지만, 덱의 사선 마감으로 읽힌다."
+  ],
+  "suggestions": [
+    "선택 후 marker와 depth만 유지하고 카드명을 추가하지 않는다.",
+    "실제 iPhone Safari에서 780ms spread-in의 체감만 최종 확인한다."
+  ],
+  "reasoning": "390px 화면에 78장이 세 겹으로 동시에 보이며 card-back 하나의 반복이 실제 테이블 spread처럼 읽힌다. 카드명, suit, id, meaning은 a11y tree와 visible UI 모두에서 드러나지 않고, 긴 horizontal list 의존도 제거됐다.",
+  "next_actions": [
+    "선택/해제 marker 검증",
+    "reveal 후에만 identity 노출 검증",
+    "질문형 결과와 상품 recommendation 검증"
+  ]
+}

@@ -5,12 +5,14 @@ import { useEffect, useReducer } from "react";
 import { AffiliateSheet } from "@/components/affiliate-sheet";
 import { ResultPaper } from "@/components/result-paper";
 import { ShareActions } from "@/components/share-actions";
-import { TarotCardBackButton } from "@/components/tarot-card-back-button";
 import { TarotCardFace } from "@/components/tarot-card-face";
+import { TarotSpread } from "@/components/tarot-spread";
 import { trackTarotEvent } from "@/lib/analytics/events";
 import type { AffiliateConfig } from "@/lib/affiliate/config";
-import { createShuffledDeck, getTarotCard } from "@/lib/tarot/cards";
-import { createRitualReading } from "@/lib/tarot/reading";
+import { createShuffledDeck } from "@/lib/tarot/cards";
+import { createQuestionAwareRitualReading } from "@/lib/tarot/reading";
+import { summarizeQuestion } from "@/lib/tarot/question";
+import { selectAffiliateProduct } from "@/lib/affiliate/products";
 import { createInitialRitualState, ritualReducer } from "@/features/ritual/state";
 
 const TIMINGS = {
@@ -29,6 +31,7 @@ const TIMINGS = {
 };
 
 const POSITION_SHORT_LABELS = ["이어진 흐름", "지금 핵심", "열릴 방향"] as const;
+const SELECTION_SLOT_LABELS = ["첫 번째", "두 번째", "세 번째"] as const;
 
 type TarotRitualProps = {
   affiliateConfig: AffiliateConfig;
@@ -94,7 +97,7 @@ function QuestionStage({
             >
               카드를 볼게요
             </button>
-            <p className="flex items-center text-xs leading-5 text-[#bfae97]">입력한 문장은 저장하거나 공유하지 않아요.</p>
+            <p className="flex items-center text-xs leading-5 text-[#9f927f]">질문은 저장되지 않아요.</p>
           </div>
         </div>
       </div>
@@ -105,9 +108,8 @@ function QuestionStage({
 function PreparingStage() {
   return (
     <StageFrame>
-      <div className="rounded-[2rem] border border-[#ad8857]/18 bg-[#18130f]/88 px-5 py-8 shadow-[0_26px_70px_rgba(0,0,0,0.34)] sm:px-8">
-        <p className="text-xs tracking-[0.24em] text-[#d0b17a]">카드를 정리하는 중</p>
-        <div className="mt-6 flex justify-center">
+      <div className="py-8 text-center sm:py-12">
+        <div className="flex justify-center">
           <div className="relative h-[220px] w-[180px]">
             {[0, 1, 2].map((index) => (
               <motion.div
@@ -121,9 +123,9 @@ function PreparingStage() {
             ))}
           </div>
         </div>
-        <h2 className="mt-3 text-center font-serif text-[1.9rem] text-[#f3e6d0]">세 번 천천히 섞고 있어요.</h2>
+        <h2 className="mt-3 font-serif text-[1.9rem] text-[#f3e6d0]">카드를 섞을게요.</h2>
         <p className="mx-auto mt-3 max-w-[26rem] text-center text-sm leading-7 text-[#dcccba]">
-          잠깐 숨을 고르는 사이에 카드를 펼쳐둘게요. 이어서 세 장만 직접 골라주세요.
+          잠깐 숨을 고르고, 손이 가는 세 장을 골라보세요.
         </p>
       </div>
     </StageFrame>
@@ -135,67 +137,65 @@ function SelectionStage({
   selectedIds,
   onToggle,
   onConfirm,
+  reducedMotion,
 }: {
   deckOrder: number[];
   selectedIds: number[];
   onToggle: (cardId: number) => void;
   onConfirm: () => void;
+  reducedMotion: boolean;
 }) {
+  const remaining = 3 - selectedIds.length;
+  const guidance =
+    remaining === 3
+      ? "천천히 훑어보다가 손이 멈추는 곳을 눌러보세요."
+      : remaining === 2
+        ? "두 장을 더 골라보세요."
+        : remaining === 1
+          ? "한 장만 더 골라보세요."
+          : "이 세 장으로 볼게요.";
+
   return (
     <StageFrame>
-      <div className="space-y-5 rounded-[2rem] border border-[#b28d60]/18 bg-[#16120f]/86 p-5 shadow-[0_26px_70px_rgba(0,0,0,0.34)] sm:p-6">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-xs tracking-[0.22em] text-[#cfb17d]">세 장 선택</p>
-            <h2 className="mt-2 font-serif text-[1.65rem] leading-snug text-[#f4e8d4] sm:text-[1.8rem]">손이 먼저 가는 카드를 세 장 골라보세요.</h2>
-          </div>
-          <p className="rounded-full border border-[#c8aa7c]/28 px-4 py-2 text-sm text-[#e6d5bc]">
-            {selectedIds.length}/3 선택됨
+      <div className="py-2 sm:py-4">
+        <div className="mx-auto max-w-xl text-center">
+          <h2 className="font-serif text-[1.7rem] leading-snug text-[#f4e8d4] sm:text-[2rem]">
+            손이 가는 카드 세 장을 골라보세요.
+          </h2>
+          <p className="mt-2 text-sm leading-6 text-[#cbbba3]" aria-live="polite">
+            {guidance}
           </p>
         </div>
 
-        <div className="grid grid-cols-3 gap-2 sm:gap-3">
-          {[0, 1, 2].map((slot) => {
-            const cardId = selectedIds[slot];
-            return (
-              <div
-                key={slot}
-                className="min-h-[86px] rounded-[1rem] border border-dashed border-[#b89567]/24 bg-[#0f0c0a]/38 px-3 py-3 sm:min-h-[92px] sm:px-4 sm:py-4"
-              >
-                <p className="text-[0.65rem] tracking-[0.08em] text-[#caa978] sm:text-xs">{POSITION_SHORT_LABELS[slot]}</p>
-                <p className="mt-2 text-xs leading-5 text-[#f0e1cb] sm:mt-3 sm:text-sm">{typeof cardId === "number" ? getTarotCard(cardId).label : "비어 있음"}</p>
-              </div>
-            );
-          })}
+        <div className="mx-auto mt-4 flex w-fit items-center gap-3" aria-label={`세 장 중 ${selectedIds.length}장 선택`}>
+          {SELECTION_SLOT_LABELS.map((label, slot) => (
+            <span
+              key={label}
+              className={`flex h-8 w-8 items-center justify-center rounded-full border text-xs transition ${
+                selectedIds[slot] !== undefined
+                  ? "border-[#efd6a5] bg-[#efd6a5] text-[#251d14]"
+                  : "border-[#a88b5f]/35 text-[#aa9679]"
+              }`}
+              aria-label={`${label} 카드 ${selectedIds[slot] !== undefined ? "선택 완료" : "선택 전"}`}
+            >
+              {selectedIds[slot] !== undefined ? "✓" : slot + 1}
+            </span>
+          ))}
         </div>
 
-        <div className="overflow-x-auto pb-1" aria-label="78장 카드 선택 레일">
-          <div className="flex min-w-max px-2 py-5">
-            {deckOrder.map((cardId, index) => {
-              const selectionOrder = selectedIds.indexOf(cardId) + 1;
-              return (
-                <div key={cardId} className={index === 0 ? "" : "-ml-10 sm:-ml-12"}>
-                  <TarotCardBackButton
-                    index={index}
-                    isSelected={selectionOrder > 0}
-                    selectionOrder={selectionOrder}
-                    onToggle={() => onToggle(cardId)}
-                  />
-                </div>
-              );
-            })}
-          </div>
+        <div className="mt-4">
+          <TarotSpread deckOrder={deckOrder} selectedIds={selectedIds} onToggle={onToggle} reducedMotion={reducedMotion} />
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm leading-6 text-[#d8cab6]">선택한 카드는 다시 누르면 바로 내려놓을 수 있어요.</p>
+        <div className="mx-auto mt-4 flex max-w-xl flex-col items-center gap-3">
+          <p className="text-xs text-[#a99478]">잘못 골랐다면 같은 카드를 다시 누르세요.</p>
           <button
             type="button"
             disabled={selectedIds.length !== 3}
             onClick={onConfirm}
-            className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#d3aa68] px-6 text-sm font-medium text-[#24190f] transition hover:bg-[#e0bb7a] disabled:cursor-not-allowed disabled:bg-[#7b6b56] disabled:text-[#e5d6c1]"
+            className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#d3aa68] px-6 text-sm font-medium text-[#24190f] transition hover:bg-[#e0bb7a] disabled:cursor-not-allowed disabled:bg-[#4b4338] disabled:text-[#a89b87] sm:w-auto"
           >
-            세 장 펼쳐 보기
+            세 장을 펼쳐볼게요
           </button>
         </div>
       </div>
@@ -214,9 +214,8 @@ function RevealStage({
 }) {
   return (
     <StageFrame>
-      <div className="rounded-[2rem] border border-[#b18a5d]/18 bg-[#17120e]/86 p-5 shadow-[0_26px_70px_rgba(0,0,0,0.34)] sm:p-6">
-        <p className="text-xs tracking-[0.2em] text-[#cfb17c]">카드 공개</p>
-        <h2 className="mt-2 font-serif text-[1.8rem] text-[#f2e7d5]">{message}</h2>
+      <div className="py-3 sm:py-5">
+        <h2 className="text-center font-serif text-[1.7rem] text-[#f2e7d5] sm:text-[1.9rem]">{message}</h2>
         <div className="mt-6 grid grid-cols-3 gap-2 sm:gap-3 md:gap-4">
           {selectedIds.map((cardId, index) => {
             const isRevealed = index < revealedCount;
@@ -229,9 +228,11 @@ function RevealStage({
                   transition={{ duration: 0.62, ease: "easeOut" }}
                   className="relative h-[238px] sm:h-[310px] md:h-[390px] [transform-style:preserve-3d]"
                 >
-                  <div aria-hidden={!isRevealed} className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden]">
-                    <TarotCardFace card={cardId} priority />
-                  </div>
+                  {isRevealed ? (
+                    <div className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                      <TarotCardFace card={cardId} priority />
+                    </div>
+                  ) : null}
                   <div
                     aria-hidden={isRevealed}
                     className="absolute inset-0 rounded-[1.25rem] border border-[#8d724d]/55 bg-cover bg-center shadow-[0_18px_50px_rgba(0,0,0,0.22)] [backface-visibility:hidden]"
@@ -250,7 +251,9 @@ function RevealStage({
 export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
   const prefersReducedMotion = Boolean(useReducedMotion());
   const [state, dispatch] = useReducer(ritualReducer, createShuffledDeck(), createInitialRitualState);
-  const reading = state.selectedIds.length === 3 ? createRitualReading(state.selectedIds) : null;
+  const questionProfile = summarizeQuestion(state.question);
+  const reading = state.selectedIds.length === 3 ? createQuestionAwareRitualReading(state.selectedIds, state.question) : null;
+  const affiliateProduct = reading ? selectAffiliateProduct(state.question, reading.cards) : null;
 
   useEffect(() => {
     if (state.stage !== "preparing") {
@@ -332,6 +335,7 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
               });
               dispatch({ type: "confirmed" });
             }}
+            reducedMotion={prefersReducedMotion}
           />
         );
       case "revealing":
@@ -339,16 +343,18 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
           <RevealStage
             selectedIds={state.selectedIds}
             revealedCount={state.revealedCount}
-            message={`${Math.min(state.revealedCount + 1, 3)}번째 카드를 조용히 뒤집고 있어요.`}
+            message={`${Math.min(state.revealedCount + 1, 3)}번째 카드를 뒤집을게요.`}
           />
         );
       case "pause":
-        return <RevealStage selectedIds={state.selectedIds} revealedCount={3} message="세 장의 흐름을 한 줄로 묶고 있어요." />;
-      case "affiliate":
+        return <RevealStage selectedIds={state.selectedIds} revealedCount={3} message="잠깐만요. 세 장을 같이 볼게요." />;
+      case "affiliate": {
+        if (!affiliateProduct) return null;
         return (
           <StageFrame>
             <AffiliateSheet
               href={affiliateConfig.outHref}
+              product={affiliateProduct}
               onClick={() => {
                 trackTarotEvent({ type: "affiliate_clicked" });
                 dispatch({ type: "affiliateDismissed" });
@@ -360,25 +366,20 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
             />
           </StageFrame>
         );
+      }
       case "result":
         return reading ? (
           <StageFrame>
             <div className="space-y-5">
               <ResultPaper
                 reading={reading}
-                title={state.question.trim() ? "당신이 붙잡고 있던 질문의 결" : "지금의 흐름"}
-                subtitle={
-                  state.question.trim()
-                    ? "마음속에 두었던 질문을 카드의 흐름으로 풀어 읽었습니다."
-                    : "질문 없이 고른 세 장도 충분히 하나의 이야기로 이어집니다."
-                }
+                title={questionProfile ? questionProfile.excerpt : "지금 가장 마음에 걸린 일"}
               />
-              <div className="flex flex-col gap-4 rounded-[1.75rem] border border-[#c8aa7b]/18 bg-[#efe6d8] px-5 py-5 text-[#241d15] sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-4 border-t border-[#a88b5f]/18 py-5 text-[#eadfcd] sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="text-sm text-[#5b5041]">질문은 공유되지 않고, 카드 순서만 링크에 담깁니다.</p>
-                  <p className="mt-1 text-sm text-[#5b5041]">다시 시작하면 지금 화면의 임시 상태도 함께 정리돼요.</p>
+                  <p className="text-sm text-[#cbbba3]">질문은 빼고, 세 장과 한 문장만 공유해요.</p>
                 </div>
-                <ShareActions cardIds={state.selectedIds} />
+                <ShareActions cardIds={state.selectedIds} tone="dark" />
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <button
@@ -391,7 +392,6 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
                 >
                   새 질문으로 다시 보기
                 </button>
-                <p className="flex min-h-12 items-center text-sm text-[#efe1cd]">같은 카드 흐름은 바로 위의 공유 버튼으로 보낼 수 있어요.</p>
               </div>
             </div>
           </StageFrame>
@@ -404,9 +404,8 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
   return (
     <main className="min-h-dvh bg-[#0b1512] text-[#f3e9d5]">
       <div className="mx-auto flex min-h-dvh w-full max-w-6xl flex-col px-4 py-5 sm:px-6 sm:py-8">
-        <header className="mb-4 flex items-center justify-between text-xs text-[#baa179]">
+        <header className="mb-4 text-center text-xs text-[#baa179]">
           <span className="font-serif text-sm tracking-[0.06em] text-[#e7d6ba]">오늘의 타로</span>
-          <span>질문은 이 화면에만 머물러요</span>
         </header>
         <AnimatePresence mode="wait">{stageContent}</AnimatePresence>
       </div>
