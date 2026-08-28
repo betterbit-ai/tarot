@@ -1,8 +1,17 @@
 # Reading Data Architecture
 
-## Corpus
+## Legacy prose corpus
 
-78C3 = 76,076 canonical combinations, 200 rows per batch, 381 batches. Generation enumeration is lexicographic and deterministic.
+78C3 = 76,076 canonical combinations, 200 rows per batch, 381 batches. Legacy prose batches are preserved for audit and rollback, but normal runtime does not select a complete prose paragraph from them because user questions require personalization.
+
+## Hybrid skeleton corpus
+
+`data/readings/skeletons/` contains 381 batches of canonical relationship skeletons. Each row records canonical key, canonical card order, dominant-card candidate, central tension, direction, relationship signals and raw signal counts. Runtime re-binds the pure skeleton contract to the user's chosen order, then combines it with a transient question profile and renders Korean prose.
+
+Commands:
+
+- `pnpm tarot:skeletons -- --resume`
+- `pnpm tarot:skeletons:validate`
 
 ## Atomic lifecycle
 
@@ -23,4 +32,4 @@ The app ships with curated sample overrides and deterministic fallback. Bulk mod
 
 ## Runtime
 
-The normal browser flow does not call a model. Full generated shards are a later override behind the same lookup API.
+The normal browser flow does not call an external model. It creates `QuestionProfile -> ReadingSkeleton -> Judgment/Stance -> Renderer` locally. The skeleton corpus is a versioned offline artifact for audit, future server lookup and editorial tooling; it is not sent wholesale to the browser.

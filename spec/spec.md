@@ -1,6 +1,55 @@
 # Executable Product Spec
 
-## Active iteration: UX v2
+## Active iteration: Structured reasoning + hybrid skeleton
+
+### Outcome
+
+질문을 해석하고 세 카드의 관계에서 판단을 먼저 만든 뒤, 그 판단을 근거로 한국어 리딩을 렌더링한다. 일반 사용자 경로의 런타임 LLM 호출 없이도 결정형 질문에는 분명하지만 비예언적인 stance를 제공하고, 76,076 조합 데이터는 완성 prose가 아닌 재사용 가능한 skeleton으로 발전할 수 있어야 한다.
+
+### Required behavior
+
+1. 질문을 domain, action, question type, decision 여부로 분리하고 substring 하나로 무관한 intent를 선택하지 않는다.
+2. 선택 순서를 보존한 세 카드에서 dominant card, base, central tension, direction, pair 관계, suit/major/court/number signal을 가진 structured skeleton을 만든다.
+3. skeleton과 question profile로 stance, evidence, caveat, closing intent를 가진 judgment를 만든다.
+4. renderer는 judgment를 먼저 말하고, 필요한 카드 근거만 자연스러운 순서로 사용한다.
+5. 기존 share와 질문 없는 리딩은 계속 작동하며 질문 원문을 저장·공유·분석하지 않는다.
+6. skeleton은 offline generator로 batch/checkpoint/resume/validation 가능한 형식이어야 하지만, quality gate 전에는 corpus migration을 실행하지 않는다.
+7. 최소 50개의 evaluation fixture가 action/type/card-relation regression을 포함하고 stance, question fit, card evidence, language, restraint를 검증한다.
+
+### Acceptance criteria and evidence
+
+| Criterion | Evidence |
+| --- | --- |
+| 결혼/이직/빚/관계 종료/상대 마음/미래 질문의 type과 action이 정확 | profile and judgment unit tests |
+| 결혼 + 컵 6/완드 킹/죽음이 conditional stance와 세 card evidence를 가짐 | regression test and browser result |
+| 카드 순서가 바뀌면 position-aware skeleton과 reading이 달라짐 | domain tests |
+| 동일 조합에서 질문 action이 바뀌면 judgment/closing이 달라짐 | domain tests |
+| runtime은 full prose batch를 읽지 않으며 skeleton seam을 사용 | module boundary test |
+| 375/390/430px 결과가 읽히고 no overflow | browser QA |
+| lint/typecheck/test/build/tarot validation/status 통과 | harness verification |
+
+### Constraints
+
+- 일반 사용자 흐름에 외부 runtime LLM을 추가하지 않는다.
+- 질문 원문은 client-local 또는 transient request scope에만 둔다.
+- 기존 76,076 prose batch와 generation validation을 즉시 파괴하거나 삭제하지 않는다.
+- 새 의존성을 추가하지 않는다.
+
+### Out of scope
+
+- Multi-candidate LLM judge
+- external model provider, API key, payments or analytics changes
+- public API or account persistence
+- corpus-wide skeleton migration before the new evaluation gate passes
+
+### Risks and rollback
+
+- renderer 품질이 기존보다 낮으면 `createQuestionAwareRitualReading` adapter를 prior V2 interpreter로 되돌린다.
+- skeleton schema는 별도 versioned artifacts로 추가해 현재 prose batches를 보존한다.
+
+---
+
+## Previous iteration: UX v2
 
 ### Outcome
 

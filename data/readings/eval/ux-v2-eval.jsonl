@@ -29,3 +29,23 @@
 {"id":"final-tower","question":"지금 계획을 계속 믿어도 될까요?","cards":[70,51,16],"facet":"stability-indecision-tower"}
 {"id":"court-conflict","question":"함께 일하는 사람과 어떻게 풀어야 할까요?","cards":[34,62,46],"facet":"three-courts-conflict"}
 {"id":"mixed-positive","question":"올해 가장 신경 써야 할 일은 뭘까요?","cards":[19,72,20],"facet":"supportive-mixed-major"}
+{"id":"marriage-tower","question":"결혼 준비를 지금 시작해도 될까요?","cards":[37,15,16],"facet":"marriage-devil-tower"}
+{"id":"marriage-world","question":"오래 만난 사람과 결혼해도 될까요?","cards":[41,14,21],"facet":"marriage-temperance-world"}
+{"id":"job-resign","question":"이번 달에 퇴사해도 될까요?","cards":[59,67,12],"facet":"resign-burden-attachment-pause"}
+{"id":"job-switch-clear","question":"새 회사 제안을 받아도 될까요?","cards":[7,29,19],"facet":"switch-advance"}
+{"id":"job-stay-burden","question":"지금 회사에 계속 남아도 될까요?","cards":[31,59,16],"facet":"stay-burden-tower"}
+{"id":"contact-cups","question":"오늘 먼저 연락해도 될까요?","cards":[37,44,19],"facet":"contact-supportive"}
+{"id":"contact-swords","question":"전 애인에게 연락해도 될까요?","cards":[52,57,18],"facet":"contact-uncertainty"}
+{"id":"breakup-world","question":"이 관계를 끝내는 게 맞을까요?","cards":[43,13,21],"facet":"breakup-release"}
+{"id":"breakup-cups","question":"헤어지는 게 맞을까요?","cards":[37,42,39],"facet":"breakup-emotional-pause"}
+{"id":"debt-money","question":"빚을 먼저 갚는 게 맞을까요?","cards":[64,67,4],"facet":"debt-pentacles-emperor"}
+{"id":"invest-wait","question":"지금 투자해도 될까요?","cards":[51,18,12],"facet":"invest-uncertainty-pause"}
+{"id":"spend-stable","question":"이 큰 지출을 해도 될까요?","cards":[72,69,14],"facet":"spend-stable-temperance"}
+{"id":"finish-world","question":"이 프로젝트를 끝내도 될까요?","cards":[30,59,21],"facet":"finish-world"}
+{"id":"continue-star","question":"지금 준비하는 일을 계속해도 될까요?","cards":[24,31,17],"facet":"continue-burden-star"}
+{"id":"future-love","question":"올해 연애를 시작할 수 있을까요?","cards":[36,37,17],"facet":"future-love-cups-star"}
+{"id":"future-job","question":"올해 취업할 수 있을까요?","cards":[1,29,19],"facet":"future-job-active"}
+{"id":"other-person-court","question":"그 사람은 저를 어떻게 보고 있을까요?","cards":[37,46,35],"facet":"other-person-court"}
+{"id":"other-person-swords","question":"그 사람이 다시 연락할까요?","cards":[51,52,58],"facet":"other-person-swords"}
+{"id":"order-reversal-a","question":"지금 일을 끝내도 될까요?","cards":[30,59,21],"facet":"order-release"}
+{"id":"order-reversal-b","question":"지금 일을 끝내도 될까요?","cards":[21,59,30],"facet":"order-background-shift"}

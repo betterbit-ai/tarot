@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { getTarotCards } from "../../src/domain/tarot/cards";
 import { interpretTarotV2, type InterpretationV2 } from "../../src/domain/tarot/interpretation-v2";
 
 type EvalCase = { id: string; question: string; cards: [number, number, number]; facet: string };
@@ -22,11 +23,12 @@ const OVERCONFIDENT = ["무조건", "확실히", "100%", "틀림없이"];
 function scoreReading(reading: InterpretationV2, fixture: EvalCase, previousLabels: Set<string>) {
   const fullText = [reading.headline, reading.story, reading.advice, reading.closing].join(" ");
   const failures: FailureReason[] = [];
-  const directness = reading.questionType === "open" ? 4 : reading.headline.length > 8 ? 5 : 3;
+  const directness = reading.questionType === "decision" ? (reading.stance === "unclear" ? 2 : 5) : reading.questionType === "other-person" ? 5 : 4;
   const specificity = fixture.question && fullText.includes(fixture.question.slice(0, 8)) ? 5 : 4;
-  const cardCoherence = reading.story.includes("첫 카드") && reading.advice.length > 50 ? 5 : 3;
+  const cardNames = getTarotCards(fixture.cards).map((card) => card.name);
+  const cardCoherence = cardNames.every((name) => fullText.includes(name)) ? 5 : cardNames.filter((name) => fullText.includes(name)).length >= 2 ? 3 : 1;
   const humanness = BANNED.some((phrase) => fullText.includes(phrase)) ? 2 : 5;
-  const position = reading.questionType === "decision" || reading.questionType === "other-person" ? (reading.headline.includes("쪽") || reading.headline.includes("어려워") || reading.headline.includes("카드는") ? 5 : 3) : 4;
+  const position = reading.questionType === "decision" || reading.questionType === "other-person" ? (reading.stance === "unclear" && reading.questionType === "decision" ? 2 : 5) : 4;
   const nonTemplated = previousLabels.has(reading.story) ? 3 : 5;
   const clarity = reading.characterCount <= 450 ? 5 : 3;
   const restraint = OVERCONFIDENT.some((phrase) => fullText.includes(phrase)) ? 2 : 5;
@@ -39,7 +41,7 @@ function scoreReading(reading: InterpretationV2, fixture: EvalCase, previousLabe
   if (clarity < 4) failures.push("OVERLONG");
   if (restraint < 4) failures.push("OVERCONFIDENT");
   if (/카드는 .*의미|카드는 .*상징|카드는 .*나타/.test(fullText)) failures.push("CARD_DICTIONARY");
-  if (/해보세요|확인해보세요|생각해보세요/.test(reading.closing) && reading.questionType === "open") failures.push("GENERIC_ADVICE");
+  if (/가장 마음에 걸리는 한 가지를 기준으로 다음 선택/.test(reading.closing) && reading.questionType === "open") failures.push("GENERIC_ADVICE");
 
   const scores = { directness, specificity, cardCoherence, humanness, position, nonTemplated, clarity, restraint };
   const total = Object.values(scores).reduce((sum, score) => sum + score, 0) / Object.keys(scores).length;

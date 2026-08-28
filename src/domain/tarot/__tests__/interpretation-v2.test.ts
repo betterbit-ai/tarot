@@ -1,7 +1,8 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
-import { interpretTarotV2 } from "../interpretation-v2";
+import { createQuestionProfile, createReadingSkeleton, interpretTarotV2 } from "../interpretation-v2";
+import { getTarotCards } from "../cards";
 
 type EvalCase = { id: string; question: string; cards: [number, number, number]; facet: string };
 
@@ -25,14 +26,14 @@ const BANNED = [
 ];
 
 describe("interpretation v2", () => {
-  it("answers an entered career question directly and concretely", () => {
-    const reading = interpretTarotV2([29, 67, 5], "지금 이직하는 게 맞을까요?");
+  it("separates question action from card-derived intent", () => {
+    const job = createQuestionProfile("지금 이직하는 게 맞을까요?", getTarotCards([29, 67, 5]));
+    const debt = createQuestionProfile("빚을 먼저 갚는 게 맞을까요?", getTarotCards([64, 65, 4]));
+    const genericDecision = createQuestionProfile("지금 결정을 내려도 될까요?", getTarotCards([44, 67, 5]));
 
-    expect(reading.intent).toBe("career");
-    expect(reading.story).toContain("지금 이직하는 게 맞을까요?");
-    expect(reading.story).toMatch(/당장 회사를|움직일 여지|해보는 쪽/);
-    expect(reading.advice).toContain("펜타클 4");
-    expect(reading.closing).toContain("이유 3개");
+    expect(job).toMatchObject({ intent: "career", questionType: "decision", action: "change-job" });
+    expect(debt).toMatchObject({ intent: "money", questionType: "decision", action: "repay-debt" });
+    expect(genericDecision.questionType).toBe("decision");
   });
 
   it("takes a clear but non-prophetic position on the marriage regression", () => {
@@ -40,37 +41,37 @@ describe("interpretation v2", () => {
 
     expect(reading.questionType).toBe("decision");
     expect(reading.intent).toBe("love");
-    expect(reading.story).toContain("결혼 자체를 말리는 카드는 아니에요");
-    expect(reading.story).toContain("지금 모습 그대로 서두르는 건 조금 걸립니다");
+    expect(reading.headline).toContain("결혼 자체를 말리는 조합은 아니에요");
+    expect(reading.headline).toContain("서두르는 건 조금 걸립니다");
     expect(reading.story).toContain("컵 6");
-    expect(reading.advice).toContain("완드 킹");
+    expect(`${reading.story} ${reading.advice}`).toContain("완드 킹");
     expect(reading.advice).toContain("죽음");
     expect(reading.closing).toContain("미뤄둔 문제");
   });
 
-  it("uses all three cards as a relationship instead of reusable keyword prose", () => {
-    const first = interpretTarotV2([44, 67, 5], "지금 결정을 내려도 될까요?");
-    const second = interpretTarotV2([16, 52, 68], "지금 결정을 내려도 될까요?");
+  it("keeps canonical combination data while binding selection order into the skeleton", () => {
+    const first = createReadingSkeleton([41, 35, 13]);
+    const reordered = createReadingSkeleton([13, 35, 41]);
 
-    expect(first.story).toContain("컵 9");
-    expect(first.advice).toContain("펜타클 4");
-    expect(first.advice).toContain("교황");
-    expect(first.story).not.toBe(second.story);
-    expect(first.advice).not.toBe(second.advice);
+    expect(first.canonicalKey).toBe(reordered.canonicalKey);
+    expect(first.orderedCardIds).not.toEqual(reordered.orderedCardIds);
+    expect(first.direction).toBe("release");
+    expect(reordered.direction).not.toBe(first.direction);
   });
 
   it("keeps all representative evaluations concise, specific and free of banned AI copy", () => {
-    expect(evalCases).toHaveLength(31);
+    expect(evalCases).toHaveLength(51);
 
     for (const fixture of evalCases) {
       const reading = interpretTarotV2(fixture.cards, fixture.question);
       const fullText = [reading.headline, reading.story, reading.advice, reading.closing].join(" ");
 
-      expect(reading.characterCount, fixture.id).toBeGreaterThanOrEqual(350);
-      expect(reading.characterCount, fixture.id).toBeLessThanOrEqual(650);
+      expect(reading.characterCount, fixture.id).toBeGreaterThanOrEqual(250);
+      expect(reading.characterCount, fixture.id).toBeLessThanOrEqual(450);
       expect(reading.labels.story, fixture.id).not.toBe("카드를 같이 보면");
       expect(reading.labels.advice, fixture.id).not.toBe("특히 걸리는 건");
       expect(reading.closing.length, fixture.id).toBeGreaterThan(20);
+      expect(reading.story, fixture.id).not.toContain(`${reading.headline}\n`);
       expect(fullText, fixture.id).not.toMatch(/컵가|펜타클가|\b2을 보면|\b4을 보면|\b5을 보면|\b9을 보면/);
       for (const phrase of BANNED) expect(fullText, `${fixture.id}: ${phrase}`).not.toContain(phrase);
     }
