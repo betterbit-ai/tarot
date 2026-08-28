@@ -101,4 +101,4 @@ Commit and push the UX v2 checkpoint, then redeploy Netlify with the three produ
 
 Checkpoint before UX v2: `44e3a28 Close V1 with reproducible verification and handoff`.
 
-UX v2 commit: pending this checkpoint.
+UX v2 commit: `96e5dad Make the tarot ritual feel physically chosen and personally read`.
