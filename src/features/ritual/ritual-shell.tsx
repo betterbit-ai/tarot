@@ -30,8 +30,24 @@ const TIMINGS = {
   },
 };
 
-const POSITION_SHORT_LABELS = ["이어진 흐름", "지금 핵심", "열릴 방향"] as const;
+const POSITION_SHORT_LABELS = ["첫 장", "가운데", "마지막"] as const;
 const SELECTION_SLOT_LABELS = ["첫 번째", "두 번째", "세 번째"] as const;
+
+function revealMessage(revealedCount: number, reading: ReturnType<typeof createQuestionAwareRitualReading> | null): string {
+  if (revealedCount === 0) return "첫 장부터 볼게요.";
+  if (!reading) return "잠깐만요. 세 장을 같이 볼게요.";
+  if (revealedCount >= 3) {
+    if (reading.signals.contradiction) return "첫 장과 마지막 장이 꽤 다르네요. 잠깐 볼게요.";
+    if (reading.signals.repeatedSuit) return "두 장이 같은 얘기를 하고 있네요. 잠깐 볼게요.";
+    if (reading.signals.majorCount >= 2) return "이번 조합은 무게가 있네요. 잠깐 볼게요.";
+    if (reading.signals.pauseCount >= 2) return "가운데 카드가 조금 걸리네요. 잠깐 볼게요.";
+    return "잠깐만요. 이 세 장은 같이 봐야겠네요.";
+  }
+  if (reading.signals.contradiction) return "첫 장과 마지막 장이 어떻게 만나는지 볼게요.";
+  if (reading.signals.repeatedSuit) return "같은 무늬가 이어지는지 볼게요.";
+  if (reading.signals.majorCount >= 2) return "이번 조합은 무게가 있네요.";
+  return `${revealedCount + 1}번째 카드를 뒤집을게요.`;
+}
 
 type TarotRitualProps = {
   affiliateConfig: AffiliateConfig;
@@ -72,13 +88,13 @@ function QuestionStage({
         >
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,16,12,0.05),rgba(8,16,12,0.1)_48%,rgba(8,16,12,0.9))]" />
           <div className="absolute inset-x-0 bottom-0 px-5 pb-5 sm:px-8 sm:pb-7">
-            <p className="font-serif text-[2.15rem] leading-tight text-[#f4e8d4] sm:text-[2.8rem]">왔네요.</p>
-            <p className="mt-2 text-sm leading-6 text-[#e5d6c0]">오늘은 무엇이 궁금한가요?</p>
+            <p className="font-serif text-[2.15rem] leading-tight text-[#f4e8d4] sm:text-[2.8rem]">왔군요.</p>
+            <p className="mt-2 text-sm leading-6 text-[#e5d6c0]">무슨 일이 마음에 걸리나요?</p>
           </div>
         </div>
         <div className="px-5 pb-6 pt-5 sm:px-8 sm:pb-8 sm:pt-6">
           <p className="max-w-[28rem] text-sm leading-7 text-[#d8c9b3]">
-            질문은 적어도 되고, 마음속에만 두어도 괜찮아요.
+            말로 적어도 좋고, 마음속에만 두어도 괜찮아요.
           </p>
           <label className="mt-7 block">
             <span className="mb-2 block text-sm text-[#eddcc4]">지금 마음에 걸린 질문</span>
@@ -153,7 +169,7 @@ function SelectionStage({
         ? "두 장을 더 골라보세요."
         : remaining === 1
           ? "한 장만 더 골라보세요."
-          : "이 세 장으로 볼게요.";
+        : "그럼, 이 세 장을 볼게요.";
 
   return (
     <StageFrame>
@@ -343,11 +359,11 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
           <RevealStage
             selectedIds={state.selectedIds}
             revealedCount={state.revealedCount}
-            message={`${Math.min(state.revealedCount + 1, 3)}번째 카드를 뒤집을게요.`}
+            message={revealMessage(state.revealedCount, reading)}
           />
         );
       case "pause":
-        return <RevealStage selectedIds={state.selectedIds} revealedCount={3} message="잠깐만요. 세 장을 같이 볼게요." />;
+        return <RevealStage selectedIds={state.selectedIds} revealedCount={3} message={revealMessage(3, reading)} />;
       case "affiliate": {
         if (!affiliateProduct) return null;
         return (
@@ -405,7 +421,7 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
     <main className="min-h-dvh bg-[#0b1512] text-[#f3e9d5]">
       <div className="mx-auto flex min-h-dvh w-full max-w-6xl flex-col px-4 py-5 sm:px-6 sm:py-8">
         <header className="mb-4 text-center text-xs text-[#baa179]">
-          <span className="font-serif text-sm tracking-[0.06em] text-[#e7d6ba]">오늘의 타로</span>
+          <span className="font-serif text-sm tracking-[0.06em] text-[#e7d6ba]">미스터 타로</span>
         </header>
         <AnimatePresence mode="wait">{stageContent}</AnimatePresence>
       </div>

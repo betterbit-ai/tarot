@@ -21,6 +21,16 @@ export type InterpretationV2 = ReadingText & {
   intent: ReadingIntent;
   signals: RelationshipSignals;
   characterCount: number;
+  pattern: NarrativePattern;
+  labels: NarrativeLabels;
+};
+
+export type NarrativePattern = "middle" | "conflict" | "same-direction" | "turn" | "major";
+
+export type NarrativeLabels = {
+  story: string;
+  advice: string;
+  closing: string;
 };
 
 const INTENT_KEYWORDS: Record<Exclude<ReadingIntent, "general">, readonly string[]> = {
@@ -229,13 +239,44 @@ function finalCardLine(card: TarotCard, finalMajor: boolean): string {
   return "마지막에는 오래 고민하는 것보다 준비한 만큼 먼저 움직여 보는 쪽으로 기웁니다.";
 }
 
-function conclusionLine(intent: ReadingIntent): string {
-  if (intent === "career") return "그래서 이 질문에는 좋아 보이는 자리인지를 따지기보다, 떠나는 이유와 새 자리의 조건이 서로 맞는지를 보는 게 더 중요해요.";
-  if (intent === "love") return "그래서 이 질문에는 상대의 마음을 추측하기보다 서로 감당할 수 있는 관계의 속도를 확인하는 게 맞아요.";
-  if (intent === "money") return "그래서 이 질문에는 수익 기대보다 감당 가능한 손실과 유지할 현금을 먼저 정하는 게 맞아요.";
-  if (intent === "rest") return "그래서 이 질문에는 더 버틸 방법보다 당장 덜어낼 일 하나를 고르는 게 맞아요.";
-  if (intent === "energy") return "그래서 이 질문에는 완벽한 계획보다 오늘 끝낼 수 있는 첫 동작을 고르는 게 맞아요.";
-  return "그래서 지금은 좋아 보이는 답보다 오래 가져가도 후회가 적을 기준을 고르는 게 맞아요.";
+function chooseNarrativePattern(signals: RelationshipSignals): NarrativePattern {
+  if (signals.majorCount >= 2) return "major";
+  if (signals.contradiction) return "conflict";
+  if (signals.repeatedSuit) return "same-direction";
+  if (signals.finalMajor) return "turn";
+  return "middle";
+}
+
+function narrativeLabels(pattern: NarrativePattern): NarrativeLabels {
+  switch (pattern) {
+    case "conflict":
+      return { story: "첫 장과 마지막 장 사이에서", advice: "가운데서 멈춘 이유", closing: "지금 남길 것" };
+    case "same-direction":
+      return { story: "세 장이 같은 쪽을 보고 있어요", advice: "반복해서 보이는 것", closing: "한 가지만 해볼 것" };
+    case "turn":
+      return { story: "마지막 카드에서 달라져요", advice: "끝에서 바뀐 말", closing: "이제 볼 것" };
+    case "major":
+      return { story: "이번 조합은 무게가 있어요", advice: "가볍게 넘기기 어려운 대목", closing: "오늘의 기준" };
+    case "middle":
+    default:
+      return { story: "가운데 카드가 먼저 말해요", advice: "그 카드가 걸리는 이유", closing: "지금 해볼 것" };
+  }
+}
+
+function adviceLead(pattern: NarrativePattern, card: TarotCard): string {
+  switch (pattern) {
+    case "conflict":
+      return `첫 장과 마지막 장이 엇갈리는데, 가운데 놓인 ${card.name}이 그 사이에서 멈춘 이유를 보여줘요.`;
+    case "same-direction":
+      return `같은 무늬가 반복되는 가운데, ${card.name}이 지금 계속 돌아오는 문제를 가장 또렷하게 보여줘요.`;
+    case "turn":
+      return `앞의 두 장 뒤에 마지막 장이 방향을 바꾸는데, 가운데 놓인 ${card.name}이 그 전환을 준비하게 해요.`;
+    case "major":
+      return `이번 조합에서 가운데 놓인 ${card.name}은 기분보다 오래 가져갈 기준을 보라고 해요.`;
+    case "middle":
+    default:
+      return `가운데 놓인 ${card.name}이 자꾸 눈에 들어와요.`;
+  }
 }
 
 function actionLine(intent: ReadingIntent): string {
@@ -253,6 +294,8 @@ export function interpretTarotV2(cardIds: readonly number[], question = ""): Int
   const intent = normalizeQuestion(question) ? classifyQuestion(question, cards) : "general";
   const signals = analyzeRelationships(cards);
   const [first, second, third] = cards;
+  const pattern = chooseNarrativePattern(signals);
+  const labels = narrativeLabels(pattern);
 
   const headlines: Record<ReadingIntent, string> = {
     love: "마음보다 서로의 속도를 먼저 확인해 보세요.",
@@ -264,11 +307,11 @@ export function interpretTarotV2(cardIds: readonly number[], question = ""): Int
   };
   const reading: ReadingText = {
     headline: headlines[intent],
-    story: `${directAnswer(intent, question, signals)}\n\n카드를 같이 보면, ${firstCardLine(first)} ${relationshipLine(cards, signals)}`,
-    advice: `특히 걸리는 건 가운데 놓인 ${second.name} 카드예요. ${middleCardLine(second)}\n\n마지막 ${third.name}까지 이어지면, ${finalCardLine(third, signals.finalMajor)} ${conclusionLine(intent)}`,
+    story: `${directAnswer(intent, question, signals)}\n\n${firstCardLine(first)} ${relationshipLine(cards, signals)}`,
+    advice: `${adviceLead(pattern, second)} ${middleCardLine(second)}\n\n마지막 ${third.name}까지 이어지면, ${finalCardLine(third, signals.finalMajor)}`,
     closing: actionLine(intent),
   };
   const characterCount = [reading.headline, reading.story, reading.advice, reading.closing].join(" ").length;
 
-  return { ...reading, intent, signals, characterCount };
+  return { ...reading, intent, signals, characterCount, pattern, labels };
 }

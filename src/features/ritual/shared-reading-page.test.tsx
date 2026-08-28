@@ -20,7 +20,7 @@ describe("SharedReadingPage", () => {
   it("renders shared cards without referencing a question", () => {
     render(<SharedReadingPage cardIds={[0, 1, 2]} />);
 
-    expect(screen.queryByText(/질문이 들어 있지 않고/)).not.toBeNull();
+    expect(screen.queryByText(/질문은 담지 않고/)).not.toBeNull();
     expect(screen.getByRole("link", { name: "나도 세 장 다시 뽑기" }).getAttribute("href")).toBe("/");
   });
 });

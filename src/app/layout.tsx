@@ -3,9 +3,9 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
-  title: "오늘의 타로",
-  description: "세 장을 직접 고르고, 하나의 흐름으로 읽어보세요.",
-  applicationName: "오늘의 타로",
+  title: "미스터 타로",
+  description: "세 장을 직접 고르고, 조용히 이야기를 읽어보세요.",
+  applicationName: "미스터 타로",
 };
 
 export const viewport: Viewport = {

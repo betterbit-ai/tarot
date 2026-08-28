@@ -14,7 +14,7 @@ describe("AffiliateSheet", () => {
   it("renders a contextual recommendation and keeps skip available when the href is missing", () => {
     render(<AffiliateSheet product={product} href={null} onSkip={vi.fn()} onClick={vi.fn()} />);
 
-    expect(screen.getByText("오늘의 카드와 어울리는 것")).not.toBeNull();
+    expect(screen.getByText("오늘은 이런 걸 골랐어요")).not.toBeNull();
     expect(screen.getByText(product.title)).not.toBeNull();
     expect((screen.getByRole("button", { name: "쿠팡에서 보기" }) as HTMLButtonElement).disabled).toBe(true);
     expect(screen.getByRole("button", { name: "건너뛰고 결과 보기" })).not.toBeNull();

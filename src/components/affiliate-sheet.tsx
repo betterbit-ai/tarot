@@ -27,7 +27,7 @@ export function AffiliateSheet({ product, href, onSkip, onClick }: AffiliateShee
 
         <div className="flex flex-col justify-center gap-5 p-5 sm:p-8">
           <div>
-            <p className="text-xs tracking-[0.12em] text-[#c8ad82]">오늘의 카드와 어울리는 것</p>
+            <p className="text-xs tracking-[0.12em] text-[#c8ad82]">오늘은 이런 걸 골랐어요</p>
             <h2 className="mt-3 font-serif text-[1.55rem] leading-tight text-[#f5ead7] sm:text-[1.9rem]">{product.title}</h2>
             <p className="mt-4 max-w-[38ch] text-sm leading-7 text-[#dfd0bb]">{product.reason}</p>
           </div>

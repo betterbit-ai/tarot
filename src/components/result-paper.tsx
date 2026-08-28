@@ -23,15 +23,15 @@ export function ResultPaper({ reading, title }: ResultPaperProps) {
 
         <div className="mt-7 space-y-7 text-[0.98rem] leading-7 text-[#dfd2bf]">
           <div>
-            <h3 className="font-serif text-[1.15rem] text-[#eedcc0]">카드를 같이 보면</h3>
+            <h3 className="font-serif text-[1.15rem] text-[#eedcc0]">{reading.labels.story}</h3>
             <p className="mt-2 whitespace-pre-line">{reading.story}</p>
           </div>
           <div className="border-t border-[#a88b5f]/16 pt-6">
-            <h3 className="font-serif text-[1.15rem] text-[#eedcc0]">특히 걸리는 건</h3>
+            <h3 className="font-serif text-[1.15rem] text-[#eedcc0]">{reading.labels.advice}</h3>
             <p className="mt-2 whitespace-pre-line">{reading.advice}</p>
           </div>
           <div className="border-t border-[#a88b5f]/16 pt-6">
-            <h3 className="font-serif text-[1.15rem] text-[#eedcc0]">지금 해볼 것</h3>
+            <h3 className="font-serif text-[1.15rem] text-[#eedcc0]">{reading.labels.closing}</h3>
             <p className="mt-2 text-[#f0dfc4]">{reading.closing}</p>
           </div>
         </div>

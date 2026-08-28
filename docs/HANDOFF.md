@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-28 16:35 KST
+Last updated: 2026-08-28 18:50 KST
 
 ## Current Phase
 
-UX V2 IMPROVEMENT: COMPLETE, AWAITING DEPLOYMENT
+UX V2 POLISH: COMPLETE, AWAITING DEPLOYMENT
 
 V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal rail with a physical 78-card spread, prevents identity leakage before a card is revealed, makes readings question-aware, and uses a configured real affiliate item. Threads/Growth Engine work is not in scope.
 
@@ -29,10 +29,15 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - Question-aware, relationship-based interpretation v2 with 30 representative evaluation fixtures; no bulk corpus generation started
 - Curated local affiliate product asset, context copy, disclosure, working configured CTA and an always-available skip path
 - Dense, mobile-first result layout and responsive browser checks at 375, 390, 430, 768 and 1440px with no horizontal overflow
+- User-facing brand unified as “미스터 타로” with Mr. Tarot metadata, share text, shared-page copy and OG artwork
+- Opening, selection, reveal and affiliate copy audited for a quiet, observant reader voice
+- Reveal copy now varies only for detected card relationships: conflict, repeated suit, major-heavy, or a strong middle pause
+- Result narrative now selects one of five relationship-based label patterns instead of repeating three fixed report headings
+- Result prose is shorter, concrete and question-aware; all 30 representative readings now measure 362–431 characters and representative 3-cycle browser QA completed at 375, 390 and 430px
 
 ## In Progress
 
-- Commit the UX v2 checkpoint and deploy it after setting the production environment variables
+- Commit and push this Mr. Tarot polish checkpoint, then deploy it after setting the production environment variables
 
 ## Remaining
 
@@ -64,6 +69,8 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - Affiliate enabled with configured local production-style values: product image, CTA and skip path verified.
 - 375, 390, 430, 768 and 1440 widths: no horizontal overflow; share and restart controls remain available.
 - Browser console errors/warnings: 0 on result verification.
+- Three full local cycles passed at 375/390/430px using career, love and continuing-work questions; all reached result, retained the question context and had no horizontal overflow.
+- Copy visual verdict: pass, 93/100. Brand, reader voice and relationship-specific narrative labels read as one restrained character without changing the established visual system.
 
 ## Interpretation Generation Status
 
@@ -86,6 +93,7 @@ UX v2 verification on 2026-08-28:
 - typecheck: pass
 - lint: pass
 - tests: 19 files, 48 tests pass
+- latest typecheck and lint: pass after narrative-pattern changes
 - Next.js webpack production build: compiled, type-checked, generated all 5 static pages and finalized output successfully
 - tarot validate: 78 cards, 76,076 combinations, 381 batches, 4 samples, 100 baseline eval rows; UX v2 uses a separate 30-row representative fixture
 - tarot status: generated 0, remaining 76,076, failed 0
@@ -102,3 +110,5 @@ Commit and push the UX v2 checkpoint, then redeploy Netlify with the three produ
 Checkpoint before UX v2: `44e3a28 Close V1 with reproducible verification and handoff`.
 
 UX v2 commit: `96e5dad Make the tarot ritual feel physically chosen and personally read`.
+
+Mr. Tarot polish commit: pending this checkpoint.

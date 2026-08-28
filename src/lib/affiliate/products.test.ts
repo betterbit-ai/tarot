@@ -14,7 +14,7 @@ describe("affiliate products", () => {
 
     expect(product.title).toBe("블루 드 샤넬 오 드 빠르펭 50ml");
     expect(product.imageSrc).toBe("/affiliate/bleu-de-chanel.avif");
-    expect(product.reason).toContain("면접이나 첫 출근");
+    expect(product.reason).toContain("새 환경에 들어가는 날");
     expect(product).not.toHaveProperty("price");
     expect(product.ctaLabel).toBe("쿠팡에서 보기");
   });

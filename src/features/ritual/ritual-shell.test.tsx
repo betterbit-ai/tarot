@@ -149,7 +149,7 @@ describe("TarotRitual", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "새 질문으로 다시 보기" }));
 
-    expect(screen.queryByText("왔네요.")).not.toBeNull();
+    expect(screen.queryByText("왔군요.")).not.toBeNull();
     expect((screen.getByLabelText("지금 마음에 걸린 질문") as HTMLInputElement).value).toBe("");
   });
 });

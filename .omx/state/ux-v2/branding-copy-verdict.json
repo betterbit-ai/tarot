@@ -1,0 +1,15 @@
+{
+  "scope": "mr-tarot-branding-and-copy",
+  "viewport": [375, 390, 430],
+  "verdict": "pass",
+  "score": 93,
+  "evidence": [
+    "Opening screen now introduces Mr. Tarot in restrained Korean copy.",
+    "Three real question cycles reached result at 375, 390 and 430px.",
+    "Question text appeared in each reading and relationship pattern changed by cards.",
+    "No horizontal overflow or browser console errors were observed."
+  ],
+  "remaining": [
+    "Native iPhone Safari share sheet still needs post-deployment smoke test."
+  ]
+}

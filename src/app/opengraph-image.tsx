@@ -36,14 +36,14 @@ export default async function OpengraphImage() {
           }}
         >
           <div style={{ display: "flex", flexDirection: "column", gap: "20px", maxWidth: "680px" }}>
-            <div style={{ fontSize: 20, letterSpacing: "0.28em", color: "#d3aa68" }}>오늘의 타로</div>
+            <div style={{ fontSize: 20, letterSpacing: "0.28em", color: "#d3aa68" }}>미스터 타로 · MR. TAROT</div>
             <div style={{ display: "flex", flexDirection: "column", fontSize: 68, lineHeight: 1.08, fontWeight: 700 }}>
               세 장을 직접 고르고
               <br />
-              하나의 흐름으로 읽어보세요.
+              세 장을 천천히 읽어보세요.
             </div>
             <div style={{ fontSize: 28, lineHeight: 1.45, color: "#e2d4bf" }}>
-              질문은 링크에 남지 않고, 카드 순서만 조용히 이어집니다.
+              질문은 링크에 남지 않고, 고른 카드만 남습니다.
             </div>
           </div>
           <div style={{ display: "flex", gap: "20px" }}>

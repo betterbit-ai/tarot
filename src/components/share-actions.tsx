@@ -21,7 +21,7 @@ export function ShareActions({ cardIds, tone = "dark" }: ShareActionsProps) {
         onClick={() => {
           startTransition(async () => {
             try {
-              const method = await shareReading(cardIds, "세 장의 흐름을 함께 읽어보세요.");
+              const method = await shareReading(cardIds, "미스터 타로에서 고른 세 장을 같이 봐주세요.");
               trackTarotEvent({ type: "result_shared", method });
               setMessage(method === "native-share" ? "공유 창을 열었어요." : "링크를 복사했어요.");
             } catch {

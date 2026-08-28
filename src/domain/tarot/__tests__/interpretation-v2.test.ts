@@ -55,7 +55,8 @@ describe("interpretation v2", () => {
 
       expect(reading.characterCount, fixture.id).toBeGreaterThanOrEqual(350);
       expect(reading.characterCount, fixture.id).toBeLessThanOrEqual(650);
-      expect(reading.advice, fixture.id).toContain("가운데 놓인");
+      expect(reading.labels.story, fixture.id).not.toBe("카드를 같이 보면");
+      expect(reading.labels.advice, fixture.id).not.toBe("특히 걸리는 건");
       expect(reading.closing.length, fixture.id).toBeGreaterThan(20);
       expect(fullText, fixture.id).not.toMatch(/컵가|펜타클가|\b2을 보면|\b4을 보면|\b5을 보면|\b9을 보면/);
       for (const phrase of BANNED) expect(fullText, `${fixture.id}: ${phrase}`).not.toContain(phrase);

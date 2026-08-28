@@ -38,7 +38,7 @@ export async function shareReading(ids: readonly number[], text: string): Promis
   if (typeof navigator !== "undefined" && navigator.share) {
     try {
       await navigator.share({
-        title: "오늘의 타로",
+        title: "미스터 타로",
         text,
         url,
       });

@@ -14,18 +14,18 @@ export async function generateMetadata({ params }: SharePageProps): Promise<Meta
 
   if (!cardIds) {
     return {
-      title: "오늘의 타로",
-      description: "세 장을 직접 고르고, 하나의 흐름으로 읽어보세요.",
+      title: "미스터 타로",
+      description: "세 장을 직접 고르고, 조용히 이야기를 읽어보세요.",
     };
   }
 
   const reading = createRitualReading(cardIds);
 
   return {
-    title: `${reading.cards.map((card) => card.label).join(", ")} | 오늘의 타로`,
+    title: `${reading.cards.map((card) => card.label).join(", ")} | 미스터 타로`,
     description: reading.headline,
     openGraph: {
-      title: "공유된 오늘의 타로",
+      title: "미스터 타로에서 고른 세 장",
       description: reading.headline,
       images: [`/share/${token}/opengraph-image`],
     },
