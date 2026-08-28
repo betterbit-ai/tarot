@@ -136,4 +136,4 @@ Interpretation quality checkpoint: `d1a0a5e Make interpretation answers direct a
 
 Full corpus generation checkpoint: `c5b978d Finalize the full relationship-aware interpretation corpus`.
 
-Threads content checkpoint: pending this checkpoint.
+Threads content checkpoint: `0c4880f Prepare a varied seven-day Mr. Tarot Threads calendar`.
