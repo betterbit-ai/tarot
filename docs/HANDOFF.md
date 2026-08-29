@@ -169,4 +169,4 @@ Threads content checkpoint: `fc828e0 Add a browser dashboard for Threads posting
 
 Naturalness audit checkpoint: `a7c9ba5 Make every tarot reading sound like natural Korean`.
 
-Editorial result checkpoint: pending commit after suit-specific meanings, comeback context, button contrast, and reveal typography updates.
+Editorial result checkpoint: `ccd22bd Ground tarot readings in card-specific meaning and context`.
