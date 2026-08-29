@@ -15,7 +15,7 @@ describe("runtime reading adapter", () => {
     const reading = createQuestionAwareRitualReading([29, 67, 5], "지금 이직하는 게 맞을까요?");
 
     expect(reading.story).toContain("지금 이직하는 게 맞을까요?");
-    expect(reading.headline).toMatch(/결정하지 않는|움직여도|할 수는/);
+    expect(reading.headline).toMatch(/결정하기보다|움직여도|할 수는/);
     expect(`${reading.story} ${reading.advice}`).toContain("펜타클 4");
     expect(reading.closing).toContain("그만둘 이유");
   });

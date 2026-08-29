@@ -42,7 +42,7 @@ describe("interpretation v2", () => {
     expect(reading.questionType).toBe("decision");
     expect(reading.intent).toBe("love");
     expect(reading.headline).toContain("결혼 자체를 말리는 조합은 아니에요");
-    expect(reading.headline).toContain("서두르는 건 조금 걸립니다");
+    expect(reading.headline).toContain("서두르는 건 조금 걸려요");
     expect(reading.story).toContain("컵 6");
     expect(`${reading.story} ${reading.advice}`).toContain("완드 킹");
     expect(reading.advice).toContain("죽음");
@@ -57,6 +57,16 @@ describe("interpretation v2", () => {
     expect(first.orderedCardIds).not.toEqual(reordered.orderedCardIds);
     expect(first.direction).toBe("release");
     expect(reordered.direction).not.toBe(first.direction);
+  });
+
+  it("uses an open reflective headline when no question was asked", () => {
+    const reading = interpretTarotV2([3, 43, 74]);
+    const fullText = [reading.headline, reading.story, reading.advice, reading.closing].join(" ");
+
+    expect(reading.questionType).toBe("open");
+    expect(reading.headline).not.toMatch(/할 수는 있지만|그쪽으로 움직여도/);
+    expect(fullText).not.toMatch(/여황제이|컵 8가|펜타클 페이지을/);
+    expect(reading.closing).toContain("돈과 시간을");
   });
 
   it("keeps all representative evaluations concise, specific and free of banned AI copy", () => {

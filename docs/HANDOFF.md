@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-29 10:00 KST
+Last updated: 2026-08-29 11:15 KST
 
 ## Current Phase
 
-STRUCTURED READING + HYBRID SKELETON: COMPLETE, AWAITING DEPLOYMENT
+STRUCTURED READING + KOREAN NATURALNESS AUDIT: COMPLETE, AWAITING DEPLOYMENT
 
 V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal rail with a physical 78-card spread, prevents identity leakage before a card is revealed, makes readings question-aware, and uses a configured real affiliate item. Threads/Growth Engine work is not in scope.
 
@@ -41,6 +41,8 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - Hybrid skeleton corpus generated and validated: 381 batches, 76,076 rows under `data/readings/skeletons/`
 - Regression gate expanded to 51 varied question/card cases; structured evaluator reports 4.90/5 with no flagged failures
 - Runtime calls `/api/tarot-skeleton` with selected card ids only, fetches one canonical skeleton batch row, and binds it to ordered positions locally; question text is not sent or persisted
+- Korean naturalness pass applied to the renderer and all 76,076 prose batch rows using the supplied `im-not-ai` taxonomy and rewriting playbook principles
+- Full deterministic audit command `pnpm tarot:audit` checks all 76,076 runtime readings for no-question decision leakage, banned AI-tell phrases, malformed card-name particles, and length bounds; current result is zero failures
 - Threads Week 01 calendar contains seven copy-paste-ready posts with varied formats, comments, CTAs, topics, hypotheses and metrics placeholders
 - Seven 1080x1350 SVG choice-card assets generated under `public/threads/week-01/`; Day 01 and Day 04 visual previews checked
 - All 23 referenced card IDs resolve against the real 78-card RWS catalog; no card fronts or affiliate assets were regenerated
@@ -51,7 +53,7 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 
 ## In Progress
 
-- Commit and deploy the structured reading checkpoint, then manually post the Week 01 Threads calendar
+- Commit and deploy the Korean naturalness checkpoint, then manually post the Week 01 Threads calendar
 
 ## Remaining
 
@@ -60,6 +62,7 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - Run a final physical iPhone Safari/native share smoke test after deployment
 - Threads posting and metrics collection remain manual; no Meta API or auto-publishing was added
 - Legacy prose batches are retained for rollback/audit but are not used by the normal ritual runtime
+- The legacy prose batches were regenerated from the current renderer after the naturalness pass; the runtime still uses the smaller hybrid skeleton route
 
 ## Known Issues
 
@@ -124,6 +127,7 @@ UX v2 verification on 2026-08-28:
 - tests: 19 files, 49 tests pass
 - latest typecheck and lint: pass after narrative-pattern changes
 - `pnpm tarot:evaluate`: 51 cases, average 4.90/5, failure distribution empty
+- `pnpm tarot:audit`: 76,076 readings checked, zero no-question decision headlines, zero banned patterns, zero malformed particles, zero length failures
 - `pnpm tarot:skeletons:validate`: 381 batches, 76,076 skeleton rows
 - Next.js webpack production build: compiled, type-checked, generated all 5 static pages and finalized output successfully
 - tarot validate: 78 cards, 76,076 combinations, 381 batches, 4 samples, 100 baseline eval rows; UX v2 uses a separate 30-row representative fixture
@@ -136,7 +140,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Post the Week 01 Threads calendar manually and record metrics, then deploy the completed `main` HEAD to Netlify with the three production environment variables. Do not add auto-publishing or Meta API integration in this phase.
+Deploy the naturalness-audited `main` HEAD to Netlify with the three production environment variables, then run one iPhone Safari/native share smoke test. Do not add auto-publishing or Meta API integration in this phase.
 
 ## Last Commit
 
@@ -151,3 +155,5 @@ Interpretation quality checkpoint: `d1a0a5e Make interpretation answers direct a
 Full corpus generation checkpoint: `c5b978d Finalize the full relationship-aware interpretation corpus`.
 
 Threads content checkpoint: `fc828e0 Add a browser dashboard for Threads posting`.
+
+Naturalness audit checkpoint: pending commit after `pnpm tarot:audit` and full prose regeneration.
