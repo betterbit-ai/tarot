@@ -176,7 +176,7 @@ function SelectionStage({
     <StageFrame>
       <div className="py-2 sm:py-4">
         <div className="mx-auto max-w-xl text-center">
-          <h2 className="font-serif text-[1.7rem] leading-snug text-[#f4e8d4] sm:text-[2rem]">
+          <h2 className="whitespace-nowrap font-serif text-[1.2rem] leading-snug text-[#f4e8d4] sm:text-[2rem]">
             손이 가는 카드 세 장을 골라보세요.
           </h2>
           <p className="mt-2 text-sm leading-6 text-[#cbbba3]" aria-live="polite">

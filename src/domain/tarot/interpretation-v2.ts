@@ -27,6 +27,19 @@ export type InterpretationV2 = ReadingText & {
   labels: NarrativeLabels;
   questionType: QuestionType;
   stance: ReadingStance;
+  cardSummary: string;
+  majorSummary: string;
+  cardInsights: readonly ReadingCardInsight[];
+  flow: string;
+  application: string;
+  mindset: string;
+};
+
+export type ReadingCardInsight = {
+  cardId: number;
+  name: string;
+  keywords: string;
+  visualEvidence: string;
 };
 
 export type NarrativePattern = "middle" | "conflict" | "same-direction" | "turn" | "major";
@@ -461,6 +474,80 @@ function closingFor(profile: StructuredQuestionProfile, stance: ReadingStance, s
   return "오늘 바로 할 수 있는 작은 일 하나를 정하고, 나머지는 조금 더 지켜보세요.";
 }
 
+const MAJOR_VISUAL_CUES: Readonly<Record<number, string>> = {
+  0: "절벽 끝의 인물이 하늘을 보며 첫발을 내디뎌요. 준비보다 호기심이 앞선 장면이에요.",
+  1: "탁자 위 도구를 앞에 둔 인물이 한 손을 들어요. 가진 것을 행동으로 꺼내는 모습이에요.",
+  2: "두 기둥 사이에 앉은 인물이 두루마리를 품고 있어요. 드러난 말보다 안쪽의 감각을 보게 해요.",
+  3: "숲과 곡식 사이에 앉은 인물이 주변을 돌봐요. 서두르기보다 키우는 힘을 보여줘요.",
+  4: "돌로 된 왕좌에 앉은 인물이 곧게 앞을 봐요. 기준과 책임을 세우는 모습이에요.",
+  5: "두 사람 앞에 선 인물이 의식을 이끌어요. 배운 원칙을 삶에 맞출지 묻는 장면이에요.",
+  6: "두 사람이 나무 사이에서 서로를 마주 봐요. 끌림보다 선택과 약속을 생각하게 해요.",
+  7: "전차 위 인물이 서로 다른 힘을 한 방향으로 몰아요. 의지를 모아 나아가는 장면이에요.",
+  8: "인물이 사자의 입을 부드럽게 다뤄요. 억누르기보다 감정을 길들이는 힘을 보여줘요.",
+  9: "등불을 든 인물이 산길에 혼자 서 있어요. 바깥 답보다 자기 속도를 확인하게 해요.",
+  10: "하늘의 수레바퀴가 계속 돌아가요. 흐름이 바뀌는 순간을 읽게 해요.",
+  11: "저울과 검을 든 인물이 정면을 봐요. 감정보다 사실을 같은 자리에 놓는 장면이에요.",
+  12: "한 발을 묶은 인물이 거꾸로 매달려 있어요. 멈춤 속에서 관점을 바꾸는 모습이에요.",
+  13: "검은 말 위의 기사가 길을 지나가요. 한 장면을 끝내고 다음으로 넘어가는 변화예요.",
+  14: "천사가 두 컵의 물을 천천히 섞어요. 서로 다른 리듬을 맞추는 장면이에요.",
+  15: "사슬에 묶인 두 사람이 악마 앞에 서 있어요. 익숙해서 붙든 관계를 돌아보게 해요.",
+  16: "번개가 탑을 가르고 사람들이 아래로 떨어져요. 숨겨 둔 균열이 드러나는 순간이에요.",
+  17: "밤하늘 아래 인물이 두 그릇의 물을 흘려보내요. 조용히 다시 믿는 힘을 보여줘요.",
+  18: "달빛 아래 개와 늑대가 길을 바라봐요. 확실하지 않은 신호를 구분하게 해요.",
+  19: "아이와 말이 밝은 해 아래 드러나 있어요. 숨김없이 확인할 수 있는 생기를 보여줘요.",
+  20: "관 속 사람들이 나팔 소리에 일어나요. 지나온 일을 다시 불러내는 각성이에요.",
+  21: "인물이 월계관 안에서 춤추고 네 상징이 주변을 둘러싸요. 한 주기를 닫는 완성이에요.",
+};
+
+const MINOR_VISUAL_CUES: Readonly<Record<Suit, string>> = {
+  wands: "그림 속 막대와 인물의 자세가 움직이려는 기세를 드러내요.",
+  cups: "컵의 간격과 물의 흐름이 감정의 거리와 교환을 보여줘요.",
+  swords: "검의 방향과 인물의 표정이 판단과 긴장을 드러내요.",
+  pentacles: "동전과 손의 위치가 돈과 생활의 조건을 보여줘요.",
+};
+
+function visualEvidenceFor(card: TarotCard): string {
+  if (card.arcana === "major") return MAJOR_VISUAL_CUES[card.id] ?? "그림의 인물과 상징이 지금의 질문을 한 장면으로 압축해 보여줘요.";
+  return `${MINOR_VISUAL_CUES[card.suit ?? "swords"]} ${card.rank === "ace" ? "하나의 상징이 크게 놓여 시작점을 만들어요." : card.rank === "ten" ? "여러 상징이 한 화면에 모여 결과와 부담을 함께 보여줘요." : "카드의 숫자와 배치가 지금 필요한 속도를 가늠하게 해요."}`;
+}
+
+function createCardInsights(cards: readonly TarotCard[]): readonly ReadingCardInsight[] {
+  return cards.map((card) => ({
+    cardId: card.id,
+    name: card.name,
+    keywords: `${cardMeaningCore(card, "light")} · 주의할 점은 ${cardMeaningCore(card, "shadow")}`,
+    visualEvidence: visualEvidenceFor(card),
+  }));
+}
+
+function majorSummaryFor(cards: readonly TarotCard[]): string {
+  const count = cards.filter((card) => card.arcana === "major").length;
+  if (count === 0) return "메이저 카드는 포함되지 않았어요. 이번 리딩은 일상의 선택과 행동에 더 가까워요.";
+  return `메이저 카드 ${count}장이 포함되어 있어요. 개인의 기분보다 오래 남을 기준을 함께 살펴봐요.`;
+}
+
+function flowFor(cards: readonly TarotCard[]): string {
+  const [first, middle, last] = cards;
+  return `배치된 흐름을 따라가면 ${first.name}의 ${cardMeaningCore(first, "light")}에서 시작해요. ${middle.name}${subjectParticle(middle.name)} ${cardMeaningCore(middle, "shadow")}${objectParticle(cardMeaningCore(middle, "shadow"))} 점검하게 하고, 마지막 ${last.name}${subjectParticle(last.name)} ${cardMeaningCore(last, "light")} 쪽으로 시선을 옮겨요.`;
+}
+
+function applicationFor(profile: StructuredQuestionProfile, skeleton: ReadingSkeleton): string {
+  const direction = skeleton.direction === "advance" ? "작게 움직이면 다음 단서가 생길 수 있어요." : skeleton.direction === "pause" ? "서두르면 같은 고민이 반복될 수 있어요." : skeleton.direction === "release" ? "기존 방식을 놓을수록 다음 선택이 선명해질 수 있어요." : skeleton.direction === "stabilize" ? "생활 조건을 먼저 확인하면 흔들림을 줄일 수 있어요." : skeleton.direction === "clarify" ? "기준을 적어두면 대화와 판단이 선명해질 수 있어요." : "익숙한 방식을 한 군데 바꾸면 흐름이 달라질 수 있어요.";
+  const context: Partial<Record<ReadingAction, string>> = {
+    marry: "결혼을 묻는 상황이라면, 마음보다 두 사람이 합의한 생활 계획이 먼저 드러날 수 있어요.",
+    "change-job": "이직을 묻는 상황이라면, 현재의 답답함보다 새 자리의 조건을 비교하는 일이 먼저예요.",
+    "stay-job": "회사에 남을지 묻는 상황이라면, 버티는 이유와 얻는 것을 따로 적어보는 편이 좋아요.",
+    contact: "연락을 묻는 상황이라면, 상대의 반응을 기다리기보다 내가 원하는 대화의 범위를 정해야 해요.",
+    "end-relationship": "관계를 정리할지 묻는 상황이라면, 반복되는 말보다 실제 행동을 기준으로 보게 돼요.",
+    "repay-debt": "빚을 갚는 상황이라면, 상환 속도와 생활비 사이의 균형이 핵심이 됩니다.",
+    invest: "투자를 묻는 상황이라면, 기대 수익보다 감당할 수 있는 손실부터 확인해야 해요.",
+    spend: "큰 지출을 묻는 상황이라면, 사고 싶은 마음과 실제 사용 계획을 나눠봐야 해요.",
+    future: "앞날을 묻는 상황이라면, 결과를 기다리는 동안 준비할 수 있는 일이 먼저 보여요.",
+    "other-person": "상대의 마음을 묻는 상황이라면, 추측보다 오간 말과 행동이 더 정확한 기준이에요.",
+  };
+  return `${context[profile.action] ?? "일과 관계, 생활 중 지금 가장 걸리는 장면에 이 흐름을 대입해보세요."} ${direction}`;
+}
+
 export function interpretStructuredReading(cardIds: readonly number[], question = "", precomputed?: ReadingSkeleton): InterpretationV2 {
   const ordered = asCardTriple(cardIds);
   const cards = getTarotCards(ordered);
@@ -491,7 +578,26 @@ export function interpretStructuredReading(cardIds: readonly number[], question 
   const advice = `${cardSituation(last, "direction")} ${adviceBridge}`;
   const closing = closingFor(profile, stance, skeleton);
   const characterCount = [headline, story, advice, closing].join(" ").length;
-  return { headline, story, advice, closing, intent: profile.intent, questionType: profile.questionType, stance, signals: skeleton.signals, characterCount, pattern: skeleton.relationships.includes("conflict") ? "conflict" : skeleton.relationships.includes("same-suit") ? "same-direction" : skeleton.signals.majorCount >= 2 ? "major" : skeleton.direction === "transform" ? "turn" : "middle", labels };
+  const cardInsights = createCardInsights(cards);
+  return {
+    headline,
+    story,
+    advice,
+    closing,
+    intent: profile.intent,
+    questionType: profile.questionType,
+    stance,
+    signals: skeleton.signals,
+    characterCount,
+    pattern: skeleton.relationships.includes("conflict") ? "conflict" : skeleton.relationships.includes("same-suit") ? "same-direction" : skeleton.signals.majorCount >= 2 ? "major" : skeleton.direction === "transform" ? "turn" : "middle",
+    labels,
+    cardSummary: `뽑은 카드: ${cards.map((card) => card.name).join(" · ")}`,
+    majorSummary: majorSummaryFor(cards),
+    cardInsights,
+    flow: flowFor(cards),
+    application: applicationFor(profile, skeleton),
+    mindset: closing,
+  };
 }
 
 export function interpretTarotV2(cardIds: readonly number[], question = ""): InterpretationV2 {

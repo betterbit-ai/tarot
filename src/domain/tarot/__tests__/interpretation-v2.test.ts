@@ -69,6 +69,18 @@ describe("interpretation v2", () => {
     expect(reading.closing).toContain("돈과 시간을");
   });
 
+  it("returns the editorial reading layers used by the result page", () => {
+    const reading = interpretTarotV2([51, 6, 54], "그 사람이 신경쓰여");
+
+    expect(reading.cardSummary).toBe("뽑은 카드: 소드 2 · 연인 · 소드 5");
+    expect(reading.majorSummary).toContain("메이저 카드 1장");
+    expect(reading.cardInsights).toHaveLength(3);
+    expect(reading.cardInsights[1]?.visualEvidence).toContain("서로를 마주 봐요");
+    expect(reading.flow).not.toMatch(/소드 5이|소드 2가|연인가/);
+    expect(reading.application).toContain("상대의 마음");
+    expect(reading.mindset).toContain("실제로 오간 말과 행동");
+  });
+
   it("keeps all representative evaluations concise, specific and free of banned AI copy", () => {
     expect(evalCases).toHaveLength(51);
 

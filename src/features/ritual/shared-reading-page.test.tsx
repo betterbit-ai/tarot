@@ -21,6 +21,8 @@ describe("SharedReadingPage", () => {
     render(<SharedReadingPage cardIds={[0, 1, 2]} />);
 
     expect(screen.queryByText(/질문은 담지 않고/)).not.toBeNull();
+    expect(screen.getByText(/뽑은 카드: 바보 · 마법사 · 여사제/)).not.toBeNull();
+    expect(screen.getByRole("heading", { name: "카드마다 보이는 것" })).not.toBeNull();
     expect(screen.getByRole("link", { name: "나도 세 장 다시 뽑기" }).getAttribute("href")).toBe("/");
   });
 });

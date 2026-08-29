@@ -19,21 +19,41 @@ export function ResultPaper({ reading, title }: ResultPaperProps) {
 
       <div className="mx-auto mt-7 max-w-2xl">
         <p className="text-sm text-[#bda98b]">{title}</p>
-        <h2 className="mt-2 font-serif text-[1.7rem] leading-snug text-[#f4e8d5] sm:text-[2rem]">{reading.headline}</h2>
+        <h2 className="mt-2 max-w-[28rem] font-serif text-[1.65rem] leading-[1.35] text-[#f4e8d5] sm:text-[2rem]">{reading.headline}</h2>
 
-        <div className="mt-7 space-y-7 text-[0.98rem] leading-7 text-[#dfd2bf]">
-          <div>
-            <h3 className="font-serif text-[1.15rem] text-[#eedcc0]">{reading.labels.story}</h3>
-            <p className="mt-2 whitespace-pre-line">{reading.story}</p>
-          </div>
-          <div className="border-t border-[#a88b5f]/16 pt-6">
-            <h3 className="font-serif text-[1.15rem] text-[#eedcc0]">{reading.labels.advice}</h3>
-            <p className="mt-2 whitespace-pre-line">{reading.advice}</p>
-          </div>
-          <div className="border-t border-[#a88b5f]/16 pt-6">
-            <h3 className="font-serif text-[1.15rem] text-[#eedcc0]">{reading.labels.closing}</h3>
-            <p className="mt-2 text-[#f0dfc4]">{reading.closing}</p>
-          </div>
+        <div className="mt-6 rounded-2xl border border-[#a88b5f]/20 bg-[#111b17]/72 px-4 py-4 sm:px-5">
+          <p className="text-sm font-medium text-[#f0dfc4]">{reading.cardSummary}</p>
+          <p className="mt-2 text-sm leading-6 text-[#cdbda8]">{reading.majorSummary}</p>
+        </div>
+
+        <div className="mt-8 space-y-8 text-[0.98rem] leading-7 text-[#dfd2bf]">
+          <section>
+            <h3 className="font-serif text-[1.2rem] text-[#eedcc0]">카드마다 보이는 것</h3>
+            <div className="mt-3 divide-y divide-[#a88b5f]/16 border-y border-[#a88b5f]/16">
+              {reading.cardInsights.map((insight, index) => (
+                <article key={`${insight.cardId}-${index}`} className="py-4 first:pt-3 last:pb-3">
+                  <h4 className="text-sm font-medium text-[#f0dfc4]">{index + 1}. {insight.name}</h4>
+                  <p className="mt-1 text-sm leading-6 text-[#d6c6b1]">핵심 키워드: {insight.keywords}</p>
+                  <p className="mt-1 text-sm leading-6 text-[#c7b7a2]">그림에서 읽히는 근거: {insight.visualEvidence}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="border-t border-[#a88b5f]/16 pt-7">
+            <h3 className="font-serif text-[1.2rem] text-[#eedcc0]">세 장의 흐름</h3>
+            <p className="mt-2">{reading.flow}</p>
+          </section>
+
+          <section className="border-t border-[#a88b5f]/16 pt-7">
+            <h3 className="font-serif text-[1.2rem] text-[#eedcc0]">질문에 대입하면</h3>
+            <p className="mt-2">{reading.application}</p>
+          </section>
+
+          <section className="border-t border-[#a88b5f]/16 pt-7">
+            <h3 className="font-serif text-[1.2rem] text-[#eedcc0]">가져갈 태도</h3>
+            <p className="mt-2 text-[#f0dfc4]">{reading.mindset}</p>
+          </section>
         </div>
       </div>
     </section>

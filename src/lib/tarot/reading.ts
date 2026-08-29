@@ -4,6 +4,7 @@ import {
   type NarrativeLabels,
   type NarrativePattern,
   type ReadingSource,
+  type ReadingCardInsight,
   type ReadingSkeleton,
   type RelationshipSignals,
 } from "@/domain/tarot";
@@ -17,6 +18,12 @@ export type ReadingSection = {
   labels: NarrativeLabels;
   pattern: NarrativePattern;
   signals: RelationshipSignals;
+  cardSummary: string;
+  majorSummary: string;
+  cardInsights: readonly ReadingCardInsight[];
+  flow: string;
+  application: string;
+  mindset: string;
 };
 
 export type RitualReading = ReadingSection & {
@@ -39,6 +46,12 @@ function buildReading(ids: readonly number[], question: string, skeleton?: Readi
     labels: reading.labels,
     pattern: reading.pattern,
     signals: reading.signals,
+    cardSummary: reading.cardSummary,
+    majorSummary: reading.majorSummary,
+    cardInsights: reading.cardInsights,
+    flow: reading.flow,
+    application: reading.application,
+    mindset: reading.mindset,
   };
 }
 
