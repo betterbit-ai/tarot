@@ -232,7 +232,7 @@ function RevealStage({
   return (
     <StageFrame>
       <div className="py-3 sm:py-5">
-        <h2 className="text-center font-serif text-[1.7rem] text-[#f2e7d5] sm:text-[1.9rem]">{message}</h2>
+        <h2 className="mx-auto max-w-[22rem] text-center font-serif text-[1.25rem] leading-[1.45] text-[#f2e7d5] sm:max-w-none sm:text-[1.75rem]">{message}</h2>
         <div className="mt-6 grid grid-cols-3 gap-2 sm:gap-3 md:gap-4">
           {selectedIds.map((cardId, index) => {
             const isRevealed = index < revealedCount;

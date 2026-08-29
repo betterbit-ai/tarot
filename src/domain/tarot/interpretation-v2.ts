@@ -506,9 +506,26 @@ const MINOR_VISUAL_CUES: Readonly<Record<Suit, string>> = {
   pentacles: "동전과 손의 위치가 돈과 생활의 조건을 보여줘요.",
 };
 
+const MINOR_RANK_VISUAL_CUES: Readonly<Record<string, string>> = {
+  ace: "하나의 상징이 크게 놓여 시작점을 만들어요.",
+  two: "두 요소가 마주해 선택과 균형을 보여줘요.",
+  three: "세 요소가 이어져 협력과 확장을 보여줘요.",
+  four: "정돈된 구도가 머물 자리와 안정을 보여줘요.",
+  five: "인물들의 엇갈린 자세가 부딪힘을 드러내요.",
+  six: "주고받는 장면이 균형과 관계의 흐름을 보여줘요.",
+  seven: "인물이 경계를 세운 모습에서 버팀이 느껴져요.",
+  eight: "반복되는 상징이 꾸준히 쌓는 시간을 보여줘요.",
+  nine: "혼자 지켜보는 인물에서 마지막 고비의 긴장이 보여요.",
+  ten: "여러 상징이 한 화면에 모여 결과와 부담을 함께 보여줘요.",
+  page: "젊은 인물이 상징을 살피며 새 소식을 기다려요.",
+  knight: "움직이는 인물이 속도와 추진을 드러내요.",
+  queen: "앉아서 장면을 바라보는 인물이 상황을 품는 태도를 보여줘요.",
+  king: "정면을 지키는 인물이 방향을 이끄는 힘을 보여줘요.",
+};
+
 function visualEvidenceFor(card: TarotCard): string {
   if (card.arcana === "major") return MAJOR_VISUAL_CUES[card.id] ?? "그림의 인물과 상징이 지금의 질문을 한 장면으로 압축해 보여줘요.";
-  return `${MINOR_VISUAL_CUES[card.suit ?? "swords"]} ${card.rank === "ace" ? "하나의 상징이 크게 놓여 시작점을 만들어요." : card.rank === "ten" ? "여러 상징이 한 화면에 모여 결과와 부담을 함께 보여줘요." : "카드의 숫자와 배치가 지금 필요한 속도를 가늠하게 해요."}`;
+  return `${MINOR_VISUAL_CUES[card.suit ?? "swords"]} ${MINOR_RANK_VISUAL_CUES[card.rank] ?? "장면의 인물과 상징이 지금 필요한 태도를 보여줘요."}`;
 }
 
 function createCardInsights(cards: readonly TarotCard[]): readonly ReadingCardInsight[] {
@@ -528,7 +545,8 @@ function majorSummaryFor(cards: readonly TarotCard[]): string {
 
 function flowFor(cards: readonly TarotCard[]): string {
   const [first, middle, last] = cards;
-  return `배치된 흐름을 따라가면 ${first.name}의 ${cardMeaningCore(first, "light")}에서 시작해요. ${middle.name}${subjectParticle(middle.name)} ${cardMeaningCore(middle, "shadow")}${objectParticle(cardMeaningCore(middle, "shadow"))} 점검하게 하고, 마지막 ${last.name}${subjectParticle(last.name)} ${cardMeaningCore(last, "light")} 쪽으로 시선을 옮겨요.`;
+  const middleShadow = cardMeaningCore(middle, "shadow");
+  return `처음에는 ${first.name}의 ${cardMeaningCore(first, "light")}이 먼저 보여요. 가운데 ${middle.name}에서 ${middleShadow}${objectParticle(middleShadow)} 한 번 살펴봐요. 마지막 ${last.name}에서는 ${cardMeaningCore(last, "light")} 쪽으로 기울어요.`;
 }
 
 function applicationFor(profile: StructuredQuestionProfile, skeleton: ReadingSkeleton): string {

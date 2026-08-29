@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-29 11:40 KST
+Last updated: 2026-08-29 12:15 KST
 
 ## Current Phase
 
-STRUCTURED READING EDITORIAL RESTRUCTURE: COMPLETE, AWAITING DEPLOYMENT
+STRUCTURED READING EDITORIAL AUDIT: COMPLETE, AWAITING DEPLOYMENT
 
 V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal rail with a physical 78-card spread, prevents identity leakage before a card is revealed, makes readings question-aware, and uses a configured real affiliate item. Threads/Growth Engine work is not in scope.
 
@@ -45,6 +45,9 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - Full deterministic audit command `pnpm tarot:audit` checks all 76,076 runtime readings for no-question decision leakage, banned AI-tell phrases, malformed card-name particles, and length bounds; current result is zero failures
 - Result page now separates card list and Major Arcana status, per-card keywords, visual evidence, combined flow, question application, and reader mindset into short readable sections
 - Selection guidance is a single non-wrapping line on mobile and scales down before the desktop breakpoint
+- Removed the repeated minor-card sentence about card numbers and placement; each minor card now gets a suit cue plus a rank-specific visual cue
+- Simplified the three-card flow into three short sentences using `처음에는`, `가운데`, and `마지막` without abstract “시선 이동” phrasing
+- Reduced the reveal pause headline to a smaller mobile type scale for the 390px viewport
 - Threads Week 01 calendar contains seven copy-paste-ready posts with varied formats, comments, CTAs, topics, hypotheses and metrics placeholders
 - Seven 1080x1350 SVG choice-card assets generated under `public/threads/week-01/`; Day 01 and Day 04 visual previews checked
 - All 23 referenced card IDs resolve against the real 78-card RWS catalog; no card fronts or affiliate assets were regenerated
@@ -55,7 +58,7 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 
 ## In Progress
 
-- Commit and deploy the editorial result checkpoint, then manually post the Week 01 Threads calendar
+- Commit and deploy the editorial audit checkpoint, then manually post the Week 01 Threads calendar
 
 ## Remaining
 
@@ -131,6 +134,7 @@ UX v2 verification on 2026-08-28:
 - `pnpm tarot:evaluate`: 51 cases, average 4.90/5, failure distribution empty
 - `pnpm tarot:audit`: 76,076 readings checked, zero no-question decision headlines, zero banned patterns, zero malformed particles, zero length failures
 - `pnpm typecheck`, `pnpm lint`, `pnpm test`: 20 files, 52 tests pass after result-page restructure
+- `pnpm tarot:audit`: added editorial-layer, redundant-visual, and awkward-flow checks; all 76,076 rows still pass with zero failures
 - `pnpm tarot:skeletons:validate`: 381 batches, 76,076 skeleton rows
 - Next.js webpack production build: compiled, type-checked, generated all 5 static pages and finalized output successfully
 - tarot validate: 78 cards, 76,076 combinations, 381 batches, 4 samples, 100 baseline eval rows; UX v2 uses a separate 30-row representative fixture
@@ -161,4 +165,4 @@ Threads content checkpoint: `fc828e0 Add a browser dashboard for Threads posting
 
 Naturalness audit checkpoint: `a7c9ba5 Make every tarot reading sound like natural Korean`.
 
-Editorial result checkpoint: pending commit after card-evidence and one-line selection updates.
+Editorial result checkpoint: pending commit after redundant-copy removal, flow simplification, and reveal typography update.

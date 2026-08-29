@@ -42,6 +42,9 @@ let corpusMismatches = 0;
 let noQuestionDecisionHeadlines = 0;
 let tooShort = 0;
 let tooLong = 0;
+let redundantVisualSentences = 0;
+let awkwardFlowSentences = 0;
+let malformedEditorialLayers = 0;
 const patternCounts = new Map<string, number>();
 const duplicateStories = new Map<string, number>();
 const particleFindings: Array<{ cards: number[]; names: string[] }> = [];
@@ -62,6 +65,9 @@ for (let batch = 1; batch <= TAROT_TOTAL_BATCHES; batch += 1) {
     if (/할 수|그 선택|그쪽으로/.test(reading.headline)) noQuestionDecisionHeadlines += 1;
     if (reading.characterCount < 250) tooShort += 1;
     if (reading.characterCount > 450) tooLong += 1;
+    if (reading.cardInsights.length !== 3 || reading.cardInsights.some((insight) => !fullText.includes(insight.name))) malformedEditorialLayers += 1;
+    if (reading.cardInsights.some((insight) => insight.visualEvidence.includes("카드의 숫자와 배치가 지금 필요한 속도를 가늠하게 해요."))) redundantVisualSentences += 1;
+    if (/시선을 옮겨요|쪽으로 기울어요 정도/.test(reading.flow)) awkwardFlowSentences += 1;
 
     for (const pattern of AI_TELL_PATTERNS) {
       if (fullText.includes(pattern)) patternCounts.set(pattern, (patternCounts.get(pattern) ?? 0) + 1);
@@ -82,6 +88,9 @@ const report = {
   noQuestionDecisionHeadlines,
   tooShort,
   tooLong,
+  redundantVisualSentences,
+  awkwardFlowSentences,
+  malformedEditorialLayers,
   aiTellCounts: Object.fromEntries(patternCounts),
   duplicateStoryTemplates: duplicateStoryRows,
   particleFindings,
@@ -90,6 +99,6 @@ const report = {
 
 console.log(JSON.stringify(report, null, 2));
 
-if (total !== 76076 || corpusRows !== 76076 || corpusMismatches > 0 || noQuestionDecisionHeadlines > 0 || tooShort > 0 || tooLong > 0 || patternCounts.size > 0 || particleFindings.length > 0) {
+if (total !== 76076 || corpusRows !== 76076 || corpusMismatches > 0 || noQuestionDecisionHeadlines > 0 || tooShort > 0 || tooLong > 0 || redundantVisualSentences > 0 || awkwardFlowSentences > 0 || malformedEditorialLayers > 0 || patternCounts.size > 0 || particleFindings.length > 0) {
   process.exitCode = 1;
 }
