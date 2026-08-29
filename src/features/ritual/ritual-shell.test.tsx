@@ -47,6 +47,7 @@ vi.mock("@/lib/analytics/events", () => ({
 describe("TarotRitual", () => {
   beforeEach(() => {
     vi.useFakeTimers();
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("Skeleton API is not part of this component test")));
     shareReadingMock.mockReset();
     shareReadingMock.mockResolvedValue("copy-link");
     trackTarotEventMock.mockReset();
@@ -54,6 +55,7 @@ describe("TarotRitual", () => {
 
   afterEach(() => {
     cleanup();
+    vi.unstubAllGlobals();
     vi.useRealTimers();
   });
 

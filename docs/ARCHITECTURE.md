@@ -23,7 +23,7 @@ The interactive ritual is a client island. Share and OG rendering are server rou
 
 ## Runtime data
 
-User order stays intact for display and three positions. Canonical keys identify a three-card set, while ordered binding determines background, tension and direction at runtime. Offline skeleton data is sharded by canonical key; the client derives the same pure skeleton contract locally and never downloads the full corpus.
+User order stays intact for display and three positions. Canonical keys identify a three-card set, while ordered binding determines background, tension and direction at runtime. The client requests only the selected combination's skeleton from `/api/tarot-skeleton`; the question remains in client-local rendering state and is never sent to this endpoint. Offline skeleton data remains sharded by canonical key, and the client never downloads the full corpus.
 
 ## Deployment
 

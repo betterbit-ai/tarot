@@ -280,6 +280,18 @@ export function createReadingSkeleton(cardIds: readonly number[]): ReadingSkelet
   };
 }
 
+export function bindReadingSkeleton(precomputed: ReadingSkeleton, orderedCardIds: readonly number[]): ReadingSkeleton {
+  const runtime = createReadingSkeleton(orderedCardIds);
+  if (runtime.canonicalKey !== precomputed.canonicalKey) {
+    throw new Error("Precomputed skeleton does not match selected cards");
+  }
+  return {
+    ...runtime,
+    relationships: precomputed.relationships,
+    signals: precomputed.signals,
+  };
+}
+
 function stanceFor(profile: StructuredQuestionProfile, skeleton: ReadingSkeleton, cards: readonly TarotCard[]): ReadingStance {
   const finalId = cards[2].id;
   const hasReleaseFinal = [13, 16, 21].includes(finalId);
@@ -375,10 +387,10 @@ function closingFor(profile: StructuredQuestionProfile, stance: ReadingStance, s
   return "오늘 바로 바꿀 수 있는 한 가지와, 더 시간을 두고 볼 한 가지를 나눠두세요.";
 }
 
-export function interpretStructuredReading(cardIds: readonly number[], question = ""): InterpretationV2 {
+export function interpretStructuredReading(cardIds: readonly number[], question = "", precomputed?: ReadingSkeleton): InterpretationV2 {
   const ordered = asCardTriple(cardIds);
   const cards = getTarotCards(ordered);
-  const skeleton = createReadingSkeleton(ordered);
+  const skeleton = precomputed ? bindReadingSkeleton(precomputed, ordered) : createReadingSkeleton(ordered);
   const profile = createQuestionProfile(question, cards);
   const stance = stanceFor(profile, skeleton, cards);
   const [first, middle, last] = cards;

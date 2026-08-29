@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-28 23:55 KST
+Last updated: 2026-08-29 10:00 KST
 
 ## Current Phase
 
@@ -40,6 +40,7 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - Runtime interpretation now separates question profile, ordered card skeleton, stance and renderer without an external LLM call
 - Hybrid skeleton corpus generated and validated: 381 batches, 76,076 rows under `data/readings/skeletons/`
 - Regression gate expanded to 51 varied question/card cases; structured evaluator reports 4.90/5 with no flagged failures
+- Runtime calls `/api/tarot-skeleton` with selected card ids only, fetches one canonical skeleton batch row, and binds it to ordered positions locally; question text is not sent or persisted
 - Threads Week 01 calendar contains seven copy-paste-ready posts with varied formats, comments, CTAs, topics, hypotheses and metrics placeholders
 - Seven 1080x1350 SVG choice-card assets generated under `public/threads/week-01/`; Day 01 and Day 04 visual previews checked
 - All 23 referenced card IDs resolve against the real 78-card RWS catalog; no card fronts or affiliate assets were regenerated

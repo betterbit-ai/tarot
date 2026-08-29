@@ -32,4 +32,4 @@ The app ships with curated sample overrides and deterministic fallback. Bulk mod
 
 ## Runtime
 
-The normal browser flow does not call an external model. It creates `QuestionProfile -> ReadingSkeleton -> Judgment/Stance -> Renderer` locally. The skeleton corpus is a versioned offline artifact for audit, future server lookup and editorial tooling; it is not sent wholesale to the browser.
+The normal browser flow does not call an external model. It creates `QuestionProfile -> ReadingSkeleton -> Judgment/Stance -> Renderer` locally after fetching only the selected canonical skeleton from the Node route `/api/tarot-skeleton`. That endpoint accepts card ids only, returns one skeleton, and never receives the question. The skeleton corpus is not sent wholesale to the browser.

@@ -1,9 +1,10 @@
 import {
   createCanonicalCombinationKey,
-  interpretTarotV2,
+  interpretStructuredReading,
   type NarrativeLabels,
   type NarrativePattern,
   type ReadingSource,
+  type ReadingSkeleton,
   type RelationshipSignals,
 } from "@/domain/tarot";
 import { getCardsByIds, type TarotCard } from "@/lib/tarot/cards";
@@ -24,8 +25,8 @@ export type RitualReading = ReadingSection & {
   source: ReadingSource;
 };
 
-function buildReading(ids: readonly number[], question: string): RitualReading {
-  const reading = interpretTarotV2(ids, question);
+function buildReading(ids: readonly number[], question: string, skeleton?: ReadingSkeleton): RitualReading {
+  const reading = interpretStructuredReading(ids, question, skeleton);
 
   return {
     cards: getCardsByIds(ids),
@@ -45,6 +46,6 @@ export function createRitualReading(ids: readonly number[]): RitualReading {
   return buildReading(ids, "");
 }
 
-export function createQuestionAwareRitualReading(ids: readonly number[], question: string): RitualReading {
-  return buildReading(ids, question);
+export function createQuestionAwareRitualReading(ids: readonly number[], question: string, skeleton?: ReadingSkeleton): RitualReading {
+  return buildReading(ids, question, skeleton);
 }

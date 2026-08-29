@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { AffiliateSheet } from "@/components/affiliate-sheet";
 import { ResultPaper } from "@/components/result-paper";
 import { ShareActions } from "@/components/share-actions";
@@ -11,6 +11,7 @@ import { trackTarotEvent } from "@/lib/analytics/events";
 import type { AffiliateConfig } from "@/lib/affiliate/config";
 import { createShuffledDeck } from "@/lib/tarot/cards";
 import { createQuestionAwareRitualReading } from "@/lib/tarot/reading";
+import { createCanonicalCombinationKey, type ReadingSkeleton } from "@/domain/tarot";
 import { summarizeQuestion } from "@/lib/tarot/question";
 import { selectAffiliateProduct } from "@/lib/affiliate/products";
 import { createInitialRitualState, ritualReducer } from "@/features/ritual/state";
@@ -267,9 +268,30 @@ function RevealStage({
 export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
   const prefersReducedMotion = Boolean(useReducedMotion());
   const [state, dispatch] = useReducer(ritualReducer, createShuffledDeck(), createInitialRitualState);
+  const [precomputedSkeleton, setPrecomputedSkeleton] = useState<ReadingSkeleton | undefined>();
   const questionProfile = summarizeQuestion(state.question);
-  const reading = state.selectedIds.length === 3 ? createQuestionAwareRitualReading(state.selectedIds, state.question) : null;
+  const skeletonForSelection = state.selectedIds.length === 3 && precomputedSkeleton?.canonicalKey === createCanonicalCombinationKey(state.selectedIds) ? precomputedSkeleton : undefined;
+  const reading = state.selectedIds.length === 3 ? createQuestionAwareRitualReading(state.selectedIds, state.question, skeletonForSelection) : null;
   const affiliateProduct = reading ? selectAffiliateProduct(state.question, reading.cards) : null;
+
+  useEffect(() => {
+    if (state.selectedIds.length !== 3) {
+      return undefined;
+    }
+    if (typeof fetch === "undefined") return undefined;
+    let cancelled = false;
+    fetch("/api/tarot-skeleton", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ cardIds: state.selectedIds }),
+    })
+      .then(async (response) => response.ok ? response.json() as Promise<{ skeleton: ReadingSkeleton }> : undefined)
+      .then((payload) => {
+        if (!cancelled && payload?.skeleton) setPrecomputedSkeleton(payload.skeleton);
+      })
+      .catch(() => undefined);
+    return () => { cancelled = true; };
+  }, [state.selectedIds]);
 
   useEffect(() => {
     if (state.stage !== "preparing") {
