@@ -30,10 +30,12 @@ describe("interpretation v2", () => {
     const job = createQuestionProfile("지금 이직하는 게 맞을까요?", getTarotCards([29, 67, 5]));
     const debt = createQuestionProfile("빚을 먼저 갚는 게 맞을까요?", getTarotCards([64, 65, 4]));
     const genericDecision = createQuestionProfile("지금 결정을 내려도 될까요?", getTarotCards([44, 67, 5]));
+    const comeback = createQuestionProfile("카라 컴백", getTarotCards([40, 62, 49]));
 
     expect(job).toMatchObject({ intent: "career", questionType: "decision", action: "change-job" });
     expect(debt).toMatchObject({ intent: "money", questionType: "decision", action: "repay-debt" });
     expect(genericDecision.questionType).toBe("decision");
+    expect(comeback).toMatchObject({ questionType: "open", action: "return" });
   });
 
   it("takes a clear but non-prophetic position on the marriage regression", () => {
@@ -82,6 +84,15 @@ describe("interpretation v2", () => {
     expect(reading.flow).toContain("쪽으로 기울어요");
     expect(reading.application).toContain("상대의 마음");
     expect(reading.mindset).toContain("실제로 오간 말과 행동");
+  });
+
+  it("applies a comeback question to a concrete team situation", () => {
+    const reading = interpretTarotV2([40, 62, 49], "카라 컴백");
+
+    expect(reading.headline).toContain("어떤 모습으로 돌아올지");
+    expect(reading.cardInsights[0]?.keywords).toContain("상실을 인정하고 회복하는 마음");
+    expect(reading.application).toContain("팀의 역할과 새 방향");
+    expect(reading.mindset).toContain("새로 보여줄 한 가지");
   });
 
   it("keeps all representative evaluations concise, specific and free of banned AI copy", () => {

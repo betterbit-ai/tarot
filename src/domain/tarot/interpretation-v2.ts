@@ -63,6 +63,7 @@ export type ReadingAction =
   | "continue"
   | "start"
   | "wait"
+  | "return"
   | "other-person"
   | "future"
   | "open";
@@ -95,6 +96,7 @@ const INTENT_KEYWORDS: Record<Exclude<ReadingIntent, "general">, readonly string
 
 const OTHER_PERSON_PHRASES = ["그 사람이", "상대는", "상대방", "저를 좋아", "마음이 있을", "연락이 올", "전 애인"];
 const FUTURE_PHRASES = ["올해", "언젠가", "할 수 있을까요", "될 수 있을까요", "생길까요"];
+const RETURN_PHRASES = ["컴백", "복귀", "돌아오", "재결합", "재개"];
 
 const SUPPORTIVE_IDS = new Set([6, 8, 14, 17, 19, 21, 37, 44, 45, 69, 72, 73]);
 const DIFFICULT_IDS = new Set([13, 15, 16, 18, 40, 43, 52, 54, 57, 58, 59, 68]);
@@ -223,9 +225,11 @@ export function createQuestionProfile(question: string, cards: readonly TarotCar
   const normalized = normalizeQuestion(question);
   const asksAboutAnotherPerson = OTHER_PERSON_PHRASES.some((phrase) => normalized.includes(phrase));
   const asksAboutFuture = FUTURE_PHRASES.some((phrase) => normalized.includes(phrase));
+  const asksAboutReturn = RETURN_PHRASES.some((phrase) => normalized.includes(phrase));
   const action: ReadingAction =
     asksAboutAnotherPerson ? "other-person" :
     asksAboutFuture ? "future" :
+    asksAboutReturn ? "return" :
     /결혼/.test(normalized) ? "marry" :
     /(이직|옮겨|퇴사|회사를 그만|직장을 그만)/.test(normalized) ? "change-job" :
     /(회사에 더 남|회사에 계속|직장에 남)/.test(normalized) ? "stay-job" :
@@ -243,7 +247,7 @@ export function createQuestionProfile(question: string, cards: readonly TarotCar
   const questionType: QuestionType =
     action === "other-person" ? "other-person" :
     action === "future" ? "future" :
-    ["marry", "change-job", "stay-job", "end-relationship", "contact", "repay-debt", "invest", "spend", "finish", "continue", "start", "wait"].includes(action) || /(결정을 내려|결정할|선택을)/.test(normalized) ? "decision" : "open";
+    ["marry", "change-job", "stay-job", "end-relationship", "contact", "repay-debt", "invest", "spend", "finish", "continue", "start", "wait"].includes(action) || (action === "return" && /(할까요|해야|맞을까요)/.test(normalized)) || /(결정을 내려|결정할|선택을)/.test(normalized) ? "decision" : "open";
 
   return { intent: normalized ? classifyQuestion(normalized, cards) : "general", questionType, action };
 }
@@ -363,6 +367,7 @@ function verdictLine(profile: StructuredQuestionProfile, stance: ReadingStance, 
   if (profile.action === "finish" && stance === "lean-yes") return "이 일은 한 번 닫고 다음으로 넘어가도 괜찮아 보여요.";
   if (profile.action === "other-person") return "마음이 없다고 단정할 조합은 아니에요. 그렇다고 행동으로 옮길 만큼 분명하다고도 보기 어려워요.";
   if (profile.action === "future") return "앞날을 단정하기보다, 지금 준비할 수 있는 부분부터 살펴봐요.";
+  if (profile.action === "return") return "돌아오는 일보다, 어떤 모습으로 돌아올지가 더 중요해 보여요.";
   return generic[stance];
 }
 
@@ -407,7 +412,27 @@ function cardSituation(card: TarotCard, role: "background" | "tension" | "direct
   return variants[card.id % variants.length];
 }
 
+const MINOR_READING_MEANINGS: Record<Suit, Record<string, { light: string; shadow: string }>> = {
+    wands: {
+      ace: { light: "새로운 열정과 시작", shadow: "불만 남고 끝나는 충동" }, two: { light: "다음 계획을 세우는 시야", shadow: "계획만 세우며 머무는 망설임" }, three: { light: "가능성을 넓히는 확장", shadow: "기대만 키우는 기다림" }, four: { light: "함께 누리는 안정", shadow: "익숙한 자리만 지키는 안일함" }, five: { light: "경쟁 속에서 실력을 겨루는 힘", shadow: "소모적인 충돌" }, six: { light: "인정을 받는 성취", shadow: "칭찬에 기대는 마음" }, seven: { light: "자기 자리를 지키는 버팀", shadow: "방어에 지치는 상태" }, eight: { light: "빠르게 진행되는 소식", shadow: "쫓기듯 움직이는 속도" }, nine: { light: "끝까지 버티는 회복력", shadow: "경계심이 높아진 피로" }, ten: { light: "책임을 다하는 완수", shadow: "혼자 떠안은 과부하" }, page: { light: "새 아이디어를 반기는 호기심", shadow: "가벼운 흥분에 휩쓸림" }, knight: { light: "거침없이 나아가는 추진력", shadow: "브레이크 없는 돌진" }, queen: { light: "자신 있게 드러내는 창의성", shadow: "상대를 누르는 자신감" }, king: { light: "방향을 이끄는 리더십", shadow: "강하게 밀어붙이는 독단" },
+    },
+    cups: {
+      ace: { light: "새로 열리는 감정", shadow: "감정에 휩쓸리는 기대" }, two: { light: "서로 통하는 마음", shadow: "상대에게 맞추느라 잃는 중심" }, three: { light: "함께 기뻐하는 관계", shadow: "분위기에 휩쓸리는 가벼움" }, four: { light: "마음을 쉬게 하는 멈춤", shadow: "아무것도 하고 싶지 않은 무기력" }, five: { light: "상실을 인정하고 회복하는 마음", shadow: "지나간 일에 머무는 후회" }, six: { light: "따뜻한 기억과 익숙함", shadow: "과거를 미화하는 그리움" }, seven: { light: "여러 가능성을 상상하는 마음", shadow: "환상에 빠져 선택을 미루는 상태" }, eight: { light: "더 맞는 곳을 찾아 떠나는 결심", shadow: "마음을 닫고 도망치는 거리" }, nine: { light: "원하는 것을 누리는 만족", shadow: "혼자만의 만족에 갇힘" }, ten: { light: "함께 만드는 정서적 안정", shadow: "겉으로만 평온한 관계" }, page: { light: "솔직한 감정의 소식", shadow: "감정적으로 서툰 반응" }, knight: { light: "마음을 전하는 다정한 제안", shadow: "말만 앞서는 낭만" }, queen: { light: "감정을 다루는 성숙함", shadow: "감정을 대신 책임지려는 통제" }, king: { light: "감정의 중심을 잡는 안정감", shadow: "감정을 숨긴 채 버티는 태도" },
+    },
+    swords: {
+      ace: { light: "흐릿함을 가르는 명확한 판단", shadow: "말로 상대를 베는 날카로움" }, two: { light: "양쪽을 살피는 신중함", shadow: "결정을 미루며 굳어 있는 상태" }, three: { light: "아픈 사실을 마주하는 정직함", shadow: "상처를 반복해서 되새김" }, four: { light: "생각을 쉬게 하는 회복", shadow: "멈춤이 길어지는 정체" }, five: { light: "불편한 쟁점을 드러내는 용기", shadow: "이겨도 남는 소모" }, six: { light: "복잡한 곳을 벗어나는 이동", shadow: "문제를 두고 떠나는 회피" }, seven: { light: "상황을 읽고 움직이는 전략", shadow: "숨기거나 빠져나가려는 태도" }, eight: { light: "두려움의 틀을 알아차리는 시선", shadow: "스스로를 묶는 불안" }, nine: { light: "걱정을 말로 꺼내는 정직함", shadow: "밤마다 커지는 불안" }, ten: { light: "한 갈등을 끝내는 결단", shadow: "이미 끝난 싸움을 붙듦" }, page: { light: "빠르게 배우고 살피는 관찰력", shadow: "경계가 지나친 신경질" }, knight: { light: "즉시 움직이는 결단력", shadow: "생각보다 앞서는 돌진" }, queen: { light: "사실을 가르는 분별력", shadow: "감정을 잘라내는 냉정함" }, king: { light: "논리로 방향을 세우는 권위", shadow: "자기 판단만 옳다고 믿는 완고함" },
+    },
+    pentacles: {
+      ace: { light: "손에 잡히는 새로운 기회", shadow: "기회만 좇는 욕심" }, two: { light: "돈과 시간을 조율하는 감각", shadow: "여러 일을 감당하지 못하는 흔들림" }, three: { light: "기술을 함께 다듬는 협업", shadow: "인정받으려는 조급함" }, four: { light: "가진 것을 지키는 안정감", shadow: "잃을까 봐 움켜쥐는 집착" }, five: { light: "어려움을 함께 견디는 연대", shadow: "부족함에 갇힌 고립" }, six: { light: "공평하게 주고받는 균형", shadow: "도움에 기대거나 생색내는 태도" }, seven: { light: "시간을 들여 결과를 기다리는 인내", shadow: "성과를 재촉하는 조급함" }, eight: { light: "반복하며 쌓는 실력", shadow: "일에 몰입해 좁아지는 시야" }, nine: { light: "혼자서도 세우는 생활 기반", shadow: "혼자 감당하려는 고립" }, ten: { light: "오래 이어지는 생활의 기반", shadow: "가족과 책임에 눌리는 부담" }, page: { light: "현실적인 배움과 기회", shadow: "준비만 하며 늦어지는 실행" }, knight: { light: "꾸준히 이어가는 성실함", shadow: "변화를 거부하는 느린 고집" }, queen: { light: "생활을 돌보는 실용성", shadow: "모든 것을 통제하려는 걱정" }, king: { light: "현실을 안정시키는 능력", shadow: "성과로 사람을 판단하는 태도" },
+    },
+};
+
 function cardMeaningCore(card: TarotCard, tone: "light" | "shadow"): string {
+  const minorMeanings = MINOR_READING_MEANINGS;
+  if (card.suit && card.rank !== null) {
+    const meaning = minorMeanings[card.suit][card.rank];
+    if (meaning) return meaning[tone];
+  }
   const prefixes: Record<string, string> = {
     wands: tone === "light" ? "열정에 불을 붙이며 " : "열기에 휩쓸려 ",
     cups: tone === "light" ? "감정의 흐름을 살피며 " : "감정에 잠겨 ",
@@ -468,6 +493,7 @@ function closingFor(profile: StructuredQuestionProfile, stance: ReadingStance, s
   if (profile.action === "end-relationship") return "마지막으로 확인할 사실 하나만 정하고, 그 뒤에는 같은 대화를 되풀이하지 않는 편이 낫겠어요.";
   if (profile.action === "other-person") return "상대의 침묵을 해석하기보다, 실제로 오간 말과 행동을 기준으로 두세요.";
   if (profile.action === "future") return "아직 오지 않은 결과를 재촉하기보다, 이번 주에 준비할 수 있는 한 가지를 정해보세요.";
+  if (profile.action === "return") return "예전의 모습을 그대로 되돌리려 하기보다, 이번에 새로 보여줄 한 가지를 정해보세요.";
   if (stance === "wait" || skeleton.direction === "pause") return "오늘 결론을 내리지 않아도 괜찮아요. 지금 빠뜨린 조건이 없는지만 살펴보세요.";
   if (skeleton.direction === "release") return "이미 끝난 일을 붙잡고 있는 부분이 무엇인지부터 보면, 다음 선택이 조금 가벼워질 거예요.";
   if (skeleton.direction === "stabilize") return "이번에는 마음이 급해지는 순간보다 생활이 흔들리지 않는 쪽을 먼저 고르는 편이 낫겠어요.";
@@ -561,6 +587,7 @@ function applicationFor(profile: StructuredQuestionProfile, skeleton: ReadingSke
     invest: "투자를 묻는 상황이라면, 기대 수익보다 감당할 수 있는 손실부터 확인해야 해요.",
     spend: "큰 지출을 묻는 상황이라면, 사고 싶은 마음과 실제 사용 계획을 나눠봐야 해요.",
     future: "앞날을 묻는 상황이라면, 결과를 기다리는 동안 준비할 수 있는 일이 먼저 보여요.",
+    return: "컴백이나 복귀를 묻는 상황이라면, 과거의 아쉬움을 정리한 뒤 팀의 역할과 새 방향을 맞추는 과정이 먼저 생길 수 있어요.",
     "other-person": "상대의 마음을 묻는 상황이라면, 추측보다 오간 말과 행동이 더 정확한 기준이에요.",
   };
   return `${context[profile.action] ?? "일과 관계, 생활 중 지금 가장 걸리는 장면에 이 흐름을 대입해보세요."} ${direction}`;
@@ -580,6 +607,8 @@ export function interpretStructuredReading(cardIds: readonly number[], question 
     ? "상대의 다음 행동을 기다리는 대신, 내가 확인할 사실 하나를 정해보세요."
     : profile.action === "future"
       ? "이번 주에 준비할 수 있는 작은 행동 하나로 좁혀보세요."
+      : profile.action === "return"
+        ? "돌아온 뒤 오래 이어갈 방식까지 함께 정해보세요."
       : skeleton.relationships.includes("conflict")
         ? "앞의 마음과 끝의 요구를 한꺼번에 만족시키려 하지 말고, 먼저 움직일 한 가지를 정해보세요."
     : skeleton.direction === "advance"

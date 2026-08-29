@@ -426,7 +426,7 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
                     trackTarotEvent({ type: "ritual_restarted", source: "result" });
                     dispatch({ type: "restarted", deckOrder: createShuffledDeck() });
                   }}
-                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#d2aa67] px-6 text-sm font-medium text-[#24190f] transition hover:bg-[#e0bb7a]"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#d2aa67]/75 bg-transparent px-6 text-sm font-medium text-[#efd6a5] transition hover:bg-[#d2aa67]/12"
                 >
                   새 질문으로 다시 보기
                 </button>

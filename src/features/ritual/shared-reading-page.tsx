@@ -33,7 +33,7 @@ export function SharedReadingPage({ cardIds }: SharedReadingPageProps) {
           </div>
           <Link
             href="/"
-            className="mt-5 inline-flex min-h-12 items-center justify-center rounded-full bg-[#d2aa67] px-6 text-sm font-medium text-[#24190f] transition hover:bg-[#e0bb7a]"
+            className="mt-5 inline-flex min-h-12 items-center justify-center rounded-full border border-[#9f773b]/75 bg-transparent px-6 text-sm font-medium text-[#6b4a23] transition hover:bg-[#d2aa67]/12"
           >
             나도 세 장 다시 뽑기
           </Link>
