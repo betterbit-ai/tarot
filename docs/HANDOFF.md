@@ -156,4 +156,4 @@ Full corpus generation checkpoint: `c5b978d Finalize the full relationship-aware
 
 Threads content checkpoint: `fc828e0 Add a browser dashboard for Threads posting`.
 
-Naturalness audit checkpoint: pending commit after `pnpm tarot:audit` and full prose regeneration.
+Naturalness audit checkpoint: `a7c9ba5 Make every tarot reading sound like natural Korean`.
