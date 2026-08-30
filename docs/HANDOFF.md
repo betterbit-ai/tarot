@@ -1,12 +1,12 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-29 14:59 KST
+Last updated: 2026-08-30 10:30 KST
 
 ## Current Phase
 
-CARD-SPECIFIC INTERPRETATION + RESULT UX AUDIT: COMPLETE, AWAITING DEPLOYMENT
+GROWTH ENGINE: RESEARCH + ARCHITECTURE COMPLETE, IMPLEMENTATION NEXT
 
-V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal rail with a physical 78-card spread, prevents identity leakage before a card is revealed, makes readings question-aware, and uses a configured real affiliate item. Threads/Growth Engine work is not in scope.
+V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
 ## Completed
 
@@ -51,6 +51,8 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 - Replaced generic minor-card meanings with 56 suit-specific light/shadow keyword pairs; Cup 5, Sword Queen, and Cup King now read with their own tarot meanings
 - Added `return` question context for comeback, return, and reunion wording so application and mindset copy use a concrete recovery/team-direction frame
 - Share remains the filled primary action while restart is an outlined secondary action on dark and light result surfaces
+- Growth Engine research completed for Meta Threads API, Netlify Scheduled Functions/Blobs, GitHub Actions limitations, and Coupang official surfaces
+- Active Growth Engine spec and runtime decision recorded in `spec/spec.md`, `docs/GROWTH_ENGINE_RESEARCH.md`, and `decisions/2026-08-30-growth-engine-runtime.md`
 - Threads Week 01 calendar contains seven copy-paste-ready posts with varied formats, comments, CTAs, topics, hypotheses and metrics placeholders
 - Seven 1080x1350 SVG choice-card assets generated under `public/threads/week-01/`; Day 01 and Day 04 visual previews checked
 - All 23 referenced card IDs resolve against the real 78-card RWS catalog; no card fronts or affiliate assets were regenerated
@@ -61,7 +63,7 @@ V1 remains the stable checkpoint. The UX v2 follow-up replaces the horizontal ra
 
 ## In Progress
 
-- Commit and deploy the card-specific interpretation checkpoint, then manually post the Week 01 Threads calendar
+- Implement Phase C: affiliate recommendation engine with a curated, rotating product pool and no live product API
 
 ## Remaining
 
@@ -151,7 +153,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Deploy the naturalness-audited `main` HEAD to Netlify with the three production environment variables, then run one iPhone Safari/native share smoke test. Do not add auto-publishing or Meta API integration in this phase.
+Implement the Growth Engine in checkpoint slices: curated affiliate pool first, then content schema/generator, image composer, dry-run publisher, Netlify scheduler, and metrics sync. Do not perform a real Threads publish.
 
 ## Last Commit
 

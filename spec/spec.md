@@ -1,5 +1,71 @@
 # Executable Product Spec
 
+## Active iteration: Growth Engine
+
+### Outcome
+
+미스터 타로 운영자가 Codex나 로컬 터미널을 켜 두지 않아도, 검수된 Threads 콘텐츠 큐에서 하루 한 건을 안전하게 선택·게시하거나 검토 대기 상태로 남길 수 있다. 웹 리딩은 질문 의도와 카드 테마를 함께 사용해 검증된 쿠팡 상품 pool에서 자연스러운 카테고리를 고른다.
+
+### User and context
+
+- 운영자는 `/threads`와 CLI에서 100건 이상의 콘텐츠 큐, 다음 게시 시간, 상태, 실패 이유를 확인한다.
+- 초기 운영은 `REVIEW`와 `DRY_RUN`을 기본으로 하며, 실제 Threads 계정 발행은 명시적인 환경 변수와 Meta credentials가 모두 있을 때만 가능하다.
+- 일반 타로 이용자는 기존 결과 열람·affiliate skip 흐름을 유지한다. 질문 원문은 외부 콘텐츠, URL, Threads 게시물, analytics에 절대 들어가지 않는다.
+
+### Required behavior
+
+1. 콘텐츠 모델은 id, format, topic, hook, main post, card ids, result replies, CTA, image asset, queue status, schedule/publish metadata, retry metadata, metrics를 가진다.
+2. generator는 8개 이상의 format과 계획된 topic mix를 사용해 100건 이상을 batch로 생성하고, 실제 RWS card catalog만 참조한다.
+3. generator와 validator는 AI 관용구, 길이, 카드 id, duplicate hook/format/card set/normalized semantic signature를 검사한다. 실패 항목은 READY가 될 수 없다.
+4. 기존 SVG/PNG 방식의 programmatic image composition으로 콘텐츠 이미지를 생성한다. AI raster generation을 사용하지 않는다.
+5. publisher는 Threads text/image main post와 `reply_to_id` result reply chain을 지원한다. container id와 published id를 queue state에 남기며, 불확실한 publish 결과는 자동 재시도하지 않는다.
+6. queue는 `DRAFT`, `READY`, `SCHEDULED`, `PUBLISHING`, `PUBLISHED`, `FAILED`, `SKIPPED` 상태를 지원한다. `REVIEW` 모드에서는 READY 전환에 운영자의 명시적 approval이 필요하다.
+7. Netlify scheduled function은 Asia/Seoul 20:30 기본 시간을 UTC cron으로 변환해 하루 한 건만 처리한다. state는 Netlify Blobs에 저장하고, local/CI에서는 file store와 DRY RUN으로 같은 publisher contract를 검증한다.
+8. scheduler, CLI, publisher는 idempotency key와 persisted container id를 사용한다. publish response가 불확실하면 `FAILED` + reconciliation metadata로 멈춰 duplicate post를 방지한다.
+9. metrics sync는 Threads API가 제공하는 profile/media metrics만 저장하며, API가 제공하지 않는 클릭·reply rate는 추정하지 않는다.
+10. affiliate engine은 QuestionProfile + ReadingSkeleton signals에서 affiliate theme을 만든 뒤 curated product pool을 rotation한다. price/live product search/무단 product image scraping은 하지 않는다.
+11. 모든 Threads 링크에는 `utm_source=threads`, `utm_medium=social`, `utm_campaign`, `utm_content=<content-id>`를 넣는다. 카드 선택·리딩·affiliate events에는 question 원문을 넣지 않는다.
+
+### Acceptance criteria and evidence
+
+| Criterion | Evidence |
+| --- | --- |
+| 100개 이상, 8 formats, topic mix를 가진 queue 생성 | `pnpm content:generate --count 100`, validator summary |
+| duplicate/AI tell/card validation 실패 0건 | `pnpm content:validate` |
+| ready/scheduled/published/failed/status transitions | domain and store unit tests |
+| review mode에서 approval 없이는 publisher가 외부 호출하지 않음 | publisher unit test + dry-run log |
+| dry run은 게시 대상, image, replies, CTA를 출력하고 상태를 기록 | `pnpm content:publish-next --dry-run` |
+| missing credentials/invalid response/timeout이 duplicate publish를 만들지 않음 | publisher tests with mocked HTTP |
+| scheduled function은 20:30 KST에 해당하는 UTC schedule이며 publish route를 직접 외부 공개하지 않음 | function config/unit test |
+| affiliate mapping은 질문 intent와 cards theme을 함께 사용하고 skip path를 보존 | affiliate tests/component test |
+| Threads UTM을 가진 CTA가 생성됨 | generator tests |
+| lint/typecheck/test/build/content validation pass | harness verification |
+
+### Constraints
+
+- 실제 Threads 발행은 이번 작업에서 절대 수행하지 않는다.
+- Threads API credentials, Coupang URLs, Netlify tokens는 repository에 저장하지 않는다.
+- Meta 공식 API만 사용한다. browser automation이나 비공식 Threads endpoint는 사용하지 않는다.
+- Netlify Scheduled Functions는 UTC 및 30초 execution limit을 전제로 한다.
+- Netlify Blobs는 single-writer queue/strong reads로 쓰며, ambiguous network response에서는 auto retry하지 않는다.
+- 쿠팡 상품은 운영자가 destination/image/disclosure를 검증한 curated pool만 사용한다. live 가격을 표시하지 않는다.
+- 기존 V1 tarot flow와 skippable affiliate contract를 변경하지 않는다.
+- 새 패키지는 `@netlify/functions`, `@netlify/blobs`만 필요할 때 추가한다.
+
+### Out of scope
+
+- 실제 게시/계정 연결/OAuth authorization completion
+- Threads DM, 댓글 moderation, follower automation, likes/follows automation
+- arbitrary Coupang catalog crawl, price tracking, coupon claims, product search automation
+- runtime LLM generation, private question persistence, user accounts
+- automated performance optimization beyond storing observed metrics
+
+### Risks and rollback
+
+- Meta/Coupang policy 또는 API contract가 바뀌면 `PUBLISH_MODE=review`와 `DRY_RUN=true`로 즉시 멈추고 static queue/dashboard는 유지한다.
+- Netlify Blobs write/read issue가 생기면 publish를 멈추고 repo-file dry-run store로 점검한다.
+- affiliate mapping quality가 낮으면 product pool selector를 existing single verified product adapter로 되돌린다.
+
 ## Active iteration: Structured reasoning + hybrid skeleton
 
 ### Outcome
