@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-30 21:30 KST
+Last updated: 2026-08-30 22:00 KST
 
 ## Current Phase
 
-GROWTH ENGINE: AFFILIATE THEME ENGINE COMPLETE, CONTENT QUEUE NEXT
+GROWTH ENGINE: CONTENT QUEUE + IMAGE COMPOSER COMPLETE, PUBLISHER NEXT
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
@@ -54,6 +54,8 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Growth Engine research completed for Meta Threads API, Netlify Scheduled Functions/Blobs, GitHub Actions limitations, and Coupang official surfaces
 - Active Growth Engine spec and runtime decision recorded in `spec/spec.md`, `docs/GROWTH_ENGINE_RESEARCH.md`, and `decisions/2026-08-30-growth-engine-runtime.md`
 - Affiliate selector now combines question intent and card signals, selects only verified pool items, and skips the interstitial when no relevant verified product exists
+- Generated a 105-item READY content queue across 8 formats and 6 planned topics under `data/content/threads-queue.json`
+- Generated 92 programmatic 1080x1350 Threads SVG selection images under `public/threads/generated/`; 13 conversation prompts intentionally need no image
 - Threads Week 01 calendar contains seven copy-paste-ready posts with varied formats, comments, CTAs, topics, hypotheses and metrics placeholders
 - Seven 1080x1350 SVG choice-card assets generated under `public/threads/week-01/`; Day 01 and Day 04 visual previews checked
 - All 23 referenced card IDs resolve against the real 78-card RWS catalog; no card fronts or affiliate assets were regenerated
@@ -64,7 +66,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 
 ## In Progress
 
-- Implement Phase D: content schema, deterministic generator, duplicate validator, and 100+ READY queue
+- Implement Phase F/G: Blob-backed queue state, DRY RUN Threads publisher, and Netlify scheduled function
 
 ## Remaining
 
