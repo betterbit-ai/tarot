@@ -34,6 +34,7 @@
     "content:sync-metrics": "node --import tsx scripts/content/sync-metrics.ts",
     "content:list": "node --import tsx scripts/content/list.ts",
     "content:preview": "node --import tsx scripts/content/preview.ts"
+    ,"content:refresh-token": "node --import tsx scripts/content/refresh-token.ts"
   },
   "dependencies": {
     "@netlify/blobs": "^11.0.2",

@@ -9,6 +9,7 @@ coverage/
 generation/temp/*
 generation/locks/*
 generation/content-runtime.json
+generation/threads-token.json
 !generation/temp/.gitkeep
 !generation/locks/.gitkeep
 .codex-harness/last-verify.json

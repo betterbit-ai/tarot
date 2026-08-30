@@ -4,8 +4,10 @@ import sourceQueue from "../../data/content/threads-queue.json";
 import type { ContentQueue } from "../../src/domain/content";
 import { getThreadsPublisherConfig } from "../../src/lib/content/config";
 import { EMPTY_RUNTIME_QUEUE, publishNextContent, type ContentRuntimeQueue } from "../../src/lib/content/publisher";
+import type { ThreadsTokenState } from "../../src/lib/content/token";
 
 const STATE_KEY = "threads-runtime-state.json";
+const TOKEN_KEY = "threads-token.json";
 
 const handler = async () => {
   const blob = getStore("mr-tarot-growth", { consistency: "strong" });
@@ -17,7 +19,9 @@ const handler = async () => {
       await blob.set(STATE_KEY, JSON.stringify(state));
     },
   };
-  const result = await publishNextContent((sourceQueue as ContentQueue).items, store, getThreadsPublisherConfig());
+  const refreshed = await blob.get(TOKEN_KEY, { type: "json", consistency: "strong" }) as ThreadsTokenState | null;
+  const config = getThreadsPublisherConfig();
+  const result = await publishNextContent((sourceQueue as ContentQueue).items, store, { ...config, accessToken: refreshed?.accessToken ?? config.accessToken });
   console.log(JSON.stringify(result));
   return new Response(JSON.stringify(result), { headers: { "content-type": "application/json" } });
 };

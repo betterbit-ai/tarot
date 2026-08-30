@@ -23,13 +23,14 @@ pnpm content:list
 pnpm content:preview --id mr-tarot-0001
 pnpm content:publish-next
 pnpm content:sync-metrics
+pnpm content:refresh-token
 ```
 
 `content:publish-next` writes local dry-run state to an ignored file. On Netlify, the scheduled function instead keeps runtime state in the `mr-tarot-growth` Blob store.
 
 ## Production schedule
 
-`netlify/functions/publish-next.mts` runs at `30 11 * * *`, which is 20:30 Asia/Seoul. Korea has no daylight saving time. The metrics sync runs at `10 12 * * *`, one hour and forty minutes later.
+`netlify/functions/refresh-threads-token.mts` runs at 09:05 Asia/Seoul. `netlify/functions/publish-next.mts` runs at `30 11 * * *`, which is 20:30 Asia/Seoul. Korea has no daylight saving time. The metrics sync runs at `10 12 * * *`, one hour and forty minutes later.
 
 Scheduled functions run in UTC, only after a published deploy, and have a 30-second limit. The publisher is intentionally sequential: main post, result replies, then CTA reply.
 
@@ -44,6 +45,8 @@ Set these in Netlify environment variables, never in Git:
 - `DRY_RUN=false`
 
 Before switching those two final values, confirm the Meta token has `threads_basic`, `threads_content_publish`, `threads_read_replies`, `threads_manage_replies`, and `threads_manage_insights` as applicable to the chosen features. Run one manual scheduled function invocation in Netlify while watching its logs.
+
+When live mode is enabled, the daily refresh function calls Meta's documented long-lived-token refresh endpoint and saves a successful replacement token plus its expiry to the Blob store. The publisher reads that stored token first. A refresh response without a replacement token fails closed and leaves the prior stored token untouched.
 
 ## Failure behavior
 

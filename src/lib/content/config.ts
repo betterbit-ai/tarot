@@ -23,3 +23,11 @@ export function getThreadsMetricsConfig(env = process.env) {
     dryRun: env.DRY_RUN === undefined ? true : enabled(env.DRY_RUN),
   };
 }
+
+export function getThreadsTokenConfig(env = process.env) {
+  return {
+    accessToken: env.THREADS_ACCESS_TOKEN?.trim() || undefined,
+    apiBaseUrl: env.THREADS_API_BASE_URL?.trim() || "https://graph.threads.net/v1.0",
+    dryRun: env.DRY_RUN === undefined ? true : enabled(env.DRY_RUN),
+  };
+}

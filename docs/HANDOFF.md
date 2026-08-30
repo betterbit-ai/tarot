@@ -60,6 +60,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - `netlify/functions/publish-next.mts` schedules daily at 20:30 KST (`30 11 * * *` UTC) and stores runtime state in a strong-consistency Netlify Blob store
 - `PUBLISH_MODE=review` and `DRY_RUN=true` are defaults. `pnpm content:publish-next` prints the planned main post, image URL, replies, and CTA without calling Threads
 - Metrics sync stores only API-returned views/likes/replies/reposts/quotes and defaults to dry run; browser queue dashboard reads the 105-item source queue and supports copy/preview interaction
+- A daily token-refresh function saves only a successful long-lived Threads token replacement to Blob storage; publisher prefers it over the original environment token
 - Threads Week 01 calendar contains seven copy-paste-ready posts with varied formats, comments, CTAs, topics, hypotheses and metrics placeholders
 - Seven 1080x1350 SVG choice-card assets generated under `public/threads/week-01/`; Day 01 and Day 04 visual previews checked
 - All 23 referenced card IDs resolve against the real 78-card RWS catalog; no card fronts or affiliate assets were regenerated
