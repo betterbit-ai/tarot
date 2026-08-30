@@ -121,6 +121,7 @@ describe("TarotRitual", () => {
   it("shows the affiliate interstitial and allows skip when enabled without a target url", async () => {
     render(<TarotRitual affiliateConfig={{ enabled: true, outHref: null }} />);
 
+    fireEvent.change(screen.getByLabelText("지금 마음에 걸린 질문"), { target: { value: "지금 쉬어야 할까요?" } });
     await moveToSelection();
     selectThreeCards();
     fireEvent.click(screen.getByRole("button", { name: "세 장을 펼쳐볼게요" }));

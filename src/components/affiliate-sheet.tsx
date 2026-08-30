@@ -1,8 +1,8 @@
 import Image from "next/image";
-import type { AffiliateProduct } from "@/lib/affiliate/products";
+import type { AffiliateSelection } from "@/lib/affiliate/products";
 
 type AffiliateSheetProps = {
-  product: AffiliateProduct;
+  product: AffiliateSelection;
   href: string | null;
   onSkip: () => void;
   onClick: () => void;

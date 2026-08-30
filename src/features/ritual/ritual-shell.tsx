@@ -272,7 +272,7 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
   const questionProfile = summarizeQuestion(state.question);
   const skeletonForSelection = state.selectedIds.length === 3 && precomputedSkeleton?.canonicalKey === createCanonicalCombinationKey(state.selectedIds) ? precomputedSkeleton : undefined;
   const reading = state.selectedIds.length === 3 ? createQuestionAwareRitualReading(state.selectedIds, state.question, skeletonForSelection) : null;
-  const affiliateProduct = reading ? selectAffiliateProduct(state.question, reading.cards) : null;
+  const affiliateProduct = reading ? selectAffiliateProduct(state.question, reading.cards, reading.signals) : null;
 
   useEffect(() => {
     if (state.selectedIds.length !== 3) {
@@ -335,7 +335,7 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
     }
 
     const timer = window.setTimeout(() => {
-      const showAffiliate = affiliateConfig.enabled;
+      const showAffiliate = affiliateConfig.enabled && Boolean(affiliateProduct);
       if (showAffiliate) {
         trackTarotEvent({ type: "affiliate_viewed", hasTarget: Boolean(affiliateConfig.outHref) });
       }
@@ -343,7 +343,7 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
     }, prefersReducedMotion ? TIMINGS.pause.reduced : TIMINGS.pause.normal);
 
     return () => window.clearTimeout(timer);
-  }, [affiliateConfig.enabled, affiliateConfig.outHref, prefersReducedMotion, state.stage]);
+  }, [affiliateConfig.enabled, affiliateConfig.outHref, affiliateProduct, prefersReducedMotion, state.stage]);
 
   const stageContent = (() => {
     switch (state.stage) {

@@ -5,6 +5,7 @@ import { selectAffiliateProduct } from "@/lib/affiliate/products";
 import { getCardsByIds } from "@/lib/tarot/cards";
 
 const product = selectAffiliateProduct("지금 쉬어야 할까요?", getCardsByIds([9, 18, 14]));
+if (!product) throw new Error("Expected a verified rest recommendation");
 
 describe("AffiliateSheet", () => {
   afterEach(() => {
