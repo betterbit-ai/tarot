@@ -7,7 +7,7 @@ import { EMPTY_RUNTIME_QUEUE, publishNextContent, type ContentRuntimeQueue } fro
 
 const STATE_KEY = "threads-runtime-state.json";
 
-export default async () => {
+const handler = async () => {
   const blob = getStore("mr-tarot-growth", { consistency: "strong" });
   const store = {
     async read(): Promise<ContentRuntimeQueue> {
@@ -21,5 +21,7 @@ export default async () => {
   console.log(JSON.stringify(result));
   return new Response(JSON.stringify(result), { headers: { "content-type": "application/json" } });
 };
+
+export default handler;
 
 export const config: Config = { schedule: "30 11 * * *" };

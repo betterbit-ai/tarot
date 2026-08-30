@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { ThreadsContentClient } from "@/components/threads-content-client";
-import { THREADS_WEEK_ONE } from "@/lib/threads/week-one";
+import { getContentQueue } from "@/lib/content/queue";
 
 export const metadata: Metadata = {
-  title: "Threads 게시물 | 미스터 타로",
-  description: "미스터 타로 Threads Week 01 게시물을 복사하고 이미지를 저장하세요.",
+  title: "Threads 콘텐츠 큐 | 미스터 타로",
+  description: "미스터 타로의 준비된 Threads 콘텐츠 큐를 확인하고 복사하세요.",
 };
 
 export default function ThreadsPage() {
-  return <ThreadsContentClient days={THREADS_WEEK_ONE} />;
+  return <ThreadsContentClient queue={getContentQueue()} />;
 }

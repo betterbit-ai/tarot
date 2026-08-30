@@ -30,7 +30,10 @@
     "content:validate": "node --import tsx scripts/content/validate.ts",
     "content:status": "node --import tsx scripts/content/status.ts",
     "content:images": "node scripts/content/generate-images.mjs",
-    "content:publish-next": "node --import tsx scripts/content/publish-next.ts"
+    "content:publish-next": "node --import tsx scripts/content/publish-next.ts",
+    "content:sync-metrics": "node --import tsx scripts/content/sync-metrics.ts",
+    "content:list": "node --import tsx scripts/content/list.ts",
+    "content:preview": "node --import tsx scripts/content/preview.ts"
   },
   "dependencies": {
     "@netlify/blobs": "^11.0.2",
@@ -50,6 +53,7 @@
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.3",
     "happy-dom": "20.11.10",
+    "sharp": "^0.35.4",
     "tailwindcss": "4.3.3",
     "tsx": "4.23.12",
     "typescript": "6.0.3",

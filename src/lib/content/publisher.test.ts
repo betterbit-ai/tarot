@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import type { ThreadsContent } from "@/domain/content";
-import { EMPTY_RUNTIME_QUEUE, publishNextContent, type ContentRuntimeQueue } from "./publisher";
+import { applyRuntimeState, EMPTY_RUNTIME_QUEUE, publishNextContent, type ContentRuntimeQueue } from "./publisher";
 
 const item: ThreadsContent = {
   id: "mr-tarot-test", status: "READY", format: "PICK_3", topic: "LOVE", hook: "test", mainPost: "main", cardIds: [0, 1, 2], replies: ["reply", "cta"], cta: "visit", imageAsset: "/threads/generated/mr-tarot-test.svg", altText: "test image", createdAt: "2026-08-30T00:00:00.000Z", scheduledAt: null, publishedAt: null, threadsPostId: null, threadsContainerId: null, replyPostIds: [], attemptCount: 0, lastError: null, metrics: {}, semanticSignature: "test",
@@ -34,5 +34,11 @@ describe("Threads publisher", () => {
     expect(preview.mode).toBe("published");
     expect(store.state().items[item.id]).toMatchObject({ status: "PUBLISHED", mainContainerId: "main-container", mainPostId: "main-post", replyPostIds: ["reply-post", "cta-post"] });
     vi.unstubAllGlobals();
+  });
+
+  it("materializes runtime status for operational status screens", () => {
+    const items = applyRuntimeState([item], { version: 1, items: { [item.id]: { status: "PUBLISHED", updatedAt: "2026-08-30T00:00:00.000Z", attemptCount: 1, mainPostId: "post-1", metrics: { views: 10 } } } });
+
+    expect(items[0]).toMatchObject({ status: "PUBLISHED", threadsPostId: "post-1", metrics: { views: 10 } });
   });
 });

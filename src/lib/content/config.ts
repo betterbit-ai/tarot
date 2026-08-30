@@ -14,3 +14,12 @@ export function getThreadsPublisherConfig(env = process.env): ThreadsPublisherCo
     maxAttempts: Math.max(1, Number(env.THREADS_MAX_ATTEMPTS ?? "2")),
   };
 }
+
+export function getThreadsMetricsConfig(env = process.env) {
+  return {
+    accessToken: env.THREADS_ACCESS_TOKEN?.trim() || undefined,
+    apiBaseUrl: env.THREADS_API_BASE_URL?.trim() || "https://graph.threads.net/v1.0",
+    metrics: (env.THREADS_INSIGHT_METRICS?.trim() || "views,likes,replies,reposts,quotes").split(",").map((metric) => metric.trim()).filter(Boolean),
+    dryRun: env.DRY_RUN === undefined ? true : enabled(env.DRY_RUN),
+  };
+}

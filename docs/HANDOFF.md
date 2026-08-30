@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-30 22:20 KST
+Last updated: 2026-08-30 22:15 KST
 
 ## Current Phase
 
-GROWTH ENGINE: DRY-RUN PUBLISHER + NETLIFY SCHEDULER COMPLETE, METRICS NEXT
+GROWTH ENGINE: COMPLETE IN DRY-RUN / REVIEW MODE, AWAITING CREDENTIALS + DEPLOYMENT
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
@@ -55,10 +55,11 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Active Growth Engine spec and runtime decision recorded in `spec/spec.md`, `docs/GROWTH_ENGINE_RESEARCH.md`, and `decisions/2026-08-30-growth-engine-runtime.md`
 - Affiliate selector now combines question intent and card signals, selects only verified pool items, and skips the interstitial when no relevant verified product exists
 - Generated a 105-item READY content queue across 8 formats and 6 planned topics under `data/content/threads-queue.json`
-- Generated 92 programmatic 1080x1350 Threads SVG selection images under `public/threads/generated/`; 13 conversation prompts intentionally need no image
+- Generated 105 programmatic 1080x1350 Threads PNG images and SVG source assets under `public/threads/generated/`
 - Threads publisher creates/persists containers before publish, appends per-content UTM CTA links, publishes result replies sequentially, and marks unknown external outcomes for manual reconciliation rather than retrying
 - `netlify/functions/publish-next.mts` schedules daily at 20:30 KST (`30 11 * * *` UTC) and stores runtime state in a strong-consistency Netlify Blob store
 - `PUBLISH_MODE=review` and `DRY_RUN=true` are defaults. `pnpm content:publish-next` prints the planned main post, image URL, replies, and CTA without calling Threads
+- Metrics sync stores only API-returned views/likes/replies/reposts/quotes and defaults to dry run; browser queue dashboard reads the 105-item source queue and supports copy/preview interaction
 - Threads Week 01 calendar contains seven copy-paste-ready posts with varied formats, comments, CTAs, topics, hypotheses and metrics placeholders
 - Seven 1080x1350 SVG choice-card assets generated under `public/threads/week-01/`; Day 01 and Day 04 visual previews checked
 - All 23 referenced card IDs resolve against the real 78-card RWS catalog; no card fronts or affiliate assets were regenerated
@@ -69,7 +70,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 
 ## In Progress
 
-- Implement Phase H: safe Threads metrics sync contract and `/threads` queue status UI; do not create a real Threads post
+- Deploy the Growth Engine checkpoint to Netlify, keep `PUBLISH_MODE=review` and `DRY_RUN=true`, then inspect the scheduled-function logs through one manual Netlify run
 
 ## Remaining
 
@@ -82,6 +83,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 
 ## Known Issues
 
+- `/threads` queue dashboard browser smoke test is pending because this session hit the Codex browser usage limit; component interaction test and production build pass
 - Authored interpretation coverage is 76,076/76,076; deterministic connected renderer and generated batch records cover every valid triple
 - Quality evaluator is intentionally heuristic and should be supplemented by human review for future corpus revisions
 - CSP permits `unsafe-inline` scripts for current Next.js compatibility; nonce/hash tightening is later hardening
@@ -147,6 +149,7 @@ UX v2 verification on 2026-08-28:
 - `pnpm typecheck`, `pnpm lint`, `pnpm test`: 20 files, 52 tests pass after result-page restructure
 - `pnpm tarot:audit`: added editorial-layer, redundant-visual, and awkward-flow checks; all 76,076 rows still pass with zero failures
 - `pnpm tarot:generate --from 1 --to 381`: regenerated all 76,076 prose rows with suit-specific minor meanings
+- Growth Engine checks: `pnpm content:generate --count 105`, `pnpm content:images`, `pnpm content:validate`, `pnpm content:status`, `pnpm content:publish-next`, `pnpm content:sync-metrics`, 24 test files / 60 tests, typecheck, lint, and build all pass
 - `pnpm tarot:skeletons:validate`: 381 batches, 76,076 skeleton rows
 - Next.js webpack production build: compiled, type-checked, generated all 5 static pages and finalized output successfully
 - tarot validate: 78 cards, 76,076 combinations, 381 batches, 4 samples, 100 baseline eval rows; UX v2 uses a separate 30-row representative fixture
@@ -178,3 +181,5 @@ Threads content checkpoint: `fc828e0 Add a browser dashboard for Threads posting
 Naturalness audit checkpoint: `a7c9ba5 Make every tarot reading sound like natural Korean`.
 
 Editorial result checkpoint: `ccd22bd Ground tarot readings in card-specific meaning and context`.
+
+Growth Engine checkpoints: `7f44e7c`, `d6ce766`, `7f8f367`, `66625be`; final metrics/dashboard checkpoint pending commit.

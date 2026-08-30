@@ -1,4 +1,4 @@
-import type { ContentStatus, ThreadsContent } from "@/domain/content";
+import type { ContentMetrics, ContentStatus, ThreadsContent } from "@/domain/content";
 
 export type PublishMode = "review" | "auto";
 
@@ -7,11 +7,13 @@ export type ContentRuntimeState = {
   updatedAt: string;
   mainContainerId?: string;
   mainPostId?: string;
+  publishedAt?: string;
   replyContainerIds?: string[];
   replyPostIds?: string[];
   attemptCount: number;
   lastError?: string;
   requiresReconciliation?: boolean;
+  metrics?: ContentMetrics;
 };
 
 export type ContentRuntimeQueue = {
@@ -44,6 +46,24 @@ export type PublishPreview = {
 };
 
 export const EMPTY_RUNTIME_QUEUE: ContentRuntimeQueue = { version: 1, items: {} };
+
+export function applyRuntimeState(source: readonly ThreadsContent[], runtime: ContentRuntimeQueue): ThreadsContent[] {
+  return source.map((item) => {
+    const state = runtime.items[item.id];
+    if (!state) return item;
+    return {
+      ...item,
+      status: state.status,
+      publishedAt: state.publishedAt ?? item.publishedAt,
+      threadsPostId: state.mainPostId ?? item.threadsPostId,
+      threadsContainerId: state.mainContainerId ?? item.threadsContainerId,
+      replyPostIds: state.replyPostIds ?? item.replyPostIds,
+      attemptCount: state.attemptCount,
+      lastError: state.lastError ?? item.lastError,
+      metrics: state.metrics ?? item.metrics,
+    };
+  });
+}
 
 function now(): string {
   return new Date().toISOString();
@@ -150,7 +170,7 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
       await store.write(queue);
     }
 
-    runtime = { ...runtime, status: "PUBLISHED", updatedAt: now(), replyContainerIds, replyPostIds };
+    runtime = { ...runtime, status: "PUBLISHED", updatedAt: now(), publishedAt: now(), replyContainerIds, replyPostIds };
     queue = applyState(queue, item.id, runtime);
     await store.write(queue);
     return { id: item.id, mode: "published", main: item.mainPost, imageUrl, replies };

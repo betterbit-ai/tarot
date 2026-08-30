@@ -1,10 +1,14 @@
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { validateContentQueue, type ContentQueue } from "../../src/domain/content";
 
 const path = resolve(process.cwd(), "data/content/threads-queue.json");
 const queue = JSON.parse(await readFile(path, "utf8")) as ContentQueue;
 const errors = validateContentQueue(queue);
+for (const item of queue.items) {
+  if (!item.imageAsset) continue;
+  try { await access(resolve(process.cwd(), "public", item.imageAsset.slice(1))); } catch { errors.push(`${item.id}: missing image asset`); }
+}
 if (errors.length) {
   process.stderr.write(`${errors.join("\n")}\n`);
   process.exitCode = 1;

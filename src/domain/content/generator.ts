@@ -13,7 +13,14 @@ const TOPIC_PLAN: readonly TopicPlan[] = [
   { topic: "EXPERIMENTAL", count: 5 },
 ];
 
-const FORMAT_CYCLE: readonly ContentFormat[] = ["PICK_5", "PICK_3", "YES_NO_NOT_YET", "LOVE", "CAREER", "MONEY", "ONE_CARD", "CONVERSATION"];
+const TOPIC_FORMATS: Record<ContentTopic, readonly ContentFormat[]> = {
+  LOVE: ["PICK_5", "PICK_3", "YES_NO_NOT_YET", "LOVE", "ONE_CARD", "CONVERSATION"],
+  GENERAL: ["PICK_5", "PICK_3", "YES_NO_NOT_YET", "ONE_CARD", "CONVERSATION"],
+  CAREER: ["PICK_3", "YES_NO_NOT_YET", "CAREER", "ONE_CARD", "CONVERSATION"],
+  MONEY: ["PICK_3", "YES_NO_NOT_YET", "MONEY", "ONE_CARD"],
+  DECISION: ["YES_NO_NOT_YET", "PICK_3", "ONE_CARD", "CONVERSATION"],
+  EXPERIMENTAL: ["CONVERSATION", "ONE_CARD", "PICK_3"],
+};
 
 const TOPIC_PROMPTS: Record<ContentTopic, readonly string[]> = {
   LOVE: ["지금 떠오르는 사람", "요즘 마음이 쓰이는 관계", "연락할지 망설이는 사람"],
@@ -33,6 +40,20 @@ const CONVERSATION_FRAMES = [
   "그 단어가 오늘의 선택과 어떤 관계가 있는지",
 ] as const;
 
+const CONVERSATION_CLOSINGS = [
+  "오늘은 한 단어면 충분해요.",
+  "길게 설명하지 않아도 괜찮아요.",
+  "지금 떠오른 말 그대로면 돼요.",
+  "답을 찾기 전에 이름부터 붙여봐요.",
+  "그 단어를 적는 것부터 시작해요.",
+  "마음이 먼저 고른 말을 남겨주세요.",
+  "생각이 길어지기 전에 적어봐요.",
+  "아무에게도 말하지 못한 단어여도 괜찮아요.",
+  "그 단어가 오늘의 시작점이 될 수 있어요.",
+  "한 번 적고 나서 천천히 봐도 돼요.",
+  "정답 대신 그 단어부터 꺼내봐요.",
+] as const;
+
 function hasFinalConsonant(value: string): boolean {
   const last = value.charCodeAt(value.length - 1);
   return last >= 0xac00 && last <= 0xd7a3 ? (last - 0xac00) % 28 !== 0 : false;
@@ -44,6 +65,22 @@ function objectParticle(value: string): "을" | "를" {
 
 function subjectParticle(value: string): "이" | "가" {
   return hasFinalConsonant(value) ? "이" : "가";
+}
+
+const HOOK_PREFIXES = ["오늘", "요즘", "잠깐 멈춰서", "혼자 있을 때", "지금", "문득"] as const;
+
+function hookFor(format: ContentFormat, prompt: string, index: number): string {
+  const prefix = HOOK_PREFIXES[index % HOOK_PREFIXES.length] ?? "오늘";
+  switch (format) {
+    case "PICK_5": return `${prompt}${objectParticle(prompt)} 생각하면서`;
+    case "PICK_3": return `${prompt}${subjectParticle(prompt)} 계속 걸린다면`;
+    case "YES_NO_NOT_YET": return `${prompt}${objectParticle(prompt)} 두고 답을 내려야 한다면`;
+    case "LOVE": return `${prompt}${objectParticle(prompt)} 두고 내가 모르는 부분`;
+    case "CAREER": return `${prompt}을 두고 망설인다면`;
+    case "MONEY": return `${prompt}${objectParticle(prompt)} 고르기 전이라면`;
+    case "ONE_CARD": return `${prefix} 필요한 한 장`;
+    case "CONVERSATION": return `${prompt}${objectParticle(prompt)} 한 단어로 남긴다면`;
+  }
 }
 
 function cardIdsFor(seed: number, format: ContentFormat): number[] {
@@ -74,22 +111,22 @@ function resultLine(cardId: number, topic: ContentTopic): string {
   const variants = [
     `${topicLead[topic]} ${meaning.light}${subjectParticle(meaning.light)} 먼저 걸려요. ${meaning.shadow}${objectParticle(meaning.shadow)} 조심하세요.`,
     `${topicLead[topic]} ${meaning.light}${objectParticle(meaning.light)} 택하는 편이 좋아요. ${meaning.shadow}에만 머물지는 마세요.`,
-    `${topicLead[topic]} ${meaning.light} 쪽으로 가도 괜찮아요. 다만 ${meaning.shadow}${subjectParticle(meaning.shadow)} 커지는지만 보세요.`,
+    `${topicLead[topic]} ${meaning.light} 쪽으로 가도 괜찮아요. 다만 ${meaning.shadow}${subjectParticle(meaning.shadow)} 커지는지 보세요.`,
   ];
   return `${card.name}\n${variants[cardId % variants.length]}`;
 }
 
-function mainPost(format: ContentFormat, prompt: string, number: number): string {
+function mainPost(format: ContentFormat, prompt: string, hook: string, number: number): string {
   const label = String(number).padStart(2, "0");
   switch (format) {
-    case "PICK_5": return `${prompt}을 생각하면서\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5`;
-    case "PICK_3": return `${prompt}을 생각하면서\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3`;
-    case "YES_NO_NOT_YET": return `${prompt}에\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO`;
-    case "LOVE": return `연애는 마음이 먼저인지, 행동이 먼저인지 헷갈릴 때가 있어요.\n\n${prompt}을 생각하면서\n세 장 중 하나를 골라보세요.\n\n1  2  3`;
-    case "CAREER": return `일이 답답할 때는\n더 버틸지, 다른 곳을 볼지부터 헷갈려요.\n\n${prompt}을 생각하면서 하나 골라보세요.\n\n1  2  3`;
-    case "MONEY": return `돈 이야기는 숫자만으로 끝나지 않아요.\n\n${prompt}을 생각하면서\n세 장 중 하나를 골라보세요.\n\n1  2  3`;
-    case "ONE_CARD": return `오늘 필요한 한 장이에요.\n\n${prompt}을 떠올리고\n카드 하나를 골라보세요.\n\n${label}`;
-    case "CONVERSATION": return `${prompt}을\n한 단어로만 남겨주세요.\n\n답을 정해드리기보다\n${CONVERSATION_FRAMES[number % CONVERSATION_FRAMES.length]} 같이 볼게요.`;
+    case "PICK_5": return `${hook}\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5`;
+    case "PICK_3": return `${hook}\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3`;
+    case "YES_NO_NOT_YET": return `${hook}\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO`;
+    case "LOVE": return `${hook}\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3`;
+    case "CAREER": return `${hook}\n\n더 버틸지, 다른 곳을 볼지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3`;
+    case "MONEY": return `${hook}\n\n돈 이야기는 숫자만으로 끝나지 않아요.\n세 장 중 하나를 골라보세요.\n\n1  2  3`;
+    case "ONE_CARD": return `${hook}\n\n${prompt}${objectParticle(prompt)} 떠올리고\n카드 하나를 골라보세요.\n\n${label}`;
+    case "CONVERSATION": return `${hook}\n\n답을 정해드리기보다\n${CONVERSATION_FRAMES[number % CONVERSATION_FRAMES.length]} 같이 볼게요.\n${CONVERSATION_CLOSINGS[number % CONVERSATION_CLOSINGS.length]}`;
   }
 }
 
@@ -99,7 +136,8 @@ function replyLines(cardIds: readonly number[], topic: ContentTopic, format: Con
 }
 
 function imageAsset(id: string, format: ContentFormat): string | null {
-  return format === "CONVERSATION" ? null : `/threads/generated/${id}.svg`;
+  void format;
+  return `/threads/generated/${id}.png`;
 }
 
 function signature(item: Pick<ThreadsContent, "format" | "topic" | "cardIds" | "mainPost">): string {
@@ -109,17 +147,19 @@ function signature(item: Pick<ThreadsContent, "format" | "topic" | "cardIds" | "
 export function generateContentQueue(count = 105, createdAt = new Date().toISOString()): ContentQueue {
   const plannedTopics = TOPIC_PLAN.flatMap(({ topic, count: topicCount }) => Array.from({ length: topicCount }, () => topic)).slice(0, count);
   const items = plannedTopics.map((topic, index): ThreadsContent => {
-    const format = FORMAT_CYCLE[index % FORMAT_CYCLE.length] ?? "PICK_3";
+    const formats = TOPIC_FORMATS[topic];
+    const format = formats[index % formats.length] ?? "PICK_3";
     const id = `mr-tarot-${String(index + 1).padStart(4, "0")}`;
     const cardIds = cardIdsFor(index + 1, format);
-    const prompt = TOPIC_PROMPTS[topic][Math.floor(index / FORMAT_CYCLE.length) % TOPIC_PROMPTS[topic].length] ?? "지금 떠오르는 일";
-    const main = mainPost(format, prompt, index + 1);
+    const prompt = TOPIC_PROMPTS[topic][Math.floor(index / 6) % TOPIC_PROMPTS[topic].length] ?? "지금 떠오르는 일";
+    const hook = hookFor(format, prompt, index);
+    const main = mainPost(format, prompt, hook, index + 1);
     const item: ThreadsContent = {
       id,
       status: "READY",
       format,
       topic,
-      hook: main.split("\n")[0] ?? main,
+      hook,
       mainPost: main,
       cardIds,
       replies: replyLines(cardIds, topic, format),

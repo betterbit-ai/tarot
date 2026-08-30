@@ -4,26 +4,53 @@
   <rect width="1080" height="1350" fill="#0b1512"/>
   <path d="M72 104 H1008" stroke="#b78d50" stroke-opacity=".34"/>
   <text x="540" y="180" text-anchor="middle" font-family="serif" font-size="38" fill="#e9d7b7" letter-spacing="3">MR. TAROT</text>
-  <text x="540" y="280" text-anchor="middle" font-family="serif" font-size="62" fill="#f2e7d5">돈 이야기는 숫자만으로 끝나지</text><text x="540" y="356" text-anchor="middle" font-family="serif" font-size="62" fill="#f2e7d5">않아요.</text>
-  <text x="540" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#c8b596">오래 고르지 말고, 먼저 멈춘 숫자로요</text>
-  
-    <g transform="translate(210 712) rotate(-4 100 150)">
+  <text x="540" y="280" text-anchor="middle" font-family="serif" font-size="62" fill="#f2e7d5">이번 주의 마음을 생각하면서</text>
+  <text x="540" y="550" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#c8b596">오래 고르지 말고, 먼저 멈춘 숫자로요</text>
+
+    <g transform="translate(110 734) rotate(-8 100 150)">
       <rect width="200" height="300" rx="24" fill="#10251d" stroke="#d6ad67" stroke-width="4"/>
-      <image href="/images/tarot-card-back.png" width="200" height="300" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip)"/>
+      <rect x="14" y="14" width="172" height="272" rx="18" fill="#17352a" stroke="#c99e60" stroke-opacity=".7" stroke-width="2"/>
+      <circle cx="100" cy="152" r="53" fill="none" stroke="#c99e60" stroke-width="2"/>
+      <circle cx="100" cy="152" r="19" fill="#0b1512" stroke="#c99e60" stroke-width="2"/>
+      <path d="M47 152h106M100 99v106M62 114l76 76M138 114l-76 76" stroke="#c99e60" stroke-opacity=".7" stroke-width="1.5"/>
       <circle cx="100" cy="48" r="28" fill="#ecd69f"/>
       <text x="100" y="59" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#21180f">1</text>
     </g>
-    <g transform="translate(440 690) rotate(0 100 150)">
+    <g transform="translate(275 712) rotate(-4 100 150)">
       <rect width="200" height="300" rx="24" fill="#10251d" stroke="#d6ad67" stroke-width="4"/>
-      <image href="/images/tarot-card-back.png" width="200" height="300" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip)"/>
+      <rect x="14" y="14" width="172" height="272" rx="18" fill="#17352a" stroke="#c99e60" stroke-opacity=".7" stroke-width="2"/>
+      <circle cx="100" cy="152" r="53" fill="none" stroke="#c99e60" stroke-width="2"/>
+      <circle cx="100" cy="152" r="19" fill="#0b1512" stroke="#c99e60" stroke-width="2"/>
+      <path d="M47 152h106M100 99v106M62 114l76 76M138 114l-76 76" stroke="#c99e60" stroke-opacity=".7" stroke-width="1.5"/>
       <circle cx="100" cy="48" r="28" fill="#ecd69f"/>
       <text x="100" y="59" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#21180f">2</text>
     </g>
-    <g transform="translate(670 712) rotate(4 100 150)">
+    <g transform="translate(440 690) rotate(0 100 150)">
       <rect width="200" height="300" rx="24" fill="#10251d" stroke="#d6ad67" stroke-width="4"/>
-      <image href="/images/tarot-card-back.png" width="200" height="300" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip)"/>
+      <rect x="14" y="14" width="172" height="272" rx="18" fill="#17352a" stroke="#c99e60" stroke-opacity=".7" stroke-width="2"/>
+      <circle cx="100" cy="152" r="53" fill="none" stroke="#c99e60" stroke-width="2"/>
+      <circle cx="100" cy="152" r="19" fill="#0b1512" stroke="#c99e60" stroke-width="2"/>
+      <path d="M47 152h106M100 99v106M62 114l76 76M138 114l-76 76" stroke="#c99e60" stroke-opacity=".7" stroke-width="1.5"/>
       <circle cx="100" cy="48" r="28" fill="#ecd69f"/>
       <text x="100" y="59" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#21180f">3</text>
+    </g>
+    <g transform="translate(605 712) rotate(4 100 150)">
+      <rect width="200" height="300" rx="24" fill="#10251d" stroke="#d6ad67" stroke-width="4"/>
+      <rect x="14" y="14" width="172" height="272" rx="18" fill="#17352a" stroke="#c99e60" stroke-opacity=".7" stroke-width="2"/>
+      <circle cx="100" cy="152" r="53" fill="none" stroke="#c99e60" stroke-width="2"/>
+      <circle cx="100" cy="152" r="19" fill="#0b1512" stroke="#c99e60" stroke-width="2"/>
+      <path d="M47 152h106M100 99v106M62 114l76 76M138 114l-76 76" stroke="#c99e60" stroke-opacity=".7" stroke-width="1.5"/>
+      <circle cx="100" cy="48" r="28" fill="#ecd69f"/>
+      <text x="100" y="59" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#21180f">4</text>
+    </g>
+    <g transform="translate(770 734) rotate(8 100 150)">
+      <rect width="200" height="300" rx="24" fill="#10251d" stroke="#d6ad67" stroke-width="4"/>
+      <rect x="14" y="14" width="172" height="272" rx="18" fill="#17352a" stroke="#c99e60" stroke-opacity=".7" stroke-width="2"/>
+      <circle cx="100" cy="152" r="53" fill="none" stroke="#c99e60" stroke-width="2"/>
+      <circle cx="100" cy="152" r="19" fill="#0b1512" stroke="#c99e60" stroke-width="2"/>
+      <path d="M47 152h106M100 99v106M62 114l76 76M138 114l-76 76" stroke="#c99e60" stroke-opacity=".7" stroke-width="1.5"/>
+      <circle cx="100" cy="48" r="28" fill="#ecd69f"/>
+      <text x="100" y="59" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#21180f">5</text>
     </g>
   <path d="M72 1170 H1008" stroke="#b78d50" stroke-opacity=".34"/>
   <text x="540" y="1235" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#d7bd8c">@mr._.tarot</text>
