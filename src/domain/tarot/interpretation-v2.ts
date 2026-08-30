@@ -443,6 +443,12 @@ function cardMeaningCore(card: TarotCard, tone: "light" | "shadow"): string {
   return prefix && card.meaning[tone].startsWith(prefix) ? card.meaning[tone].slice(prefix.length) : card.meaning[tone];
 }
 
+export function getEditorialCardMeaning(cardId: number): { light: string; shadow: string } {
+  const card = getTarotCards([cardId])[0];
+  if (!card) throw new RangeError(`Unknown tarot card id: ${cardId}`);
+  return { light: cardMeaningCore(card, "light"), shadow: cardMeaningCore(card, "shadow") };
+}
+
 function hasFinalConsonant(value: string): boolean {
   const last = value.charCodeAt(value.length - 1);
   if (last >= 0xac00 && last <= 0xd7a3) return (last - 0xac00) % 28 !== 0;

@@ -1,3 +1,4 @@
+import { getEditorialCardMeaning } from "@/domain/tarot/interpretation-v2";
 import { getTarotCard } from "@/domain/tarot/cards";
 import type { ContentFormat, ContentQueue, ContentTopic, ThreadsContent } from "./types";
 
@@ -32,6 +33,19 @@ const CONVERSATION_FRAMES = [
   "그 단어가 오늘의 선택과 어떤 관계가 있는지",
 ] as const;
 
+function hasFinalConsonant(value: string): boolean {
+  const last = value.charCodeAt(value.length - 1);
+  return last >= 0xac00 && last <= 0xd7a3 ? (last - 0xac00) % 28 !== 0 : false;
+}
+
+function objectParticle(value: string): "을" | "를" {
+  return hasFinalConsonant(value) ? "을" : "를";
+}
+
+function subjectParticle(value: string): "이" | "가" {
+  return hasFinalConsonant(value) ? "이" : "가";
+}
+
 function cardIdsFor(seed: number, format: ContentFormat): number[] {
   if (format === "CONVERSATION") return [];
   const count = format === "PICK_5" ? 5 : format === "ONE_CARD" ? 1 : 3;
@@ -48,6 +62,7 @@ function cardIdsFor(seed: number, format: ContentFormat): number[] {
 
 function resultLine(cardId: number, topic: ContentTopic): string {
   const card = getTarotCard(cardId);
+  const meaning = getEditorialCardMeaning(cardId);
   const topicLead: Record<ContentTopic, string> = {
     LOVE: "관계에서는",
     GENERAL: "지금은",
@@ -56,7 +71,12 @@ function resultLine(cardId: number, topic: ContentTopic): string {
     DECISION: "결정 앞에서는",
     EXPERIMENTAL: "오늘은",
   };
-  return `${card.name}\n${topicLead[topic]} ${card.meaning.light}이 먼저 보여요. ${card.meaning.shadow} 쪽으로만 가지 않게 한 번 멈춰보세요.`;
+  const variants = [
+    `${topicLead[topic]} ${meaning.light}${subjectParticle(meaning.light)} 먼저 걸려요. ${meaning.shadow}${objectParticle(meaning.shadow)} 조심하세요.`,
+    `${topicLead[topic]} ${meaning.light}${objectParticle(meaning.light)} 택하는 편이 좋아요. ${meaning.shadow}에만 머물지는 마세요.`,
+    `${topicLead[topic]} ${meaning.light} 쪽으로 가도 괜찮아요. 다만 ${meaning.shadow}${subjectParticle(meaning.shadow)} 커지는지만 보세요.`,
+  ];
+  return `${card.name}\n${variants[cardId % variants.length]}`;
 }
 
 function mainPost(format: ContentFormat, prompt: string, number: number): string {

@@ -25,13 +25,16 @@
     "tarot:audit": "node --import tsx scripts/tarot/audit-interpretations.ts",
     "threads:assets": "node scripts/content/generate-threads-assets.mjs",
     "threads:copy": "node scripts/content/threads-copy.mjs",
-    "tarot:assets": "node scripts/tarot/download-rws-assets.mjs"
-    ,"content:generate": "node --import tsx scripts/content/generate.ts"
-    ,"content:validate": "node --import tsx scripts/content/validate.ts"
-    ,"content:status": "node --import tsx scripts/content/status.ts"
-    ,"content:images": "node scripts/content/generate-images.mjs"
+    "tarot:assets": "node scripts/tarot/download-rws-assets.mjs",
+    "content:generate": "node --import tsx scripts/content/generate.ts",
+    "content:validate": "node --import tsx scripts/content/validate.ts",
+    "content:status": "node --import tsx scripts/content/status.ts",
+    "content:images": "node scripts/content/generate-images.mjs",
+    "content:publish-next": "node --import tsx scripts/content/publish-next.ts"
   },
   "dependencies": {
+    "@netlify/blobs": "^11.0.2",
+    "@netlify/functions": "^6.0.0",
     "motion": "13.1.1",
     "next": "16.3.3",
     "react": "19.2.8",
