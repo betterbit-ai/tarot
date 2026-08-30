@@ -183,4 +183,4 @@ Naturalness audit checkpoint: `a7c9ba5 Make every tarot reading sound like natur
 
 Editorial result checkpoint: `ccd22bd Ground tarot readings in card-specific meaning and context`.
 
-Growth Engine checkpoints: `7f44e7c`, `d6ce766`, `7f8f367`, `66625be`; final metrics/dashboard checkpoint pending commit.
+Growth Engine checkpoints: `7f44e7c`, `d6ce766`, `7f8f367`, `66625be`, `38c608a`, `5873a10`.
