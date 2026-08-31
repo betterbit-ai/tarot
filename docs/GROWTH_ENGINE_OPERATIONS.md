@@ -64,3 +64,5 @@ Each outbound CTA gets `utm_source=threads`, `utm_medium=social`, `utm_campaign=
 ## Affiliate pool
 
 The web selector joins question intent and card signals to a theme before choosing a verified product. Current pool coverage is relationship, self-care, rest, and new-start. Work, money, and organization categories skip the interstitial until a matching product URL and licensed image are verified. Results always remain available without clicking.
+
+When the operator later enables the Partners API, set `COUPANG_PARTNERS_API_ENABLED=true`, `COUPANG_PARTNERS_ACCESS_KEY`, and `COUPANG_PARTNERS_SECRET_KEY` only in Netlify. The refresh workflow will use theme-owned search keywords, convert the chosen URL with `/links/deeplink`, and add a verified candidate to the pool. Do not send raw tarot questions and do not enable ADID-based `/products/reco` without a new privacy decision.

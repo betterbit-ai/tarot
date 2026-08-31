@@ -39,7 +39,18 @@ Source:
 
 ## Coupang Partners
 
-The Coupang Open API developer portal exposes seller/product management APIs. It does not establish a general Partners catalog search contract appropriate for finding arbitrary affiliate products at runtime. The Growth Engine therefore uses an operator-verified curated product pool. It stores no prices, does not scrape product data, and keeps the existing clear commission disclosure and result skip path.
+The operating account's official Partners API page confirms a separate affiliate Open API base URL: `https://api-gateway.coupang.com/v2/providers/affiliate_open_api/apis/openapi/v1/`. It lists `/products/search` with a 50 requests/minute limit, best-category and Goldbox product endpoints, `/products/reco` using ADID, `/links/deeplink` for turning a Coupang URL into a member tracking link, and daily click/order/cancel/commission reports. The daily reports update at 15:00 KST according to the Partners page.
+
+This supersedes the earlier seller-API-only finding. It still does **not** justify a raw live search inside a visitor's tarot request. The selected design is:
+
+1. Convert the transient question intent and card signals into a small internal theme, such as `relationship`, `rest`, `focus`, or `organization`.
+2. Map that theme to operator-owned neutral search keywords. Never submit the raw tarot question.
+3. Use `/products/search` offline or from a privileged scheduled refresh to fetch a bounded candidate list.
+4. Convert the chosen product URL with `/links/deeplink` before it enters the active pool.
+5. Store only verified title, image URL, product URL, category, link, and refresh metadata in the pool. Continue not to show price without a trusted current-price policy.
+6. Use `/reports/clicks`, `/reports/orders`, `/reports/cancels`, and `/reports/commission` only for aggregate affiliate reporting after the daily update window.
+
+`/products/reco` is not part of the default design because it requires an ADID. The product should not become personalized from a browser identifier without a separate privacy, consent, and policy decision.
 
 The official Coupang Partners guide also warns against using Coupang intellectual property outside provided assets or presenting activity as official Coupang activity. The project must not recreate or modify Coupang logos, use unverified product images, or present a recommendation as official Coupang endorsement.
 
@@ -48,6 +59,7 @@ Sources:
 - https://developers.coupang.com/en/api
 - https://developers.coupang.com/en/getting-started/coupang-open-api
 - https://partners.coupangcdn.com/partners-guide/partners-guide-20251028182159.pdf
+- Coupang Partners API page from the operating account, captured 2026-08-31
 
 ## Delivery rules
 

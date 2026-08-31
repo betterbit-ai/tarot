@@ -61,6 +61,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - `PUBLISH_MODE=review` and `DRY_RUN=true` are defaults. `pnpm content:publish-next` prints the planned main post, image URL, replies, and CTA without calling Threads
 - Metrics sync stores only API-returned views/likes/replies/reposts/quotes and defaults to dry run; browser queue dashboard reads the 105-item source queue and supports copy/preview interaction
 - A daily token-refresh function saves only a successful long-lived Threads token replacement to Blob storage; publisher prefers it over the original environment token
+- Coupang Partners API discovery corrected: product search, deep link conversion, and daily aggregate reports are available to the operating account; future integration must refresh a privileged theme-based pool without transmitting raw questions or using ADID reco
 - Threads Week 01 calendar contains seven copy-paste-ready posts with varied formats, comments, CTAs, topics, hypotheses and metrics placeholders
 - Seven 1080x1350 SVG choice-card assets generated under `public/threads/week-01/`; Day 01 and Day 04 visual previews checked
 - All 23 referenced card IDs resolve against the real 78-card RWS catalog; no card fronts or affiliate assets were regenerated
