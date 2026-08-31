@@ -1,0 +1,11 @@
+{
+  "mode": "ralph",
+  "active": true,
+  "iteration": 1,
+  "max_iterations": 10,
+  "current_phase": "discovery",
+  "started_at": "2026-08-31T16:21:03Z",
+  "context_snapshot_path": ".omx/context/vercel-free-growth-20260831T162103Z.md",
+  "plan_path": ".omx/plans/prd-vercel-free-growth.md",
+  "test_spec_path": ".omx/plans/test-spec-vercel-free-growth.md"
+}

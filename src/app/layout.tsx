@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
+import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: getSiteUrl(),
   title: "미스터 타로",
   description: "세 장을 직접 고르고, 조용히 이야기를 읽어보세요.",
   applicationName: "미스터 타로",

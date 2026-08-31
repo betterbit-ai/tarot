@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-01 00:51 KST
+Last updated: 2026-09-01 01:24 KST
 
 ## Current Phase
 
-GROWTH ENGINE: GITHUB ACTIONS TRIGGER + REVIEW MODE, AWAITING CREDENTIALS + NETLIFY DEPLOYMENT RESUMPTION
+VERCEL FREE MIGRATION: WEB DEPLOYMENT RECOVERY + REVIEW-FIRST GROWTH ENGINE PORTABILITY
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
@@ -71,12 +71,13 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Structured reading checkpoint: `b09d60d Bind ritual readings to precomputed skeletons at runtime`
 - Seven PNG exports are available alongside the SVG source assets for direct Threads upload
 - Public Meta compliance pages now exist at `/privacy`, `/terms`, and `/data-deletion`; they accurately state that the service has no user accounts, does not persist tarot questions, and always leaves the affiliate route optional
+- Vercel project import from `betterbit-ai/tarot` is connected on the Hobby team. Its first deployment reached Next.js static-page collection but failed because an imported blank `NEXT_PUBLIC_SITE_URL` made `new URL("")` throw.
 
 ## In Progress
 
-- Netlify production deploys are paused because the `betterbit-ai` team has exhausted deploy-capable credits. `main` contains the Meta compliance pages, but production still returns 404 until the owner upgrades the team or the billing cycle resumes
-- Once production resumes, confirm Netlify serves `/privacy`, `/terms`, and `/data-deletion`, then update the Meta basic settings with those three deployed URLs
-- Keep `PUBLISH_MODE=review` and `DRY_RUN=true` while inspecting one manual GitHub Actions to protected-Netlify publisher run
+- Push the Vercel build-safety checkpoint. It handles an empty or invalid `NEXT_PUBLIC_SITE_URL` without failing the build, allowing Vercel to assign a deployment URL first.
+- After Vercel serves the project, set `NEXT_PUBLIC_SITE_URL` to the verified production URL and redeploy before changing Meta URLs.
+- Keep `PUBLISH_MODE=review` and `DRY_RUN=true`; no live Threads post may occur while the Netlify Blob-backed publisher is being made portable.
 
 ## Remaining
 
@@ -97,6 +98,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Home OG uses a symbolic three-card brand composition; shared-result OG uses actual selected RWS fronts
 - Threads assets are SVG source artwork for direct social export; export at 1080x1350 PNG only if the account requires raster uploads
 - Netlify reports that the `betterbit-ai` team has operational credits only and that production deploys are paused. The current `mr-tarot.netlify.app/privacy` response is therefore 404 even though `main` contains the route. Do not save the Meta policy URLs until the deploy succeeds.
+- The Vercel Hobby import currently has 14 detected variable names. The supplied `.env.local` has only `NEXT_PUBLIC_SITE_URL`, `AFFILIATE_ENABLED`, and `COUPANG_PARTNERS_URL` populated. All publishing and API credentials must remain empty until their provider setup is verified.
 
 ## Current Tarot Asset Status
 
@@ -170,7 +172,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-The owner must resume Netlify production deploys by upgrading the `betterbit-ai` team or waiting for its billing cycle. Then confirm `https://mr-tarot.netlify.app/privacy`, `/terms`, and `/data-deletion` return their pages. Only then set those three Meta basic-settings URLs and request immediate confirmation before pressing Save Changes. Continue Threads OAuth in review/dry-run mode only.
+Push the Vercel build-safety checkpoint and inspect the Vercel deployment URL. Set `NEXT_PUBLIC_SITE_URL` to that verified public origin, redeploy, and then update the three Meta policy URLs. Continue Threads OAuth in review/dry-run mode only.
 
 ## Last Commit
 
@@ -195,3 +197,5 @@ Growth Engine checkpoints: `7f44e7c`, `d6ce766`, `7f8f367`, `66625be`, `38c608a`
 Meta compliance-page checkpoint: `9ef6a68 Make Meta compliance URLs truthful and deployable`.
 
 Netlify deployment-blocker record: current `HEAD`.
+
+Vercel migration record: current `HEAD` — empty production URL no longer blocks a first deploy.
