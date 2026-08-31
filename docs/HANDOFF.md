@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-31 09:36 KST
+Last updated: 2026-09-01 00:51 KST
 
 ## Current Phase
 
@@ -70,10 +70,12 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - `/threads` browser dashboard now lets the user switch days, preview the PNG, and copy main/comments/CTA without keeping a terminal open
 - Structured reading checkpoint: `b09d60d Bind ritual readings to precomputed skeletons at runtime`
 - Seven PNG exports are available alongside the SVG source assets for direct Threads upload
+- Public Meta compliance pages now exist at `/privacy`, `/terms`, and `/data-deletion`; they accurately state that the service has no user accounts, does not persist tarot questions, and always leaves the affiliate route optional
 
 ## In Progress
 
-- Deploy the Growth Engine checkpoint to Netlify, keep `PUBLISH_MODE=review` and `DRY_RUN=true`, then inspect the scheduled-function logs through one manual Netlify run
+- Push the Meta compliance-page checkpoint to `main`, confirm Netlify serves `/privacy`, `/terms`, and `/data-deletion`, then update the Meta basic settings with those three deployed URLs
+- Keep `PUBLISH_MODE=review` and `DRY_RUN=true` while inspecting one manual GitHub Actions to protected-Netlify publisher run
 
 ## Remaining
 
@@ -160,12 +162,13 @@ UX v2 verification on 2026-08-28:
 - `pnpm threads:assets`: generated 7 SVG social assets
 - Threads card-reference check: 23 valid references, 0 invalid
 - diff-check: pass
+- Meta compliance-page checkpoint: `pnpm typecheck`, `pnpm lint`, `pnpm test` (25 files, 62 tests), `pnpm build`, and `git diff --check`: pass. Build includes static `/privacy`, `/terms`, and `/data-deletion` routes.
 
 The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Deploy `main` to Netlify with `PUBLISH_MODE=review`, `DRY_RUN=true`, and `CONTENT_SCHEDULER_SECRET`; add the matching `NETLIFY_PUBLISH_TRIGGER_SECRET` in GitHub Actions. Trigger the GitHub workflow manually and confirm the dry-run response in Netlify logs. Do not perform a real Threads publish.
+Push the Meta compliance-page checkpoint, wait for its Netlify deploy, then set the Meta basic-settings URLs to `https://mr-tarot.netlify.app/privacy`, `https://mr-tarot.netlify.app/terms`, and `https://mr-tarot.netlify.app/data-deletion`. Do not press Meta’s Save Changes button without an immediate user confirmation. After that, continue the Threads OAuth app configuration in review/dry-run mode only.
 
 ## Last Commit
 
@@ -186,3 +189,5 @@ Naturalness audit checkpoint: `a7c9ba5 Make every tarot reading sound like natur
 Editorial result checkpoint: `ccd22bd Ground tarot readings in card-specific meaning and context`.
 
 Growth Engine checkpoints: `7f44e7c`, `d6ce766`, `7f8f367`, `66625be`, `38c608a`, `5873a10`, `94b0bfb`.
+
+Meta compliance-page checkpoint: current `HEAD` — Make Meta compliance URLs truthful and deployable.
