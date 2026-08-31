@@ -4,7 +4,7 @@ Last updated: 2026-09-01 00:51 KST
 
 ## Current Phase
 
-GROWTH ENGINE: GITHUB ACTIONS TRIGGER + REVIEW MODE, AWAITING CREDENTIALS + DEPLOYMENT
+GROWTH ENGINE: GITHUB ACTIONS TRIGGER + REVIEW MODE, AWAITING CREDENTIALS + NETLIFY DEPLOYMENT RESUMPTION
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
@@ -74,7 +74,8 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 
 ## In Progress
 
-- Push the Meta compliance-page checkpoint to `main`, confirm Netlify serves `/privacy`, `/terms`, and `/data-deletion`, then update the Meta basic settings with those three deployed URLs
+- Netlify production deploys are paused because the `betterbit-ai` team has exhausted deploy-capable credits. `main` contains the Meta compliance pages, but production still returns 404 until the owner upgrades the team or the billing cycle resumes
+- Once production resumes, confirm Netlify serves `/privacy`, `/terms`, and `/data-deletion`, then update the Meta basic settings with those three deployed URLs
 - Keep `PUBLISH_MODE=review` and `DRY_RUN=true` while inspecting one manual GitHub Actions to protected-Netlify publisher run
 
 ## Remaining
@@ -95,6 +96,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Native share depends on browser/device support; copy-link fallback is implemented and tested
 - Home OG uses a symbolic three-card brand composition; shared-result OG uses actual selected RWS fronts
 - Threads assets are SVG source artwork for direct social export; export at 1080x1350 PNG only if the account requires raster uploads
+- Netlify reports that the `betterbit-ai` team has operational credits only and that production deploys are paused. The current `mr-tarot.netlify.app/privacy` response is therefore 404 even though `main` contains the route. Do not save the Meta policy URLs until the deploy succeeds.
 
 ## Current Tarot Asset Status
 
@@ -168,7 +170,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Push the Meta compliance-page checkpoint, wait for its Netlify deploy, then set the Meta basic-settings URLs to `https://mr-tarot.netlify.app/privacy`, `https://mr-tarot.netlify.app/terms`, and `https://mr-tarot.netlify.app/data-deletion`. Do not press Meta’s Save Changes button without an immediate user confirmation. After that, continue the Threads OAuth app configuration in review/dry-run mode only.
+The owner must resume Netlify production deploys by upgrading the `betterbit-ai` team or waiting for its billing cycle. Then confirm `https://mr-tarot.netlify.app/privacy`, `/terms`, and `/data-deletion` return their pages. Only then set those three Meta basic-settings URLs and request immediate confirmation before pressing Save Changes. Continue Threads OAuth in review/dry-run mode only.
 
 ## Last Commit
 
@@ -190,4 +192,6 @@ Editorial result checkpoint: `ccd22bd Ground tarot readings in card-specific mea
 
 Growth Engine checkpoints: `7f44e7c`, `d6ce766`, `7f8f367`, `66625be`, `38c608a`, `5873a10`, `94b0bfb`.
 
-Meta compliance-page checkpoint: current `HEAD` — Make Meta compliance URLs truthful and deployable.
+Meta compliance-page checkpoint: `9ef6a68 Make Meta compliance URLs truthful and deployable`.
+
+Netlify deployment-blocker record: current `HEAD`.
