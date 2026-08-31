@@ -26,37 +26,39 @@ pnpm content:sync-metrics
 pnpm content:refresh-token
 ```
 
-`content:publish-next` writes local dry-run state to an ignored file. On Netlify, the scheduled function instead keeps runtime state in the `mr-tarot-growth` Blob store.
+`content:publish-next` writes local dry-run state to an ignored file. On Vercel, protected API routes keep runtime state and the refreshed token in Upstash Redis through server-only REST credentials.
 
 ## Production schedule
 
-`netlify/functions/refresh-threads-token.mts` runs at 09:05 Asia/Seoul. GitHub Actions triggers the protected `publish-next` function at `30 11 * * *`, which is 20:30 Asia/Seoul. Korea has no daylight saving time. The metrics sync runs at `10 12 * * *`, one hour and forty minutes later.
+GitHub Actions triggers protected Vercel routes. `refresh-threads-token.yml` runs at 09:05 Asia/Seoul, `publish-threads.yml` at 20:30, and `sync-threads-metrics.yml` at 21:10. Korea has no daylight saving time.
 
-Scheduled functions run in UTC, only after a published deploy, and have a 30-second limit. The publisher is intentionally sequential: main post, result replies, then CTA reply.
+GitHub schedules run in UTC and can be delayed. The publisher is intentionally sequential: main post, result replies, then CTA reply.
 
 ## Secrets needed to turn on real posting
 
-Set these in Netlify environment variables, never in Git:
+Set these in Vercel project environment variables, never in Git:
 
 - `THREADS_ACCESS_TOKEN`: long-lived Threads user access token
 - `THREADS_USER_ID`: Threads user id from Meta OAuth
-- `CONTENT_SCHEDULER_SECRET`: random secret accepted only by the Netlify publish endpoint
-- `NEXT_PUBLIC_SITE_URL`: production site, currently `https://mr-tarot.netlify.app`
+- `CONTENT_SCHEDULER_SECRET`: random secret accepted only by the Vercel publisher routes
+- `NEXT_PUBLIC_SITE_URL`: verified Vercel production origin
+- `UPSTASH_REDIS_REST_URL`: Upstash database REST endpoint
+- `UPSTASH_REDIS_REST_TOKEN`: Upstash standard REST token
 - `PUBLISH_MODE=auto`
 - `DRY_RUN=false`
 
-Set the exact same random value as `NETLIFY_PUBLISH_TRIGGER_SECRET` in GitHub Actions secrets. GitHub only uses it to trigger Netlify; it never receives the Threads token.
+Set the exact same random value as `GROWTH_SCHEDULER_SECRET` in GitHub Actions secrets. Set `VERCEL_GROWTH_BASE_URL` as a GitHub Actions variable to the Vercel production origin without a trailing slash. GitHub only uses the secret to trigger Vercel; it never receives a Threads or Upstash token.
 
-Before switching those two final values, confirm the Meta token has `threads_basic`, `threads_content_publish`, `threads_read_replies`, `threads_manage_replies`, and `threads_manage_insights` as applicable to the chosen features. Run one manual scheduled function invocation in Netlify while watching its logs.
+Before switching those two final values, confirm the Meta token has `threads_basic`, `threads_content_publish`, `threads_read_replies`, `threads_manage_replies`, and `threads_manage_insights` as applicable to the chosen features. Run one manual GitHub Actions invocation while watching Vercel function logs.
 
-When live mode is enabled, the daily refresh function calls Meta's documented long-lived-token refresh endpoint and saves a successful replacement token plus its expiry to the Blob store. The publisher reads that stored token first. A refresh response without a replacement token fails closed and leaves the prior stored token untouched.
+When live mode is enabled, the daily refresh route calls Meta's documented long-lived-token refresh endpoint and saves a successful replacement token plus its expiry to Upstash. The publisher reads that stored token first. A refresh response without a replacement token fails closed and leaves the prior stored token untouched.
 
 ## Failure behavior
 
 - Main/reply container IDs are persisted before their publish request.
 - An API timeout or non-2xx response marks the item `FAILED` with `requiresReconciliation=true`.
 - It is not automatically retried after an ambiguous result because an automatic retry could duplicate a Threads post.
-- Inspect the Threads account and the `mr-tarot-growth` Blob state before manually resolving the item.
+- Inspect the Threads account and the Upstash runtime state before manually resolving the item.
 
 ## Queue and assets
 
@@ -68,4 +70,4 @@ Each outbound CTA gets `utm_source=threads`, `utm_medium=social`, `utm_campaign=
 
 The web selector joins question intent and card signals to a theme before choosing a verified product. Current pool coverage is relationship, self-care, rest, and new-start. Work, money, and organization categories skip the interstitial until a matching product URL and licensed image are verified. Results always remain available without clicking.
 
-When the operator later enables the Partners API, set `COUPANG_PARTNERS_API_ENABLED=true`, `COUPANG_PARTNERS_ACCESS_KEY`, and `COUPANG_PARTNERS_SECRET_KEY` only in Netlify. The refresh workflow will use theme-owned search keywords, convert the chosen URL with `/links/deeplink`, and add a verified candidate to the pool. Do not send raw tarot questions and do not enable ADID-based `/products/reco` without a new privacy decision.
+When the operator later enables the Partners API, set `COUPANG_PARTNERS_API_ENABLED=true`, `COUPANG_PARTNERS_ACCESS_KEY`, and `COUPANG_PARTNERS_SECRET_KEY` only in Vercel. The refresh workflow will use theme-owned search keywords, convert the chosen URL with `/links/deeplink`, and add a verified candidate to the pool. Do not send raw tarot questions and do not enable ADID-based `/products/reco` without a new privacy decision.

@@ -20,7 +20,7 @@
 4. 기존 SVG/PNG 방식의 programmatic image composition으로 콘텐츠 이미지를 생성한다. AI raster generation을 사용하지 않는다.
 5. publisher는 Threads text/image main post와 `reply_to_id` result reply chain을 지원한다. container id와 published id를 queue state에 남기며, 불확실한 publish 결과는 자동 재시도하지 않는다.
 6. queue는 `DRAFT`, `READY`, `SCHEDULED`, `PUBLISHING`, `PUBLISHED`, `FAILED`, `SKIPPED` 상태를 지원한다. `REVIEW` 모드에서는 READY 전환에 운영자의 명시적 approval이 필요하다.
-7. Netlify scheduled function은 Asia/Seoul 20:30 기본 시간을 UTC cron으로 변환해 하루 한 건만 처리한다. state는 Netlify Blobs에 저장하고, local/CI에서는 file store와 DRY RUN으로 같은 publisher contract를 검증한다.
+7. GitHub Actions는 Asia/Seoul 20:30 기본 시간을 UTC cron으로 변환해 Vercel의 보호된 publisher route를 하루 한 번 호출한다. state는 Upstash Redis REST에 저장하고, local/CI에서는 file store와 DRY RUN으로 같은 publisher contract를 검증한다.
 8. scheduler, CLI, publisher는 idempotency key와 persisted container id를 사용한다. publish response가 불확실하면 `FAILED` + reconciliation metadata로 멈춰 duplicate post를 방지한다.
 9. metrics sync는 Threads API가 제공하는 profile/media metrics만 저장하며, API가 제공하지 않는 클릭·reply rate는 추정하지 않는다.
 10. affiliate engine은 QuestionProfile + ReadingSkeleton signals에서 affiliate theme을 만든 뒤 curated product pool을 rotation한다. price/live product search/무단 product image scraping은 하지 않는다.
@@ -36,7 +36,7 @@
 | review mode에서 approval 없이는 publisher가 외부 호출하지 않음 | publisher unit test + dry-run log |
 | dry run은 게시 대상, image, replies, CTA를 출력하고 상태를 기록 | `pnpm content:publish-next --dry-run` |
 | missing credentials/invalid response/timeout이 duplicate publish를 만들지 않음 | publisher tests with mocked HTTP |
-| scheduled function은 20:30 KST에 해당하는 UTC schedule이며 publish route를 직접 외부 공개하지 않음 | function config/unit test |
+| scheduler는 20:30 KST에 해당하는 UTC schedule이며 protected Vercel publish route를 직접 외부 공개하지 않음 | workflow and auth unit test |
 | affiliate mapping은 질문 intent와 cards theme을 함께 사용하고 skip path를 보존 | affiliate tests/component test |
 | Threads UTM을 가진 CTA가 생성됨 | generator tests |
 | lint/typecheck/test/build/content validation pass | harness verification |
@@ -46,8 +46,8 @@
 - 실제 Threads 발행은 이번 작업에서 절대 수행하지 않는다.
 - Threads API credentials, Coupang URLs, Netlify tokens는 repository에 저장하지 않는다.
 - Meta 공식 API만 사용한다. browser automation이나 비공식 Threads endpoint는 사용하지 않는다.
-- Netlify Scheduled Functions는 UTC 및 30초 execution limit을 전제로 한다.
-- Netlify Blobs는 single-writer queue/strong reads로 쓰며, ambiguous network response에서는 auto retry하지 않는다.
+- Vercel Hobby와 GitHub Actions의 무료 일정 제약을 전제로 하며, 스케줄 지연은 duplicate publish보다 안전하게 처리한다.
+- Upstash Redis REST는 server-only token으로 단일 writer runtime queue를 저장하며, ambiguous network response에서는 auto retry하지 않는다.
 - 쿠팡 상품은 운영자가 destination/image/disclosure를 검증한 curated pool만 사용한다. live 가격을 표시하지 않는다.
 - 기존 V1 tarot flow와 skippable affiliate contract를 변경하지 않는다.
 - 새 패키지는 `@netlify/functions`, `@netlify/blobs`만 필요할 때 추가한다.

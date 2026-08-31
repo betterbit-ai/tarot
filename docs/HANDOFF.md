@@ -72,12 +72,14 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Seven PNG exports are available alongside the SVG source assets for direct Threads upload
 - Public Meta compliance pages now exist at `/privacy`, `/terms`, and `/data-deletion`; they accurately state that the service has no user accounts, does not persist tarot questions, and always leaves the affiliate route optional
 - Vercel project import from `betterbit-ai/tarot` is connected on the Hobby team. Its first deployment reached Next.js static-page collection but failed because an imported blank `NEXT_PUBLIC_SITE_URL` made `new URL("")` throw.
+- Vercel portability slice adds protected Next route handlers for publish, token refresh, and metrics sync. The new Upstash REST adapter keeps queue and refreshed-token state server-side with no added package; GitHub Actions triggers those routes instead of a Netlify URL.
 
 ## In Progress
 
 - Push the Vercel build-safety checkpoint. It handles an empty or invalid `NEXT_PUBLIC_SITE_URL` without failing the build, allowing Vercel to assign a deployment URL first.
 - After Vercel serves the project, set `NEXT_PUBLIC_SITE_URL` to the verified production URL and redeploy before changing Meta URLs.
 - Keep `PUBLISH_MODE=review` and `DRY_RUN=true`; no live Threads post may occur while the Netlify Blob-backed publisher is being made portable.
+- Create a free Upstash Redis database, then set its REST URL/token in Vercel. Do not enable automatic publication yet.
 
 ## Remaining
 
@@ -99,6 +101,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Threads assets are SVG source artwork for direct social export; export at 1080x1350 PNG only if the account requires raster uploads
 - Netlify reports that the `betterbit-ai` team has operational credits only and that production deploys are paused. The current `mr-tarot.netlify.app/privacy` response is therefore 404 even though `main` contains the route. Do not save the Meta policy URLs until the deploy succeeds.
 - The Vercel Hobby import currently has 14 detected variable names. The supplied `.env.local` has only `NEXT_PUBLIC_SITE_URL`, `AFFILIATE_ENABLED`, and `COUPANG_PARTNERS_URL` populated. All publishing and API credentials must remain empty until their provider setup is verified.
+- Vercel/Upstash port exists in source but is intentionally inactive without `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, and `CONTENT_SCHEDULER_SECRET`.
 
 ## Current Tarot Asset Status
 
@@ -167,12 +170,13 @@ UX v2 verification on 2026-08-28:
 - Threads card-reference check: 23 valid references, 0 invalid
 - diff-check: pass
 - Meta compliance-page checkpoint: `pnpm typecheck`, `pnpm lint`, `pnpm test` (25 files, 62 tests), `pnpm build`, and `git diff --check`: pass. Build includes static `/privacy`, `/terms`, and `/data-deletion` routes.
+- Vercel portability checkpoint: `pnpm test` (29 files, 73 tests), `pnpm typecheck`, `pnpm lint`, `pnpm build`, and `git diff --check`: pass. Build includes protected `/api/content/publish-next`, `/api/content/refresh-token`, and `/api/content/sync-metrics` routes. Independent architecture review approved after token-refresh metrics regression repair.
 
 The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Push the Vercel build-safety checkpoint and inspect the Vercel deployment URL. Set `NEXT_PUBLIC_SITE_URL` to that verified public origin, redeploy, and then update the three Meta policy URLs. Continue Threads OAuth in review/dry-run mode only.
+Push the Upstash/Vercel portability checkpoint. Then obtain immediate user confirmation before clicking Vercel Import’s **Deploy** button, because it creates the external Vercel project. After the first URL exists, set `NEXT_PUBLIC_SITE_URL`, redeploy, and verify the legal routes before changing Meta URLs. Keep review/dry-run mode until a manual workflow run succeeds.
 
 ## Last Commit
 
@@ -199,3 +203,5 @@ Meta compliance-page checkpoint: `9ef6a68 Make Meta compliance URLs truthful and
 Netlify deployment-blocker record: current `HEAD`.
 
 Vercel migration record: current `HEAD` — empty production URL no longer blocks a first deploy.
+
+Vercel/Upstash runtime portability record: current `HEAD`.

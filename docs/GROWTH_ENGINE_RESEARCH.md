@@ -20,18 +20,18 @@ Sources:
 
 ## Scheduler and queue storage
 
-Netlify Scheduled Functions run only on published deploys, use UTC cron expressions, and have a 30 second execution limit. A daily 20:30 Asia/Seoul run is `30 11 * * *` UTC because Korea has no daylight saving time.
+The initial Netlify implementation is retained only as a rollback adapter. The active migration runs protected Next.js/Vercel routes, triggered by GitHub Actions at UTC cron expressions. A daily 20:30 Asia/Seoul run is `30 11 * * *` UTC because Korea has no daylight saving time.
 
-Netlify Blobs is a site-wide key-value store that persists across deploys. It supports strong reads, but concurrent writes are last-write-wins and have no transaction primitive. The queue therefore has a single scheduled writer, an expiring lease, persisted per-item container IDs, and a manual reconciliation state for unknown publish outcomes.
+Upstash Redis REST stores the site-wide JSON runtime state and refreshed token. Its HTTPS REST endpoint works from serverless code with native `fetch`; its standard token stays server-side. The queue remains single-writer, retains persisted container IDs, and uses manual reconciliation for unknown publish outcomes.
 
 Sources:
 
-- https://docs.netlify.com/build/functions/scheduled-functions/
-- https://docs.netlify.com/build/data-and-storage/netlify-blobs/
+- https://vercel.com/docs/functions/runtimes/node-js
+- https://upstash.com/docs/redis/features/restapi
 
 ## GitHub Actions trigger
 
-GitHub Actions schedules run from the default branch and can be delayed or dropped under high load. Public repositories can have scheduled workflows automatically disabled after 60 days of inactivity. At the operator's request, Actions is the visible daily trigger at 20:30 KST, but it does not own queue state or Threads credentials. It calls one protected Netlify publisher endpoint; Netlify Blobs remains the durable idempotency and reconciliation store. The workflow also supports manual dispatch for recovery.
+GitHub Actions schedules run from the default branch and can be delayed or dropped under high load. Public repositories can have scheduled workflows automatically disabled after 60 days of inactivity. At the operator's request, Actions is the visible daily trigger at 20:30 KST, but it does not own queue state or Threads credentials. It calls one protected Vercel publisher endpoint; Upstash remains the durable idempotency and reconciliation store. The workflow also supports manual dispatch for recovery.
 
 Source:
 
