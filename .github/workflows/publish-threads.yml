@@ -1,0 +1,29 @@
+name: Publish prepared Threads content
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 20:30 Asia/Seoul = 11:30 UTC. Korea has no daylight saving time.
+    - cron: "30 11 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  publish-next:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      NETLIFY_PUBLISH_TRIGGER_SECRET: ${{ secrets.NETLIFY_PUBLISH_TRIGGER_SECRET }}
+      NETLIFY_PUBLISH_URL: https://mr-tarot.netlify.app/.netlify/functions/publish-next
+    steps:
+      - name: Trigger the protected Netlify publisher
+        run: |
+          if [ -z "$NETLIFY_PUBLISH_TRIGGER_SECRET" ]; then
+            echo "NETLIFY_PUBLISH_TRIGGER_SECRET is not configured; no post was attempted."
+            exit 0
+          fi
+          curl --fail --silent --show-error --max-time 25 \
+            --request POST "$NETLIFY_PUBLISH_URL" \
+            --header "x-mr-tarot-scheduler: $NETLIFY_PUBLISH_TRIGGER_SECRET" \
+            --header "content-type: application/json"

@@ -29,9 +29,9 @@ Sources:
 - https://docs.netlify.com/build/functions/scheduled-functions/
 - https://docs.netlify.com/build/data-and-storage/netlify-blobs/
 
-## GitHub Actions alternative
+## GitHub Actions trigger
 
-GitHub Actions schedules run from the default branch and can be delayed or dropped under high load. Public repositories can have scheduled workflows automatically disabled after 60 days of inactivity. It is retained only as an optional CI/manual dry-run path, not as the production scheduler.
+GitHub Actions schedules run from the default branch and can be delayed or dropped under high load. Public repositories can have scheduled workflows automatically disabled after 60 days of inactivity. At the operator's request, Actions is the visible daily trigger at 20:30 KST, but it does not own queue state or Threads credentials. It calls one protected Netlify publisher endpoint; Netlify Blobs remains the durable idempotency and reconciliation store. The workflow also supports manual dispatch for recovery.
 
 Source:
 

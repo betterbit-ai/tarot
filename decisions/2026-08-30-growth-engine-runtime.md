@@ -1,7 +1,7 @@
 ---
 date: 2026-08-30
 scope: project
-status: active
+status: superseded
 source: research
 ---
 
@@ -9,7 +9,7 @@ source: research
 
 ## Decision
 
-Threads queue state is stored in a Netlify Blob store and processed by a Netlify Scheduled Function. Content definitions and generated image assets remain versioned in the repository. Publishing defaults to review-first dry run and only enables external HTTP calls after all explicit production variables are configured.
+Superseded by `2026-08-31-github-actions-publish-trigger.md`. Content definitions and generated image assets remain versioned in the repository. Publishing defaults to review-first dry run and only enables external HTTP calls after all explicit production variables are configured.
 
 ## Context and constraints
 

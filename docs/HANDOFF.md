@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-08-30 22:15 KST
+Last updated: 2026-08-31 09:36 KST
 
 ## Current Phase
 
-GROWTH ENGINE: COMPLETE IN DRY-RUN / REVIEW MODE, AWAITING CREDENTIALS + DEPLOYMENT
+GROWTH ENGINE: GITHUB ACTIONS TRIGGER + REVIEW MODE, AWAITING CREDENTIALS + DEPLOYMENT
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
@@ -52,7 +52,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Added `return` question context for comeback, return, and reunion wording so application and mindset copy use a concrete recovery/team-direction frame
 - Share remains the filled primary action while restart is an outlined secondary action on dark and light result surfaces
 - Growth Engine research completed for Meta Threads API, Netlify Scheduled Functions/Blobs, GitHub Actions limitations, and Coupang official surfaces
-- Active Growth Engine spec and runtime decision recorded in `spec/spec.md`, `docs/GROWTH_ENGINE_RESEARCH.md`, and `decisions/2026-08-30-growth-engine-runtime.md`
+- Active Growth Engine spec and runtime decisions recorded in `spec/spec.md`, `docs/GROWTH_ENGINE_RESEARCH.md`, `decisions/2026-08-30-growth-engine-runtime.md`, and `decisions/2026-08-31-github-actions-publish-trigger.md`
 - Affiliate selector now combines question intent and card signals, selects only verified pool items, and skips the interstitial when no relevant verified product exists
 - Generated a 105-item READY content queue across 8 formats and 6 planned topics under `data/content/threads-queue.json`
 - Generated 105 programmatic 1080x1350 Threads PNG images and SVG source assets under `public/threads/generated/`
@@ -61,6 +61,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - `PUBLISH_MODE=review` and `DRY_RUN=true` are defaults. `pnpm content:publish-next` prints the planned main post, image URL, replies, and CTA without calling Threads
 - Metrics sync stores only API-returned views/likes/replies/reposts/quotes and defaults to dry run; browser queue dashboard reads the 105-item source queue and supports copy/preview interaction
 - A daily token-refresh function saves only a successful long-lived Threads token replacement to Blob storage; publisher prefers it over the original environment token
+- GitHub Actions now triggers the protected Netlify publisher at 20:30 KST; Threads credentials remain only in Netlify and Blob queue state prevents replay from ephemeral runners
 - Coupang Partners API discovery corrected: product search, deep link conversion, and daily aggregate reports are available to the operating account; future integration must refresh a privileged theme-based pool without transmitting raw questions or using ADID reco
 - Threads Week 01 calendar contains seven copy-paste-ready posts with varied formats, comments, CTAs, topics, hypotheses and metrics placeholders
 - Seven 1080x1350 SVG choice-card assets generated under `public/threads/week-01/`; Day 01 and Day 04 visual previews checked
@@ -164,7 +165,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Implement the Growth Engine in checkpoint slices: curated affiliate pool first, then content schema/generator, image composer, dry-run publisher, Netlify scheduler, and metrics sync. Do not perform a real Threads publish.
+Deploy `main` to Netlify with `PUBLISH_MODE=review`, `DRY_RUN=true`, and `CONTENT_SCHEDULER_SECRET`; add the matching `NETLIFY_PUBLISH_TRIGGER_SECRET` in GitHub Actions. Trigger the GitHub workflow manually and confirm the dry-run response in Netlify logs. Do not perform a real Threads publish.
 
 ## Last Commit
 
@@ -184,4 +185,4 @@ Naturalness audit checkpoint: `a7c9ba5 Make every tarot reading sound like natur
 
 Editorial result checkpoint: `ccd22bd Ground tarot readings in card-specific meaning and context`.
 
-Growth Engine checkpoints: `7f44e7c`, `d6ce766`, `7f8f367`, `66625be`, `38c608a`, `5873a10`; latest robustness checkpoint pending commit.
+Growth Engine checkpoints: `7f44e7c`, `d6ce766`, `7f8f367`, `66625be`, `38c608a`, `5873a10`; GitHub Actions trigger checkpoint pending commit.

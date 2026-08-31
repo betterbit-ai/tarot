@@ -1,5 +1,4 @@
 import { getStore } from "@netlify/blobs";
-import type { Config } from "@netlify/functions";
 import sourceQueue from "../../data/content/threads-queue.json";
 import type { ContentQueue } from "../../src/domain/content";
 import { getThreadsPublisherConfig } from "../../src/lib/content/config";
@@ -9,7 +8,11 @@ import type { ThreadsTokenState } from "../../src/lib/content/token";
 const STATE_KEY = "threads-runtime-state.json";
 const TOKEN_KEY = "threads-token.json";
 
-const handler = async () => {
+const handler = async (request: Request) => {
+  if (request.method !== "POST") return new Response("Method Not Allowed", { status: 405 });
+  const schedulerSecret = process.env.CONTENT_SCHEDULER_SECRET;
+  if (!schedulerSecret) return new Response("Scheduler secret is not configured", { status: 503 });
+  if (request.headers.get("x-mr-tarot-scheduler") !== schedulerSecret) return new Response("Unauthorized", { status: 401 });
   const blob = getStore("mr-tarot-growth", { consistency: "strong" });
   const store = {
     async read(): Promise<ContentRuntimeQueue> {
@@ -27,5 +30,3 @@ const handler = async () => {
 };
 
 export default handler;
-
-export const config: Config = { schedule: "30 11 * * *" };

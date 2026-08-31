@@ -30,7 +30,7 @@ pnpm content:refresh-token
 
 ## Production schedule
 
-`netlify/functions/refresh-threads-token.mts` runs at 09:05 Asia/Seoul. `netlify/functions/publish-next.mts` runs at `30 11 * * *`, which is 20:30 Asia/Seoul. Korea has no daylight saving time. The metrics sync runs at `10 12 * * *`, one hour and forty minutes later.
+`netlify/functions/refresh-threads-token.mts` runs at 09:05 Asia/Seoul. GitHub Actions triggers the protected `publish-next` function at `30 11 * * *`, which is 20:30 Asia/Seoul. Korea has no daylight saving time. The metrics sync runs at `10 12 * * *`, one hour and forty minutes later.
 
 Scheduled functions run in UTC, only after a published deploy, and have a 30-second limit. The publisher is intentionally sequential: main post, result replies, then CTA reply.
 
@@ -40,9 +40,12 @@ Set these in Netlify environment variables, never in Git:
 
 - `THREADS_ACCESS_TOKEN`: long-lived Threads user access token
 - `THREADS_USER_ID`: Threads user id from Meta OAuth
+- `CONTENT_SCHEDULER_SECRET`: random secret accepted only by the Netlify publish endpoint
 - `NEXT_PUBLIC_SITE_URL`: production site, currently `https://mr-tarot.netlify.app`
 - `PUBLISH_MODE=auto`
 - `DRY_RUN=false`
+
+Set the exact same random value as `NETLIFY_PUBLISH_TRIGGER_SECRET` in GitHub Actions secrets. GitHub only uses it to trigger Netlify; it never receives the Threads token.
 
 Before switching those two final values, confirm the Meta token has `threads_basic`, `threads_content_publish`, `threads_read_replies`, `threads_manage_replies`, and `threads_manage_insights` as applicable to the chosen features. Run one manual scheduled function invocation in Netlify while watching its logs.
 
