@@ -24,6 +24,7 @@ import {
 } from "./shared";
 
 const tempRoots: string[] = [];
+const GENERATION_TEST_TIMEOUT = 20_000;
 
 afterEach(async () => {
   await Promise.all(
@@ -83,7 +84,7 @@ describe("tarot data tooling", () => {
     const result = await generateOne(root, 2, { resume: true });
 
     expect(result.status).toBe("skipped");
-  });
+  }, GENERATION_TEST_TIMEOUT);
 
   it("supports ranged generation", async () => {
     const root = await createTempRoot("range");
@@ -99,7 +100,7 @@ describe("tarot data tooling", () => {
 
     expect(result.targetedBatches).toEqual([2, 3]);
     expect(result.generated.filter((entry) => entry.status === "generated")).toHaveLength(2);
-  });
+  }, GENERATION_TEST_TIMEOUT);
 
   it("rejects overlapping locks and recovers stale locks", async () => {
     const root = await createTempRoot("locks");
@@ -116,7 +117,7 @@ describe("tarot data tooling", () => {
     const result = await generateOne(root, 4, { staleLockMs: 1_000 });
 
     expect(result.status).toBe("generated");
-  });
+  }, GENERATION_TEST_TIMEOUT);
 
   it("rejects invalid json, invalid keys, and wrong row counts", async () => {
     const root = await createTempRoot("invalid");

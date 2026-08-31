@@ -150,7 +150,7 @@ UX v2 verification on 2026-08-28:
 - `pnpm typecheck`, `pnpm lint`, `pnpm test`: 20 files, 52 tests pass after result-page restructure
 - `pnpm tarot:audit`: added editorial-layer, redundant-visual, and awkward-flow checks; all 76,076 rows still pass with zero failures
 - `pnpm tarot:generate --from 1 --to 381`: regenerated all 76,076 prose rows with suit-specific minor meanings
-- Growth Engine checks: `pnpm content:generate --count 105`, `pnpm content:images`, `pnpm content:validate`, `pnpm content:status`, `pnpm content:publish-next`, `pnpm content:sync-metrics`, 24 test files / 60 tests, typecheck, lint, and build all pass
+- Growth Engine checks: `pnpm content:generate --count 105`, `pnpm content:images`, `pnpm content:validate`, `pnpm content:status`, `pnpm content:publish-next`, `pnpm content:sync-metrics`, `pnpm content:refresh-token`, 25 test files / 62 tests, typecheck, lint, and build all pass
 - `pnpm tarot:skeletons:validate`: 381 batches, 76,076 skeleton rows
 - Next.js webpack production build: compiled, type-checked, generated all 5 static pages and finalized output successfully
 - tarot validate: 78 cards, 76,076 combinations, 381 batches, 4 samples, 100 baseline eval rows; UX v2 uses a separate 30-row representative fixture
@@ -183,4 +183,4 @@ Naturalness audit checkpoint: `a7c9ba5 Make every tarot reading sound like natur
 
 Editorial result checkpoint: `ccd22bd Ground tarot readings in card-specific meaning and context`.
 
-Growth Engine checkpoints: `7f44e7c`, `d6ce766`, `7f8f367`, `66625be`, `38c608a`, `5873a10`.
+Growth Engine checkpoints: `7f44e7c`, `d6ce766`, `7f8f367`, `66625be`, `38c608a`, `5873a10`; latest robustness checkpoint pending commit.
