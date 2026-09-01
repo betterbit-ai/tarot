@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-01 10:35 KST
+Last updated: 2026-09-01 12:18 KST
 
 ## Current Phase
 
-VERCEL FREE MIGRATION: WEB DEPLOYMENT LIVE + REVIEW-FIRST GROWTH ENGINE AWAITING PROVIDER INPUT
+VERCEL FREE MIGRATION: MR-TAROT DOMAIN LIVE + REVIEW-FIRST GROWTH ENGINE AWAITING PROVIDER INPUT
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
@@ -80,23 +80,23 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Upstash account is connected under `joelonsw`; free Redis database `mr-tarot-growth` was created in `us-east-1` with REST API and TLS enabled. Its REST URL is stored in Vercel; the standard REST token is intentionally not read or recorded and still needs direct operator paste into Vercel.
 - Coupang Partners Access Key and Secret Key were transferred directly from the authenticated Partners UI into Vercel server-only Secrets. Values are not present in Git, docs or chat.
 - Threads public profile link was saved as `tarot-ten-gamma.vercel.app` with UTM parameters. Meta Basic Settings could not be re-verified because the session redirected to Facebook login.
+- Vercel project was renamed to `mr-tarot` and `https://mr-tarot.vercel.app` was connected to Production. `NEXT_PUBLIC_SITE_URL` now uses that alias and a redeploy was requested.
+- Threads profile link was corrected to `https://mr-tarot.vercel.app/?utm_source=threads&utm_medium=social&utm_content=link_in_bio`; the public profile now displays `mr-tarot.vercel.app`.
 
 ## In Progress
 
-- Push the Vercel build-safety checkpoint. It handles an empty or invalid `NEXT_PUBLIC_SITE_URL` without failing the build, allowing Vercel to assign a deployment URL first.
-- After Vercel serves the project, set `NEXT_PUBLIC_SITE_URL` to the verified production URL and redeploy before changing Meta URLs.
-- Keep `PUBLISH_MODE=review` and `DRY_RUN=true`; no live Threads post may occur while the Netlify Blob-backed publisher is being made portable.
-- Create a free Upstash Redis database, then set its REST URL/token in Vercel. Do not enable automatic publication yet.
+- Wait for the current `mr-tarot` redeploy to finish, then verify `/`, `/privacy`, `/terms`, and `/data-deletion` on `https://mr-tarot.vercel.app`.
+- Paste the Upstash REST token into Vercel `UPSTASH_REDIS_REST_TOKEN`; do not put it in Git or chat.
 - Meta settings save redirected to a Facebook login prompt before reflection could be verified. Facebook login is needed to validate the Vercel policy URLs, category and OAuth redirect setup.
 - Upstash REST token still needs direct paste in Vercel. The browser automation surface does not expose the masked token to another form, by design.
 - GitHub repository Actions settings returned 404 for the current GitHub session; `GROWTH_SCHEDULER_SECRET` must be added by an account with repository Actions-secret access.
 
 ## Remaining
 
-- Set `NEXT_PUBLIC_SITE_URL=https://mr-tarot.netlify.app`, `AFFILIATE_ENABLED=true`, and the server-only `COUPANG_PARTNERS_URL` in production
+- Set `NEXT_PUBLIC_SITE_URL=https://mr-tarot.vercel.app`, `AFFILIATE_ENABLED=true`, and the server-only `COUPANG_PARTNERS_URL` in production (the first two are already applied; verify the redeploy)
 - Confirm the final Coupang partner destination and policy wording with the operating account
 - Run a final physical iPhone Safari/native share smoke test after deployment
-- Threads posting and metrics collection remain manual; no Meta API or auto-publishing was added
+- Threads posting remains disabled until Upstash token, Meta OAuth, and GitHub Actions secret setup are complete; no live post has been created
 - Legacy prose batches are retained for rollback/audit but are not used by the normal ritual runtime
 - The legacy prose batches were regenerated from the current renderer after the naturalness pass; the runtime still uses the smaller hybrid skeleton route
 
@@ -110,7 +110,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Home OG uses a symbolic three-card brand composition; shared-result OG uses actual selected RWS fronts
 - Threads assets are SVG source artwork for direct social export; export at 1080x1350 PNG only if the account requires raster uploads
 - Netlify reports that the `betterbit-ai` team has operational credits only and that production deploys are paused. The current `mr-tarot.netlify.app/privacy` response is therefore 404 even though `main` contains the route. Do not save the Meta policy URLs until the deploy succeeds.
-- The Vercel Hobby import currently has 14 detected variable names. The supplied `.env.local` has only `NEXT_PUBLIC_SITE_URL`, `AFFILIATE_ENABLED`, and `COUPANG_PARTNERS_URL` populated. All publishing and API credentials must remain empty until their provider setup is verified.
+- The Vercel Hobby import currently has 20 detected variable names. Public site/affiliate defaults and the Coupang Secrets are present; Upstash REST token, Threads App Secret and user token remain unset.
 - Vercel/Upstash port exists in source but is intentionally inactive without `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, and `CONTENT_SCHEDULER_SECRET`.
 - `COUPANG_PARTNERS_API_ENABLED` remains unset because live product-pool refresh is not yet implemented; do not claim that the stored keys have started live discovery.
 
@@ -219,3 +219,5 @@ Vercel migration record: current `HEAD` — empty production URL no longer block
 Vercel/Upstash runtime portability record: current `HEAD`.
 
 Vercel live + Threads link + OAuth callback record: `f951faf` followed by current provider setup.
+
+Vercel project rename/domain record: current `HEAD` — `mr-tarot` / `mr-tarot.vercel.app`.
