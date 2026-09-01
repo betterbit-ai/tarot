@@ -23,7 +23,15 @@ jobs:
             echo "Vercel token-refresh settings are incomplete; no refresh was attempted."
             exit 0
           fi
-          curl --fail --silent --show-error --max-time 25 \
+          response_file="$(mktemp)"
+          http_status="$(curl --silent --show-error --max-time 25 \
+            --output "$response_file" \
+            --write-out "%{http_code}" \
             --request POST "$VERCEL_GROWTH_BASE_URL/api/content/refresh-token" \
             --header "x-mr-tarot-scheduler: $CONTENT_SCHEDULER_SECRET" \
-            --header "content-type: application/json"
+            --header "content-type: application/json")"
+          echo "Vercel token-refresh HTTP status: $http_status"
+          sed -E 's/(accessToken|token|secret|authorization)[^,}]*/\1=[redacted]/gi' "$response_file"
+          if [ "$http_status" -ge 400 ]; then
+            exit 22
+          fi
