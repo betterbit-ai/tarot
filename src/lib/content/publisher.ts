@@ -117,7 +117,7 @@ async function requestContainer(config: ThreadsPublisherConfig, text: string, re
 async function waitForContainer(config: ThreadsPublisherConfig, containerId: string): Promise<void> {
   if (!config.accessToken) throw new Error("Threads access token is not configured");
 
-  const maxChecks = 6;
+  const maxChecks = 12;
   for (let check = 0; check < maxChecks; check += 1) {
     const response = await fetch(`${config.apiBaseUrl}/${containerId}?fields=status,error_message`, {
       headers: { authorization: `Bearer ${config.accessToken}` },
