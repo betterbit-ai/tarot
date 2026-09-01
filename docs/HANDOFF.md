@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-01 10:12 KST
+Last updated: 2026-09-01 10:35 KST
 
 ## Current Phase
 
-VERCEL FREE MIGRATION: WEB DEPLOYMENT RECOVERY + REVIEW-FIRST GROWTH ENGINE PORTABILITY
+VERCEL FREE MIGRATION: WEB DEPLOYMENT LIVE + REVIEW-FIRST GROWTH ENGINE AWAITING PROVIDER INPUT
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
@@ -77,6 +77,9 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Vercel has `NEXT_PUBLIC_SITE_URL` as a public Config value, affiliate enabled with the verified partner URL, and `PUBLISH_MODE=review` plus `DRY_RUN=true`. Coupang Access/Secret Keys were copied directly from the Partners UI into Vercel server-only Secrets and never committed or recorded in docs.
 - The Threads profile link now points to `https://tarot-ten-gamma.vercel.app/?utm_source=threads&utm_medium=social&utm_content=link_in_bio` and publicly displays the new Vercel host.
 - Threads OAuth start/callback routes now bind a signed, expiring state to an HttpOnly browser cookie, verify the authorized `@mr._.tarot` username through the Threads API, exchange a code in a POST body, and store only the long-lived token in Upstash. Publisher uses the stored OAuth user id when present.
+- Upstash account is connected under `joelonsw`; free Redis database `mr-tarot-growth` was created in `us-east-1` with REST API and TLS enabled. Its REST URL is stored in Vercel; the standard REST token is intentionally not read or recorded and still needs direct operator paste into Vercel.
+- Coupang Partners Access Key and Secret Key were transferred directly from the authenticated Partners UI into Vercel server-only Secrets. Values are not present in Git, docs or chat.
+- Threads public profile link was saved as `tarot-ten-gamma.vercel.app` with UTM parameters. Meta Basic Settings could not be re-verified because the session redirected to Facebook login.
 
 ## In Progress
 
@@ -85,7 +88,8 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Keep `PUBLISH_MODE=review` and `DRY_RUN=true`; no live Threads post may occur while the Netlify Blob-backed publisher is being made portable.
 - Create a free Upstash Redis database, then set its REST URL/token in Vercel. Do not enable automatic publication yet.
 - Meta settings save redirected to a Facebook login prompt before reflection could be verified. Facebook login is needed to validate the Vercel policy URLs, category and OAuth redirect setup.
-- Upstash is at the GitHub account-selection page. The operator must choose an account before a free Redis database can be created.
+- Upstash REST token still needs direct paste in Vercel. The browser automation surface does not expose the masked token to another form, by design.
+- GitHub repository Actions settings returned 404 for the current GitHub session; `GROWTH_SCHEDULER_SECRET` must be added by an account with repository Actions-secret access.
 
 ## Remaining
 
@@ -184,7 +188,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Log in to Facebook in the kept Meta tab, choose an Upstash account and create the free Redis database. Then set its REST URL/token, `CONTENT_SCHEDULER_SECRET`, `THREADS_APP_ID`, `THREADS_APP_SECRET`, and the exact OAuth callback URL as Vercel Secrets. Add the same callback to Meta, complete `/api/threads/oauth/start`, then run GitHub Actions in review/dry-run mode. Do not enable auto publishing before the manual dry run succeeds.
+Paste the Upstash REST token into Vercel `UPSTASH_REDIS_REST_TOKEN`. Log in to Facebook in Meta for Developers, verify/save the Vercel policy URLs, add the exact OAuth callback, and store `THREADS_APP_SECRET` in Vercel. Add `GROWTH_SCHEDULER_SECRET` to GitHub Actions, set `VERCEL_GROWTH_BASE_URL`, then complete `/api/threads/oauth/start` and run one review/dry-run workflow. Do not enable auto publishing before that dry run succeeds.
 
 ## Last Commit
 
@@ -214,4 +218,4 @@ Vercel migration record: current `HEAD` — empty production URL no longer block
 
 Vercel/Upstash runtime portability record: current `HEAD`.
 
-Vercel live + Threads link + OAuth callback record: `06562f4` followed by current OAuth security repair.
+Vercel live + Threads link + OAuth callback record: `f951faf` followed by current provider setup.
