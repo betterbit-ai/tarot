@@ -103,6 +103,25 @@ async function requestContainer(config: ThreadsPublisherConfig, text: string, re
   return payload.id;
 }
 
+async function waitForImageContainer(config: ThreadsPublisherConfig, containerId: string): Promise<void> {
+  if (!config.accessToken) throw new Error("Threads access token is not configured");
+
+  const maxChecks = 6;
+  for (let check = 0; check < maxChecks; check += 1) {
+    const response = await fetch(`${config.apiBaseUrl}/${containerId}?fields=status,error_message`, {
+      headers: { authorization: `Bearer ${config.accessToken}` },
+    });
+    if (!response.ok) throw new Error(`container status request failed: ${response.status}`);
+
+    const payload = await response.json() as { status?: string; error_message?: string };
+    if (payload.status === "FINISHED") return;
+    if (payload.status === "ERROR") throw new Error(`container processing failed: ${payload.error_message ?? "unknown error"}`);
+    if (check < maxChecks - 1) await new Promise((resolve) => setTimeout(resolve, 400));
+  }
+
+  throw new Error("image container is still processing");
+}
+
 async function publishContainer(config: ThreadsPublisherConfig, containerId: string): Promise<string> {
   const response = await fetch(`${config.apiBaseUrl}/${config.userId}/threads_publish`, {
     method: "POST",
@@ -151,6 +170,7 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
       queue = applyState(queue, item.id, runtime);
       await store.write(queue);
     }
+    if (imageUrl) await waitForImageContainer(config, mainContainerId);
     const mainPostId = runtime.mainPostId ?? await publishContainer(config, mainContainerId);
     runtime = { ...runtime, mainPostId, updatedAt: now() };
     queue = applyState(queue, item.id, runtime);

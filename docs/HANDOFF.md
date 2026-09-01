@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-02 02:05 KST
+Last updated: 2026-09-02 02:00 KST
 
 ## Current Phase
 
-VERCEL FREE MIGRATION: MR-TAROT DOMAIN LIVE + AUTO CONFIGURED, THREADS CREDENTIAL DIAGNOSTIC BLOCKED
+VERCEL FREE MIGRATION: MR-TAROT DOMAIN LIVE + AUTO CONFIGURED, IMAGE PUBLISH READINESS FIX IN PROGRESS
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
@@ -89,10 +89,12 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Publish workflow run #12 reached Vercel with HTTP 200 after the latest Production redeploy but still returned `mode: failed` with `Missing Threads credentials or site URL`. Upstash runtime state remains `mr-tarot-0001: READY` and no `mr-tarot:threads-token:v1` key exists.
 - `PUBLISH_MODE=auto` and `DRY_RUN=false` were deleted/recreated as readable Config variables and verified through the Vercel dashboard. The remaining failure is a missing or invalid `THREADS_ACCESS_TOKEN` or `THREADS_USER_ID` in the deployed runtime, not a dry-run flag.
 - Latest token-refresh workflow #6 returned HTTP 200 but did not create `mr-tarot:threads-token:v1`; the publisher therefore remains fail-closed and has not created a confirmed live post.
+- After the operator supplied `THREADS_ACCESS_TOKEN` and numeric `THREADS_USER_ID`, token-refresh workflow #7 returned HTTP 200 with `{"mode":"refreshed"}`.
+- Publish workflow #13 reached Vercel with HTTP 200 and valid content, but Threads returned `400` while publishing the image container. The publisher now polls image-container status before calling `threads_publish`.
 
 ## In Progress
 
-- Wait for the current `mr-tarot` redeploy to finish, then verify `/`, `/privacy`, `/terms`, and `/data-deletion` on `https://mr-tarot.vercel.app`.
+- Deploy the image-container readiness polling fix and rerun the first queued Threads item; require `mode: published` before unattended auto mode.
 - Paste the Upstash REST token into Vercel `UPSTASH_REDIS_REST_TOKEN`; do not put it in Git or chat.
 - Meta settings save redirected to a Facebook login prompt before reflection could be verified. Facebook login is needed to validate the Vercel policy URLs, category and OAuth redirect setup.
 - Upstash REST token still needs direct paste in Vercel. The browser automation surface does not expose the masked token to another form, by design.
@@ -104,7 +106,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Auto mode is enabled in the current Vercel Production deployment. Leave the daily GitHub schedule enabled and do not manually rerun it unless reconciling the queue.
 - Confirm the final Coupang partner destination and policy wording with the operating account
 - Run a final physical iPhone Safari/native share smoke test after deployment
-- Threads auto publishing is configured, but no post is considered published until a token-refresh run creates the Upstash token state and a publisher response returns `mode: published`.
+- Threads auto publishing is configured, but no post is considered published until a publisher response returns `mode: published`.
 - Vercel `THREADS_ACCESS_TOKEN` must be a valid long-lived Threads user token and `THREADS_USER_ID` must be the numeric id for `@mr._.tarot`, not the Threads App ID. Both must be set for the Production environment and followed by a redeploy.
 - Legacy prose batches are retained for rollback/audit but are not used by the normal ritual runtime
 - The legacy prose batches were regenerated from the current renderer after the naturalness pass; the runtime still uses the smaller hybrid skeleton route
@@ -199,7 +201,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Put a valid long-lived Threads user access token and the numeric `@mr._.tarot` user id in Vercel Production, redeploy, run token-refresh, confirm `mr-tarot:threads-token:v1` appears in Upstash, and require a `mode: published` response before leaving auto mode unattended.
+Commit and deploy the image-container readiness polling fix in `src/lib/content/publisher.ts`, then rerun `Publish prepared Threads content`. Inspect the redacted response and Threads profile; only leave the daily schedule unattended after a `mode: published` result.
 
 ## Last Commit
 
@@ -233,4 +235,4 @@ Vercel live + Threads link + OAuth callback record: `f951faf` followed by curren
 
 Vercel project rename/domain record: current `HEAD` — `mr-tarot` / `mr-tarot.vercel.app`.
 
-Scheduler diagnostic checkpoint: current `HEAD` — GitHub reaches Vercel but receives redacted `401 Unauthorized`; no post attempted.
+Scheduler diagnostic checkpoint: current `HEAD` — GitHub reaches Vercel; token refresh succeeds, while publish #13 exposed an image-container readiness `400`.
