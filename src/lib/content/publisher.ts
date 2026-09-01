@@ -103,6 +103,7 @@ async function requestContainer(config: ThreadsPublisherConfig, text: string, re
   if (replyToId) body.set("reply_to_id", replyToId);
   if (imageUrl) body.set("image_url", imageUrl);
   if (altText) body.set("alt_text", altText);
+  if (!imageUrl) body.set("auto_publish_text", "true");
   const response = await fetch(`${config.apiBaseUrl}/${config.userId}/threads`, {
     method: "POST",
     headers: { authorization: `Bearer ${config.accessToken}`, "content-type": "application/x-www-form-urlencoded" },
@@ -181,8 +182,8 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
       queue = applyState(queue, item.id, runtime);
       await store.write(queue);
     }
-    await waitForContainer(config, mainContainerId);
-    const mainPostId = runtime.mainPostId ?? await publishContainer(config, mainContainerId);
+    if (imageUrl) await waitForContainer(config, mainContainerId);
+    const mainPostId = runtime.mainPostId ?? (imageUrl ? await publishContainer(config, mainContainerId) : mainContainerId);
     runtime = { ...runtime, mainPostId, updatedAt: now() };
     queue = applyState(queue, item.id, runtime);
     await store.write(queue);
@@ -195,8 +196,8 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
       runtime = { ...runtime, replyContainerIds, replyPostIds, updatedAt: now() };
       queue = applyState(queue, item.id, runtime);
       await store.write(queue);
-      await waitForContainer(config, containerId);
-      replyPostIds[index] = await publishContainer(config, containerId);
+      // Replies are text containers created with auto_publish_text=true.
+      replyPostIds[index] = containerId;
       runtime = { ...runtime, replyContainerIds, replyPostIds, updatedAt: now() };
       queue = applyState(queue, item.id, runtime);
       await store.write(queue);
