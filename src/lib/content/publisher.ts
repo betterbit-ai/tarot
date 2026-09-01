@@ -103,7 +103,7 @@ async function requestContainer(config: ThreadsPublisherConfig, text: string, re
   return payload.id;
 }
 
-async function waitForImageContainer(config: ThreadsPublisherConfig, containerId: string): Promise<void> {
+async function waitForContainer(config: ThreadsPublisherConfig, containerId: string): Promise<void> {
   if (!config.accessToken) throw new Error("Threads access token is not configured");
 
   const maxChecks = 6;
@@ -119,7 +119,7 @@ async function waitForImageContainer(config: ThreadsPublisherConfig, containerId
     if (check < maxChecks - 1) await new Promise((resolve) => setTimeout(resolve, 400));
   }
 
-  throw new Error("image container is still processing");
+  throw new Error("media container is still processing");
 }
 
 async function publishContainer(config: ThreadsPublisherConfig, containerId: string): Promise<string> {
@@ -170,7 +170,7 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
       queue = applyState(queue, item.id, runtime);
       await store.write(queue);
     }
-    if (imageUrl) await waitForImageContainer(config, mainContainerId);
+    await waitForContainer(config, mainContainerId);
     const mainPostId = runtime.mainPostId ?? await publishContainer(config, mainContainerId);
     runtime = { ...runtime, mainPostId, updatedAt: now() };
     queue = applyState(queue, item.id, runtime);
@@ -184,6 +184,7 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
       runtime = { ...runtime, replyContainerIds, replyPostIds, updatedAt: now() };
       queue = applyState(queue, item.id, runtime);
       await store.write(queue);
+      await waitForContainer(config, containerId);
       replyPostIds[index] = await publishContainer(config, containerId);
       runtime = { ...runtime, replyContainerIds, replyPostIds, updatedAt: now() };
       queue = applyState(queue, item.id, runtime);

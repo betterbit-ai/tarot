@@ -32,8 +32,10 @@ describe("Threads publisher", () => {
       new Response(JSON.stringify({ status: "FINISHED" }), { status: 200 }),
       new Response(JSON.stringify({ id: "main-post" }), { status: 200 }),
       new Response(JSON.stringify({ id: "reply-container" }), { status: 200 }),
+      new Response(JSON.stringify({ status: "FINISHED" }), { status: 200 }),
       new Response(JSON.stringify({ id: "reply-post" }), { status: 200 }),
       new Response(JSON.stringify({ id: "cta-container" }), { status: 200 }),
+      new Response(JSON.stringify({ status: "FINISHED" }), { status: 200 }),
       new Response(JSON.stringify({ id: "cta-post" }), { status: 200 }),
     ];
     vi.stubGlobal("fetch", vi.fn(async () => responses.shift()));
