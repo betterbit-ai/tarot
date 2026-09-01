@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-01 12:18 KST
+Last updated: 2026-09-01 12:36 KST
 
 ## Current Phase
 
-VERCEL FREE MIGRATION: MR-TAROT DOMAIN LIVE + REVIEW-FIRST GROWTH ENGINE AWAITING PROVIDER INPUT
+VERCEL FREE MIGRATION: MR-TAROT DOMAIN LIVE + REVIEW-FIRST GROWTH ENGINE DIAGNOSTIC IN PROGRESS
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
@@ -82,6 +82,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Threads public profile link was saved as `tarot-ten-gamma.vercel.app` with UTM parameters. Meta Basic Settings could not be re-verified because the session redirected to Facebook login.
 - Vercel project was renamed to `mr-tarot` and `https://mr-tarot.vercel.app` was connected to Production. `NEXT_PUBLIC_SITE_URL` now uses that alias and a redeploy was requested.
 - Threads profile link was corrected to `https://mr-tarot.vercel.app/?utm_source=threads&utm_medium=social&utm_content=link_in_bio`; the public profile now displays `mr-tarot.vercel.app`.
+- Vercel and GitHub scheduler secrets were rotated together, but the first post-redeploy dry-runs still receive `401 Unauthorized`; the workflow now prints only status and redacted response text for diagnosis.
 
 ## In Progress
 
@@ -90,10 +91,11 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Meta settings save redirected to a Facebook login prompt before reflection could be verified. Facebook login is needed to validate the Vercel policy URLs, category and OAuth redirect setup.
 - Upstash REST token still needs direct paste in Vercel. The browser automation surface does not expose the masked token to another form, by design.
 - GitHub repository Actions settings returned 404 for the current GitHub session; `GROWTH_SCHEDULER_SECRET` must be added by an account with repository Actions-secret access.
+- GitHub Actions variable and repository secret are now visible and present. The remaining `401` indicates Vercel's deployed secret snapshot or value still differs; no Threads post was attempted.
 
 ## Remaining
 
-- Set `NEXT_PUBLIC_SITE_URL=https://mr-tarot.vercel.app`, `AFFILIATE_ENABLED=true`, and the server-only `COUPANG_PARTNERS_URL` in production (the first two are already applied; verify the redeploy)
+- Verify the latest Vercel Production deployment after the scheduler-secret rotation and rerun the protected dry-run.
 - Confirm the final Coupang partner destination and policy wording with the operating account
 - Run a final physical iPhone Safari/native share smoke test after deployment
 - Threads posting remains disabled until Upstash token, Meta OAuth, and GitHub Actions secret setup are complete; no live post has been created
@@ -112,6 +114,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Netlify reports that the `betterbit-ai` team has operational credits only and that production deploys are paused. The current `mr-tarot.netlify.app/privacy` response is therefore 404 even though `main` contains the route. Do not save the Meta policy URLs until the deploy succeeds.
 - The Vercel Hobby import currently has 20 detected variable names. Public site/affiliate defaults and the Coupang Secrets are present; Upstash REST token, Threads App Secret and user token remain unset.
 - Vercel/Upstash port exists in source but is intentionally inactive without `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, and `CONTENT_SCHEDULER_SECRET`.
+- Vercel/Upstash port is configured, but the protected publisher currently fails closed with `401` until the deployed scheduler secret matches GitHub's repository secret.
 - `COUPANG_PARTNERS_API_ENABLED` remains unset because live product-pool refresh is not yet implemented; do not claim that the stored keys have started live discovery.
 
 ## Current Tarot Asset Status
@@ -221,3 +224,5 @@ Vercel/Upstash runtime portability record: current `HEAD`.
 Vercel live + Threads link + OAuth callback record: `f951faf` followed by current provider setup.
 
 Vercel project rename/domain record: current `HEAD` — `mr-tarot` / `mr-tarot.vercel.app`.
+
+Scheduler diagnostic checkpoint: current `HEAD` — GitHub reaches Vercel but receives redacted `401 Unauthorized`; no post attempted.
