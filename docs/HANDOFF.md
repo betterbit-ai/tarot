@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-01 12:36 KST
+Last updated: 2026-09-02 00:52 KST
 
 ## Current Phase
 
-VERCEL FREE MIGRATION: MR-TAROT DOMAIN LIVE + REVIEW-FIRST GROWTH ENGINE DIAGNOSTIC IN PROGRESS
+VERCEL FREE MIGRATION: MR-TAROT DOMAIN LIVE + THREADS AUTO PUBLISH ENABLED
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
@@ -83,6 +83,9 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Vercel project was renamed to `mr-tarot` and `https://mr-tarot.vercel.app` was connected to Production. `NEXT_PUBLIC_SITE_URL` now uses that alias and a redeploy was requested.
 - Threads profile link was corrected to `https://mr-tarot.vercel.app/?utm_source=threads&utm_medium=social&utm_content=link_in_bio`; the public profile now displays `mr-tarot.vercel.app`.
 - Vercel and GitHub scheduler secrets were rotated together, but the first post-redeploy dry-runs still receive `401 Unauthorized`; the workflow now prints only status and redacted response text for diagnosis.
+- Canonical `CONTENT_SCHEDULER_SECRET` was added to GitHub Actions and Vercel; after a fresh Production redeploy, publish workflow run #9 succeeded in dry-run mode and run #11 succeeded with `PUBLISH_MODE=auto` and `DRY_RUN=false`.
+- Threads token-refresh workflow run #2 succeeded, confirming the stored token can refresh through Vercel/Upstash without exposing the token.
+- Publish workflow run #11 reached Vercel with HTTP 200 but returned `mode: failed` because the runtime lacked Threads credentials or site URL; its response was inspected without exposing tokens. Token refresh now also resolves and persists the verified `@mr._.tarot` user id from `/me`.
 
 ## In Progress
 
@@ -91,14 +94,14 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Meta settings save redirected to a Facebook login prompt before reflection could be verified. Facebook login is needed to validate the Vercel policy URLs, category and OAuth redirect setup.
 - Upstash REST token still needs direct paste in Vercel. The browser automation surface does not expose the masked token to another form, by design.
 - GitHub repository Actions settings returned 404 for the current GitHub session; `GROWTH_SCHEDULER_SECRET` must be added by an account with repository Actions-secret access.
-- GitHub Actions variable and repository secret are now visible and present. The remaining `401` indicates Vercel's deployed secret snapshot or value still differs; no Threads post was attempted.
+- GitHub Actions variable and repository secret are now visible and present. The latest protected publish workflow succeeded after the canonical secret migration.
 
 ## Remaining
 
-- Verify the latest Vercel Production deployment after the scheduler-secret rotation and rerun the protected dry-run.
+- Auto mode is enabled in the current Vercel Production deployment. Leave the daily GitHub schedule enabled and do not manually rerun it unless reconciling the queue.
 - Confirm the final Coupang partner destination and policy wording with the operating account
 - Run a final physical iPhone Safari/native share smoke test after deployment
-- Threads posting remains disabled until Upstash token, Meta OAuth, and GitHub Actions secret setup are complete; no live post has been created
+- Threads auto publishing remains enabled, but the next live run is held until the user-id recovery code is deployed and a refresh workflow repopulates Upstash state.
 - Legacy prose batches are retained for rollback/audit but are not used by the normal ritual runtime
 - The legacy prose batches were regenerated from the current renderer after the naturalness pass; the runtime still uses the smaller hybrid skeleton route
 
@@ -116,6 +119,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Vercel/Upstash port exists in source but is intentionally inactive without `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, and `CONTENT_SCHEDULER_SECRET`.
 - Vercel/Upstash port is configured, but the protected publisher currently fails closed with `401` until the deployed scheduler secret matches GitHub's repository secret.
 - `COUPANG_PARTNERS_API_ENABLED` remains unset because live product-pool refresh is not yet implemented; do not claim that the stored keys have started live discovery.
+- Threads profile link edit is not persistent: the UI optimistically displays `mr-tarot.vercel.app`, but a reload restores `mr-tarot.netlify.app`. Fix or manually retry before claiming the profile migration complete.
 
 ## Current Tarot Asset Status
 

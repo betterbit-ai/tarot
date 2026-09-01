@@ -28,6 +28,21 @@ export type ThreadsOAuthExchange = {
   userId: string;
 };
 
+export async function fetchThreadsIdentity(
+  accessToken: string,
+  config: Pick<ThreadsOAuthConfig, "apiBaseUrl" | "expectedUsername">,
+  fetcher: typeof fetch = fetch,
+): Promise<{ id: string; username: string }> {
+  if (!config.expectedUsername) throw new Error("Threads expected username is not configured");
+  const identity = new URL(`${config.apiBaseUrl}/me`);
+  identity.searchParams.set("fields", "id,username");
+  const response = await fetcher(identity, { headers: { authorization: `Bearer ${accessToken}` } });
+  if (!response.ok) throw new Error(`Threads identity check failed: ${response.status}`);
+  const payload = await response.json() as { id?: string; username?: string };
+  if (!payload.id || payload.username !== config.expectedUsername) throw new Error("Threads OAuth authorized an unexpected account");
+  return { id: payload.id, username: payload.username };
+}
+
 type OAuthState = { binding: string; expiresAt: number };
 
 function trim(value: string | undefined): string | undefined {
@@ -113,14 +128,8 @@ export async function exchangeThreadsOAuthCode(
   const codePayload = await codeResponse.json() as { access_token?: string; user_id?: string };
   if (!codePayload.access_token || !codePayload.user_id) throw new Error("Threads OAuth code exchange returned incomplete credentials");
 
-  const identity = new URL(`${config.apiBaseUrl}/me`);
-  identity.searchParams.set("fields", "id,username");
-  const identityResponse = await fetcher(identity, { headers: { authorization: `Bearer ${codePayload.access_token}` } });
-  if (!identityResponse.ok) throw new Error(`Threads identity check failed: ${identityResponse.status}`);
-  const identityPayload = await identityResponse.json() as { id?: string; username?: string };
-  if (identityPayload.id !== codePayload.user_id || identityPayload.username !== config.expectedUsername) {
-    throw new Error("Threads OAuth authorized an unexpected account");
-  }
+  const identity = await fetchThreadsIdentity(codePayload.access_token, config, fetcher);
+  if (identity.id !== codePayload.user_id) throw new Error("Threads OAuth authorized an unexpected account");
 
   const longLived = new URL(`${config.apiBaseUrl}/access_token`);
   longLived.search = new URLSearchParams({ grant_type: "th_exchange_token", client_secret: config.appSecret, access_token: codePayload.access_token }).toString();
@@ -131,12 +140,12 @@ export async function exchangeThreadsOAuthCode(
 
   const refreshedAt = now();
   return {
-    userId: codePayload.user_id,
+    userId: identity.id,
     token: {
       accessToken: longLivedPayload.access_token,
       refreshedAt: refreshedAt.toISOString(),
       expiresAt: typeof longLivedPayload.expires_in === "number" ? new Date(refreshedAt.getTime() + longLivedPayload.expires_in * 1000).toISOString() : null,
-      userId: codePayload.user_id,
+      userId: identity.id,
     },
   };
 }

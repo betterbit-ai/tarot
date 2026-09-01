@@ -1,4 +1,5 @@
 import { getThreadsTokenConfig } from "@/lib/content/config";
+import { fetchThreadsIdentity, getThreadsOAuthConfig } from "@/lib/content/threads-oauth";
 import { schedulerRequestIsAuthorized } from "@/lib/content/scheduler-auth";
 import { refreshThreadsToken } from "@/lib/content/token";
 import { createUpstashJsonStore, UPSTASH_TOKEN_STATE_KEY } from "@/lib/content/upstash-store";
@@ -14,6 +15,15 @@ export async function POST(request: Request) {
   const stored = await tokenStore.get<ThreadsTokenState>(UPSTASH_TOKEN_STATE_KEY);
   const config = getThreadsTokenConfig();
   const result = await refreshThreadsToken({ ...config, accessToken: stored?.accessToken ?? config.accessToken });
-  if (result.token) await tokenStore.set(UPSTASH_TOKEN_STATE_KEY, { ...result.token, userId: stored?.userId });
+  const candidate = result.token ?? stored;
+  if (candidate) {
+    const oauthConfig = getThreadsOAuthConfig();
+    try {
+      const identity = await fetchThreadsIdentity(candidate.accessToken, oauthConfig);
+      await tokenStore.set(UPSTASH_TOKEN_STATE_KEY, { ...candidate, userId: identity.id });
+    } catch {
+      if (result.token) await tokenStore.set(UPSTASH_TOKEN_STATE_KEY, { ...result.token, userId: stored?.userId });
+    }
+  }
   return Response.json({ mode: result.mode, reason: result.reason });
 }

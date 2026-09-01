@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { createOAuthState, createThreadsAuthorizationUrl, exchangeThreadsOAuthCode, getThreadsOAuthConfig, validateOAuthState } from "./threads-oauth";
+import { createOAuthState, createThreadsAuthorizationUrl, exchangeThreadsOAuthCode, fetchThreadsIdentity, getThreadsOAuthConfig, validateOAuthState } from "./threads-oauth";
 
 describe("Threads OAuth", () => {
   const config = {
@@ -48,5 +48,10 @@ describe("Threads OAuth", () => {
     expect(validateOAuthState(state, "browser-binding", "state-secret", 1_001)).toBe(true);
     expect(validateOAuthState(state, "other-browser", "state-secret", 1_001)).toBe(false);
     expect(validateOAuthState(state, "browser-binding", "state-secret", 700_000)).toBe(false);
+  });
+
+  it("rejects a token that is not owned by the expected Threads account", async () => {
+    const fetcher = vi.fn().mockResolvedValue(new Response(JSON.stringify({ id: "other", username: "other" }), { status: 200 }));
+    await expect(fetchThreadsIdentity("token", config, fetcher)).rejects.toThrow("unexpected account");
   });
 });
