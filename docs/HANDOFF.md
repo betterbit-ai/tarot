@@ -1,10 +1,10 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-02 00:52 KST
+Last updated: 2026-09-02 01:18 KST
 
 ## Current Phase
 
-VERCEL FREE MIGRATION: MR-TAROT DOMAIN LIVE + THREADS AUTO PUBLISH ENABLED
+VERCEL FREE MIGRATION: MR-TAROT DOMAIN LIVE + AUTO CONFIGURED, THREADS CREDENTIAL DIAGNOSTIC BLOCKED
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
@@ -86,6 +86,8 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Canonical `CONTENT_SCHEDULER_SECRET` was added to GitHub Actions and Vercel; after a fresh Production redeploy, publish workflow run #9 succeeded in dry-run mode and run #11 succeeded with `PUBLISH_MODE=auto` and `DRY_RUN=false`.
 - Threads token-refresh workflow run #2 succeeded, confirming the stored token can refresh through Vercel/Upstash without exposing the token.
 - Publish workflow run #11 reached Vercel with HTTP 200 but returned `mode: failed` because the runtime lacked Threads credentials or site URL; its response was inspected without exposing tokens. Token refresh now also resolves and persists the verified `@mr._.tarot` user id from `/me`.
+- Publish workflow run #12 reached Vercel with HTTP 200 after the latest Production redeploy but still returned `mode: failed` with `Missing Threads credentials or site URL`. Upstash runtime state remains `mr-tarot-0001: READY` and no `mr-tarot:threads-token:v1` key exists.
+- `PUBLISH_MODE=auto` and `DRY_RUN=false` were deleted/recreated as readable Config variables and verified through the Vercel dashboard. The remaining failure is a missing or invalid `THREADS_ACCESS_TOKEN` or `THREADS_USER_ID` in the deployed runtime, not a dry-run flag.
 
 ## In Progress
 
@@ -101,7 +103,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Auto mode is enabled in the current Vercel Production deployment. Leave the daily GitHub schedule enabled and do not manually rerun it unless reconciling the queue.
 - Confirm the final Coupang partner destination and policy wording with the operating account
 - Run a final physical iPhone Safari/native share smoke test after deployment
-- Threads auto publishing remains enabled, but the next live run is held until the user-id recovery code is deployed and a refresh workflow repopulates Upstash state.
+- Threads auto publishing is configured, but no post is considered published until a token-refresh run creates the Upstash token state and a publisher response returns `mode: published`.
 - Legacy prose batches are retained for rollback/audit but are not used by the normal ritual runtime
 - The legacy prose batches were regenerated from the current renderer after the naturalness pass; the runtime still uses the smaller hybrid skeleton route
 
@@ -195,7 +197,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Paste the Upstash REST token into Vercel `UPSTASH_REDIS_REST_TOKEN`. Log in to Facebook in Meta for Developers, verify/save the Vercel policy URLs, add the exact OAuth callback, and store `THREADS_APP_SECRET` in Vercel. Add `GROWTH_SCHEDULER_SECRET` to GitHub Actions, set `VERCEL_GROWTH_BASE_URL`, then complete `/api/threads/oauth/start` and run one review/dry-run workflow. Do not enable auto publishing before that dry run succeeds.
+Put a valid long-lived Threads user access token and the numeric `@mr._.tarot` user id in Vercel Production, redeploy, run token-refresh, and require a `mode: published` response before leaving auto mode unattended.
 
 ## Last Commit
 
