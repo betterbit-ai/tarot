@@ -14,12 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     env:
-      GROWTH_SCHEDULER_SECRET: ${{ secrets.GROWTH_SCHEDULER_SECRET }}
+      CONTENT_SCHEDULER_SECRET: ${{ secrets.CONTENT_SCHEDULER_SECRET }}
       VERCEL_GROWTH_BASE_URL: ${{ vars.VERCEL_GROWTH_BASE_URL }}
     steps:
       - name: Trigger the protected Vercel publisher
         run: |
-          if [ -z "$GROWTH_SCHEDULER_SECRET" ] || [ -z "$VERCEL_GROWTH_BASE_URL" ]; then
+          if [ -z "$CONTENT_SCHEDULER_SECRET" ] || [ -z "$VERCEL_GROWTH_BASE_URL" ]; then
             echo "Vercel publisher settings are incomplete; no post was attempted."
             exit 0
           fi
@@ -28,7 +28,7 @@ jobs:
             --output "$response_file" \
             --write-out "%{http_code}" \
             --request POST "$VERCEL_GROWTH_BASE_URL/api/content/publish-next" \
-            --header "x-mr-tarot-scheduler: $GROWTH_SCHEDULER_SECRET" \
+            --header "x-mr-tarot-scheduler: $CONTENT_SCHEDULER_SECRET" \
             --header "content-type: application/json")"
           echo "Vercel publisher HTTP status: $http_status"
           sed -E 's/(accessToken|token|secret|authorization)[^,}]*/\1=[redacted]/gi' "$response_file"

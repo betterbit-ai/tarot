@@ -14,16 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     env:
-      GROWTH_SCHEDULER_SECRET: ${{ secrets.GROWTH_SCHEDULER_SECRET }}
+      CONTENT_SCHEDULER_SECRET: ${{ secrets.CONTENT_SCHEDULER_SECRET }}
       VERCEL_GROWTH_BASE_URL: ${{ vars.VERCEL_GROWTH_BASE_URL }}
     steps:
       - name: Trigger the protected Vercel metrics sync
         run: |
-          if [ -z "$GROWTH_SCHEDULER_SECRET" ] || [ -z "$VERCEL_GROWTH_BASE_URL" ]; then
+          if [ -z "$CONTENT_SCHEDULER_SECRET" ] || [ -z "$VERCEL_GROWTH_BASE_URL" ]; then
             echo "Vercel metrics settings are incomplete; no sync was attempted."
             exit 0
           fi
           curl --fail --silent --show-error --max-time 25 \
             --request POST "$VERCEL_GROWTH_BASE_URL/api/content/sync-metrics" \
-            --header "x-mr-tarot-scheduler: $GROWTH_SCHEDULER_SECRET" \
+            --header "x-mr-tarot-scheduler: $CONTENT_SCHEDULER_SECRET" \
             --header "content-type: application/json"

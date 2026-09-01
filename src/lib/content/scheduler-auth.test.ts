@@ -10,4 +10,5 @@ describe("schedulerRequestIsAuthorized", () => {
   it("accepts only the configured server-side header", () => {
     expect(schedulerRequestIsAuthorized(new Request("https://example.com", { headers: { "x-mr-tarot-scheduler": "right" } }), { CONTENT_SCHEDULER_SECRET: "right" })).toBe(true);
   });
+
 });
