@@ -16,6 +16,9 @@ export async function POST(request: Request) {
 
   const refreshed = await tokenStore.get<ThreadsTokenState>(UPSTASH_TOKEN_STATE_KEY);
   const config = getThreadsPublisherConfig();
-  const result = await publishNextContent((sourceQueue as ContentQueue).items, store, withStoredThreadsToken(config, refreshed));
+  const result = await publishNextContent((sourceQueue as ContentQueue).items, store, {
+    ...withStoredThreadsToken(config, refreshed),
+    userId: refreshed?.userId ?? config.userId,
+  });
   return Response.json(result);
 }

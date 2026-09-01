@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-01 01:24 KST
+Last updated: 2026-09-01 10:12 KST
 
 ## Current Phase
 
@@ -73,6 +73,10 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Public Meta compliance pages now exist at `/privacy`, `/terms`, and `/data-deletion`; they accurately state that the service has no user accounts, does not persist tarot questions, and always leaves the affiliate route optional
 - Vercel project import from `betterbit-ai/tarot` is connected on the Hobby team. Its first deployment reached Next.js static-page collection but failed because an imported blank `NEXT_PUBLIC_SITE_URL` made `new URL("")` throw.
 - Vercel portability slice adds protected Next route handlers for publish, token refresh, and metrics sync. The new Upstash REST adapter keeps queue and refreshed-token state server-side with no added package; GitHub Actions triggers those routes instead of a Netlify URL.
+- Vercel Hobby project `tarot` is live at `https://tarot-ten-gamma.vercel.app`; `/privacy`, `/terms`, and `/data-deletion` have been checked on the public deployment.
+- Vercel has `NEXT_PUBLIC_SITE_URL` as a public Config value, affiliate enabled with the verified partner URL, and `PUBLISH_MODE=review` plus `DRY_RUN=true`. Coupang Access/Secret Keys were copied directly from the Partners UI into Vercel server-only Secrets and never committed or recorded in docs.
+- The Threads profile link now points to `https://tarot-ten-gamma.vercel.app/?utm_source=threads&utm_medium=social&utm_content=link_in_bio` and publicly displays the new Vercel host.
+- Threads OAuth start/callback routes now exchange an authorization code for a long-lived token and store it in Upstash only. Publisher uses the stored OAuth user id when present.
 
 ## In Progress
 
@@ -80,6 +84,8 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - After Vercel serves the project, set `NEXT_PUBLIC_SITE_URL` to the verified production URL and redeploy before changing Meta URLs.
 - Keep `PUBLISH_MODE=review` and `DRY_RUN=true`; no live Threads post may occur while the Netlify Blob-backed publisher is being made portable.
 - Create a free Upstash Redis database, then set its REST URL/token in Vercel. Do not enable automatic publication yet.
+- Meta settings save redirected to a Facebook login prompt before reflection could be verified. Facebook login is needed to validate the Vercel policy URLs, category and OAuth redirect setup.
+- Upstash is at the GitHub account-selection page. The operator must choose an account before a free Redis database can be created.
 
 ## Remaining
 
@@ -102,6 +108,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Netlify reports that the `betterbit-ai` team has operational credits only and that production deploys are paused. The current `mr-tarot.netlify.app/privacy` response is therefore 404 even though `main` contains the route. Do not save the Meta policy URLs until the deploy succeeds.
 - The Vercel Hobby import currently has 14 detected variable names. The supplied `.env.local` has only `NEXT_PUBLIC_SITE_URL`, `AFFILIATE_ENABLED`, and `COUPANG_PARTNERS_URL` populated. All publishing and API credentials must remain empty until their provider setup is verified.
 - Vercel/Upstash port exists in source but is intentionally inactive without `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, and `CONTENT_SCHEDULER_SECRET`.
+- `COUPANG_PARTNERS_API_ENABLED` remains unset because live product-pool refresh is not yet implemented; do not claim that the stored keys have started live discovery.
 
 ## Current Tarot Asset Status
 
@@ -171,12 +178,13 @@ UX v2 verification on 2026-08-28:
 - diff-check: pass
 - Meta compliance-page checkpoint: `pnpm typecheck`, `pnpm lint`, `pnpm test` (25 files, 62 tests), `pnpm build`, and `git diff --check`: pass. Build includes static `/privacy`, `/terms`, and `/data-deletion` routes.
 - Vercel portability checkpoint: `pnpm test` (29 files, 73 tests), `pnpm typecheck`, `pnpm lint`, `pnpm build`, and `git diff --check`: pass. Build includes protected `/api/content/publish-next`, `/api/content/refresh-token`, and `/api/content/sync-metrics` routes. Independent architecture review approved after token-refresh metrics regression repair.
+- Threads OAuth checkpoint: targeted OAuth/token/config tests, typecheck, and lint pass. Full build/checkpoint is pending current code review.
 
 The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Push the Upstash/Vercel portability checkpoint. Then obtain immediate user confirmation before clicking Vercel Import’s **Deploy** button, because it creates the external Vercel project. After the first URL exists, set `NEXT_PUBLIC_SITE_URL`, redeploy, and verify the legal routes before changing Meta URLs. Keep review/dry-run mode until a manual workflow run succeeds.
+Log in to Facebook in the kept Meta tab, choose an Upstash account and create the free Redis database. Then set its REST URL/token, `CONTENT_SCHEDULER_SECRET`, `THREADS_APP_ID`, `THREADS_APP_SECRET`, and the exact OAuth callback URL as Vercel Secrets. Add the same callback to Meta, complete `/api/threads/oauth/start`, then run GitHub Actions in review/dry-run mode. Do not enable auto publishing before the manual dry run succeeds.
 
 ## Last Commit
 
@@ -205,3 +213,5 @@ Netlify deployment-blocker record: current `HEAD`.
 Vercel migration record: current `HEAD` — empty production URL no longer blocks a first deploy.
 
 Vercel/Upstash runtime portability record: current `HEAD`.
+
+Vercel live + Threads link + OAuth callback record: current `HEAD`.

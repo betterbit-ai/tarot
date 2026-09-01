@@ -14,6 +14,6 @@ export async function POST(request: Request) {
   const stored = await tokenStore.get<ThreadsTokenState>(UPSTASH_TOKEN_STATE_KEY);
   const config = getThreadsTokenConfig();
   const result = await refreshThreadsToken({ ...config, accessToken: stored?.accessToken ?? config.accessToken });
-  if (result.token) await tokenStore.set(UPSTASH_TOKEN_STATE_KEY, result.token);
+  if (result.token) await tokenStore.set(UPSTASH_TOKEN_STATE_KEY, { ...result.token, userId: stored?.userId });
   return Response.json({ mode: result.mode, reason: result.reason });
 }

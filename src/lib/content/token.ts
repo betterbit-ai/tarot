@@ -2,6 +2,7 @@ export type ThreadsTokenState = {
   accessToken: string;
   refreshedAt: string;
   expiresAt: string | null;
+  userId?: string;
 };
 
 export type ThreadsTokenConfig = {

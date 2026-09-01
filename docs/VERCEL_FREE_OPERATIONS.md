@@ -46,9 +46,11 @@ Secret:   GROWTH_SCHEDULER_SECRET=<Vercel CONTENT_SCHEDULER_SECRET과 동일한 
 Variable: VERCEL_GROWTH_BASE_URL=https://<verified-project>.vercel.app
 ```
 
-5. Threads OAuth가 끝난 뒤에만 Vercel에 `THREADS_ACCESS_TOKEN`과 `THREADS_USER_ID`를 넣는다.
-6. 한 번의 GitHub Actions 수동 실행이 `dry-run`으로 성공한 것을 확인한다.
-7. 운영자가 결과를 검토한 뒤에만 `PUBLISH_MODE=auto`와 `DRY_RUN=false`로 바꾼다.
+5. Vercel에 `THREADS_APP_ID`, `THREADS_APP_SECRET`, `THREADS_OAUTH_REDIRECT_URI=https://<verified-project>.vercel.app/api/threads/oauth/callback`을 서버 전용 Secret으로 넣는다.
+6. Meta Threads use case의 OAuth redirect URI에도 정확히 같은 callback URL을 등록한다.
+7. `https://<verified-project>.vercel.app/api/threads/oauth/start`를 열어 `@mr._.tarot` 권한을 승인한다. callback은 장기 token과 Threads user id를 Upstash에만 저장한다.
+8. 한 번의 GitHub Actions 수동 실행이 `dry-run`으로 성공한 것을 확인한다.
+9. 운영자가 결과를 검토한 뒤에만 `PUBLISH_MODE=auto`와 `DRY_RUN=false`로 바꾼다.
 
 현재 GitHub Actions schedule은 무료이며 다음을 호출한다.
 
