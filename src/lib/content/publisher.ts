@@ -87,6 +87,17 @@ function applyState(queue: ContentRuntimeQueue, id: string, next: ContentRuntime
   return { ...queue, items: { ...queue.items, [id]: next } };
 }
 
+async function threadsError(response: Response, fallback: string): Promise<Error> {
+  const raw = await response.text();
+  try {
+    const payload = JSON.parse(raw) as { error?: { message?: string } };
+    if (payload.error?.message) return new Error(`${fallback}: ${payload.error.message}`);
+  } catch {
+    // Keep the status-only fallback when the provider does not return JSON.
+  }
+  return new Error(fallback);
+}
+
 async function requestContainer(config: ThreadsPublisherConfig, text: string, replyToId?: string, imageUrl?: string, altText?: string): Promise<string> {
   const body = new URLSearchParams({ text, media_type: imageUrl ? "IMAGE" : "TEXT" });
   if (replyToId) body.set("reply_to_id", replyToId);
@@ -97,7 +108,7 @@ async function requestContainer(config: ThreadsPublisherConfig, text: string, re
     headers: { authorization: `Bearer ${config.accessToken}`, "content-type": "application/x-www-form-urlencoded" },
     body,
   });
-  if (!response.ok) throw new Error(`container request failed: ${response.status}`);
+  if (!response.ok) throw await threadsError(response, `container request failed: ${response.status}`);
   const payload = await response.json() as { id?: string };
   if (!payload.id) throw new Error("container request returned no id");
   return payload.id;
@@ -111,7 +122,7 @@ async function waitForContainer(config: ThreadsPublisherConfig, containerId: str
     const response = await fetch(`${config.apiBaseUrl}/${containerId}?fields=status,error_message`, {
       headers: { authorization: `Bearer ${config.accessToken}` },
     });
-    if (!response.ok) throw new Error(`container status request failed: ${response.status}`);
+    if (!response.ok) throw await threadsError(response, `container status request failed: ${response.status}`);
 
     const payload = await response.json() as { status?: string; error_message?: string };
     if (payload.status === "FINISHED") return;
@@ -128,7 +139,7 @@ async function publishContainer(config: ThreadsPublisherConfig, containerId: str
     headers: { authorization: `Bearer ${config.accessToken}`, "content-type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({ creation_id: containerId }),
   });
-  if (!response.ok) throw new Error(`publish request failed: ${response.status}`);
+  if (!response.ok) throw await threadsError(response, `publish request failed: ${response.status}`);
   const payload = await response.json() as { id?: string };
   if (!payload.id) throw new Error("publish request returned no id");
   return payload.id;
