@@ -76,7 +76,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Vercel Hobby project `tarot` is live at `https://tarot-ten-gamma.vercel.app`; `/privacy`, `/terms`, and `/data-deletion` have been checked on the public deployment.
 - Vercel has `NEXT_PUBLIC_SITE_URL` as a public Config value, affiliate enabled with the verified partner URL, and `PUBLISH_MODE=review` plus `DRY_RUN=true`. Coupang Access/Secret Keys were copied directly from the Partners UI into Vercel server-only Secrets and never committed or recorded in docs.
 - The Threads profile link now points to `https://tarot-ten-gamma.vercel.app/?utm_source=threads&utm_medium=social&utm_content=link_in_bio` and publicly displays the new Vercel host.
-- Threads OAuth start/callback routes now exchange an authorization code for a long-lived token and store it in Upstash only. Publisher uses the stored OAuth user id when present.
+- Threads OAuth start/callback routes now bind a signed, expiring state to an HttpOnly browser cookie, verify the authorized `@mr._.tarot` username through the Threads API, exchange a code in a POST body, and store only the long-lived token in Upstash. Publisher uses the stored OAuth user id when present.
 
 ## In Progress
 
@@ -178,7 +178,7 @@ UX v2 verification on 2026-08-28:
 - diff-check: pass
 - Meta compliance-page checkpoint: `pnpm typecheck`, `pnpm lint`, `pnpm test` (25 files, 62 tests), `pnpm build`, and `git diff --check`: pass. Build includes static `/privacy`, `/terms`, and `/data-deletion` routes.
 - Vercel portability checkpoint: `pnpm test` (29 files, 73 tests), `pnpm typecheck`, `pnpm lint`, `pnpm build`, and `git diff --check`: pass. Build includes protected `/api/content/publish-next`, `/api/content/refresh-token`, and `/api/content/sync-metrics` routes. Independent architecture review approved after token-refresh metrics regression repair.
-- Threads OAuth checkpoint: targeted OAuth/token/config tests, typecheck, and lint pass. Full build/checkpoint is pending current code review.
+- Threads OAuth security checkpoint: `pnpm test` (30 files, 77 tests), typecheck, lint, build and diff check pass. OAuth security review found and then verified fixes for CSRF, account binding and token transport.
 
 The status command is read-only and leaves the worktree unchanged.
 
@@ -214,4 +214,4 @@ Vercel migration record: current `HEAD` — empty production URL no longer block
 
 Vercel/Upstash runtime portability record: current `HEAD`.
 
-Vercel live + Threads link + OAuth callback record: current `HEAD`.
+Vercel live + Threads link + OAuth callback record: `06562f4` followed by current OAuth security repair.

@@ -17,9 +17,9 @@ export async function refreshThreadsToken(config: ThreadsTokenConfig): Promise<T
   if (config.dryRun) return { mode: "dry-run" };
   if (!config.accessToken) return { mode: "skipped", reason: "Missing THREADS_ACCESS_TOKEN" };
   try {
-    const response = await fetch(`${config.apiBaseUrl}/refresh_access_token?grant_type=th_refresh_token`, {
-      headers: { authorization: `Bearer ${config.accessToken}` },
-    });
+    const url = new URL(`${config.apiBaseUrl}/refresh_access_token`);
+    url.search = new URLSearchParams({ grant_type: "th_refresh_token", access_token: config.accessToken }).toString();
+    const response = await fetch(url);
     if (!response.ok) return { mode: "failed", reason: `Token refresh failed: ${response.status}` };
     const payload = await response.json() as { access_token?: string; expires_in?: number };
     if (!payload.access_token) return { mode: "failed", reason: "Token refresh returned no access token" };
