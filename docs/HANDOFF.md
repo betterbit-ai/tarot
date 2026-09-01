@@ -90,11 +90,11 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - `PUBLISH_MODE=auto` and `DRY_RUN=false` were deleted/recreated as readable Config variables and verified through the Vercel dashboard. The remaining failure is a missing or invalid `THREADS_ACCESS_TOKEN` or `THREADS_USER_ID` in the deployed runtime, not a dry-run flag.
 - Latest token-refresh workflow #6 returned HTTP 200 but did not create `mr-tarot:threads-token:v1`; the publisher therefore remains fail-closed and has not created a confirmed live post.
 - After the operator supplied `THREADS_ACCESS_TOKEN` and numeric `THREADS_USER_ID`, token-refresh workflow #7 returned HTTP 200 with `{"mode":"refreshed"}`.
-- Publish workflow #13 reached Vercel with HTTP 200 and valid content, but Threads returned `400` while publishing a reply container. Publish workflow #15 then confirmed the provider response `media container is still processing`; the publisher now polls every media-container status for a longer bounded window before calling `threads_publish` and preserves provider error messages for the next diagnosis.
+- Publish workflow #13 reached Vercel with HTTP 200 and valid content, but Threads returned `400` while publishing a reply container. Publish workflow #15 then confirmed the provider response `media container is still processing`; the publisher now polls every media-container status in a short bounded window, keeps processing containers retryable without exhausting attempts, and preserves provider error messages.
 
 ## In Progress
 
-- Deploy the longer media-container readiness polling fix and rerun the first queued Threads item; require `mode: published` before unattended auto mode.
+- Deploy the retryable media-container readiness fix and rerun the first queued Threads item; require `mode: published` before unattended auto mode.
 - Paste the Upstash REST token into Vercel `UPSTASH_REDIS_REST_TOKEN`; do not put it in Git or chat.
 - Meta settings save redirected to a Facebook login prompt before reflection could be verified. Facebook login is needed to validate the Vercel policy URLs, category and OAuth redirect setup.
 - Upstash REST token still needs direct paste in Vercel. The browser automation surface does not expose the masked token to another form, by design.
@@ -201,7 +201,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Commit and deploy the longer media-container readiness polling fix in `src/lib/content/publisher.ts`, then rerun `Publish prepared Threads content`. Inspect the redacted response and Threads profile; only leave the daily schedule unattended after a `mode: published` result.
+Commit and deploy the retryable media-container readiness fix in `src/lib/content/publisher.ts`, then rerun `Publish prepared Threads content` until the existing containers reach `FINISHED`. Inspect the redacted response and Threads profile; only leave the daily schedule unattended after a `mode: published` result.
 
 ## Last Commit
 

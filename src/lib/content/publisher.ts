@@ -117,7 +117,7 @@ async function requestContainer(config: ThreadsPublisherConfig, text: string, re
 async function waitForContainer(config: ThreadsPublisherConfig, containerId: string): Promise<void> {
   if (!config.accessToken) throw new Error("Threads access token is not configured");
 
-  const maxChecks = 12;
+  const maxChecks = 3;
   for (let check = 0; check < maxChecks; check += 1) {
     const response = await fetch(`${config.apiBaseUrl}/${containerId}?fields=status,error_message`, {
       headers: { authorization: `Bearer ${config.accessToken}` },
@@ -208,7 +208,15 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
     return { id: item.id, mode: "published", main: item.mainPost, imageUrl, replies };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    runtime = { ...runtime, status: "FAILED", updatedAt: now(), lastError: message, requiresReconciliation: true };
+    const transientContainer = message === "media container is still processing";
+    runtime = {
+      ...runtime,
+      status: transientContainer ? "READY" : "FAILED",
+      updatedAt: now(),
+      lastError: message,
+      attemptCount: transientContainer ? Math.max(0, runtime.attemptCount - 1) : runtime.attemptCount,
+      requiresReconciliation: !transientContainer,
+    };
     queue = applyState(queue, item.id, runtime);
     await store.write(queue);
     return { id: item.id, mode: "failed", main: item.mainPost, imageUrl, replies, error: message };

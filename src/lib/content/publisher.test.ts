@@ -46,6 +46,23 @@ describe("Threads publisher", () => {
     vi.unstubAllGlobals();
   });
 
+  it("keeps a processing container retryable without exhausting attempts", async () => {
+    const store = memoryStore();
+    const responses = [
+      new Response(JSON.stringify({ id: "main-container" }), { status: 200 }),
+      new Response(JSON.stringify({ status: "IN_PROGRESS" }), { status: 200 }),
+      new Response(JSON.stringify({ status: "IN_PROGRESS" }), { status: 200 }),
+      new Response(JSON.stringify({ status: "IN_PROGRESS" }), { status: 200 }),
+    ];
+    vi.stubGlobal("fetch", vi.fn(async () => responses.shift()));
+    const preview = await publishNextContent([item], store, { apiBaseUrl: "https://graph.threads.net/v1.0", mode: "auto", dryRun: false, maxAttempts: 2, siteUrl: "https://mr-tarot.netlify.app", accessToken: "token", userId: "user" });
+
+    expect(preview.mode).toBe("failed");
+    expect(preview.error).toBe("media container is still processing");
+    expect(store.state().items[item.id]).toMatchObject({ status: "READY", attemptCount: 0, requiresReconciliation: false, mainContainerId: "main-container" });
+    vi.unstubAllGlobals();
+  });
+
   it("materializes runtime status for operational status screens", () => {
     const items = applyRuntimeState([item], { version: 1, items: { [item.id]: { status: "PUBLISHED", updatedAt: "2026-08-30T00:00:00.000Z", attemptCount: 1, mainPostId: "post-1", metrics: { views: 10 } } } });
 
