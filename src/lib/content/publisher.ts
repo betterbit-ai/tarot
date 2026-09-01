@@ -182,7 +182,7 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
       queue = applyState(queue, item.id, runtime);
       await store.write(queue);
     }
-    if (imageUrl) await waitForContainer(config, mainContainerId);
+    if (imageUrl && !runtime.mainPostId) await waitForContainer(config, mainContainerId);
     const mainPostId = runtime.mainPostId ?? (imageUrl ? await publishContainer(config, mainContainerId) : mainContainerId);
     runtime = { ...runtime, mainPostId, updatedAt: now() };
     queue = applyState(queue, item.id, runtime);

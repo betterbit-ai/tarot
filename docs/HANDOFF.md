@@ -90,7 +90,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - `PUBLISH_MODE=auto` and `DRY_RUN=false` were deleted/recreated as readable Config variables and verified through the Vercel dashboard. The remaining failure is a missing or invalid `THREADS_ACCESS_TOKEN` or `THREADS_USER_ID` in the deployed runtime, not a dry-run flag.
 - Latest token-refresh workflow #6 returned HTTP 200 but did not create `mr-tarot:threads-token:v1`; the publisher therefore remains fail-closed and has not created a confirmed live post.
 - After the operator supplied `THREADS_ACCESS_TOKEN` and numeric `THREADS_USER_ID`, token-refresh workflow #7 returned HTTP 200 with `{"mode":"refreshed"}`.
-- Publish workflow #13 reached Vercel with HTTP 200 and valid content, but Threads returned `400` while publishing a reply container. Publish workflow #15 then confirmed the provider response `media container is still processing`; text replies now use the official `auto_publish_text=true` path, while image containers retain bounded readiness polling and provider error details.
+- Publish workflow #13 reached Vercel with HTTP 200 and valid content, but Threads returned `400` while publishing a reply container. Publish workflow #15 then confirmed the provider response `media container is still processing`; text replies now use the official `auto_publish_text=true` path, while only an unpublished image container is readiness-polled and provider error details are preserved.
 
 ## In Progress
 
