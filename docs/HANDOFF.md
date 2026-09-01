@@ -4,7 +4,7 @@ Last updated: 2026-09-02 02:00 KST
 
 ## Current Phase
 
-VERCEL FREE MIGRATION: MR-TAROT DOMAIN LIVE + AUTO CONFIGURED, IMAGE PUBLISH READINESS FIX IN PROGRESS
+VERCEL FREE MIGRATION: MR-TAROT DOMAIN LIVE + AUTO CONFIGURED, FIRST LIVE THREADS CONTENT PUBLISHED
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
@@ -91,10 +91,12 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Latest token-refresh workflow #6 returned HTTP 200 but did not create `mr-tarot:threads-token:v1`; the publisher therefore remains fail-closed and has not created a confirmed live post.
 - After the operator supplied `THREADS_ACCESS_TOKEN` and numeric `THREADS_USER_ID`, token-refresh workflow #7 returned HTTP 200 with `{"mode":"refreshed"}`.
 - Publish workflow #13 reached Vercel with HTTP 200 and valid content, but Threads returned `400` while publishing a reply container. Publish workflow #15 then confirmed the provider response `media container is still processing`; text replies now use the official `auto_publish_text=true` path, while only an unpublished image container is readiness-polled and provider error details are preserved.
+- Publish workflow #19 created the first live Threads post and six replies for `mr-tarot-0001`; the public `@mr._.tarot` profile shows the post and `답글 6`. Upstash runtime state is `PUBLISHED` with the main post id and all six reply ids.
+- GitHub's previous 25-second curl limit caused a false timeout after the serverless publisher completed; the workflow limit is now 55 seconds.
 
 ## In Progress
 
-- Deploy the text-reply auto-publish fix and rerun the first queued Threads item; require `mode: published` before unattended auto mode.
+- Verify the next queued item through the same workflow and monitor runtime state before leaving the daily schedule unattended.
 - Paste the Upstash REST token into Vercel `UPSTASH_REDIS_REST_TOKEN`; do not put it in Git or chat.
 - Meta settings save redirected to a Facebook login prompt before reflection could be verified. Facebook login is needed to validate the Vercel policy URLs, category and OAuth redirect setup.
 - Upstash REST token still needs direct paste in Vercel. The browser automation surface does not expose the masked token to another form, by design.
@@ -106,7 +108,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Auto mode is enabled in the current Vercel Production deployment. Leave the daily GitHub schedule enabled and do not manually rerun it unless reconciling the queue.
 - Confirm the final Coupang partner destination and policy wording with the operating account
 - Run a final physical iPhone Safari/native share smoke test after deployment
-- Threads auto publishing is configured, but no post is considered published until a publisher response returns `mode: published`.
+- Threads auto publishing is configured and the first item is confirmed published; continue checking each next item for `mode: published` because provider processing can be delayed.
 - Vercel `THREADS_ACCESS_TOKEN` must be a valid long-lived Threads user token and `THREADS_USER_ID` must be the numeric id for `@mr._.tarot`, not the Threads App ID. Both must be set for the Production environment and followed by a redeploy.
 - Legacy prose batches are retained for rollback/audit but are not used by the normal ritual runtime
 - The legacy prose batches were regenerated from the current renderer after the naturalness pass; the runtime still uses the smaller hybrid skeleton route
@@ -201,7 +203,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Commit and deploy the text-reply auto-publish fix in `src/lib/content/publisher.ts`, then rerun `Publish prepared Threads content` with the remaining reply container reset if necessary. Inspect the redacted response and Threads profile; only leave the daily schedule unattended after a `mode: published` result.
+Run `Publish prepared Threads content` for the next READY item and confirm its public Threads post plus `PUBLISHED` runtime state. The first live item `mr-tarot-0001` is already complete.
 
 ## Last Commit
 

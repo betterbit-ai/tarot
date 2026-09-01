@@ -38,7 +38,8 @@ describe("Threads publisher", () => {
     const preview = await publishNextContent([item], store, { apiBaseUrl: "https://graph.threads.net/v1.0", mode: "auto", dryRun: false, maxAttempts: 2, siteUrl: "https://mr-tarot.netlify.app", accessToken: "token", userId: "user" });
 
     expect(preview.mode).toBe("published");
-    expect(store.state().items[item.id]).toMatchObject({ status: "PUBLISHED", mainContainerId: "main-container", mainPostId: "main-post", replyPostIds: ["reply-container", "cta-container"] });
+    expect(store.state().items[item.id]).toMatchObject({ status: "PUBLISHED", mainContainerId: "main-container", mainPostId: "main-post", replyPostIds: ["reply-container", "cta-container"], requiresReconciliation: false });
+    expect(store.state().items[item.id]?.lastError).toBeUndefined();
     vi.unstubAllGlobals();
   });
 

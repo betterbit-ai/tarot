@@ -203,7 +203,7 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
       await store.write(queue);
     }
 
-    runtime = { ...runtime, status: "PUBLISHED", updatedAt: now(), publishedAt: now(), replyContainerIds, replyPostIds };
+    runtime = { ...runtime, status: "PUBLISHED", updatedAt: now(), publishedAt: now(), replyContainerIds, replyPostIds, lastError: undefined, requiresReconciliation: false };
     queue = applyState(queue, item.id, runtime);
     await store.write(queue);
     return { id: item.id, mode: "published", main: item.mainPost, imageUrl, replies };

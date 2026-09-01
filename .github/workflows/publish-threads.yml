@@ -24,7 +24,7 @@ jobs:
             exit 0
           fi
           response_file="$(mktemp)"
-          http_status="$(curl --silent --show-error --max-time 25 \
+          http_status="$(curl --silent --show-error --max-time 55 \
             --output "$response_file" \
             --write-out "%{http_code}" \
             --request POST "$VERCEL_GROWTH_BASE_URL/api/content/publish-next" \
