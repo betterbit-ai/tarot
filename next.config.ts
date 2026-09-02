@@ -16,7 +16,10 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   images: {
-    remotePatterns: [{ protocol: "https", hostname: "**.coupangcdn.com" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "**.coupangcdn.com" },
+      { protocol: "https", hostname: "ads-partners.coupang.com" },
+    ],
   },
   async headers() {
     return [

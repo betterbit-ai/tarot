@@ -200,6 +200,7 @@ UX v2 verification on 2026-08-28:
 - `pnpm tarot:audit`: 76,076 rows, zero mismatches and zero failures
 - `pnpm tarot:evaluate`: 51 cases, average 4.90/5, failure distribution empty
 - Manual Coupang refresh workflow: HTTP 200, `mode: refreshed`, `count: 6`, `verified: 6`, `deeplinkFailures: 0`; Upstash key `mr-tarot:affiliate-pool:v1` is present.
+- Affiliate sheet now permits `ads-partners.coupang.com` in Next image optimization and gives every theme a product-specific sentence; no fallback copy says a product is being prepared.
 - Interpretation renderer v3 now varies `세 장의 흐름`, `질문에 대입하면`, and `가져갈 태도` by ordered card relationships, direction, progression, question action, and final-card meaning instead of fixed generic copy.
 - All 76,076 prose rows were regenerated after the v3 renderer update; `pnpm tarot:audit` reports zero corpus mismatches, malformed particles, awkward flow markers, or AI-tell phrases.
 - `pnpm tarot:audit`: added editorial-layer, redundant-visual, and awkward-flow checks; all 76,076 rows still pass with zero failures
@@ -220,7 +221,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Verify a live Vercel ritual with several card combinations and questions to confirm the three narrative sections read as one coherent result. Also verify a refreshed Coupang product and the skip path in the same live flow. Do not regenerate the two preserved published Threads items.
+Verify a live Vercel ritual with several card combinations and questions to confirm the three narrative sections read as one coherent result. Also verify a refreshed Coupang product image, its product-specific reason sentence, and the skip path in the same live flow. Do not regenerate the two preserved published Threads items.
 
 ## Last Commit
 

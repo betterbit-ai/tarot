@@ -14,7 +14,7 @@ describe("affiliate products", () => {
 
     expect(product?.title).toBe("블루 드 샤넬 오 드 빠르펭 50ml");
     expect(product?.imageSrc).toBe("/affiliate/bleu-de-chanel.avif");
-    expect(product?.reason).toContain("관계 생각");
+    expect(product?.reason).toContain("관계에 얽힌 마음");
     expect(product).not.toHaveProperty("price");
     expect(product?.ctaLabel).toBe("쿠팡에서 보기");
     expect(selectAffiliateProduct("지금 빚을 갚아야 할까요?", getCardsByIds([64, 67, 71]))).toBeNull();

@@ -67,14 +67,24 @@ function themeFromCards(cards: readonly TarotCard[], signals?: RelationshipSigna
   return themes;
 }
 
-function reasonForTheme(theme: AffiliateTheme): string {
+function hasFinalConsonant(value: string): boolean {
+  const last = value.charCodeAt(value.length - 1);
+  return last >= 0xac00 && last <= 0xd7a3 ? (last - 0xac00) % 28 !== 0 : false;
+}
+
+function objectParticle(value: string): "을" | "를" {
+  return hasFinalConsonant(value) ? "을" : "를";
+}
+
+function reasonForTheme(theme: AffiliateTheme, title: string): string {
+  const object = `${title}${objectParticle(title)}`;
   switch (theme) {
-    case "relationship": return "관계 생각을 덮고 일상으로 돌아갈 때, 분위기를 가볍게 바꿔볼 수 있는 물건이에요.";
-    case "rest": return "생각을 오래 끌기보다, 잠깐 나를 돌보는 시간에 어울리는 제안이에요.";
-    case "new-start": return "새로운 장면을 시작하기 전에, 내 기분부터 정돈하고 싶은 날에 어울려요.";
-    case "self-care": return "리딩 뒤에 나를 한 번 돌보고 싶은 날을 위한 작은 제안이에요.";
-    case "focus": return "지금은 이 카테고리에 맞는 검증 상품을 준비 중이에요.";
-    case "organization": return "지금은 이 카테고리에 맞는 검증 상품을 준비 중이에요.";
+    case "relationship": return `관계에 얽힌 마음을 잠시 환기하는 흐름이라, 오늘은 ${object} 골라봤어요.`;
+    case "rest": return `생각을 잠깐 내려놓고 쉬어야 하는 흐름이라, ${object} 제안해요.`;
+    case "new-start": return `새로운 시작을 준비하는 흐름이라, ${object} 골라봤어요.`;
+    case "self-care": return `지금은 나를 돌보는 시간이 필요한 흐름이라, ${object} 제안해요.`;
+    case "focus": return `흩어진 일을 정리하고 집중하는 흐름이라, ${object} 골라봤어요.`;
+    case "organization": return `생활과 돈의 조건을 정리하는 흐름이라, ${object} 제안해요.`;
   }
 }
 
@@ -95,5 +105,5 @@ export function selectAffiliateProduct(question: string, cards: readonly TarotCa
   const rotationSeed = cards.reduce((total, card) => total + card.id, 0);
   const product = candidates[rotationSeed % candidates.length] ?? candidates[0];
   const category = product.categories.find((theme) => themes.includes(theme)) ?? product.categories[0];
-  return { ...product, category, reason: reasonForTheme(category) };
+  return { ...product, category, reason: reasonForTheme(category, product.title) };
 }
