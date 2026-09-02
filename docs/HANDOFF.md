@@ -93,6 +93,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Publish workflow #13 reached Vercel with HTTP 200 and valid content, but Threads returned `400` while publishing a reply container. Publish workflow #15 then confirmed the provider response `media container is still processing`; text replies now use the official `auto_publish_text=true` path, while only an unpublished image container is readiness-polled and provider error details are preserved.
 - Publish workflow #19 created the first live Threads post and six replies for `mr-tarot-0001`; the public `@mr._.tarot` profile shows the post and `답글 6`. Upstash runtime state is `PUBLISHED` with the main post id and all six reply ids.
 - GitHub's previous 25-second curl limit caused a false timeout after the serverless publisher completed; the workflow limit is now 55 seconds.
+- The missing `3번` reply on `mr-tarot-0002` was manually posted under the user's `wanderer_0528` comment. Threads shows the parent reply count increased from 3 to 4 and the new author reply is visible.
 
 ## In Progress
 
@@ -237,4 +238,4 @@ Vercel live + Threads link + OAuth callback record: `f951faf` followed by curren
 
 Vercel project rename/domain record: current `HEAD` — `mr-tarot` / `mr-tarot.vercel.app`.
 
-Scheduler diagnostic checkpoint: current `HEAD` — GitHub reaches Vercel; token refresh succeeds, while publish #13 exposed an image-container readiness `400`.
+Scheduler diagnostic checkpoint: current `HEAD` — GitHub reaches Vercel; first automated content is published, and the missing `3번` reply was manually completed.
