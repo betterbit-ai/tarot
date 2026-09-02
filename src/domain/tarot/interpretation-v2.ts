@@ -468,6 +468,17 @@ function objectParticle(value: string): "을" | "를" {
   return hasFinalConsonant(value) ? "을" : "를";
 }
 
+function conjunctionParticle(value: string): "과" | "와" {
+  return hasFinalConsonant(value) ? "과" : "와";
+}
+
+function instrumentalParticle(value: string): "으로" | "로" {
+  const last = value.charCodeAt(value.length - 1);
+  if (last < 0xac00 || last > 0xd7a3) return "로";
+  const jongseong = (last - 0xac00) % 28;
+  return jongseong === 0 || jongseong === 8 ? "로" : "으로";
+}
+
 function relationshipSituation(skeleton: ReadingSkeleton, cards: readonly TarotCard[]): string {
   if (skeleton.relationships.includes("same-suit") && cards[0].suit) {
     const repeated = cards[0].suit === "cups" ? "감정" : cards[0].suit === "pentacles" ? "생활 조건" : cards[0].suit === "wands" ? "움직이고 싶은 마음" : "생각과 판단";
@@ -484,26 +495,28 @@ function relationshipSituation(skeleton: ReadingSkeleton, cards: readonly TarotC
   return `처음 카드 ${cards[0].name}에서 보인 마음을 ${cards[1].name}에서 확인한 뒤, ${cards[2].name} 쪽으로 옮겨 가는 흐름이에요.`;
 }
 
-function closingFor(profile: StructuredQuestionProfile, stance: ReadingStance, skeleton: ReadingSkeleton): string {
+function closingFor(profile: StructuredQuestionProfile, stance: ReadingStance, skeleton: ReadingSkeleton, cards: readonly TarotCard[]): string {
+  const finalCard = cards[2];
+  const finalLight = cardMeaningCore(finalCard, "light");
   if (profile.action === "open") {
-    if (skeleton.direction === "pause") return "오늘은 결론 대신, 빠뜨린 조건 하나만 적어두세요.";
-    if (skeleton.direction === "release") return "이미 끝난 대화나 습관 중 하나를 오늘은 내려놓아 보세요.";
-    if (skeleton.direction === "advance") return "미루던 일에서 가장 작은 첫 동작을 오늘 해보세요.";
-    if (skeleton.direction === "stabilize") return "돈과 시간을 흔들지 않는 선에서 할 일을 하나만 정해보세요.";
-    if (skeleton.direction === "clarify") return "마음을 흔드는 이유를 한 문장으로 적고, 내일 다시 읽어보세요.";
-    return "익숙한 방법 하나를 바꿔서 작게 시험해보세요.";
+    if (skeleton.direction === "pause") return `오늘은 ${finalCard.name}의 ${finalLight}${objectParticle(finalLight)} 서두르지 말고, 빠뜨린 조건 하나만 적어두세요.`;
+    if (skeleton.direction === "release") return `이미 끝난 대화나 습관 중 하나를 내려놓고, ${finalCard.name}의 ${finalLight}${objectParticle(finalLight)} 다음 기준으로 삼아보세요.`;
+    if (skeleton.direction === "advance") return `미루던 일에서 가장 작은 첫 동작을 오늘 해보세요. ${finalCard.name}의 ${finalLight}${subjectParticle(finalLight)} 그 출발점이 될 수 있어요.`;
+    if (skeleton.direction === "stabilize") return `돈과 시간을 흔들지 않는 선에서 할 일을 하나만 정해보세요. ${finalCard.name}${subjectParticle(finalCard.name)} 말하는 ${finalLight}${objectParticle(finalLight)} 먼저 챙기면 돼요.`;
+    if (skeleton.direction === "clarify") return `마음을 흔드는 이유를 한 문장으로 적어보세요. ${finalCard.name}의 ${finalLight}${subjectParticle(finalLight)} 판단의 기준이 되어줄 거예요.`;
+    return `익숙한 방법 하나를 바꿔서 작게 시험해보세요. ${finalCard.name}의 ${finalLight}${objectParticle(finalLight)} 확인하는 정도면 충분해요.`;
   }
-  if (profile.action === "marry") return "결혼하면 자연스럽게 풀릴 거라며 미뤄둔 문제가 있다면, 그 얘기부터 두 사람이 해보는 게 좋겠어요.";
-  if (profile.action === "change-job") return stance === "wait" ? "그만둘 이유와 갈 곳에서 꼭 얻고 싶은 조건이 같은 답인지 먼저 보세요." : "움직이기 전에 새 자리에서 절대 양보하지 않을 조건 하나만 정해두세요.";
-  if (profile.action === "repay-debt") return "갚을 금액보다 먼저, 갚고도 남아야 할 생활비를 정해두는 편이 안전해요.";
-  if (profile.action === "end-relationship") return "마지막으로 확인할 사실 하나만 정하고, 그 뒤에는 같은 대화를 되풀이하지 않는 편이 낫겠어요.";
-  if (profile.action === "other-person") return "상대의 침묵을 해석하기보다, 실제로 오간 말과 행동을 기준으로 두세요.";
-  if (profile.action === "future") return "아직 오지 않은 결과를 재촉하기보다, 이번 주에 준비할 수 있는 한 가지를 정해보세요.";
-  if (profile.action === "return") return "예전의 모습을 그대로 되돌리려 하기보다, 이번에 새로 보여줄 한 가지를 정해보세요.";
-  if (stance === "wait" || skeleton.direction === "pause") return "오늘 결론을 내리지 않아도 괜찮아요. 지금 빠뜨린 조건이 없는지만 살펴보세요.";
-  if (skeleton.direction === "release") return "이미 끝난 일을 붙잡고 있는 부분이 무엇인지부터 보면, 다음 선택이 조금 가벼워질 거예요.";
-  if (skeleton.direction === "stabilize") return "이번에는 마음이 급해지는 순간보다 생활이 흔들리지 않는 쪽을 먼저 고르는 편이 낫겠어요.";
-  return "오늘 바로 할 수 있는 작은 일 하나를 정하고, 나머지는 조금 더 지켜보세요.";
+  if (profile.action === "marry") return `결혼하면 자연스럽게 풀릴 거라며 미뤄둔 문제가 있다면, ${finalCard.name}의 ${finalLight}${objectParticle(finalLight)} 두 사람이 먼저 이야기해보세요.`;
+  if (profile.action === "change-job") return stance === "wait" ? `${finalCard.name}${subjectParticle(finalCard.name)} 보여준 ${finalLight}${objectParticle(finalLight)} 확인한 뒤, 그만둘 이유와 새 자리의 조건이 같은 답인지 비교해보세요.` : `움직이기 전에 ${finalCard.name}의 ${finalLight}${objectParticle(finalLight)} 새 자리에서 꼭 지킬 조건 하나로 정해두세요.`;
+  if (profile.action === "repay-debt") return `${finalCard.name}의 ${finalLight}${objectParticle(finalLight)} 지키는 선에서, 갚을 금액과 남겨둘 생활비를 따로 정해두세요.`;
+  if (profile.action === "end-relationship") return `마지막 ${finalCard.name}${subjectParticle(finalCard.name)} 가리키는 ${finalLight}${objectParticle(finalLight)} 확인할 사실 하나로 좁히고, 같은 대화를 반복하지 마세요.`;
+  if (profile.action === "other-person") return `상대의 침묵보다 ${finalCard.name}${subjectParticle(finalCard.name)} 보여준 ${finalLight}${conjunctionParticle(finalLight)} 실제로 오간 말과 행동을 기준으로 두세요.`;
+  if (profile.action === "future") return `아직 오지 않은 결과보다 ${finalCard.name}의 ${finalLight}${objectParticle(finalLight)} 이번 주에 준비할 한 가지로 옮겨보세요.`;
+  if (profile.action === "return") return `예전 모습을 그대로 되돌리기보다 ${finalCard.name}의 ${finalLight}${objectParticle(finalLight)} 바탕으로 이번에 새로 보여줄 한 가지를 정해보세요.`;
+  if (stance === "wait" || skeleton.direction === "pause") return `${finalCard.name}의 ${finalLight}${objectParticle(finalLight)} 확인할 때까지 오늘 결론은 잠시 미뤄두세요.`;
+  if (skeleton.direction === "release") return `${finalCard.name}${subjectParticle(finalCard.name)} 말하는 ${finalLight}${objectParticle(finalLight)} 남기고, 이미 끝난 일을 붙잡는 부분은 내려놓아 보세요.`;
+  if (skeleton.direction === "stabilize") return `${finalCard.name}의 ${finalLight}${objectParticle(finalLight)} 먼저 챙기면서, 생활이 흔들리지 않는 선택을 골라보세요.`;
+  return `${finalCard.name}의 ${finalLight}${objectParticle(finalLight)} 기준으로 오늘 바로 할 수 있는 작은 일 하나를 정해보세요.`;
 }
 
 const MAJOR_VISUAL_CUES: Readonly<Record<number, string>> = {
@@ -575,28 +588,44 @@ function majorSummaryFor(cards: readonly TarotCard[]): string {
   return `메이저 카드 ${count}장이 포함되어 있어요. 개인의 기분보다 오래 남을 기준을 함께 살펴봐요.`;
 }
 
-function flowFor(cards: readonly TarotCard[]): string {
+function flowFor(cards: readonly TarotCard[], skeleton: ReadingSkeleton): string {
   const [first, middle, last] = cards;
+  const firstLight = cardMeaningCore(first, "light");
+  const middleLight = cardMeaningCore(middle, "light");
   const middleShadow = cardMeaningCore(middle, "shadow");
-  return `처음에는 ${first.name}의 ${cardMeaningCore(first, "light")}이 먼저 보여요. 가운데 ${middle.name}에서 ${middleShadow}${objectParticle(middleShadow)} 한 번 살펴봐요. 마지막 ${last.name}에서는 ${cardMeaningCore(last, "light")} 쪽으로 기울어요.`;
+  const lastLight = cardMeaningCore(last, "light");
+  if (skeleton.relationships.includes("conflict")) return `처음 ${first.name}에서는 ${firstLight}${subjectParticle(firstLight)} 앞에 나와요. 가운데 ${middle.name}에서 ${middleShadow}${objectParticle(middleShadow)} 점검하고, 마지막 ${last.name}에서는 ${lastLight} 쪽으로 기울어요.`;
+  if (skeleton.relationships.includes("same-suit") && first.suit) {
+    const suit = first.suit === "cups" ? "감정" : first.suit === "pentacles" ? "생활 조건" : first.suit === "wands" ? "움직임" : "생각과 판단";
+    return `세 장 모두 ${suit}${subjectParticle(suit)} 이어져요. ${first.name}의 ${firstLight}에서 시작해 ${middle.name}의 ${middleLight}${objectParticle(middleLight)} 거쳐 ${last.name}의 ${lastLight}${instrumentalParticle(lastLight)} 흘러가요.`;
+  }
+  if (skeleton.signals.progression === "ascending") return `숫자가 올라가며 범위가 넓어져요. ${first.name}의 ${firstLight}에서 시작해 ${middle.name}에서 힘을 키우고, ${last.name}의 ${lastLight}${instrumentalParticle(lastLight)} 결과를 확인해요.`;
+  if (skeleton.signals.progression === "descending") return `숫자가 낮아지며 속도를 줄여요. ${first.name}의 ${firstLight}이 앞에 서고, ${middle.name}에서 덜어낸 뒤 ${last.name}의 ${lastLight}에 머물러요.`;
+  if (skeleton.relationships.includes("court-dynamic")) return `인물 카드들이 서로 다른 역할을 맡아요. ${first.name}${subjectParticle(first.name)} 시작한 ${firstLight}${objectParticle(firstLight)} ${middle.name}${subjectParticle(middle.name)} 다듬고, ${last.name}${subjectParticle(last.name)} ${lastLight}${instrumentalParticle(lastLight)} 방향을 정해요.`;
+  if (skeleton.relationships.includes("major-weight")) return `큰 장면이 두 번 이상 나와요. ${first.name}에서 ${firstLight}이 열리고, ${middle.name}을 거쳐 ${last.name}의 ${lastLight}이 결론의 무게를 만들어요.`;
+  if (skeleton.direction === "release") return `${first.name}에서 ${firstLight}${objectParticle(firstLight)} 붙잡고 시작하지만, ${middle.name}에서 한 번 멈춘 뒤 ${last.name}의 ${lastLight} 쪽으로 놓아주는 흐름이에요.`;
+  if (skeleton.direction === "stabilize") return `${first.name}에서 ${firstLight}${objectParticle(firstLight)} 확인하고, ${middle.name}에서 조건을 맞춘 다음 ${last.name}의 ${lastLight}에 자리를 잡아요.`;
+  if (skeleton.direction === "clarify") return `${first.name}에서 생긴 ${firstLight}${objectParticle(firstLight)} ${middle.name}에서 따져보고, ${last.name}의 ${lastLight} 쪽으로 판단을 좁혀가요.`;
+  return `${first.name}의 ${firstLight}에서 출발해 ${middle.name}의 ${middleLight}${objectParticle(middleLight)} 거친 뒤, ${last.name}의 ${lastLight}${instrumentalParticle(lastLight)} 이어져요.`;
 }
 
-function applicationFor(profile: StructuredQuestionProfile, skeleton: ReadingSkeleton): string {
-  const direction = skeleton.direction === "advance" ? "작게 움직이면 다음 단서가 생길 수 있어요." : skeleton.direction === "pause" ? "서두르면 같은 고민이 반복될 수 있어요." : skeleton.direction === "release" ? "기존 방식을 놓을수록 다음 선택이 선명해질 수 있어요." : skeleton.direction === "stabilize" ? "생활 조건을 먼저 확인하면 흔들림을 줄일 수 있어요." : skeleton.direction === "clarify" ? "기준을 적어두면 대화와 판단이 선명해질 수 있어요." : "익숙한 방식을 한 군데 바꾸면 흐름이 달라질 수 있어요.";
+function applicationFor(profile: StructuredQuestionProfile, skeleton: ReadingSkeleton, cards: readonly TarotCard[]): string {
+  const [first, middle, last] = cards;
+  const direction = skeleton.direction === "advance" ? `${last.name}의 ${cardMeaningCore(last, "light")}${objectParticle(cardMeaningCore(last, "light"))} 실제 행동으로 옮겨보세요.` : skeleton.direction === "pause" ? `${middle.name}의 ${cardMeaningCore(middle, "shadow")}${subjectParticle(cardMeaningCore(middle, "shadow"))} 반복되지 않는지 먼저 살펴보세요.` : skeleton.direction === "release" ? `${last.name}의 ${cardMeaningCore(last, "light")}${objectParticle(cardMeaningCore(last, "light"))} 위해 기존 방식을 하나 내려놓아야 해요.` : skeleton.direction === "stabilize" ? `${last.name}의 ${cardMeaningCore(last, "light")}${objectParticle(cardMeaningCore(last, "light"))} 지킬 조건부터 확인해보세요.` : skeleton.direction === "clarify" ? `${middle.name}의 ${cardMeaningCore(middle, "light")}${objectParticle(cardMeaningCore(middle, "light"))} 기준으로 말과 행동을 나눠보세요.` : `${first.name}에서 시작된 ${cardMeaningCore(first, "light")}${objectParticle(cardMeaningCore(first, "light"))} 한 군데 바꿔보세요.`;
   const context: Partial<Record<ReadingAction, string>> = {
-    marry: "결혼을 묻는 상황이라면, 마음보다 두 사람이 합의한 생활 계획이 먼저 드러날 수 있어요.",
-    "change-job": "이직을 묻는 상황이라면, 현재의 답답함보다 새 자리의 조건을 비교하는 일이 먼저예요.",
-    "stay-job": "회사에 남을지 묻는 상황이라면, 버티는 이유와 얻는 것을 따로 적어보는 편이 좋아요.",
-    contact: "연락을 묻는 상황이라면, 상대의 반응을 기다리기보다 내가 원하는 대화의 범위를 정해야 해요.",
-    "end-relationship": "관계를 정리할지 묻는 상황이라면, 반복되는 말보다 실제 행동을 기준으로 보게 돼요.",
-    "repay-debt": "빚을 갚는 상황이라면, 상환 속도와 생활비 사이의 균형이 핵심이 됩니다.",
-    invest: "투자를 묻는 상황이라면, 기대 수익보다 감당할 수 있는 손실부터 확인해야 해요.",
-    spend: "큰 지출을 묻는 상황이라면, 사고 싶은 마음과 실제 사용 계획을 나눠봐야 해요.",
-    future: "앞날을 묻는 상황이라면, 결과를 기다리는 동안 준비할 수 있는 일이 먼저 보여요.",
-    return: "컴백이나 복귀를 묻는 상황이라면, 과거의 아쉬움을 정리한 뒤 팀의 역할과 새 방향을 맞추는 과정이 먼저 생길 수 있어요.",
-    "other-person": "상대의 마음을 묻는 상황이라면, 추측보다 오간 말과 행동이 더 정확한 기준이에요.",
+    marry: `${first.name}에서 보인 마음과 ${last.name}이 요구하는 생활 조건을 결혼 전 대화에서 맞춰보세요.`,
+    "change-job": `${first.name}의 답답함과 ${last.name}이 보여주는 새 조건을 나란히 적어보세요.`,
+    "stay-job": `${middle.name}에서 드러난 부담과 ${last.name}이 남긴 실익을 따로 계산해보세요.`,
+    contact: `${first.name}에서 시작된 감정과 ${last.name}이 요구하는 행동을 구분한 뒤 연락 범위를 정하세요.`,
+    "end-relationship": `${middle.name}이 보여준 걸림돌과 ${last.name}의 정리 신호를 실제 대화 기록과 맞춰보세요.`,
+    "repay-debt": `${first.name}의 불안보다 ${last.name}이 요구하는 생활 기준을 먼저 숫자로 적어보세요.`,
+    invest: `${middle.name}의 흔들림을 감당할 수 있는 손실 범위와 ${last.name}의 방향을 함께 확인하세요.`,
+    spend: `${first.name}에서 생긴 욕구와 ${last.name}이 보여주는 실제 필요를 분리해보세요.`,
+    future: `${middle.name}에서 걸린 조건을 이번 주 준비 목록으로 옮기면 기다리는 시간이 덜 막연해져요.`,
+    return: `${first.name}의 익숙함보다 ${last.name}이 요구하는 팀의 역할과 새 방향을 먼저 맞춰보세요.`,
+    "other-person": `상대의 마음을 단정하기보다 ${first.name}의 인상과 ${middle.name}, ${last.name}에서 실제로 확인되는 말과 행동을 기준으로 두세요.`,
   };
-  return `${context[profile.action] ?? "일과 관계, 생활 중 지금 가장 걸리는 장면에 이 흐름을 대입해보세요."} ${direction}`;
+  return `${context[profile.action] ?? `${first.name}, ${middle.name}, ${last.name}이 보여준 차이를 지금 가장 걸리는 장면에 대입해보세요.`} ${direction}`;
 }
 
 export function interpretStructuredReading(cardIds: readonly number[], question = "", precomputed?: ReadingSkeleton): InterpretationV2 {
@@ -629,7 +658,7 @@ export function interpretStructuredReading(cardIds: readonly number[], question 
               ? "이미 끝난 것과 계속할 것을 나눠 적어보세요."
               : "익숙한 방식 하나만 바꿔서 시험해보세요.";
   const advice = `${cardSituation(last, "direction")} ${adviceBridge}`;
-  const closing = closingFor(profile, stance, skeleton);
+  const closing = closingFor(profile, stance, skeleton, cards);
   const characterCount = [headline, story, advice, closing].join(" ").length;
   const cardInsights = createCardInsights(cards);
   return {
@@ -647,8 +676,8 @@ export function interpretStructuredReading(cardIds: readonly number[], question 
     cardSummary: `뽑은 카드: ${cards.map((card) => card.name).join(" · ")}`,
     majorSummary: majorSummaryFor(cards),
     cardInsights,
-    flow: flowFor(cards),
-    application: applicationFor(profile, skeleton),
+    flow: flowFor(cards, skeleton),
+    application: applicationFor(profile, skeleton, cards),
     mindset: closing,
   };
 }

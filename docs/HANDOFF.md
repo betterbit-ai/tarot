@@ -4,7 +4,7 @@ Last updated: 2026-09-02 02:00 KST
 
 ## Current Phase
 
-VERCEL FREE MIGRATION: MR-TAROT DOMAIN LIVE + AUTO CONFIGURED, FIRST LIVE THREADS CONTENT PUBLISHED
+V1 + INTERPRETATION V3: COMBINATION-AWARE STORY, APPLICATION AND MINDSET RENDERER COMPLETE
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
@@ -196,7 +196,12 @@ UX v2 verification on 2026-08-28:
 - `pnpm test`: 30 files, 79 tests pass after hook rotation changes
 - `pnpm typecheck`, `pnpm lint`, `pnpm build`, `pnpm content:validate`, `git diff --check`: pass after Threads hook refresh
 - Coupang adapter tests cover HMAC signing, six-theme refresh mapping, and refreshed-pool selection.
+- `pnpm tarot:generate --from 1 --to 381`: regenerated 76,076 deterministic rows with v3 narrative layers
+- `pnpm tarot:audit`: 76,076 rows, zero mismatches and zero failures
+- `pnpm tarot:evaluate`: 51 cases, average 4.90/5, failure distribution empty
 - Manual Coupang refresh workflow: HTTP 200, `mode: refreshed`, `count: 6`, `verified: 6`, `deeplinkFailures: 0`; Upstash key `mr-tarot:affiliate-pool:v1` is present.
+- Interpretation renderer v3 now varies `세 장의 흐름`, `질문에 대입하면`, and `가져갈 태도` by ordered card relationships, direction, progression, question action, and final-card meaning instead of fixed generic copy.
+- All 76,076 prose rows were regenerated after the v3 renderer update; `pnpm tarot:audit` reports zero corpus mismatches, malformed particles, awkward flow markers, or AI-tell phrases.
 - `pnpm tarot:audit`: added editorial-layer, redundant-visual, and awkward-flow checks; all 76,076 rows still pass with zero failures
 - `pnpm tarot:generate --from 1 --to 381`: regenerated all 76,076 prose rows with suit-specific minor meanings
 - Growth Engine checks: `pnpm content:generate --count 105`, `pnpm content:images`, `pnpm content:validate`, `pnpm content:status`, `pnpm content:publish-next`, `pnpm content:sync-metrics`, `pnpm content:refresh-token`, 25 test files / 62 tests, typecheck, lint, and build all pass
@@ -215,7 +220,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Verify a live Vercel ritual displays one of the six refreshed products and preserves the skip path. Then run `Publish prepared Threads content` for `mr-tarot-0003` and compare hook performance against the two published baselines. Do not regenerate the two preserved published items.
+Verify a live Vercel ritual with several card combinations and questions to confirm the three narrative sections read as one coherent result. Also verify a refreshed Coupang product and the skip path in the same live flow. Do not regenerate the two preserved published Threads items.
 
 ## Last Commit
 
