@@ -2,6 +2,7 @@ import { EMPTY_RUNTIME_QUEUE, type ContentRuntimeQueue, type ContentStateStore }
 
 const RUNTIME_STATE_KEY = "mr-tarot:threads-runtime-state:v1";
 const TOKEN_STATE_KEY = "mr-tarot:threads-token:v1";
+export const AFFILIATE_POOL_KEY = "mr-tarot:affiliate-pool:v1";
 
 type Fetcher = typeof fetch;
 type Environment = Record<string, string | undefined>;

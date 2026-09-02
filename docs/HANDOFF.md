@@ -94,12 +94,14 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Publish workflow #19 created the first live Threads post and six replies for `mr-tarot-0001`; the public `@mr._.tarot` profile shows the post and `답글 6`. Upstash runtime state is `PUBLISHED` with the main post id and all six reply ids.
 - GitHub's previous 25-second curl limit caused a false timeout after the serverless publisher completed; the workflow limit is now 55 seconds.
 - The missing `3번` reply on `mr-tarot-0002` was manually posted under the user's `wanderer_0528` comment. Threads shows the parent reply count increased from 3 to 4 and the new author reply is visible.
+- Coupang Partners refresh integration is implemented: HMAC-SHA256 signing, theme-keyword product search, CDN/product URL validation, `/links/deeplink` conversion, Upstash pool storage, public sanitized pool fallback, and a protected GitHub schedule.
 - Threads hook research added at `docs/content/THREADS_HOOK_RESEARCH.md`: 30 original Korean hook candidates based on public archetype research, with a note that no official cross-account top-30 ranking exists.
 - The content generator now rotates 30 curiosity, tension, direct-question, warning, reversal and participation hooks. `pnpm content:refresh-hooks` upgraded 103 queued items while preserving the two already-published items, and `pnpm content:images` regenerated matching PNG/SVG assets.
 
 ## In Progress
 
 - Verify the next queued item through the same workflow and record hook impressions, replies and profile visits before choosing a winning hook pattern.
+- Set `COUPANG_PARTNERS_API_ENABLED=true` in Vercel Production, redeploy, run `Refresh Coupang affiliate pool` once, and confirm `/api/affiliate/pool` returns at least one refreshed product before relying on live recommendations.
 - Paste the Upstash REST token into Vercel `UPSTASH_REDIS_REST_TOKEN`; do not put it in Git or chat.
 - Meta settings save redirected to a Facebook login prompt before reflection could be verified. Facebook login is needed to validate the Vercel policy URLs, category and OAuth redirect setup.
 - Upstash REST token still needs direct paste in Vercel. The browser automation surface does not expose the masked token to another form, by design.
@@ -191,6 +193,7 @@ UX v2 verification on 2026-08-28:
 - `pnpm content:refresh-hooks`, `pnpm content:images`, `pnpm content:validate`: 105 queued items, 105 READY, validation pass
 - `pnpm test`: 30 files, 79 tests pass after hook rotation changes
 - `pnpm typecheck`, `pnpm lint`, `pnpm build`, `pnpm content:validate`, `git diff --check`: pass after Threads hook refresh
+- Coupang adapter tests cover HMAC signing, six-theme refresh mapping, and refreshed-pool selection.
 - `pnpm tarot:audit`: added editorial-layer, redundant-visual, and awkward-flow checks; all 76,076 rows still pass with zero failures
 - `pnpm tarot:generate --from 1 --to 381`: regenerated all 76,076 prose rows with suit-specific minor meanings
 - Growth Engine checks: `pnpm content:generate --count 105`, `pnpm content:images`, `pnpm content:validate`, `pnpm content:status`, `pnpm content:publish-next`, `pnpm content:sync-metrics`, `pnpm content:refresh-token`, 25 test files / 62 tests, typecheck, lint, and build all pass
@@ -209,7 +212,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Run `Publish prepared Threads content` for `mr-tarot-0003`, confirm its public Threads post plus `PUBLISHED` runtime state, and compare hook performance against `mr-tarot-0001` and `mr-tarot-0002`. Do not regenerate the two preserved published items.
+Set the Coupang API feature flag in Vercel Production, redeploy, run `Refresh Coupang affiliate pool`, then verify a live ritual shows a refreshed product while keeping the skip path. After that, run `Publish prepared Threads content` for `mr-tarot-0003` and compare hook performance against the two published baselines. Do not regenerate the two preserved published items.
 
 ## Last Commit
 

@@ -1,0 +1,37 @@
+name: Refresh Coupang affiliate pool
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 04:30 Asia/Seoul = 19:30 UTC. Korea has no daylight saving time.
+    - cron: "30 19 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  refresh-pool:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      CONTENT_SCHEDULER_SECRET: ${{ secrets.CONTENT_SCHEDULER_SECRET }}
+      VERCEL_GROWTH_BASE_URL: ${{ vars.VERCEL_GROWTH_BASE_URL }}
+    steps:
+      - name: Trigger protected Coupang pool refresh
+        run: |
+          if [ -z "$CONTENT_SCHEDULER_SECRET" ] || [ -z "$VERCEL_GROWTH_BASE_URL" ]; then
+            echo "Coupang refresh settings are incomplete; no refresh was attempted."
+            exit 0
+          fi
+          response_file="$(mktemp)"
+          http_status="$(curl --silent --show-error --max-time 55 \
+            --output "$response_file" \
+            --write-out "%{http_code}" \
+            --request POST "$VERCEL_GROWTH_BASE_URL/api/affiliate/refresh" \
+            --header "x-mr-tarot-scheduler: $CONTENT_SCHEDULER_SECRET" \
+            --header "content-type: application/json")"
+          echo "Coupang refresh HTTP status: $http_status"
+          sed -E 's/(accessKey|secretKey|token|authorization)[^,}]*/\1=[redacted]/gi' "$response_file"
+          if [ "$http_status" -ge 400 ]; then
+            exit 22
+          fi

@@ -19,4 +19,22 @@ describe("affiliate products", () => {
     expect(product?.ctaLabel).toBe("쿠팡에서 보기");
     expect(selectAffiliateProduct("지금 빚을 갚아야 할까요?", getCardsByIds([64, 67, 71]))).toBeNull();
   });
+
+  it("selects from a refreshed pool without changing theme inference", () => {
+    const product = selectAffiliateProduct("이직을 고민하고 있어요", getCardsByIds([2, 8, 14]), undefined, [{
+      id: "coupang-focus",
+      categories: ["focus"],
+      title: "집중을 돕는 정리함",
+      imageSrc: "https://thumbnail.coupangcdn.com/example.jpg",
+      imageAlt: "정리함 상품 이미지",
+      disclosure: "제휴 안내",
+      ctaLabel: "쿠팡에서 보기",
+      weight: 1,
+      active: true,
+      partnerUrl: "https://link.coupang.com/a/example",
+    }]);
+
+    expect(product?.id).toBe("coupang-focus");
+    expect(product?.partnerUrl).toContain("link.coupang.com");
+  });
 });

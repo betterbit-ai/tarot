@@ -24,13 +24,14 @@ pnpm content:preview --id mr-tarot-0001
 pnpm content:publish-next
 pnpm content:sync-metrics
 pnpm content:refresh-token
+pnpm content:refresh-hooks
 ```
 
 `content:publish-next` writes local dry-run state to an ignored file. On Vercel, protected API routes keep runtime state and the refreshed token in Upstash Redis through server-only REST credentials.
 
 ## Production schedule
 
-GitHub Actions triggers protected Vercel routes. `refresh-threads-token.yml` runs at 09:05 Asia/Seoul, `publish-threads.yml` at 20:30, and `sync-threads-metrics.yml` at 21:10. Korea has no daylight saving time.
+GitHub Actions triggers protected Vercel routes. `refresh-threads-token.yml` runs at 09:05 Asia/Seoul, `publish-threads.yml` at 20:30, `sync-threads-metrics.yml` at 21:10, and `refresh-coupang-pool.yml` at 04:30. Korea has no daylight saving time.
 
 GitHub schedules run in UTC and can be delayed. The publisher is intentionally sequential: main post, result replies, then CTA reply.
 
@@ -46,12 +47,17 @@ Set these in Vercel project environment variables, never in Git:
 - `UPSTASH_REDIS_REST_TOKEN`: Upstash standard REST token
 - `PUBLISH_MODE=auto`
 - `DRY_RUN=false`
+- `COUPANG_PARTNERS_API_ENABLED=true`
+- `COUPANG_PARTNERS_ACCESS_KEY`: Coupang Partners AccessKey
+- `COUPANG_PARTNERS_SECRET_KEY`: Coupang Partners SecretKey
 
 Set the exact same random value as `GROWTH_SCHEDULER_SECRET` in GitHub Actions secrets. Set `VERCEL_GROWTH_BASE_URL` as a GitHub Actions variable to the Vercel production origin without a trailing slash. GitHub only uses the secret to trigger Vercel; it never receives a Threads or Upstash token.
 
 Before switching those two final values, confirm the Meta token has `threads_basic`, `threads_content_publish`, `threads_read_replies`, `threads_manage_replies`, and `threads_manage_insights` as applicable to the chosen features. Run one manual GitHub Actions invocation while watching Vercel function logs.
 
 When live mode is enabled, the daily refresh route calls Meta's documented long-lived-token refresh endpoint and saves a successful replacement token plus its expiry to Upstash. The publisher reads that stored token first. A refresh response without a replacement token fails closed and leaves the prior stored token untouched.
+
+The Coupang refresh route is separate from the visitor request. It maps each internal affiliate theme to a neutral keyword, calls `/products/search`, validates the Coupang CDN image and product URL, converts the URL through `/links/deeplink`, and stores the bounded pool at `mr-tarot:affiliate-pool:v1`. It never sends the user's raw question or an ADID.
 
 ## Failure behavior
 
@@ -70,4 +76,4 @@ Each outbound CTA gets `utm_source=threads`, `utm_medium=social`, `utm_campaign=
 
 The web selector joins question intent and card signals to a theme before choosing a verified product. Current pool coverage is relationship, self-care, rest, and new-start. Work, money, and organization categories skip the interstitial until a matching product URL and licensed image are verified. Results always remain available without clicking.
 
-When the operator later enables the Partners API, set `COUPANG_PARTNERS_API_ENABLED=true`, `COUPANG_PARTNERS_ACCESS_KEY`, and `COUPANG_PARTNERS_SECRET_KEY` only in Vercel. The refresh workflow will use theme-owned search keywords, convert the chosen URL with `/links/deeplink`, and add a verified candidate to the pool. Do not send raw tarot questions and do not enable ADID-based `/products/reco` without a new privacy decision.
+Set `COUPANG_PARTNERS_API_ENABLED=true`, `COUPANG_PARTNERS_ACCESS_KEY`, and `COUPANG_PARTNERS_SECRET_KEY` only in Vercel. Then run `Refresh Coupang affiliate pool` manually once from GitHub Actions and confirm the response reports `mode: refreshed`. The web ritual reads the sanitized pool from `/api/affiliate/pool`, with the existing local product as a fallback. Do not send raw tarot questions and do not enable ADID-based `/products/reco` without a new privacy decision.

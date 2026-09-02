@@ -14,6 +14,9 @@ export type AffiliateProduct = {
   ctaLabel: string;
   weight: number;
   active: boolean;
+  partnerUrl?: string;
+  sourceProductId?: string;
+  refreshedAt?: string;
 };
 
 export type AffiliateSelection = AffiliateProduct & {
@@ -84,9 +87,9 @@ export function inferAffiliateCategory(question: string, cards: readonly TarotCa
   return inferAffiliateThemes(question, cards, signals)[0] ?? "self-care";
 }
 
-export function selectAffiliateProduct(question: string, cards: readonly TarotCard[], signals?: RelationshipSignals): AffiliateSelection | null {
+export function selectAffiliateProduct(question: string, cards: readonly TarotCard[], signals?: RelationshipSignals, products: readonly AffiliateProduct[] = CURATED_AFFILIATE_PRODUCTS): AffiliateSelection | null {
   const themes = inferAffiliateThemes(question, cards, signals);
-  const candidates = CURATED_AFFILIATE_PRODUCTS.filter((product) => product.active && product.categories.some((theme) => themes.includes(theme)));
+  const candidates = products.filter((product) => product.active && product.categories.some((theme) => themes.includes(theme)));
   if (!candidates.length) return null;
 
   const rotationSeed = cards.reduce((total, card) => total + card.id, 0);

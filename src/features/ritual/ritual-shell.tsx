@@ -13,7 +13,7 @@ import { createShuffledDeck } from "@/lib/tarot/cards";
 import { createQuestionAwareRitualReading } from "@/lib/tarot/reading";
 import { createCanonicalCombinationKey, type ReadingSkeleton } from "@/domain/tarot";
 import { summarizeQuestion } from "@/lib/tarot/question";
-import { selectAffiliateProduct } from "@/lib/affiliate/products";
+import { selectAffiliateProduct, type AffiliateProduct } from "@/lib/affiliate/products";
 import { createInitialRitualState, ritualReducer } from "@/features/ritual/state";
 
 const TIMINGS = {
@@ -269,10 +269,23 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
   const prefersReducedMotion = Boolean(useReducedMotion());
   const [state, dispatch] = useReducer(ritualReducer, createShuffledDeck(), createInitialRitualState);
   const [precomputedSkeleton, setPrecomputedSkeleton] = useState<ReadingSkeleton | undefined>();
+  const [affiliateProducts, setAffiliateProducts] = useState<readonly AffiliateProduct[] | undefined>();
   const questionProfile = summarizeQuestion(state.question);
   const skeletonForSelection = state.selectedIds.length === 3 && precomputedSkeleton?.canonicalKey === createCanonicalCombinationKey(state.selectedIds) ? precomputedSkeleton : undefined;
   const reading = state.selectedIds.length === 3 ? createQuestionAwareRitualReading(state.selectedIds, state.question, skeletonForSelection) : null;
-  const affiliateProduct = reading ? selectAffiliateProduct(state.question, reading.cards, reading.signals) : null;
+  const affiliateProduct = reading ? selectAffiliateProduct(state.question, reading.cards, reading.signals, affiliateProducts) : null;
+
+  useEffect(() => {
+    if (!affiliateConfig.enabled || typeof fetch === "undefined") return undefined;
+    let cancelled = false;
+    fetch("/api/affiliate/pool")
+      .then(async (response) => response.ok ? response.json() as Promise<{ products?: AffiliateProduct[] }> : undefined)
+      .then((payload) => {
+        if (!cancelled && payload?.products?.length) setAffiliateProducts(payload.products);
+      })
+      .catch(() => undefined);
+    return () => { cancelled = true; };
+  }, [affiliateConfig.enabled]);
 
   useEffect(() => {
     if (state.selectedIds.length !== 3) {
@@ -388,10 +401,11 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
         return <RevealStage selectedIds={state.selectedIds} revealedCount={3} message={revealMessage(3, reading)} />;
       case "affiliate": {
         if (!affiliateProduct) return null;
+        const affiliateHref = affiliateProduct.partnerUrl ?? affiliateConfig.outHref;
         return (
           <StageFrame>
             <AffiliateSheet
-              href={affiliateConfig.outHref}
+              href={affiliateHref}
               product={affiliateProduct}
               onClick={() => {
                 trackTarotEvent({ type: "affiliate_clicked" });
