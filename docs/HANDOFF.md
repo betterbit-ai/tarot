@@ -255,3 +255,5 @@ Vercel live + Threads link + OAuth callback record: `f951faf` followed by curren
 Vercel project rename/domain record: current `HEAD` — `mr-tarot` / `mr-tarot.vercel.app`.
 
 Scheduler diagnostic checkpoint: current `HEAD` — GitHub reaches Vercel; first automated content is published, and the missing `3번` reply was manually completed.
+
+Latest interpretation checkpoint: `982c021` — combination-aware flow, question application, mindset, and regenerated 76,076-row corpus.
