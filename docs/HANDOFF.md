@@ -74,7 +74,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Vercel project import from `betterbit-ai/tarot` is connected on the Hobby team. Its first deployment reached Next.js static-page collection but failed because an imported blank `NEXT_PUBLIC_SITE_URL` made `new URL("")` throw.
 - Vercel portability slice adds protected Next route handlers for publish, token refresh, and metrics sync. The new Upstash REST adapter keeps queue and refreshed-token state server-side with no added package; GitHub Actions triggers those routes instead of a Netlify URL.
 - Vercel Hobby project `tarot` is live at `https://tarot-ten-gamma.vercel.app`; `/privacy`, `/terms`, and `/data-deletion` have been checked on the public deployment.
-- Vercel has `NEXT_PUBLIC_SITE_URL` as a public Config value, affiliate enabled with the verified partner URL, and `PUBLISH_MODE=review` plus `DRY_RUN=true`. Coupang Access/Secret Keys were copied directly from the Partners UI into Vercel server-only Secrets and never committed or recorded in docs.
+- Vercel has `NEXT_PUBLIC_SITE_URL` as a public Config value, affiliate enabled with the verified partner URL, and live Threads publishing configured with `PUBLISH_MODE=auto` plus `DRY_RUN=false`. Coupang Access/Secret Keys were copied directly from the Partners UI into Vercel server-only Secrets and never committed or recorded in docs.
 - The Threads profile link now points to `https://tarot-ten-gamma.vercel.app/?utm_source=threads&utm_medium=social&utm_content=link_in_bio` and publicly displays the new Vercel host.
 - Threads OAuth start/callback routes now bind a signed, expiring state to an HttpOnly browser cookie, verify the authorized `@mr._.tarot` username through the Threads API, exchange a code in a POST body, and store only the long-lived token in Upstash. Publisher uses the stored OAuth user id when present.
 - Upstash account is connected under `joelonsw`; free Redis database `mr-tarot-growth` was created in `us-east-1` with REST API and TLS enabled. Its REST URL is stored in Vercel; the standard REST token is intentionally not read or recorded and still needs direct operator paste into Vercel.
@@ -102,7 +102,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 ## In Progress
 
 - Verify the next queued item through the same workflow and record hook impressions, replies and profile visits before choosing a winning hook pattern.
-- Set `COUPANG_PARTNERS_API_ENABLED=true` in Vercel Production, redeploy, run `Refresh Coupang affiliate pool` once, and confirm `/api/affiliate/pool` returns at least one refreshed product before relying on live recommendations.
+- `COUPANG_PARTNERS_API_ENABLED=true` is present in Vercel Production and has been redeployed; the first refresh reached Coupang but received HTTP 401.
 - After issuing or correcting a valid Coupang Partners AccessKey/SecretKey, rerun the refresh workflow and confirm `mode: refreshed`; until then the ritual safely uses the local fallback product.
 - Paste the Upstash REST token into Vercel `UPSTASH_REDIS_REST_TOKEN`; do not put it in Git or chat.
 - Meta settings save redirected to a Facebook login prompt before reflection could be verified. Facebook login is needed to validate the Vercel policy URLs, category and OAuth redirect setup.
@@ -130,7 +130,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Home OG uses a symbolic three-card brand composition; shared-result OG uses actual selected RWS fronts
 - Threads assets are SVG source artwork for direct social export; export at 1080x1350 PNG only if the account requires raster uploads
 - Netlify reports that the `betterbit-ai` team has operational credits only and that production deploys are paused. The current `mr-tarot.netlify.app/privacy` response is therefore 404 even though `main` contains the route. Do not save the Meta policy URLs until the deploy succeeds.
-- The Vercel Hobby import currently has 20 detected variable names. Public site/affiliate defaults and the Coupang Secrets are present; Upstash REST token, Threads App Secret and user token remain unset.
+- The Vercel Hobby project has the public site/affiliate defaults, Upstash REST credentials, Threads credentials, and Coupang Secrets configured server-side. Values are not present in Git, docs, or chat.
 - Vercel/Upstash port exists in source but is intentionally inactive without `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, and `CONTENT_SCHEDULER_SECRET`.
 - Vercel/Upstash port is configured, but the protected publisher currently fails closed with `401` until the deployed scheduler secret matches GitHub's repository secret.
 - `COUPANG_PARTNERS_API_ENABLED` remains unset because live product-pool refresh is not yet implemented; do not claim that the stored keys have started live discovery.
@@ -196,6 +196,7 @@ UX v2 verification on 2026-08-28:
 - `pnpm test`: 30 files, 79 tests pass after hook rotation changes
 - `pnpm typecheck`, `pnpm lint`, `pnpm build`, `pnpm content:validate`, `git diff --check`: pass after Threads hook refresh
 - Coupang adapter tests cover HMAC signing, six-theme refresh mapping, and refreshed-pool selection.
+- Manual Coupang refresh workflow: route authorization succeeded, provider returned HTTP 401 (`Coupang API request failed: 401`); no pool data was written.
 - `pnpm tarot:audit`: added editorial-layer, redundant-visual, and awkward-flow checks; all 76,076 rows still pass with zero failures
 - `pnpm tarot:generate --from 1 --to 381`: regenerated all 76,076 prose rows with suit-specific minor meanings
 - Growth Engine checks: `pnpm content:generate --count 105`, `pnpm content:images`, `pnpm content:validate`, `pnpm content:status`, `pnpm content:publish-next`, `pnpm content:sync-metrics`, `pnpm content:refresh-token`, 25 test files / 62 tests, typecheck, lint, and build all pass
