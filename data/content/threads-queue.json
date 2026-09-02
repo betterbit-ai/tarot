@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-30T13:07:08.619Z",
+  "generatedAt": "2026-09-02T12:52:28.435Z",
   "items": [
     {
       "id": "mr-tarot-0001",
@@ -75,8 +75,8 @@
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "LOVE",
-      "hook": "지금 떠오르는 사람을 두고 답을 내려야 한다면",
-      "mainPost": "지금 떠오르는 사람을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "지금 떠오르는 사람을 생각할 때 가장 먼저 눈에 들어온 세 장 중 하나를 골라보세요.",
+      "mainPost": "지금 떠오르는 사람을 생각할 때 가장 먼저 눈에 들어온 세 장 중 하나를 골라보세요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         57,
         74,
@@ -91,7 +91,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0003.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -100,15 +100,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|LOVE|13-57-74|지금떠오르는사람을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|LOVE|13-57-74|지금떠오르는사람을생각할때가장먼저눈에들어온세장중하나를골라보세요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0004",
       "status": "READY",
       "format": "LOVE",
       "topic": "LOVE",
-      "hook": "지금 떠오르는 사람을 두고 내가 모르는 부분",
-      "mainPost": "지금 떠오르는 사람을 두고 내가 모르는 부분\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
+      "hook": "괜찮은 척했지만, 지금 떠오르는 사람을 아직 놓지 못했다면.",
+      "mainPost": "괜찮은 척했지만, 지금 떠오르는 사람을 아직 놓지 못했다면.\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
       "cardIds": [
         74,
         15,
@@ -123,7 +123,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0004.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -132,15 +132,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "LOVE|LOVE|15-34-74|지금떠오르는사람을두고내가모르는부분마음이먼저인지행동이먼저인지세장중하나를고르며살펴봐요"
+      "semanticSignature": "LOVE|LOVE|15-34-74|괜찮은척했지만지금떠오르는사람을아직놓지못했다면마음이먼저인지행동이먼저인지세장중하나를고르며살펴봐요"
     },
     {
       "id": "mr-tarot-0005",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "LOVE",
-      "hook": "지금 필요한 한 장",
-      "mainPost": "지금 필요한 한 장\n\n지금 떠오르는 사람을 떠올리고\n카드 하나를 골라보세요.\n\n05",
+      "hook": "지금 떠오르는 사람이 다시 움직일 때인지, 잠시 멈출 때인지 보겠습니다.",
+      "mainPost": "지금 떠오르는 사람이 다시 움직일 때인지, 잠시 멈출 때인지 보겠습니다.\n\n지금 떠오르는 사람을 떠올리고\n카드 하나를 골라보세요.\n\n05",
       "cardIds": [
         13
       ],
@@ -151,7 +151,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0005.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -160,15 +160,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|LOVE|13|지금필요한한장지금떠오르는사람을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|LOVE|13|지금떠오르는사람이다시움직일때인지잠시멈출때인지보겠습니다지금떠오르는사람을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0006",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "LOVE",
-      "hook": "지금 떠오르는 사람을 한 단어로 남긴다면",
-      "mainPost": "지금 떠오르는 사람을 한 단어로 남긴다면\n\n답을 정해드리기보다\n그 단어를 떠올릴 때 가장 먼저 보이는 장면이 무엇인지 같이 볼게요.\n생각이 길어지기 전에 적어봐요.",
+      "hook": "지금 가장 피하고 싶은 선택이 오히려 힌트일 수 있어요.",
+      "mainPost": "지금 가장 피하고 싶은 선택이 오히려 힌트일 수 있어요.\n\n답을 정해드리기보다\n그 단어를 떠올릴 때 가장 먼저 보이는 장면이 무엇인지 같이 볼게요.\n생각이 길어지기 전에 적어봐요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -177,7 +177,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0006.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -186,15 +186,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|LOVE||지금떠오르는사람을한단어로남긴다면답을정해드리기보다그단어를떠올릴때가장먼저보이는장면이무엇인지같이볼게요생각이길어지기전에적어봐요"
+      "semanticSignature": "CONVERSATION|LOVE||지금가장피하고싶은선택이오히려힌트일수있어요답을정해드리기보다그단어를떠올릴때가장먼저보이는장면이무엇인지같이볼게요생각이길어지기전에적어봐요"
     },
     {
       "id": "mr-tarot-0007",
       "status": "READY",
       "format": "PICK_5",
       "topic": "LOVE",
-      "hook": "요즘 마음이 쓰이는 관계를 생각하면서",
-      "mainPost": "요즘 마음이 쓰이는 관계를 생각하면서\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
+      "hook": "요즘 마음이 쓰이는 관계를 계속 미루는 데는 이유가 있어요.",
+      "mainPost": "요즘 마음이 쓰이는 관계를 계속 미루는 데는 이유가 있어요.\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
       "cardIds": [
         47,
         62,
@@ -213,7 +213,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0007.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 5장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -222,15 +222,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_5|LOVE|14-29-47-62-77|요즘마음이쓰이는관계를생각하면서다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
+      "semanticSignature": "PICK_5|LOVE|14-29-47-62-77|요즘마음이쓰이는관계를계속미루는데는이유가있어요다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
     },
     {
       "id": "mr-tarot-0008",
       "status": "READY",
       "format": "PICK_3",
       "topic": "LOVE",
-      "hook": "요즘 마음이 쓰이는 관계가 계속 걸린다면",
-      "mainPost": "요즘 마음이 쓰이는 관계가 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "이 고민의 다음 장면이 궁금한 날, 세 장 중 하나를 골라보세요.",
+      "mainPost": "이 고민의 다음 장면이 궁금한 날, 세 장 중 하나를 골라보세요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         64,
         3,
@@ -245,7 +245,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0008.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -254,15 +254,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|LOVE|3-20-64|요즘마음이쓰이는관계가계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|LOVE|3-20-64|이고민의다음장면이궁금한날세장중하나를골라보세요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0009",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "LOVE",
-      "hook": "요즘 마음이 쓰이는 관계를 두고 답을 내려야 한다면",
-      "mainPost": "요즘 마음이 쓰이는 관계를 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "잘될까요?보다 먼저 확인할 게 있어요.",
+      "mainPost": "잘될까요?보다 먼저 확인할 게 있어요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         3,
         22,
@@ -277,7 +277,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0009.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -286,15 +286,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|LOVE|3-22-41|요즘마음이쓰이는관계를두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|LOVE|3-22-41|잘될까요보다먼저확인할게있어요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0010",
       "status": "READY",
       "format": "LOVE",
       "topic": "LOVE",
-      "hook": "요즘 마음이 쓰이는 관계를 두고 내가 모르는 부분",
-      "mainPost": "요즘 마음이 쓰이는 관계를 두고 내가 모르는 부분\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
+      "hook": "오늘은 정답 대신 덜 후회할 쪽을 고릅니다.",
+      "mainPost": "오늘은 정답 대신 덜 후회할 쪽을 고릅니다.\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
       "cardIds": [
         20,
         31,
@@ -309,7 +309,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0010.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -318,15 +318,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "LOVE|LOVE|20-31-42|요즘마음이쓰이는관계를두고내가모르는부분마음이먼저인지행동이먼저인지세장중하나를고르며살펴봐요"
+      "semanticSignature": "LOVE|LOVE|20-31-42|오늘은정답대신덜후회할쪽을고릅니다마음이먼저인지행동이먼저인지세장중하나를고르며살펴봐요"
     },
     {
       "id": "mr-tarot-0011",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "LOVE",
-      "hook": "지금 필요한 한 장",
-      "mainPost": "지금 필요한 한 장\n\n요즘 마음이 쓰이는 관계를 떠올리고\n카드 하나를 골라보세요.\n\n11",
+      "hook": "요즘 마음이 쓰이는 관계를 친구에게 묻기 어려웠다면, 카드 한 장을 골라 확인해보세요.",
+      "mainPost": "요즘 마음이 쓰이는 관계를 친구에게 묻기 어려웠다면, 카드 한 장을 골라 확인해보세요.\n\n요즘 마음이 쓰이는 관계를 떠올리고\n카드 하나를 골라보세요.\n\n11",
       "cardIds": [
         37
       ],
@@ -337,7 +337,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0011.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -346,15 +346,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|LOVE|37|지금필요한한장요즘마음이쓰이는관계를떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|LOVE|37|요즘마음이쓰이는관계를친구에게묻기어려웠다면카드한장을골라확인해보세요요즘마음이쓰이는관계를떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0012",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "LOVE",
-      "hook": "요즘 마음이 쓰이는 관계를 한 단어로 남긴다면",
-      "mainPost": "요즘 마음이 쓰이는 관계를 한 단어로 남긴다면\n\n답을 정해드리기보다\n그 단어를 피하고 싶은지 붙잡고 싶은지 같이 볼게요.\n길게 설명하지 않아도 괜찮아요.",
+      "hook": "마음이 먼저 고른 선택을 믿어도 될까요?",
+      "mainPost": "마음이 먼저 고른 선택을 믿어도 될까요?\n\n답을 정해드리기보다\n그 단어를 피하고 싶은지 붙잡고 싶은지 같이 볼게요.\n길게 설명하지 않아도 괜찮아요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -363,7 +363,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0012.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -372,15 +372,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|LOVE||요즘마음이쓰이는관계를한단어로남긴다면답을정해드리기보다그단어를피하고싶은지붙잡고싶은지같이볼게요길게설명하지않아도괜찮아요"
+      "semanticSignature": "CONVERSATION|LOVE||마음이먼저고른선택을믿어도될까요답을정해드리기보다그단어를피하고싶은지붙잡고싶은지같이볼게요길게설명하지않아도괜찮아요"
     },
     {
       "id": "mr-tarot-0013",
       "status": "READY",
       "format": "PICK_5",
       "topic": "LOVE",
-      "hook": "연락할지 망설이는 사람을 생각하면서",
-      "mainPost": "연락할지 망설이는 사람을 생각하면서\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
+      "hook": "세 선택지 중 유독 불편한 것이 있다면, 그 이유를 봅니다.",
+      "mainPost": "세 선택지 중 유독 불편한 것이 있다면, 그 이유를 봅니다.\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
       "cardIds": [
         71,
         10,
@@ -399,7 +399,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0013.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 5장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -408,15 +408,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_5|LOVE|10-27-44-61-71|연락할지망설이는사람을생각하면서다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
+      "semanticSignature": "PICK_5|LOVE|10-27-44-61-71|세선택지중유독불편한것이있다면그이유를봅니다다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
     },
     {
       "id": "mr-tarot-0014",
       "status": "READY",
       "format": "PICK_3",
       "topic": "LOVE",
-      "hook": "연락할지 망설이는 사람이 계속 걸린다면",
-      "mainPost": "연락할지 망설이는 사람이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "연락할지 망설이는 사람이 끝난 건지, 잠시 멈춘 건지 헷갈린다면.",
+      "mainPost": "연락할지 망설이는 사람이 끝난 건지, 잠시 멈춘 건지 헷갈린다면.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         10,
         29,
@@ -431,7 +431,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0014.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -440,15 +440,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|LOVE|10-29-48|연락할지망설이는사람이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|LOVE|10-29-48|연락할지망설이는사람이끝난건지잠시멈춘건지헷갈린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0015",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "LOVE",
-      "hook": "연락할지 망설이는 사람을 두고 답을 내려야 한다면",
-      "mainPost": "연락할지 망설이는 사람을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "지금 바꾸지 않으면 반복될 장면이 보여요.",
+      "mainPost": "지금 바꾸지 않으면 반복될 장면이 보여요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         27,
         38,
@@ -463,7 +463,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0015.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -472,15 +472,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|LOVE|27-38-49|연락할지망설이는사람을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|LOVE|27-38-49|지금바꾸지않으면반복될장면이보여요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0016",
       "status": "READY",
       "format": "LOVE",
       "topic": "LOVE",
-      "hook": "연락할지 망설이는 사람을 두고 내가 모르는 부분",
-      "mainPost": "연락할지 망설이는 사람을 두고 내가 모르는 부분\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
+      "hook": "연락할지 망설이는 사람이 계속 떠오른다면, 그 마음을 피하지 마세요.",
+      "mainPost": "연락할지 망설이는 사람이 계속 떠오른다면, 그 마음을 피하지 마세요.\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
       "cardIds": [
         44,
         57,
@@ -495,7 +495,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0016.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -504,15 +504,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "LOVE|LOVE|44-57-70|연락할지망설이는사람을두고내가모르는부분마음이먼저인지행동이먼저인지세장중하나를고르며살펴봐요"
+      "semanticSignature": "LOVE|LOVE|44-57-70|연락할지망설이는사람이계속떠오른다면그마음을피하지마세요마음이먼저인지행동이먼저인지세장중하나를고르며살펴봐요"
     },
     {
       "id": "mr-tarot-0017",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "LOVE",
-      "hook": "지금 필요한 한 장",
-      "mainPost": "지금 필요한 한 장\n\n연락할지 망설이는 사람을 떠올리고\n카드 하나를 골라보세요.\n\n17",
+      "hook": "당장 움직이기 전에 멈춰야 할 이유부터 확인해보세요.",
+      "mainPost": "당장 움직이기 전에 멈춰야 할 이유부터 확인해보세요.\n\n연락할지 망설이는 사람을 떠올리고\n카드 하나를 골라보세요.\n\n17",
       "cardIds": [
         61
       ],
@@ -523,7 +523,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0017.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -532,15 +532,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|LOVE|61|지금필요한한장연락할지망설이는사람을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|LOVE|61|당장움직이기전에멈춰야할이유부터확인해보세요연락할지망설이는사람을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0018",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "LOVE",
-      "hook": "연락할지 망설이는 사람을 한 단어로 남긴다면",
-      "mainPost": "연락할지 망설이는 사람을 한 단어로 남긴다면\n\n답을 정해드리기보다\n그 단어를 누구에게도 말하지 못한 이유가 있는지 같이 볼게요.\n아무에게도 말하지 못한 단어여도 괜찮아요.",
+      "hook": "좋은 소식보다 먼저 살펴야 할 현실이 있어요.",
+      "mainPost": "좋은 소식보다 먼저 살펴야 할 현실이 있어요.\n\n답을 정해드리기보다\n그 단어를 누구에게도 말하지 못한 이유가 있는지 같이 볼게요.\n아무에게도 말하지 못한 단어여도 괜찮아요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -549,7 +549,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0018.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -558,15 +558,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|LOVE||연락할지망설이는사람을한단어로남긴다면답을정해드리기보다그단어를누구에게도말하지못한이유가있는지같이볼게요아무에게도말하지못한단어여도괜찮아요"
+      "semanticSignature": "CONVERSATION|LOVE||좋은소식보다먼저살펴야할현실이있어요답을정해드리기보다그단어를누구에게도말하지못한이유가있는지같이볼게요아무에게도말하지못한단어여도괜찮아요"
     },
     {
       "id": "mr-tarot-0019",
       "status": "READY",
       "format": "PICK_5",
       "topic": "LOVE",
-      "hook": "지금 떠오르는 사람을 생각하면서",
-      "mainPost": "지금 떠오르는 사람을 생각하면서\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
+      "hook": "지금 떠오르는 사람을 놓치면 안 될 한 가지를 골라보세요.",
+      "mainPost": "지금 떠오르는 사람을 놓치면 안 될 한 가지를 골라보세요.\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
       "cardIds": [
         17,
         36,
@@ -585,7 +585,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0019.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 5장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -594,15 +594,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_5|LOVE|15-17-36-55-74|지금떠오르는사람을생각하면서다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
+      "semanticSignature": "PICK_5|LOVE|15-17-36-55-74|지금떠오르는사람을놓치면안될한가지를골라보세요다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
     },
     {
       "id": "mr-tarot-0020",
       "status": "READY",
       "format": "PICK_3",
       "topic": "LOVE",
-      "hook": "지금 떠오르는 사람이 계속 걸린다면",
-      "mainPost": "지금 떠오르는 사람이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "이번에는 미래를 맞히지 않고, 오늘의 신호만 읽습니다.",
+      "mainPost": "이번에는 미래를 맞히지 않고, 오늘의 신호만 읽습니다.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         34,
         45,
@@ -617,7 +617,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0020.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -626,15 +626,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|LOVE|34-45-56|지금떠오르는사람이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|LOVE|34-45-56|이번에는미래를맞히지않고오늘의신호만읽습니다중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0021",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "LOVE",
-      "hook": "지금 떠오르는 사람을 두고 답을 내려야 한다면",
-      "mainPost": "지금 떠오르는 사람을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "고른 뒤에 설명할게요. 먼저 세 장 중 하나를 골라보세요.",
+      "mainPost": "고른 뒤에 설명할게요. 먼저 세 장 중 하나를 골라보세요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         51,
         64,
@@ -649,7 +649,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0021.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -658,15 +658,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|LOVE|51-64-77|지금떠오르는사람을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|LOVE|51-64-77|고른뒤에설명할게요먼저세장중하나를골라보세요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0022",
       "status": "READY",
       "format": "LOVE",
       "topic": "LOVE",
-      "hook": "지금 떠오르는 사람을 두고 내가 모르는 부분",
-      "mainPost": "지금 떠오르는 사람을 두고 내가 모르는 부분\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
+      "hook": "지금 떠오르는 사람이 왜 자꾸 같은 장면으로 돌아오는지 볼게요.",
+      "mainPost": "지금 떠오르는 사람이 왜 자꾸 같은 장면으로 돌아오는지 볼게요.\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
       "cardIds": [
         68,
         5,
@@ -681,7 +681,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0022.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -690,15 +690,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "LOVE|LOVE|5-20-68|지금떠오르는사람을두고내가모르는부분마음이먼저인지행동이먼저인지세장중하나를고르며살펴봐요"
+      "semanticSignature": "LOVE|LOVE|5-20-68|지금떠오르는사람이왜자꾸같은장면으로돌아오는지볼게요마음이먼저인지행동이먼저인지세장중하나를고르며살펴봐요"
     },
     {
       "id": "mr-tarot-0023",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "LOVE",
-      "hook": "지금 필요한 한 장",
-      "mainPost": "지금 필요한 한 장\n\n지금 떠오르는 사람을 떠올리고\n카드 하나를 골라보세요.\n\n23",
+      "hook": "이 선택에서 가장 아픈 부분부터 카드에 물어볼게요.",
+      "mainPost": "이 선택에서 가장 아픈 부분부터 카드에 물어볼게요.\n\n지금 떠오르는 사람을 떠올리고\n카드 하나를 골라보세요.\n\n23",
       "cardIds": [
         7
       ],
@@ -709,7 +709,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0023.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -718,15 +718,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|LOVE|7|지금필요한한장지금떠오르는사람을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|LOVE|7|이선택에서가장아픈부분부터카드에물어볼게요지금떠오르는사람을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0024",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "LOVE",
-      "hook": "지금 떠오르는 사람을 한 단어로 남긴다면",
-      "mainPost": "지금 떠오르는 사람을 한 단어로 남긴다면\n\n답을 정해드리기보다\n그 단어가 오늘의 선택과 어떤 관계가 있는지 같이 볼게요.\n지금 떠오른 말 그대로면 돼요.",
+      "hook": "지금 떠오르는 사람을 지금 다시 시작할 힘이 남아 있는지 확인해보세요.",
+      "mainPost": "지금 떠오르는 사람을 지금 다시 시작할 힘이 남아 있는지 확인해보세요.\n\n답을 정해드리기보다\n그 단어가 오늘의 선택과 어떤 관계가 있는지 같이 볼게요.\n지금 떠오른 말 그대로면 돼요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -735,7 +735,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0024.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -744,15 +744,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|LOVE||지금떠오르는사람을한단어로남긴다면답을정해드리기보다그단어가오늘의선택과어떤관계가있는지같이볼게요지금떠오른말그대로면돼요"
+      "semanticSignature": "CONVERSATION|LOVE||지금떠오르는사람을지금다시시작할힘이남아있는지확인해보세요답을정해드리기보다그단어가오늘의선택과어떤관계가있는지같이볼게요지금떠오른말그대로면돼요"
     },
     {
       "id": "mr-tarot-0025",
       "status": "READY",
       "format": "PICK_5",
       "topic": "LOVE",
-      "hook": "요즘 마음이 쓰이는 관계를 생각하면서",
-      "mainPost": "요즘 마음이 쓰이는 관계를 생각하면서\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
+      "hook": "마음은 이미 답을 골랐을지도 몰라요. 다섯 장 중 하나로 확인해보세요.",
+      "mainPost": "마음은 이미 답을 골랐을지도 몰라요. 다섯 장 중 하나로 확인해보세요.\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
       "cardIds": [
         41,
         52,
@@ -771,7 +771,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0025.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 5장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -780,15 +780,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_5|LOVE|7-41-52-63-74|요즘마음이쓰이는관계를생각하면서다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
+      "semanticSignature": "PICK_5|LOVE|7-41-52-63-74|마음은이미답을골랐을지도몰라요다섯장중하나로확인해보세요다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
     },
     {
       "id": "mr-tarot-0026",
       "status": "READY",
       "format": "PICK_3",
       "topic": "LOVE",
-      "hook": "요즘 마음이 쓰이는 관계가 계속 걸린다면",
-      "mainPost": "요즘 마음이 쓰이는 관계가 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "요즘 마음이 쓰이는 관계가 바라는 것과 두려운 것이 다르게 보일 수 있어요.",
+      "mainPost": "요즘 마음이 쓰이는 관계가 바라는 것과 두려운 것이 다르게 보일 수 있어요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         58,
         71,
@@ -803,7 +803,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0026.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -812,15 +812,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|LOVE|6-58-71|요즘마음이쓰이는관계가계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|LOVE|6-58-71|요즘마음이쓰이는관계가바라는것과두려운것이다르게보일수있어요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0027",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "LOVE",
-      "hook": "요즘 마음이 쓰이는 관계를 두고 답을 내려야 한다면",
-      "mainPost": "요즘 마음이 쓰이는 관계를 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "먼저 고른 쪽부터 천천히 읽어보세요.",
+      "mainPost": "먼저 고른 쪽부터 천천히 읽어보세요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         75,
         12,
@@ -835,7 +835,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0027.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -844,15 +844,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|LOVE|12-27-75|요즘마음이쓰이는관계를두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|LOVE|12-27-75|먼저고른쪽부터천천히읽어보세요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0028",
       "status": "READY",
       "format": "LOVE",
       "topic": "LOVE",
-      "hook": "요즘 마음이 쓰이는 관계를 두고 내가 모르는 부분",
-      "mainPost": "요즘 마음이 쓰이는 관계를 두고 내가 모르는 부분\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
+      "hook": "계속 걸린다면, 이번에는 오래 고르지 마세요.",
+      "mainPost": "계속 걸린다면, 이번에는 오래 고르지 마세요.\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
       "cardIds": [
         14,
         31,
@@ -867,7 +867,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0028.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -876,15 +876,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "LOVE|LOVE|14-31-48|요즘마음이쓰이는관계를두고내가모르는부분마음이먼저인지행동이먼저인지세장중하나를고르며살펴봐요"
+      "semanticSignature": "LOVE|LOVE|14-31-48|계속걸린다면이번에는오래고르지마세요마음이먼저인지행동이먼저인지세장중하나를고르며살펴봐요"
     },
     {
       "id": "mr-tarot-0029",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "LOVE",
-      "hook": "지금 필요한 한 장",
-      "mainPost": "지금 필요한 한 장\n\n요즘 마음이 쓰이는 관계를 떠올리고\n카드 하나를 골라보세요.\n\n29",
+      "hook": "요즘 마음이 쓰이는 관계를 기다릴지 움직일지, 카드가 보여주는 방향을 봅니다.",
+      "mainPost": "요즘 마음이 쓰이는 관계를 기다릴지 움직일지, 카드가 보여주는 방향을 봅니다.\n\n요즘 마음이 쓰이는 관계를 떠올리고\n카드 하나를 골라보세요.\n\n29",
       "cardIds": [
         31
       ],
@@ -895,7 +895,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0029.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -904,15 +904,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|LOVE|31|지금필요한한장요즘마음이쓰이는관계를떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|LOVE|31|요즘마음이쓰이는관계를기다릴지움직일지카드가보여주는방향을봅니다요즘마음이쓰이는관계를떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0030",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "LOVE",
-      "hook": "요즘 마음이 쓰이는 관계를 한 단어로 남긴다면",
-      "mainPost": "요즘 마음이 쓰이는 관계를 한 단어로 남긴다면\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n그 단어가 오늘의 시작점이 될 수 있어요.",
+      "hook": "오늘 당신이 먼저 봐야 할 장면이 하나 있어요.",
+      "mainPost": "오늘 당신이 먼저 봐야 할 장면이 하나 있어요.\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n그 단어가 오늘의 시작점이 될 수 있어요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -921,7 +921,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0030.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -930,15 +930,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|LOVE||요즘마음이쓰이는관계를한단어로남긴다면답을정해드리기보다왜그단어가남았는지같이볼게요그단어가오늘의시작점이될수있어요"
+      "semanticSignature": "CONVERSATION|LOVE||오늘당신이먼저봐야할장면이하나있어요답을정해드리기보다왜그단어가남았는지같이볼게요그단어가오늘의시작점이될수있어요"
     },
     {
       "id": "mr-tarot-0031",
       "status": "READY",
       "format": "PICK_5",
       "topic": "LOVE",
-      "hook": "연락할지 망설이는 사람을 생각하면서",
-      "mainPost": "연락할지 망설이는 사람을 생각하면서\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
+      "hook": "연락할지 망설이는 사람이 계속 마음에 남는 이유, 다섯 장 중 하나에서 먼저 볼게요.",
+      "mainPost": "연락할지 망설이는 사람이 계속 마음에 남는 이유, 다섯 장 중 하나에서 먼저 볼게요.\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
       "cardIds": [
         65,
         0,
@@ -957,7 +957,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0031.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 5장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -966,15 +966,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_5|LOVE|0-13-26-39-65|연락할지망설이는사람을생각하면서다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
+      "semanticSignature": "PICK_5|LOVE|0-13-26-39-65|연락할지망설이는사람이계속마음에남는이유다섯장중하나에서먼저볼게요다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
     },
     {
       "id": "mr-tarot-0032",
       "status": "READY",
       "format": "PICK_3",
       "topic": "LOVE",
-      "hook": "연락할지 망설이는 사람이 계속 걸린다면",
-      "mainPost": "연락할지 망설이는 사람이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "답을 서두르기 전에 연락할지 망설이는 사람을 붙잡고 있는 마음부터 확인해보세요.",
+      "mainPost": "답을 서두르기 전에 연락할지 망설이는 사람을 붙잡고 있는 마음부터 확인해보세요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         4,
         19,
@@ -989,7 +989,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0032.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -998,15 +998,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|LOVE|4-19-34|연락할지망설이는사람이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|LOVE|4-19-34|답을서두르기전에연락할지망설이는사람을붙잡고있는마음부터확인해보세요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0033",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "LOVE",
-      "hook": "연락할지 망설이는 사람을 두고 답을 내려야 한다면",
-      "mainPost": "연락할지 망설이는 사람을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "연락할지 망설이는 사람을 생각할 때 가장 먼저 눈에 들어온 세 장 중 하나를 골라보세요.",
+      "mainPost": "연락할지 망설이는 사람을 생각할 때 가장 먼저 눈에 들어온 세 장 중 하나를 골라보세요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         21,
         38,
@@ -1021,7 +1021,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0033.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1030,15 +1030,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|LOVE|21-38-55|연락할지망설이는사람을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|LOVE|21-38-55|연락할지망설이는사람을생각할때가장먼저눈에들어온세장중하나를골라보세요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0034",
       "status": "READY",
       "format": "LOVE",
       "topic": "LOVE",
-      "hook": "연락할지 망설이는 사람을 두고 내가 모르는 부분",
-      "mainPost": "연락할지 망설이는 사람을 두고 내가 모르는 부분\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
+      "hook": "괜찮은 척했지만, 연락할지 망설이는 사람을 아직 놓지 못했다면.",
+      "mainPost": "괜찮은 척했지만, 연락할지 망설이는 사람을 아직 놓지 못했다면.\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
       "cardIds": [
         38,
         57,
@@ -1053,7 +1053,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0034.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1062,15 +1062,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "LOVE|LOVE|38-57-76|연락할지망설이는사람을두고내가모르는부분마음이먼저인지행동이먼저인지세장중하나를고르며살펴봐요"
+      "semanticSignature": "LOVE|LOVE|38-57-76|괜찮은척했지만연락할지망설이는사람을아직놓지못했다면마음이먼저인지행동이먼저인지세장중하나를고르며살펴봐요"
     },
     {
       "id": "mr-tarot-0035",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "LOVE",
-      "hook": "지금 필요한 한 장",
-      "mainPost": "지금 필요한 한 장\n\n연락할지 망설이는 사람을 떠올리고\n카드 하나를 골라보세요.\n\n35",
+      "hook": "연락할지 망설이는 사람이 다시 움직일 때인지, 잠시 멈출 때인지 보겠습니다.",
+      "mainPost": "연락할지 망설이는 사람이 다시 움직일 때인지, 잠시 멈출 때인지 보겠습니다.\n\n연락할지 망설이는 사람을 떠올리고\n카드 하나를 골라보세요.\n\n35",
       "cardIds": [
         55
       ],
@@ -1081,7 +1081,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0035.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1090,15 +1090,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|LOVE|55|지금필요한한장연락할지망설이는사람을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|LOVE|55|연락할지망설이는사람이다시움직일때인지잠시멈출때인지보겠습니다연락할지망설이는사람을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0036",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "LOVE",
-      "hook": "연락할지 망설이는 사람을 한 단어로 남긴다면",
-      "mainPost": "연락할지 망설이는 사람을 한 단어로 남긴다면\n\n답을 정해드리기보다\n그 단어를 떠올릴 때 가장 먼저 보이는 장면이 무엇인지 같이 볼게요.\n답을 찾기 전에 이름부터 붙여봐요.",
+      "hook": "지금 가장 피하고 싶은 선택이 오히려 힌트일 수 있어요.",
+      "mainPost": "지금 가장 피하고 싶은 선택이 오히려 힌트일 수 있어요.\n\n답을 정해드리기보다\n그 단어를 떠올릴 때 가장 먼저 보이는 장면이 무엇인지 같이 볼게요.\n답을 찾기 전에 이름부터 붙여봐요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -1107,7 +1107,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0036.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1116,15 +1116,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|LOVE||연락할지망설이는사람을한단어로남긴다면답을정해드리기보다그단어를떠올릴때가장먼저보이는장면이무엇인지같이볼게요답을찾기전에이름부터붙여봐요"
+      "semanticSignature": "CONVERSATION|LOVE||지금가장피하고싶은선택이오히려힌트일수있어요답을정해드리기보다그단어를떠올릴때가장먼저보이는장면이무엇인지같이볼게요답을찾기전에이름부터붙여봐요"
     },
     {
       "id": "mr-tarot-0037",
       "status": "READY",
       "format": "PICK_5",
       "topic": "LOVE",
-      "hook": "지금 떠오르는 사람을 생각하면서",
-      "mainPost": "지금 떠오르는 사람을 생각하면서\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
+      "hook": "지금 떠오르는 사람을 계속 미루는 데는 이유가 있어요.",
+      "mainPost": "지금 떠오르는 사람을 계속 미루는 데는 이유가 있어요.\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
       "cardIds": [
         11,
         26,
@@ -1143,7 +1143,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0037.png",
       "altText": "LOVE 주제의 미스터 타로 선택 카드 5장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1152,15 +1152,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_5|LOVE|11-26-41-56-71|지금떠오르는사람을생각하면서다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
+      "semanticSignature": "PICK_5|LOVE|11-26-41-56-71|지금떠오르는사람을계속미루는데는이유가있어요다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
     },
     {
       "id": "mr-tarot-0038",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "GENERAL",
-      "hook": "오늘 자꾸 걸리는 일을 두고 답을 내려야 한다면",
-      "mainPost": "오늘 자꾸 걸리는 일을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "이 고민의 다음 장면이 궁금한 날, 세 장 중 하나를 골라보세요.",
+      "mainPost": "이 고민의 다음 장면이 궁금한 날, 세 장 중 하나를 골라보세요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         28,
         45,
@@ -1175,7 +1175,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0038.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1184,15 +1184,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|GENERAL|28-45-62|오늘자꾸걸리는일을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|GENERAL|28-45-62|이고민의다음장면이궁금한날세장중하나를골라보세요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0039",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "GENERAL",
-      "hook": "잠깐 멈춰서 필요한 한 장",
-      "mainPost": "잠깐 멈춰서 필요한 한 장\n\n오늘 자꾸 걸리는 일을 떠올리고\n카드 하나를 골라보세요.\n\n39",
+      "hook": "잘될까요?보다 먼저 확인할 게 있어요.",
+      "mainPost": "잘될까요?보다 먼저 확인할 게 있어요.\n\n오늘 자꾸 걸리는 일을 떠올리고\n카드 하나를 골라보세요.\n\n39",
       "cardIds": [
         45
       ],
@@ -1203,7 +1203,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0039.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1212,15 +1212,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|GENERAL|45|잠깐멈춰서필요한한장오늘자꾸걸리는일을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|GENERAL|45|잘될까요보다먼저확인할게있어요오늘자꾸걸리는일을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0040",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "GENERAL",
-      "hook": "오늘 자꾸 걸리는 일을 한 단어로 남긴다면",
-      "mainPost": "오늘 자꾸 걸리는 일을 한 단어로 남긴다면\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n아무에게도 말하지 못한 단어여도 괜찮아요.",
+      "hook": "오늘은 정답 대신 덜 후회할 쪽을 고릅니다.",
+      "mainPost": "오늘은 정답 대신 덜 후회할 쪽을 고릅니다.\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n아무에게도 말하지 못한 단어여도 괜찮아요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -1229,7 +1229,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0040.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1238,15 +1238,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|GENERAL||오늘자꾸걸리는일을한단어로남긴다면답을정해드리기보다왜그단어가남았는지같이볼게요아무에게도말하지못한단어여도괜찮아요"
+      "semanticSignature": "CONVERSATION|GENERAL||오늘은정답대신덜후회할쪽을고릅니다답을정해드리기보다왜그단어가남았는지같이볼게요아무에게도말하지못한단어여도괜찮아요"
     },
     {
       "id": "mr-tarot-0041",
       "status": "READY",
       "format": "PICK_5",
       "topic": "GENERAL",
-      "hook": "오늘 자꾸 걸리는 일을 생각하면서",
-      "mainPost": "오늘 자꾸 걸리는 일을 생각하면서\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
+      "hook": "오늘 자꾸 걸리는 일을 친구에게 묻기 어려웠다면, 다섯 장 중 하나를 골라 확인해보세요.",
+      "mainPost": "오늘 자꾸 걸리는 일을 친구에게 묻기 어려웠다면, 다섯 장 중 하나를 골라 확인해보세요.\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
       "cardIds": [
         1,
         14,
@@ -1265,7 +1265,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0041.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 5장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1274,15 +1274,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_5|GENERAL|1-14-27-40-53|오늘자꾸걸리는일을생각하면서다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
+      "semanticSignature": "PICK_5|GENERAL|1-14-27-40-53|오늘자꾸걸리는일을친구에게묻기어려웠다면다섯장중하나를골라확인해보세요다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
     },
     {
       "id": "mr-tarot-0042",
       "status": "READY",
       "format": "PICK_3",
       "topic": "GENERAL",
-      "hook": "오늘 자꾸 걸리는 일이 계속 걸린다면",
-      "mainPost": "오늘 자꾸 걸리는 일이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "마음이 먼저 고른 선택을 믿어도 될까요?",
+      "mainPost": "마음이 먼저 고른 선택을 믿어도 될까요?\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         18,
         33,
@@ -1297,7 +1297,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0042.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1306,15 +1306,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|GENERAL|18-33-48|오늘자꾸걸리는일이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|GENERAL|18-33-48|마음이먼저고른선택을믿어도될까요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0043",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "GENERAL",
-      "hook": "이번 주의 마음을 두고 답을 내려야 한다면",
-      "mainPost": "이번 주의 마음을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "세 선택지 중 유독 불편한 것이 있다면, 그 이유를 봅니다.",
+      "mainPost": "세 선택지 중 유독 불편한 것이 있다면, 그 이유를 봅니다.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         35,
         52,
@@ -1329,7 +1329,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0043.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1338,15 +1338,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|GENERAL|35-52-69|이번주의마음을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|GENERAL|35-52-69|세선택지중유독불편한것이있다면그이유를봅니다YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0044",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "GENERAL",
-      "hook": "요즘 필요한 한 장",
-      "mainPost": "요즘 필요한 한 장\n\n이번 주의 마음을 떠올리고\n카드 하나를 골라보세요.\n\n44",
+      "hook": "이번 주의 마음이 끝난 건지, 잠시 멈춘 건지 헷갈린다면.",
+      "mainPost": "이번 주의 마음이 끝난 건지, 잠시 멈춘 건지 헷갈린다면.\n\n이번 주의 마음을 떠올리고\n카드 하나를 골라보세요.\n\n44",
       "cardIds": [
         52
       ],
@@ -1357,7 +1357,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0044.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1366,15 +1366,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|GENERAL|52|요즘필요한한장이번주의마음을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|GENERAL|52|이번주의마음이끝난건지잠시멈춘건지헷갈린다면이번주의마음을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0045",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "GENERAL",
-      "hook": "이번 주의 마음을 한 단어로 남긴다면",
-      "mainPost": "이번 주의 마음을 한 단어로 남긴다면\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n길게 설명하지 않아도 괜찮아요.",
+      "hook": "지금 바꾸지 않으면 반복될 장면이 보여요.",
+      "mainPost": "지금 바꾸지 않으면 반복될 장면이 보여요.\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n길게 설명하지 않아도 괜찮아요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -1383,7 +1383,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0045.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1392,15 +1392,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|GENERAL||이번주의마음을한단어로남긴다면답을정해드리기보다왜그단어가남았는지같이볼게요길게설명하지않아도괜찮아요"
+      "semanticSignature": "CONVERSATION|GENERAL||지금바꾸지않으면반복될장면이보여요답을정해드리기보다왜그단어가남았는지같이볼게요길게설명하지않아도괜찮아요"
     },
     {
       "id": "mr-tarot-0046",
       "status": "READY",
       "format": "PICK_5",
       "topic": "GENERAL",
-      "hook": "이번 주의 마음을 생각하면서",
-      "mainPost": "이번 주의 마음을 생각하면서\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
+      "hook": "이번 주의 마음이 계속 떠오른다면, 그 마음을 피하지 마세요.",
+      "mainPost": "이번 주의 마음이 계속 떠오른다면, 그 마음을 피하지 마세요.\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
       "cardIds": [
         8,
         21,
@@ -1419,7 +1419,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0046.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 5장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1428,15 +1428,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_5|GENERAL|8-21-34-47-60|이번주의마음을생각하면서다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
+      "semanticSignature": "PICK_5|GENERAL|8-21-34-47-60|이번주의마음이계속떠오른다면그마음을피하지마세요다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
     },
     {
       "id": "mr-tarot-0047",
       "status": "READY",
       "format": "PICK_3",
       "topic": "GENERAL",
-      "hook": "이번 주의 마음이 계속 걸린다면",
-      "mainPost": "이번 주의 마음이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "당장 움직이기 전에 멈춰야 할 이유부터 확인해보세요.",
+      "mainPost": "당장 움직이기 전에 멈춰야 할 이유부터 확인해보세요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         25,
         40,
@@ -1451,7 +1451,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0047.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1460,15 +1460,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|GENERAL|25-40-55|이번주의마음이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|GENERAL|25-40-55|당장움직이기전에멈춰야할이유부터확인해보세요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0048",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "GENERAL",
-      "hook": "이번 주의 마음을 두고 답을 내려야 한다면",
-      "mainPost": "이번 주의 마음을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "좋은 소식보다 먼저 살펴야 할 현실이 있어요.",
+      "mainPost": "좋은 소식보다 먼저 살펴야 할 현실이 있어요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         42,
         59,
@@ -1483,7 +1483,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0048.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1492,15 +1492,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|GENERAL|42-59-76|이번주의마음을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|GENERAL|42-59-76|좋은소식보다먼저살펴야할현실이있어요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0049",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "GENERAL",
-      "hook": "오늘 필요한 한 장",
-      "mainPost": "오늘 필요한 한 장\n\n요즘 나를 붙잡는 생각을 떠올리고\n카드 하나를 골라보세요.\n\n49",
+      "hook": "요즘 나를 붙잡는 생각을 놓치면 안 될 한 가지를 골라보세요.",
+      "mainPost": "요즘 나를 붙잡는 생각을 놓치면 안 될 한 가지를 골라보세요.\n\n요즘 나를 붙잡는 생각을 떠올리고\n카드 하나를 골라보세요.\n\n49",
       "cardIds": [
         59
       ],
@@ -1511,7 +1511,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0049.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1520,15 +1520,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|GENERAL|59|오늘필요한한장요즘나를붙잡는생각을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|GENERAL|59|요즘나를붙잡는생각을놓치면안될한가지를골라보세요요즘나를붙잡는생각을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0050",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "GENERAL",
-      "hook": "요즘 나를 붙잡는 생각을 한 단어로 남긴다면",
-      "mainPost": "요즘 나를 붙잡는 생각을 한 단어로 남긴다면\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n생각이 길어지기 전에 적어봐요.",
+      "hook": "이번에는 미래를 맞히지 않고, 오늘의 신호만 읽습니다.",
+      "mainPost": "이번에는 미래를 맞히지 않고, 오늘의 신호만 읽습니다.\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n생각이 길어지기 전에 적어봐요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -1537,7 +1537,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0050.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1546,15 +1546,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|GENERAL||요즘나를붙잡는생각을한단어로남긴다면답을정해드리기보다왜그단어가남았는지같이볼게요생각이길어지기전에적어봐요"
+      "semanticSignature": "CONVERSATION|GENERAL||이번에는미래를맞히지않고오늘의신호만읽습니다답을정해드리기보다왜그단어가남았는지같이볼게요생각이길어지기전에적어봐요"
     },
     {
       "id": "mr-tarot-0051",
       "status": "READY",
       "format": "PICK_5",
       "topic": "GENERAL",
-      "hook": "요즘 나를 붙잡는 생각을 생각하면서",
-      "mainPost": "요즘 나를 붙잡는 생각을 생각하면서\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
+      "hook": "고른 뒤에 설명할게요. 먼저 다섯 장 중 하나를 골라보세요.",
+      "mainPost": "고른 뒤에 설명할게요. 먼저 다섯 장 중 하나를 골라보세요.\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
       "cardIds": [
         15,
         28,
@@ -1573,7 +1573,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0051.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 5장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1582,15 +1582,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_5|GENERAL|15-28-41-54-67|요즘나를붙잡는생각을생각하면서다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
+      "semanticSignature": "PICK_5|GENERAL|15-28-41-54-67|고른뒤에설명할게요먼저다섯장중하나를골라보세요다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
     },
     {
       "id": "mr-tarot-0052",
       "status": "READY",
       "format": "PICK_3",
       "topic": "GENERAL",
-      "hook": "요즘 나를 붙잡는 생각이 계속 걸린다면",
-      "mainPost": "요즘 나를 붙잡는 생각이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "요즘 나를 붙잡는 생각이 왜 자꾸 같은 장면으로 돌아오는지 볼게요.",
+      "mainPost": "요즘 나를 붙잡는 생각이 왜 자꾸 같은 장면으로 돌아오는지 볼게요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         32,
         47,
@@ -1605,7 +1605,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0052.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1614,15 +1614,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|GENERAL|32-47-62|요즘나를붙잡는생각이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|GENERAL|32-47-62|요즘나를붙잡는생각이왜자꾸같은장면으로돌아오는지볼게요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0053",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "GENERAL",
-      "hook": "요즘 나를 붙잡는 생각을 두고 답을 내려야 한다면",
-      "mainPost": "요즘 나를 붙잡는 생각을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "이 선택에서 가장 아픈 부분부터 카드에 물어볼게요.",
+      "mainPost": "이 선택에서 가장 아픈 부분부터 카드에 물어볼게요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         49,
         66,
@@ -1637,7 +1637,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0053.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1646,15 +1646,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|GENERAL|5-49-66|요즘나를붙잡는생각을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|GENERAL|5-49-66|이선택에서가장아픈부분부터카드에물어볼게요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0054",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "GENERAL",
-      "hook": "문득 필요한 한 장",
-      "mainPost": "문득 필요한 한 장\n\n요즘 나를 붙잡는 생각을 떠올리고\n카드 하나를 골라보세요.\n\n54",
+      "hook": "요즘 나를 붙잡는 생각을 지금 다시 시작할 힘이 남아 있는지 확인해보세요.",
+      "mainPost": "요즘 나를 붙잡는 생각을 지금 다시 시작할 힘이 남아 있는지 확인해보세요.\n\n요즘 나를 붙잡는 생각을 떠올리고\n카드 하나를 골라보세요.\n\n54",
       "cardIds": [
         66
       ],
@@ -1665,7 +1665,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0054.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1674,15 +1674,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|GENERAL|66|문득필요한한장요즘나를붙잡는생각을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|GENERAL|66|요즘나를붙잡는생각을지금다시시작할힘이남아있는지확인해보세요요즘나를붙잡는생각을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0055",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "GENERAL",
-      "hook": "오늘 자꾸 걸리는 일을 한 단어로 남긴다면",
-      "mainPost": "오늘 자꾸 걸리는 일을 한 단어로 남긴다면\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n오늘은 한 단어면 충분해요.",
+      "hook": "마음은 이미 답을 골랐을지도 몰라요. 한 단어로 확인해보세요.",
+      "mainPost": "마음은 이미 답을 골랐을지도 몰라요. 한 단어로 확인해보세요.\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n오늘은 한 단어면 충분해요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -1691,7 +1691,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0055.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1700,15 +1700,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|GENERAL||오늘자꾸걸리는일을한단어로남긴다면답을정해드리기보다왜그단어가남았는지같이볼게요오늘은한단어면충분해요"
+      "semanticSignature": "CONVERSATION|GENERAL||마음은이미답을골랐을지도몰라요한단어로확인해보세요답을정해드리기보다왜그단어가남았는지같이볼게요오늘은한단어면충분해요"
     },
     {
       "id": "mr-tarot-0056",
       "status": "READY",
       "format": "PICK_5",
       "topic": "GENERAL",
-      "hook": "오늘 자꾸 걸리는 일을 생각하면서",
-      "mainPost": "오늘 자꾸 걸리는 일을 생각하면서\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
+      "hook": "오늘 자꾸 걸리는 일이 바라는 것과 두려운 것이 다르게 보일 수 있어요.",
+      "mainPost": "오늘 자꾸 걸리는 일이 바라는 것과 두려운 것이 다르게 보일 수 있어요.\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
       "cardIds": [
         22,
         35,
@@ -1727,7 +1727,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0056.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 5장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1736,15 +1736,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_5|GENERAL|22-35-48-61-74|오늘자꾸걸리는일을생각하면서다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
+      "semanticSignature": "PICK_5|GENERAL|22-35-48-61-74|오늘자꾸걸리는일이바라는것과두려운것이다르게보일수있어요다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
     },
     {
       "id": "mr-tarot-0057",
       "status": "READY",
       "format": "PICK_3",
       "topic": "GENERAL",
-      "hook": "오늘 자꾸 걸리는 일이 계속 걸린다면",
-      "mainPost": "오늘 자꾸 걸리는 일이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "먼저 고른 쪽부터 천천히 읽어보세요.",
+      "mainPost": "먼저 고른 쪽부터 천천히 읽어보세요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         39,
         54,
@@ -1759,7 +1759,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0057.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1768,15 +1768,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|GENERAL|39-54-69|오늘자꾸걸리는일이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|GENERAL|39-54-69|먼저고른쪽부터천천히읽어보세요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0058",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "GENERAL",
-      "hook": "오늘 자꾸 걸리는 일을 두고 답을 내려야 한다면",
-      "mainPost": "오늘 자꾸 걸리는 일을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "계속 걸린다면, 이번에는 오래 고르지 마세요.",
+      "mainPost": "계속 걸린다면, 이번에는 오래 고르지 마세요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         56,
         73,
@@ -1791,7 +1791,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0058.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1800,15 +1800,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|GENERAL|12-56-73|오늘자꾸걸리는일을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|GENERAL|12-56-73|계속걸린다면이번에는오래고르지마세요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0059",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "GENERAL",
-      "hook": "지금 필요한 한 장",
-      "mainPost": "지금 필요한 한 장\n\n오늘 자꾸 걸리는 일을 떠올리고\n카드 하나를 골라보세요.\n\n59",
+      "hook": "오늘 자꾸 걸리는 일을 기다릴지 움직일지, 카드가 보여주는 방향을 봅니다.",
+      "mainPost": "오늘 자꾸 걸리는 일을 기다릴지 움직일지, 카드가 보여주는 방향을 봅니다.\n\n오늘 자꾸 걸리는 일을 떠올리고\n카드 하나를 골라보세요.\n\n59",
       "cardIds": [
         73
       ],
@@ -1819,7 +1819,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0059.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1828,15 +1828,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|GENERAL|73|지금필요한한장오늘자꾸걸리는일을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|GENERAL|73|오늘자꾸걸리는일을기다릴지움직일지카드가보여주는방향을봅니다오늘자꾸걸리는일을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0060",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "GENERAL",
-      "hook": "오늘 자꾸 걸리는 일을 한 단어로 남긴다면",
-      "mainPost": "오늘 자꾸 걸리는 일을 한 단어로 남긴다면\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n마음이 먼저 고른 말을 남겨주세요.",
+      "hook": "오늘 당신이 먼저 봐야 할 장면이 하나 있어요.",
+      "mainPost": "오늘 당신이 먼저 봐야 할 장면이 하나 있어요.\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n마음이 먼저 고른 말을 남겨주세요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -1845,7 +1845,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0060.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1854,15 +1854,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|GENERAL||오늘자꾸걸리는일을한단어로남긴다면답을정해드리기보다왜그단어가남았는지같이볼게요마음이먼저고른말을남겨주세요"
+      "semanticSignature": "CONVERSATION|GENERAL||오늘당신이먼저봐야할장면이하나있어요답을정해드리기보다왜그단어가남았는지같이볼게요마음이먼저고른말을남겨주세요"
     },
     {
       "id": "mr-tarot-0061",
       "status": "READY",
       "format": "PICK_5",
       "topic": "GENERAL",
-      "hook": "이번 주의 마음을 생각하면서",
-      "mainPost": "이번 주의 마음을 생각하면서\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
+      "hook": "이번 주의 마음이 계속 마음에 남는 이유, 다섯 장 중 하나에서 먼저 볼게요.",
+      "mainPost": "이번 주의 마음이 계속 마음에 남는 이유, 다섯 장 중 하나에서 먼저 볼게요.\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5",
       "cardIds": [
         29,
         42,
@@ -1881,7 +1881,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0061.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 5장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1890,15 +1890,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_5|GENERAL|3-29-42-55-68|이번주의마음을생각하면서다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
+      "semanticSignature": "PICK_5|GENERAL|3-29-42-55-68|이번주의마음이계속마음에남는이유다섯장중하나에서먼저볼게요다섯장중하나를골라보세요오래고르지말고먼저멈춘숫자로요결과는댓글에남겨둘게요"
     },
     {
       "id": "mr-tarot-0062",
       "status": "READY",
       "format": "PICK_3",
       "topic": "GENERAL",
-      "hook": "이번 주의 마음이 계속 걸린다면",
-      "mainPost": "이번 주의 마음이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "답을 서두르기 전에 이번 주의 마음을 붙잡고 있는 마음부터 확인해보세요.",
+      "mainPost": "답을 서두르기 전에 이번 주의 마음을 붙잡고 있는 마음부터 확인해보세요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         46,
         61,
@@ -1913,7 +1913,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0062.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1922,15 +1922,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|GENERAL|46-61-76|이번주의마음이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|GENERAL|46-61-76|답을서두르기전에이번주의마음을붙잡고있는마음부터확인해보세요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0063",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "GENERAL",
-      "hook": "이번 주의 마음을 두고 답을 내려야 한다면",
-      "mainPost": "이번 주의 마음을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "이번 주의 마음을 생각할 때 가장 먼저 눈에 들어온 세 장 중 하나를 골라보세요.",
+      "mainPost": "이번 주의 마음을 생각할 때 가장 먼저 눈에 들어온 세 장 중 하나를 골라보세요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         63,
         2,
@@ -1945,7 +1945,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0063.png",
       "altText": "GENERAL 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1954,15 +1954,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|GENERAL|2-19-63|이번주의마음을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|GENERAL|2-19-63|이번주의마음을생각할때가장먼저눈에들어온세장중하나를골라보세요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0064",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "CAREER",
-      "hook": "혼자 있을 때 필요한 한 장",
-      "mainPost": "혼자 있을 때 필요한 한 장\n\n이직이나 새 업무를 떠올리고\n카드 하나를 골라보세요.\n\n64",
+      "hook": "괜찮은 척했지만, 이직이나 새 업무를 아직 놓지 못했다면.",
+      "mainPost": "괜찮은 척했지만, 이직이나 새 업무를 아직 놓지 못했다면.\n\n이직이나 새 업무를 떠올리고\n카드 하나를 골라보세요.\n\n64",
       "cardIds": [
         2
       ],
@@ -1973,7 +1973,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0064.png",
       "altText": "CAREER 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -1982,15 +1982,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|CAREER|2|혼자있을때필요한한장이직이나새업무를떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|CAREER|2|괜찮은척했지만이직이나새업무를아직놓지못했다면이직이나새업무를떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0065",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "CAREER",
-      "hook": "이직이나 새 업무를 한 단어로 남긴다면",
-      "mainPost": "이직이나 새 업무를 한 단어로 남긴다면\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n정답 대신 그 단어부터 꺼내봐요.",
+      "hook": "이직이나 새 업무가 다시 움직일 때인지, 잠시 멈출 때인지 보겠습니다.",
+      "mainPost": "이직이나 새 업무가 다시 움직일 때인지, 잠시 멈출 때인지 보겠습니다.\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n정답 대신 그 단어부터 꺼내봐요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -1999,7 +1999,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0065.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2008,15 +2008,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|CAREER||이직이나새업무를한단어로남긴다면답을정해드리기보다왜그단어가남았는지같이볼게요정답대신그단어부터꺼내봐요"
+      "semanticSignature": "CONVERSATION|CAREER||이직이나새업무가다시움직일때인지잠시멈출때인지보겠습니다답을정해드리기보다왜그단어가남았는지같이볼게요정답대신그단어부터꺼내봐요"
     },
     {
       "id": "mr-tarot-0066",
       "status": "READY",
       "format": "PICK_3",
       "topic": "CAREER",
-      "hook": "이직이나 새 업무가 계속 걸린다면",
-      "mainPost": "이직이나 새 업무가 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "지금 가장 피하고 싶은 선택이 오히려 힌트일 수 있어요.",
+      "mainPost": "지금 가장 피하고 싶은 선택이 오히려 힌트일 수 있어요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         36,
         49,
@@ -2031,7 +2031,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0066.png",
       "altText": "CAREER 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2040,15 +2040,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|CAREER|36-49-62|이직이나새업무가계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|CAREER|36-49-62|지금가장피하고싶은선택이오히려힌트일수있어요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0067",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "CAREER",
-      "hook": "지금 버티는 이유를 두고 답을 내려야 한다면",
-      "mainPost": "지금 버티는 이유를 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "지금 버티는 이유를 계속 미루는 데는 이유가 있어요.",
+      "mainPost": "지금 버티는 이유를 계속 미루는 데는 이유가 있어요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         53,
         68,
@@ -2063,7 +2063,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0067.png",
       "altText": "CAREER 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2072,15 +2072,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|CAREER|5-53-68|지금버티는이유를두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|CAREER|5-53-68|지금버티는이유를계속미루는데는이유가있어요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0068",
       "status": "READY",
       "format": "CAREER",
       "topic": "CAREER",
-      "hook": "지금 버티는 이유을 두고 망설인다면",
-      "mainPost": "지금 버티는 이유을 두고 망설인다면\n\n더 버틸지, 다른 곳을 볼지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
+      "hook": "이 고민의 다음 장면이 궁금한 날, 세 장 중 하나를 골라보세요.",
+      "mainPost": "이 고민의 다음 장면이 궁금한 날, 세 장 중 하나를 골라보세요.\n\n더 버틸지, 다른 곳을 볼지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
       "cardIds": [
         70,
         9,
@@ -2095,7 +2095,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0068.png",
       "altText": "CAREER 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2104,15 +2104,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CAREER|CAREER|9-26-70|지금버티는이유을두고망설인다면더버틸지다른곳을볼지세장중하나를고르며살펴봐요"
+      "semanticSignature": "CAREER|CAREER|9-26-70|이고민의다음장면이궁금한날세장중하나를골라보세요더버틸지다른곳을볼지세장중하나를고르며살펴봐요"
     },
     {
       "id": "mr-tarot-0069",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "CAREER",
-      "hook": "잠깐 멈춰서 필요한 한 장",
-      "mainPost": "잠깐 멈춰서 필요한 한 장\n\n지금 버티는 이유를 떠올리고\n카드 하나를 골라보세요.\n\n69",
+      "hook": "잘될까요?보다 먼저 확인할 게 있어요.",
+      "mainPost": "잘될까요?보다 먼저 확인할 게 있어요.\n\n지금 버티는 이유를 떠올리고\n카드 하나를 골라보세요.\n\n69",
       "cardIds": [
         9
       ],
@@ -2123,7 +2123,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0069.png",
       "altText": "CAREER 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2132,15 +2132,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|CAREER|9|잠깐멈춰서필요한한장지금버티는이유를떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|CAREER|9|잘될까요보다먼저확인할게있어요지금버티는이유를떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0070",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "CAREER",
-      "hook": "지금 버티는 이유를 한 단어로 남긴다면",
-      "mainPost": "지금 버티는 이유를 한 단어로 남긴다면\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n그 단어를 적는 것부터 시작해요.",
+      "hook": "오늘은 정답 대신 덜 후회할 쪽을 고릅니다.",
+      "mainPost": "오늘은 정답 대신 덜 후회할 쪽을 고릅니다.\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n그 단어를 적는 것부터 시작해요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -2149,7 +2149,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0070.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2158,15 +2158,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|CAREER||지금버티는이유를한단어로남긴다면답을정해드리기보다왜그단어가남았는지같이볼게요그단어를적는것부터시작해요"
+      "semanticSignature": "CONVERSATION|CAREER||오늘은정답대신덜후회할쪽을고릅니다답을정해드리기보다왜그단어가남았는지같이볼게요그단어를적는것부터시작해요"
     },
     {
       "id": "mr-tarot-0071",
       "status": "READY",
       "format": "PICK_3",
       "topic": "CAREER",
-      "hook": "지금 버티는 이유가 계속 걸린다면",
-      "mainPost": "지금 버티는 이유가 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "지금 버티는 이유를 친구에게 묻기 어려웠다면, 세 장 중 하나를 골라 확인해보세요.",
+      "mainPost": "지금 버티는 이유를 친구에게 묻기 어려웠다면, 세 장 중 하나를 골라 확인해보세요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         43,
         56,
@@ -2181,7 +2181,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0071.png",
       "altText": "CAREER 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2190,15 +2190,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|CAREER|43-56-69|지금버티는이유가계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|CAREER|43-56-69|지금버티는이유를친구에게묻기어려웠다면세장중하나를골라확인해보세요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0072",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "CAREER",
-      "hook": "지금 버티는 이유를 두고 답을 내려야 한다면",
-      "mainPost": "지금 버티는 이유를 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "마음이 먼저 고른 선택을 믿어도 될까요?",
+      "mainPost": "마음이 먼저 고른 선택을 믿어도 될까요?\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         60,
         75,
@@ -2213,7 +2213,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0072.png",
       "altText": "CAREER 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2222,15 +2222,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|CAREER|12-60-75|지금버티는이유를두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|CAREER|12-60-75|마음이먼저고른선택을믿어도될까요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0073",
       "status": "READY",
       "format": "CAREER",
       "topic": "CAREER",
-      "hook": "일에서 고르고 싶은 방향을 두고 망설인다면",
-      "mainPost": "일에서 고르고 싶은 방향을 두고 망설인다면\n\n더 버틸지, 다른 곳을 볼지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
+      "hook": "세 선택지 중 유독 불편한 것이 있다면, 그 이유를 봅니다.",
+      "mainPost": "세 선택지 중 유독 불편한 것이 있다면, 그 이유를 봅니다.\n\n더 버틸지, 다른 곳을 볼지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
       "cardIds": [
         77,
         16,
@@ -2245,7 +2245,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0073.png",
       "altText": "CAREER 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2254,15 +2254,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CAREER|CAREER|16-33-77|일에서고르고싶은방향을두고망설인다면더버틸지다른곳을볼지세장중하나를고르며살펴봐요"
+      "semanticSignature": "CAREER|CAREER|16-33-77|세선택지중유독불편한것이있다면그이유를봅니다더버틸지다른곳을볼지세장중하나를고르며살펴봐요"
     },
     {
       "id": "mr-tarot-0074",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "CAREER",
-      "hook": "요즘 필요한 한 장",
-      "mainPost": "요즘 필요한 한 장\n\n일에서 고르고 싶은 방향을 떠올리고\n카드 하나를 골라보세요.\n\n74",
+      "hook": "일에서 고르고 싶은 방향이 끝난 건지, 잠시 멈춘 건지 헷갈린다면.",
+      "mainPost": "일에서 고르고 싶은 방향이 끝난 건지, 잠시 멈춘 건지 헷갈린다면.\n\n일에서 고르고 싶은 방향을 떠올리고\n카드 하나를 골라보세요.\n\n74",
       "cardIds": [
         16
       ],
@@ -2273,7 +2273,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0074.png",
       "altText": "CAREER 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2282,15 +2282,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|CAREER|16|요즘필요한한장일에서고르고싶은방향을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|CAREER|16|일에서고르고싶은방향이끝난건지잠시멈춘건지헷갈린다면일에서고르고싶은방향을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0075",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "CAREER",
-      "hook": "일에서 고르고 싶은 방향을 한 단어로 남긴다면",
-      "mainPost": "일에서 고르고 싶은 방향을 한 단어로 남긴다면\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n한 번 적고 나서 천천히 봐도 돼요.",
+      "hook": "지금 바꾸지 않으면 반복될 장면이 보여요.",
+      "mainPost": "지금 바꾸지 않으면 반복될 장면이 보여요.\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n한 번 적고 나서 천천히 봐도 돼요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -2299,7 +2299,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0075.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2308,15 +2308,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|CAREER||일에서고르고싶은방향을한단어로남긴다면답을정해드리기보다왜그단어가남았는지같이볼게요한번적고나서천천히봐도돼요"
+      "semanticSignature": "CONVERSATION|CAREER||지금바꾸지않으면반복될장면이보여요답을정해드리기보다왜그단어가남았는지같이볼게요한번적고나서천천히봐도돼요"
     },
     {
       "id": "mr-tarot-0076",
       "status": "READY",
       "format": "PICK_3",
       "topic": "CAREER",
-      "hook": "일에서 고르고 싶은 방향이 계속 걸린다면",
-      "mainPost": "일에서 고르고 싶은 방향이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "일에서 고르고 싶은 방향이 계속 떠오른다면, 그 마음을 피하지 마세요.",
+      "mainPost": "일에서 고르고 싶은 방향이 계속 떠오른다면, 그 마음을 피하지 마세요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         50,
         63,
@@ -2331,7 +2331,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0076.png",
       "altText": "CAREER 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2340,15 +2340,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|CAREER|50-63-76|일에서고르고싶은방향이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|CAREER|50-63-76|일에서고르고싶은방향이계속떠오른다면그마음을피하지마세요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0077",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "CAREER",
-      "hook": "일에서 고르고 싶은 방향을 두고 답을 내려야 한다면",
-      "mainPost": "일에서 고르고 싶은 방향을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "당장 움직이기 전에 멈춰야 할 이유부터 확인해보세요.",
+      "mainPost": "당장 움직이기 전에 멈춰야 할 이유부터 확인해보세요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         67,
         4,
@@ -2363,7 +2363,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0077.png",
       "altText": "CAREER 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2372,15 +2372,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|CAREER|4-19-67|일에서고르고싶은방향을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|CAREER|4-19-67|당장움직이기전에멈춰야할이유부터확인해보세요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0078",
       "status": "READY",
       "format": "CAREER",
       "topic": "CAREER",
-      "hook": "일에서 고르고 싶은 방향을 두고 망설인다면",
-      "mainPost": "일에서 고르고 싶은 방향을 두고 망설인다면\n\n더 버틸지, 다른 곳을 볼지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
+      "hook": "좋은 소식보다 먼저 살펴야 할 현실이 있어요.",
+      "mainPost": "좋은 소식보다 먼저 살펴야 할 현실이 있어요.\n\n더 버틸지, 다른 곳을 볼지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3",
       "cardIds": [
         6,
         23,
@@ -2395,7 +2395,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0078.png",
       "altText": "CAREER 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2404,15 +2404,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CAREER|CAREER|6-23-40|일에서고르고싶은방향을두고망설인다면더버틸지다른곳을볼지세장중하나를고르며살펴봐요"
+      "semanticSignature": "CAREER|CAREER|6-23-40|좋은소식보다먼저살펴야할현실이있어요더버틸지다른곳을볼지세장중하나를고르며살펴봐요"
     },
     {
       "id": "mr-tarot-0079",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "CAREER",
-      "hook": "오늘 필요한 한 장",
-      "mainPost": "오늘 필요한 한 장\n\n이직이나 새 업무를 떠올리고\n카드 하나를 골라보세요.\n\n79",
+      "hook": "이직이나 새 업무를 놓치면 안 될 한 가지를 골라보세요.",
+      "mainPost": "이직이나 새 업무를 놓치면 안 될 한 가지를 골라보세요.\n\n이직이나 새 업무를 떠올리고\n카드 하나를 골라보세요.\n\n79",
       "cardIds": [
         23
       ],
@@ -2423,7 +2423,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0079.png",
       "altText": "CAREER 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2432,15 +2432,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|CAREER|23|오늘필요한한장이직이나새업무를떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|CAREER|23|이직이나새업무를놓치면안될한가지를골라보세요이직이나새업무를떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0080",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "MONEY",
-      "hook": "요즘 필요한 한 장",
-      "mainPost": "요즘 필요한 한 장\n\n생활을 정리하고 싶은 부분을 떠올리고\n카드 하나를 골라보세요.\n\n80",
+      "hook": "이번에는 미래를 맞히지 않고, 오늘의 신호만 읽습니다.",
+      "mainPost": "이번에는 미래를 맞히지 않고, 오늘의 신호만 읽습니다.\n\n생활을 정리하고 싶은 부분을 떠올리고\n카드 하나를 골라보세요.\n\n80",
       "cardIds": [
         40
       ],
@@ -2451,7 +2451,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0080.png",
       "altText": "MONEY 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2460,15 +2460,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|MONEY|40|요즘필요한한장생활을정리하고싶은부분을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|MONEY|40|이번에는미래를맞히지않고오늘의신호만읽습니다생활을정리하고싶은부분을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0081",
       "status": "READY",
       "format": "PICK_3",
       "topic": "MONEY",
-      "hook": "생활을 정리하고 싶은 부분이 계속 걸린다면",
-      "mainPost": "생활을 정리하고 싶은 부분이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "고른 뒤에 설명할게요. 먼저 세 장 중 하나를 골라보세요.",
+      "mainPost": "고른 뒤에 설명할게요. 먼저 세 장 중 하나를 골라보세요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         57,
         70,
@@ -2483,7 +2483,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0081.png",
       "altText": "MONEY 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2492,15 +2492,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|MONEY|5-57-70|생활을정리하고싶은부분이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|MONEY|5-57-70|고른뒤에설명할게요먼저세장중하나를골라보세요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0082",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "MONEY",
-      "hook": "생활을 정리하고 싶은 부분을 두고 답을 내려야 한다면",
-      "mainPost": "생활을 정리하고 싶은 부분을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "생활을 정리하고 싶은 부분이 왜 자꾸 같은 장면으로 돌아오는지 볼게요.",
+      "mainPost": "생활을 정리하고 싶은 부분이 왜 자꾸 같은 장면으로 돌아오는지 볼게요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         74,
         11,
@@ -2515,7 +2515,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0082.png",
       "altText": "MONEY 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2524,15 +2524,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|MONEY|11-26-74|생활을정리하고싶은부분을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|MONEY|11-26-74|생활을정리하고싶은부분이왜자꾸같은장면으로돌아오는지볼게요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0083",
       "status": "READY",
       "format": "MONEY",
       "topic": "MONEY",
-      "hook": "생활을 정리하고 싶은 부분을 고르기 전이라면",
-      "mainPost": "생활을 정리하고 싶은 부분을 고르기 전이라면\n\n돈 이야기는 숫자만으로 끝나지 않아요.\n세 장 중 하나를 골라보세요.\n\n1  2  3",
+      "hook": "이 선택에서 가장 아픈 부분부터 카드에 물어볼게요.",
+      "mainPost": "이 선택에서 가장 아픈 부분부터 카드에 물어볼게요.\n\n돈 이야기는 숫자만으로 끝나지 않아요.\n세 장 중 하나를 골라보세요.\n\n1  2  3",
       "cardIds": [
         13,
         30,
@@ -2547,7 +2547,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0083.png",
       "altText": "MONEY 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2556,15 +2556,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "MONEY|MONEY|13-30-47|생활을정리하고싶은부분을고르기전이라면돈이야기는숫자만으로끝나지않아요세장중하나를골라보세요"
+      "semanticSignature": "MONEY|MONEY|13-30-47|이선택에서가장아픈부분부터카드에물어볼게요돈이야기는숫자만으로끝나지않아요세장중하나를골라보세요"
     },
     {
       "id": "mr-tarot-0084",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "MONEY",
-      "hook": "문득 필요한 한 장",
-      "mainPost": "문득 필요한 한 장\n\n생활을 정리하고 싶은 부분을 떠올리고\n카드 하나를 골라보세요.\n\n84",
+      "hook": "생활을 정리하고 싶은 부분을 지금 다시 시작할 힘이 남아 있는지 확인해보세요.",
+      "mainPost": "생활을 정리하고 싶은 부분을 지금 다시 시작할 힘이 남아 있는지 확인해보세요.\n\n생활을 정리하고 싶은 부분을 떠올리고\n카드 하나를 골라보세요.\n\n84",
       "cardIds": [
         30
       ],
@@ -2575,7 +2575,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0084.png",
       "altText": "MONEY 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2584,15 +2584,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|MONEY|30|문득필요한한장생활을정리하고싶은부분을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|MONEY|30|생활을정리하고싶은부분을지금다시시작할힘이남아있는지확인해보세요생활을정리하고싶은부분을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0085",
       "status": "READY",
       "format": "PICK_3",
       "topic": "MONEY",
-      "hook": "이번 달의 선택이 계속 걸린다면",
-      "mainPost": "이번 달의 선택이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "마음은 이미 답을 골랐을지도 몰라요. 세 장 중 하나로 확인해보세요.",
+      "mainPost": "마음은 이미 답을 골랐을지도 몰라요. 세 장 중 하나로 확인해보세요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         47,
         58,
@@ -2607,7 +2607,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0085.png",
       "altText": "MONEY 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2616,15 +2616,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|MONEY|47-58-69|이번달의선택이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|MONEY|47-58-69|마음은이미답을골랐을지도몰라요세장중하나로확인해보세요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0086",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "MONEY",
-      "hook": "이번 달의 선택을 두고 답을 내려야 한다면",
-      "mainPost": "이번 달의 선택을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "이번 달의 선택이 바라는 것과 두려운 것이 다르게 보일 수 있어요.",
+      "mainPost": "이번 달의 선택이 바라는 것과 두려운 것이 다르게 보일 수 있어요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         64,
         77,
@@ -2639,7 +2639,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0086.png",
       "altText": "MONEY 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2648,15 +2648,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|MONEY|12-64-77|이번달의선택을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|MONEY|12-64-77|이번달의선택이바라는것과두려운것이다르게보일수있어요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0087",
       "status": "READY",
       "format": "MONEY",
       "topic": "MONEY",
-      "hook": "이번 달의 선택을 고르기 전이라면",
-      "mainPost": "이번 달의 선택을 고르기 전이라면\n\n돈 이야기는 숫자만으로 끝나지 않아요.\n세 장 중 하나를 골라보세요.\n\n1  2  3",
+      "hook": "먼저 고른 쪽부터 천천히 읽어보세요.",
+      "mainPost": "먼저 고른 쪽부터 천천히 읽어보세요.\n\n돈 이야기는 숫자만으로 끝나지 않아요.\n세 장 중 하나를 골라보세요.\n\n1  2  3",
       "cardIds": [
         3,
         18,
@@ -2671,7 +2671,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0087.png",
       "altText": "MONEY 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2680,15 +2680,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "MONEY|MONEY|3-18-33|이번달의선택을고르기전이라면돈이야기는숫자만으로끝나지않아요세장중하나를골라보세요"
+      "semanticSignature": "MONEY|MONEY|3-18-33|먼저고른쪽부터천천히읽어보세요돈이야기는숫자만으로끝나지않아요세장중하나를골라보세요"
     },
     {
       "id": "mr-tarot-0088",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "MONEY",
-      "hook": "혼자 있을 때 필요한 한 장",
-      "mainPost": "혼자 있을 때 필요한 한 장\n\n이번 달의 선택을 떠올리고\n카드 하나를 골라보세요.\n\n88",
+      "hook": "계속 걸린다면, 이번에는 오래 고르지 마세요.",
+      "mainPost": "계속 걸린다면, 이번에는 오래 고르지 마세요.\n\n이번 달의 선택을 떠올리고\n카드 하나를 골라보세요.\n\n88",
       "cardIds": [
         20
       ],
@@ -2699,7 +2699,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0088.png",
       "altText": "MONEY 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2708,15 +2708,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|MONEY|20|혼자있을때필요한한장이번달의선택을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|MONEY|20|계속걸린다면이번에는오래고르지마세요이번달의선택을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0089",
       "status": "READY",
       "format": "PICK_3",
       "topic": "MONEY",
-      "hook": "이번 달의 선택이 계속 걸린다면",
-      "mainPost": "이번 달의 선택이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "이번 달의 선택을 기다릴지 움직일지, 카드가 보여주는 방향을 봅니다.",
+      "mainPost": "이번 달의 선택을 기다릴지 움직일지, 카드가 보여주는 방향을 봅니다.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         37,
         56,
@@ -2731,7 +2731,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0089.png",
       "altText": "MONEY 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2740,15 +2740,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|MONEY|37-56-75|이번달의선택이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|MONEY|37-56-75|이번달의선택을기다릴지움직일지카드가보여주는방향을봅니다중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0090",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "MONEY",
-      "hook": "이번 달의 선택을 두고 답을 내려야 한다면",
-      "mainPost": "이번 달의 선택을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "오늘 당신이 먼저 봐야 할 장면이 하나 있어요.",
+      "mainPost": "오늘 당신이 먼저 봐야 할 장면이 하나 있어요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         54,
         65,
@@ -2763,7 +2763,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0090.png",
       "altText": "MONEY 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2772,15 +2772,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|MONEY|54-65-76|이번달의선택을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|MONEY|54-65-76|오늘당신이먼저봐야할장면이하나있어요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0091",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "DECISION",
-      "hook": "오늘 필요한 한 장",
-      "mainPost": "오늘 필요한 한 장\n\n미루고 있는 결정을 떠올리고\n카드 하나를 골라보세요.\n\n91",
+      "hook": "미루고 있는 결정이 계속 마음에 남는 이유, 카드 한 장에서 먼저 볼게요.",
+      "mainPost": "미루고 있는 결정이 계속 마음에 남는 이유, 카드 한 장에서 먼저 볼게요.\n\n미루고 있는 결정을 떠올리고\n카드 하나를 골라보세요.\n\n91",
       "cardIds": [
         71
       ],
@@ -2791,7 +2791,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0091.png",
       "altText": "DECISION 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2800,15 +2800,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|DECISION|71|오늘필요한한장미루고있는결정을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|DECISION|71|미루고있는결정이계속마음에남는이유카드한장에서먼저볼게요미루고있는결정을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0092",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "DECISION",
-      "hook": "미루고 있는 결정을 한 단어로 남긴다면",
-      "mainPost": "미루고 있는 결정을 한 단어로 남긴다면\n\n답을 정해드리기보다\n그 단어를 피하고 싶은지 붙잡고 싶은지 같이 볼게요.\n그 단어를 적는 것부터 시작해요.",
+      "hook": "답을 서두르기 전에 미루고 있는 결정을 붙잡고 있는 마음부터 확인해보세요.",
+      "mainPost": "답을 서두르기 전에 미루고 있는 결정을 붙잡고 있는 마음부터 확인해보세요.\n\n답을 정해드리기보다\n그 단어를 피하고 싶은지 붙잡고 싶은지 같이 볼게요.\n그 단어를 적는 것부터 시작해요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -2817,7 +2817,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0092.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2826,15 +2826,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|DECISION||미루고있는결정을한단어로남긴다면답을정해드리기보다그단어를피하고싶은지붙잡고싶은지같이볼게요그단어를적는것부터시작해요"
+      "semanticSignature": "CONVERSATION|DECISION||답을서두르기전에미루고있는결정을붙잡고있는마음부터확인해보세요답을정해드리기보다그단어를피하고싶은지붙잡고싶은지같이볼게요그단어를적는것부터시작해요"
     },
     {
       "id": "mr-tarot-0093",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "DECISION",
-      "hook": "미루고 있는 결정을 두고 답을 내려야 한다면",
-      "mainPost": "미루고 있는 결정을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "미루고 있는 결정을 생각할 때 가장 먼저 눈에 들어온 세 장 중 하나를 골라보세요.",
+      "mainPost": "미루고 있는 결정을 생각할 때 가장 먼저 눈에 들어온 세 장 중 하나를 골라보세요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         27,
         44,
@@ -2849,7 +2849,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0093.png",
       "altText": "DECISION 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2858,15 +2858,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|DECISION|27-44-61|미루고있는결정을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|DECISION|27-44-61|미루고있는결정을생각할때가장먼저눈에들어온세장중하나를골라보세요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0094",
       "status": "READY",
       "format": "PICK_3",
       "topic": "DECISION",
-      "hook": "미루고 있는 결정이 계속 걸린다면",
-      "mainPost": "미루고 있는 결정이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "괜찮은 척했지만, 미루고 있는 결정을 아직 놓지 못했다면.",
+      "mainPost": "괜찮은 척했지만, 미루고 있는 결정을 아직 놓지 못했다면.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         44,
         63,
@@ -2881,7 +2881,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0094.png",
       "altText": "DECISION 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2890,15 +2890,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|DECISION|4-44-63|미루고있는결정이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|DECISION|4-44-63|괜찮은척했지만미루고있는결정을아직놓지못했다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0095",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "DECISION",
-      "hook": "지금 필요한 한 장",
-      "mainPost": "지금 필요한 한 장\n\n미루고 있는 결정을 떠올리고\n카드 하나를 골라보세요.\n\n95",
+      "hook": "미루고 있는 결정이 다시 움직일 때인지, 잠시 멈출 때인지 보겠습니다.",
+      "mainPost": "미루고 있는 결정이 다시 움직일 때인지, 잠시 멈출 때인지 보겠습니다.\n\n미루고 있는 결정을 떠올리고\n카드 하나를 골라보세요.\n\n95",
       "cardIds": [
         61
       ],
@@ -2909,7 +2909,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0095.png",
       "altText": "DECISION 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2918,15 +2918,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|DECISION|61|지금필요한한장미루고있는결정을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|DECISION|61|미루고있는결정이다시움직일때인지잠시멈출때인지보겠습니다미루고있는결정을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0096",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "DECISION",
-      "hook": "미루고 있는 결정을 한 단어로 남긴다면",
-      "mainPost": "미루고 있는 결정을 한 단어로 남긴다면\n\n답을 정해드리기보다\n그 단어를 떠올릴 때 가장 먼저 보이는 장면이 무엇인지 같이 볼게요.\n그 단어가 오늘의 시작점이 될 수 있어요.",
+      "hook": "지금 가장 피하고 싶은 선택이 오히려 힌트일 수 있어요.",
+      "mainPost": "지금 가장 피하고 싶은 선택이 오히려 힌트일 수 있어요.\n\n답을 정해드리기보다\n그 단어를 떠올릴 때 가장 먼저 보이는 장면이 무엇인지 같이 볼게요.\n그 단어가 오늘의 시작점이 될 수 있어요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -2935,7 +2935,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0096.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2944,15 +2944,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|DECISION||미루고있는결정을한단어로남긴다면답을정해드리기보다그단어를떠올릴때가장먼저보이는장면이무엇인지같이볼게요그단어가오늘의시작점이될수있어요"
+      "semanticSignature": "CONVERSATION|DECISION||지금가장피하고싶은선택이오히려힌트일수있어요답을정해드리기보다그단어를떠올릴때가장먼저보이는장면이무엇인지같이볼게요그단어가오늘의시작점이될수있어요"
     },
     {
       "id": "mr-tarot-0097",
       "status": "READY",
       "format": "YES_NO_NOT_YET",
       "topic": "DECISION",
-      "hook": "YES와 NOT YET 사이의 고민을 두고 답을 내려야 한다면",
-      "mainPost": "YES와 NOT YET 사이의 고민을 두고 답을 내려야 한다면\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
+      "hook": "YES와 NOT YET 사이의 고민을 계속 미루는 데는 이유가 있어요.",
+      "mainPost": "YES와 NOT YET 사이의 고민을 계속 미루는 데는 이유가 있어요.\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO",
       "cardIds": [
         17,
         32,
@@ -2967,7 +2967,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0097.png",
       "altText": "DECISION 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -2976,15 +2976,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "YES_NO_NOT_YET|DECISION|17-32-47|YES와NOTYET사이의고민을두고답을내려야한다면YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
+      "semanticSignature": "YES_NO_NOT_YET|DECISION|17-32-47|YES와NOTYET사이의고민을계속미루는데는이유가있어요YESNONOTYET중하나만고른다면카드가말하는건정답보다지금덜무리한방향이에요YESNOTYETNO"
     },
     {
       "id": "mr-tarot-0098",
       "status": "READY",
       "format": "PICK_3",
       "topic": "DECISION",
-      "hook": "YES와 NOT YET 사이의 고민이 계속 걸린다면",
-      "mainPost": "YES와 NOT YET 사이의 고민이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "이 고민의 다음 장면이 궁금한 날, 세 장 중 하나를 골라보세요.",
+      "mainPost": "이 고민의 다음 장면이 궁금한 날, 세 장 중 하나를 골라보세요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         34,
         51,
@@ -2999,7 +2999,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0098.png",
       "altText": "DECISION 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -3008,15 +3008,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|DECISION|34-51-68|YES와NOTYET사이의고민이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|DECISION|34-51-68|이고민의다음장면이궁금한날세장중하나를골라보세요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0099",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "DECISION",
-      "hook": "잠깐 멈춰서 필요한 한 장",
-      "mainPost": "잠깐 멈춰서 필요한 한 장\n\nYES와 NOT YET 사이의 고민을 떠올리고\n카드 하나를 골라보세요.\n\n99",
+      "hook": "잘될까요?보다 먼저 확인할 게 있어요.",
+      "mainPost": "잘될까요?보다 먼저 확인할 게 있어요.\n\nYES와 NOT YET 사이의 고민을 떠올리고\n카드 하나를 골라보세요.\n\n99",
       "cardIds": [
         51
       ],
@@ -3027,7 +3027,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0099.png",
       "altText": "DECISION 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -3036,15 +3036,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|DECISION|51|잠깐멈춰서필요한한장YES와NOTYET사이의고민을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|DECISION|51|잘될까요보다먼저확인할게있어요YES와NOTYET사이의고민을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0100",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "DECISION",
-      "hook": "YES와 NOT YET 사이의 고민을 한 단어로 남긴다면",
-      "mainPost": "YES와 NOT YET 사이의 고민을 한 단어로 남긴다면\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n길게 설명하지 않아도 괜찮아요.",
+      "hook": "오늘은 정답 대신 덜 후회할 쪽을 고릅니다.",
+      "mainPost": "오늘은 정답 대신 덜 후회할 쪽을 고릅니다.\n\n답을 정해드리기보다\n왜 그 단어가 남았는지 같이 볼게요.\n길게 설명하지 않아도 괜찮아요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -3053,7 +3053,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0100.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -3062,15 +3062,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|DECISION||YES와NOTYET사이의고민을한단어로남긴다면답을정해드리기보다왜그단어가남았는지같이볼게요길게설명하지않아도괜찮아요"
+      "semanticSignature": "CONVERSATION|DECISION||오늘은정답대신덜후회할쪽을고릅니다답을정해드리기보다왜그단어가남았는지같이볼게요길게설명하지않아도괜찮아요"
     },
     {
       "id": "mr-tarot-0101",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "EXPERIMENTAL",
-      "hook": "지금 필요한 한 장",
-      "mainPost": "지금 필요한 한 장\n\n요즘 나를 설명하는 장면을 떠올리고\n카드 하나를 골라보세요.\n\n101",
+      "hook": "요즘 나를 설명하는 장면을 친구에게 묻기 어려웠다면, 카드 한 장을 골라 확인해보세요.",
+      "mainPost": "요즘 나를 설명하는 장면을 친구에게 묻기 어려웠다면, 카드 한 장을 골라 확인해보세요.\n\n요즘 나를 설명하는 장면을 떠올리고\n카드 하나를 골라보세요.\n\n101",
       "cardIds": [
         7
       ],
@@ -3081,7 +3081,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0101.png",
       "altText": "EXPERIMENTAL 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -3090,15 +3090,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|EXPERIMENTAL|7|지금필요한한장요즘나를설명하는장면을떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|EXPERIMENTAL|7|요즘나를설명하는장면을친구에게묻기어려웠다면카드한장을골라확인해보세요요즘나를설명하는장면을떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0102",
       "status": "READY",
       "format": "PICK_3",
       "topic": "EXPERIMENTAL",
-      "hook": "요즘 나를 설명하는 장면이 계속 걸린다면",
-      "mainPost": "요즘 나를 설명하는 장면이 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "마음이 먼저 고른 선택을 믿어도 될까요?",
+      "mainPost": "마음이 먼저 고른 선택을 믿어도 될까요?\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         24,
         39,
@@ -3113,7 +3113,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0102.png",
       "altText": "EXPERIMENTAL 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -3122,15 +3122,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|EXPERIMENTAL|24-39-54|요즘나를설명하는장면이계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|EXPERIMENTAL|24-39-54|마음이먼저고른선택을믿어도될까요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     },
     {
       "id": "mr-tarot-0103",
       "status": "READY",
       "format": "CONVERSATION",
       "topic": "EXPERIMENTAL",
-      "hook": "지금 나에게 필요한 거리를 한 단어로 남긴다면",
-      "mainPost": "지금 나에게 필요한 거리를 한 단어로 남긴다면\n\n답을 정해드리기보다\n그 단어를 누구에게도 말하지 못한 이유가 있는지 같이 볼게요.\n그 단어를 적는 것부터 시작해요.",
+      "hook": "세 선택지 중 유독 불편한 것이 있다면, 그 이유를 봅니다.",
+      "mainPost": "세 선택지 중 유독 불편한 것이 있다면, 그 이유를 봅니다.\n\n답을 정해드리기보다\n그 단어를 누구에게도 말하지 못한 이유가 있는지 같이 볼게요.\n그 단어를 적는 것부터 시작해요.",
       "cardIds": [],
       "replies": [
         "남겨준 단어를 보고 다음 글의 카드를 고를게요.",
@@ -3139,7 +3139,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0103.png",
       "altText": null,
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -3148,15 +3148,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "CONVERSATION|EXPERIMENTAL||지금나에게필요한거리를한단어로남긴다면답을정해드리기보다그단어를누구에게도말하지못한이유가있는지같이볼게요그단어를적는것부터시작해요"
+      "semanticSignature": "CONVERSATION|EXPERIMENTAL||세선택지중유독불편한것이있다면그이유를봅니다답을정해드리기보다그단어를누구에게도말하지못한이유가있는지같이볼게요그단어를적는것부터시작해요"
     },
     {
       "id": "mr-tarot-0104",
       "status": "READY",
       "format": "ONE_CARD",
       "topic": "EXPERIMENTAL",
-      "hook": "요즘 필요한 한 장",
-      "mainPost": "요즘 필요한 한 장\n\n지금 나에게 필요한 거리를 떠올리고\n카드 하나를 골라보세요.\n\n104",
+      "hook": "지금 나에게 필요한 거리가 끝난 건지, 잠시 멈춘 건지 헷갈린다면.",
+      "mainPost": "지금 나에게 필요한 거리가 끝난 건지, 잠시 멈춘 건지 헷갈린다면.\n\n지금 나에게 필요한 거리를 떠올리고\n카드 하나를 골라보세요.\n\n104",
       "cardIds": [
         58
       ],
@@ -3167,7 +3167,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0104.png",
       "altText": "EXPERIMENTAL 주제의 미스터 타로 선택 카드 1장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -3176,15 +3176,15 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "ONE_CARD|EXPERIMENTAL|58|요즘필요한한장지금나에게필요한거리를떠올리고카드하나를골라보세요"
+      "semanticSignature": "ONE_CARD|EXPERIMENTAL|58|지금나에게필요한거리가끝난건지잠시멈춘건지헷갈린다면지금나에게필요한거리를떠올리고카드하나를골라보세요"
     },
     {
       "id": "mr-tarot-0105",
       "status": "READY",
       "format": "PICK_3",
       "topic": "EXPERIMENTAL",
-      "hook": "지금 나에게 필요한 거리가 계속 걸린다면",
-      "mainPost": "지금 나에게 필요한 거리가 계속 걸린다면\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
+      "hook": "지금 바꾸지 않으면 반복될 장면이 보여요.",
+      "mainPost": "지금 바꾸지 않으면 반복될 장면이 보여요.\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3",
       "cardIds": [
         75,
         8,
@@ -3199,7 +3199,7 @@
       "cta": "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.",
       "imageAsset": "/threads/generated/mr-tarot-0105.png",
       "altText": "EXPERIMENTAL 주제의 미스터 타로 선택 카드 3장",
-      "createdAt": "2026-08-30T13:07:08.619Z",
+      "createdAt": "2026-09-02T12:52:28.435Z",
       "scheduledAt": null,
       "publishedAt": null,
       "threadsPostId": null,
@@ -3208,7 +3208,7 @@
       "attemptCount": 0,
       "lastError": null,
       "metrics": {},
-      "semanticSignature": "PICK_3|EXPERIMENTAL|8-19-75|지금나에게필요한거리가계속걸린다면중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
+      "semanticSignature": "PICK_3|EXPERIMENTAL|8-19-75|지금바꾸지않으면반복될장면이보여요중하나를골라보세요이번에는큰예언보다지금눈에걸리는한가지를볼게요"
     }
   ]
 }

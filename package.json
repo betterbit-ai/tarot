@@ -27,6 +27,7 @@
     "threads:copy": "node scripts/content/threads-copy.mjs",
     "tarot:assets": "node scripts/tarot/download-rws-assets.mjs",
     "content:generate": "node --import tsx scripts/content/generate.ts",
+    "content:refresh-hooks": "node --import tsx scripts/content/refresh-hooks.ts",
     "content:validate": "node --import tsx scripts/content/validate.ts",
     "content:status": "node --import tsx scripts/content/status.ts",
     "content:images": "node scripts/content/generate-images.mjs",

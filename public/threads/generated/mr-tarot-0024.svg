@@ -4,8 +4,8 @@
   <rect width="1080" height="1350" fill="#0b1512"/>
   <path d="M72 104 H1008" stroke="#b78d50" stroke-opacity=".34"/>
   <text x="540" y="180" text-anchor="middle" font-family="serif" font-size="38" fill="#e9d7b7" letter-spacing="3">MR. TAROT</text>
-  <text x="540" y="280" text-anchor="middle" font-family="serif" font-size="62" fill="#f2e7d5">지금 떠오르는 사람을 한 단어로</text><text x="540" y="356" text-anchor="middle" font-family="serif" font-size="62" fill="#f2e7d5">남긴다면</text>
-  <text x="540" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#c8b596">댓글에 한 단어만 남겨주세요</text>
+  <text x="540" y="280" text-anchor="middle" font-family="serif" font-size="62" fill="#f2e7d5">지금 떠오르는 사람을 지금 다시</text><text x="540" y="356" text-anchor="middle" font-family="serif" font-size="62" fill="#f2e7d5">시작할 힘이 남아 있는지</text><text x="540" y="432" text-anchor="middle" font-family="serif" font-size="62" fill="#f2e7d5">확인해보세요.</text>
+  <text x="540" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#c8b596">댓글에 한 단어만 남겨주세요</text>
 
     <g transform="translate(210 712) rotate(-4 100 150)">
       <rect width="200" height="300" rx="24" fill="#10251d" stroke="#d6ad67" stroke-width="4"/>

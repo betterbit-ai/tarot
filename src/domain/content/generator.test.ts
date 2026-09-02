@@ -9,6 +9,8 @@ describe("content generator", () => {
     expect(new Set(queue.items.map((item) => item.format)).size).toBe(8);
     expect(new Set(queue.items.map((item) => item.topic)).size).toBe(6);
     expect(queue.items.filter((item) => item.status === "READY")).toHaveLength(105);
+    expect(new Set(queue.items.map((item) => item.hook)).size).toBeGreaterThanOrEqual(25);
+    expect(queue.items.every((item) => item.hook.length <= 100)).toBe(true);
     expect(validateContentQueue(queue)).toEqual([]);
   });
 });

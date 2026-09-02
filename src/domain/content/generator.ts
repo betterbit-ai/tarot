@@ -67,20 +67,69 @@ function subjectParticle(value: string): "이" | "가" {
   return hasFinalConsonant(value) ? "이" : "가";
 }
 
-const HOOK_PREFIXES = ["오늘", "요즘", "잠깐 멈춰서", "혼자 있을 때", "지금", "문득"] as const;
+function instrumentalParticle(value: string): "으로" | "로" {
+  const last = value.charCodeAt(value.length - 1);
+  if (last < 0xac00 || last > 0xd7a3) return "로";
+  const jongseong = (last - 0xac00) % 28;
+  return jongseong === 0 || jongseong === 8 ? "로" : "으로";
+}
+
+type HookContext = {
+  prompt: string;
+  subject: string;
+  object: string;
+  selection: string;
+};
+
+const THREADS_HOOK_BUILDERS: readonly ((context: HookContext) => string)[] = [
+  ({ subject, selection }) => `${subject} 계속 마음에 남는 이유, ${selection}에서 먼저 볼게요.`,
+  ({ object }) => `답을 서두르기 전에 ${object} 붙잡고 있는 마음부터 확인해보세요.`,
+  ({ object, selection }) => `${object} 생각할 때 가장 먼저 눈에 들어온 ${selection}${objectParticle(selection)} 골라보세요.`,
+  ({ object }) => `괜찮은 척했지만, ${object} 아직 놓지 못했다면.`,
+  ({ subject }) => `${subject} 다시 움직일 때인지, 잠시 멈출 때인지 보겠습니다.`,
+  () => "지금 가장 피하고 싶은 선택이 오히려 힌트일 수 있어요.",
+  ({ object }) => `${object} 계속 미루는 데는 이유가 있어요.`,
+  ({ selection }) => `이 고민의 다음 장면이 궁금한 날, ${selection}${objectParticle(selection)} 골라보세요.`,
+  () => "잘될까요?보다 먼저 확인할 게 있어요.",
+  () => "오늘은 정답 대신 덜 후회할 쪽을 고릅니다.",
+  ({ object, selection }) => `${object} 친구에게 묻기 어려웠다면, ${selection}${objectParticle(selection)} 골라 확인해보세요.`,
+  () => "마음이 먼저 고른 선택을 믿어도 될까요?",
+  () => "세 선택지 중 유독 불편한 것이 있다면, 그 이유를 봅니다.",
+  ({ subject }) => `${subject} 끝난 건지, 잠시 멈춘 건지 헷갈린다면.`,
+  () => "지금 바꾸지 않으면 반복될 장면이 보여요.",
+  ({ subject }) => `${subject} 계속 떠오른다면, 그 마음을 피하지 마세요.`,
+  () => "당장 움직이기 전에 멈춰야 할 이유부터 확인해보세요.",
+  () => "좋은 소식보다 먼저 살펴야 할 현실이 있어요.",
+  ({ object }) => `${object} 놓치면 안 될 한 가지를 골라보세요.`,
+  () => "이번에는 미래를 맞히지 않고, 오늘의 신호만 읽습니다.",
+  ({ selection }) => `고른 뒤에 설명할게요. 먼저 ${selection}${objectParticle(selection)} 골라보세요.`,
+  ({ subject }) => `${subject} 왜 자꾸 같은 장면으로 돌아오는지 볼게요.`,
+  () => "이 선택에서 가장 아픈 부분부터 카드에 물어볼게요.",
+  ({ object }) => `${object} 지금 다시 시작할 힘이 남아 있는지 확인해보세요.`,
+  ({ selection }) => `마음은 이미 답을 골랐을지도 몰라요. ${selection}${instrumentalParticle(selection)} 확인해보세요.`,
+  ({ subject }) => `${subject} 바라는 것과 두려운 것이 다르게 보일 수 있어요.`,
+  () => "먼저 고른 쪽부터 천천히 읽어보세요.",
+  () => "계속 걸린다면, 이번에는 오래 고르지 마세요.",
+  ({ object }) => `${object} 기다릴지 움직일지, 카드가 보여주는 방향을 봅니다.`,
+  () => "오늘 당신이 먼저 봐야 할 장면이 하나 있어요.",
+] as const;
 
 function hookFor(format: ContentFormat, prompt: string, index: number): string {
-  const prefix = HOOK_PREFIXES[index % HOOK_PREFIXES.length] ?? "오늘";
-  switch (format) {
-    case "PICK_5": return `${prompt}${objectParticle(prompt)} 생각하면서`;
-    case "PICK_3": return `${prompt}${subjectParticle(prompt)} 계속 걸린다면`;
-    case "YES_NO_NOT_YET": return `${prompt}${objectParticle(prompt)} 두고 답을 내려야 한다면`;
-    case "LOVE": return `${prompt}${objectParticle(prompt)} 두고 내가 모르는 부분`;
-    case "CAREER": return `${prompt}을 두고 망설인다면`;
-    case "MONEY": return `${prompt}${objectParticle(prompt)} 고르기 전이라면`;
-    case "ONE_CARD": return `${prefix} 필요한 한 장`;
-    case "CONVERSATION": return `${prompt}${objectParticle(prompt)} 한 단어로 남긴다면`;
-  }
+  const selection = format === "PICK_5"
+    ? "다섯 장 중 하나"
+    : format === "ONE_CARD"
+      ? "카드 한 장"
+      : format === "CONVERSATION"
+        ? "한 단어"
+        : "세 장 중 하나";
+  const context: HookContext = {
+    prompt,
+    subject: `${prompt}${subjectParticle(prompt)}`,
+    object: `${prompt}${objectParticle(prompt)}`,
+    selection,
+  };
+  const builder = THREADS_HOOK_BUILDERS[index % THREADS_HOOK_BUILDERS.length] ?? THREADS_HOOK_BUILDERS[0];
+  return builder(context);
 }
 
 function cardIdsFor(seed: number, format: ContentFormat): number[] {
