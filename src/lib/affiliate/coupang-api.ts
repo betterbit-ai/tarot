@@ -17,6 +17,12 @@ export type CoupangRefreshStats = {
   arrayResponses: number;
   objectResponses: number;
   verified: number;
+  missingNames: number;
+  missingIds: number;
+  invalidImages: number;
+  invalidUrls: number;
+  imageHosts: string[];
+  productHosts: string[];
 };
 
 type CoupangProduct = {
@@ -146,12 +152,20 @@ export async function refreshCoupangPool(config: CoupangApiConfig, refreshedAt =
 
 export async function refreshCoupangPoolWithStats(config: CoupangApiConfig, refreshedAt = new Date().toISOString()): Promise<{ products: AffiliateProduct[]; stats: CoupangRefreshStats }> {
   const themes = Object.entries(COUPANG_THEME_KEYWORDS) as Array<[AffiliateTheme, string]>;
-  const stats: CoupangRefreshStats = { themes: themes.length, searched: 0, arrayResponses: 0, objectResponses: 0, verified: 0 };
+  const stats: CoupangRefreshStats = { themes: themes.length, searched: 0, arrayResponses: 0, objectResponses: 0, verified: 0, missingNames: 0, missingIds: 0, invalidImages: 0, invalidUrls: 0, imageHosts: [], productHosts: [] };
   const products: Array<AffiliateProduct | null> = await Promise.all(themes.map(async ([theme, keyword]): Promise<AffiliateProduct | null> => {
     const candidates = await searchCoupangProducts(config, keyword, 5);
     stats.searched += candidates.length;
     if (candidates.length) stats.arrayResponses += 1;
     else stats.objectResponses += 1;
+    for (const item of candidates) {
+      if (!item.productName) stats.missingNames += 1;
+      if (!item.productId) stats.missingIds += 1;
+      try { if (item.productImage) stats.imageHosts.push(new URL(item.productImage).hostname); else stats.invalidImages += 1; } catch { stats.invalidImages += 1; }
+      try { if (item.productUrl) stats.productHosts.push(new URL(item.productUrl).hostname); else stats.invalidUrls += 1; } catch { stats.invalidUrls += 1; }
+    }
+    stats.imageHosts = [...new Set(stats.imageHosts)].slice(0, 10);
+    stats.productHosts = [...new Set(stats.productHosts)].slice(0, 10);
     const candidate = candidates.find((item) => item.productName && validProductImage(item.productImage) && validProductUrl(item.productUrl));
     if (!candidate || !candidate.productName || !candidate.productId) return null;
     const partnerUrl = await createCoupangDeepLink(config, candidate.productUrl as string, `mr-tarot-${theme}`);
