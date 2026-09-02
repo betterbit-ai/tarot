@@ -21,7 +21,7 @@ type CoupangProduct = {
 type CoupangSearchResponse = {
   rCode?: string | number;
   rMessage?: string;
-  data?: CoupangProduct[];
+  data?: CoupangProduct[] | { productData?: CoupangProduct[] };
 };
 
 type CoupangDeepLinkResponse = {
@@ -119,7 +119,7 @@ async function requestJson<T>(config: CoupangApiConfig, method: "GET" | "POST", 
 export async function searchCoupangProducts(config: CoupangApiConfig, keyword: string, limit = 5): Promise<CoupangProduct[]> {
   const query = new URLSearchParams({ keyword, limit: String(Math.min(10, Math.max(1, limit))) }).toString();
   const payload = await requestJson<CoupangSearchResponse>(config, "GET", "/products/search", query);
-  return payload.data ?? [];
+  return Array.isArray(payload.data) ? payload.data : payload.data?.productData ?? [];
 }
 
 export async function createCoupangDeepLink(config: CoupangApiConfig, originalUrl: string, subId: string): Promise<string> {
