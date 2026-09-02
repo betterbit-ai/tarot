@@ -15,6 +15,6 @@ Selection is deterministic across the current product pool from the selected car
 
 ## Partners API refresh
 
-`COUPANG_PARTNERS_API_ENABLED=true` enables the protected `/api/affiliate/refresh` route. The scheduled GitHub Action searches operator-owned keywords for the six internal themes, validates Coupang CDN images and Coupang product URLs, converts each URL through `/links/deeplink`, and stores the sanitized result in Upstash under `mr-tarot:affiliate-pool:v1`.
+`COUPANG_PARTNERS_API_ENABLED=true` enables the protected `/api/affiliate/refresh` route. The scheduled GitHub Action searches operator-owned keywords for the six internal themes, validates Coupang CDN images and Coupang product URLs, converts each URL through `/deeplink`, and stores the sanitized result in Upstash under `mr-tarot:affiliate-pool:v1`.
 
 The ritual fetches that pool through `/api/affiliate/pool` without sending the visitor's question. If the pool is unavailable or empty, it falls back to the verified local product above. Prices are still omitted until a trusted price policy is added.

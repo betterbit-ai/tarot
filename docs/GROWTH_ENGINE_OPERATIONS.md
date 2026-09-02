@@ -57,7 +57,7 @@ Before switching those two final values, confirm the Meta token has `threads_bas
 
 When live mode is enabled, the daily refresh route calls Meta's documented long-lived-token refresh endpoint and saves a successful replacement token plus its expiry to Upstash. The publisher reads that stored token first. A refresh response without a replacement token fails closed and leaves the prior stored token untouched.
 
-The Coupang refresh route is separate from the visitor request. It maps each internal affiliate theme to a neutral keyword, calls `/products/search`, validates the Coupang CDN image and product URL, converts the URL through `/links/deeplink`, and stores the bounded pool at `mr-tarot:affiliate-pool:v1`. It never sends the user's raw question or an ADID.
+The Coupang refresh route is separate from the visitor request. It maps each internal affiliate theme to a neutral keyword, calls `/products/search`, validates the Coupang CDN image and product URL, converts the URL through `/deeplink`, and stores the bounded pool at `mr-tarot:affiliate-pool:v1`. It never sends the user's raw question or an ADID.
 
 ## Failure behavior
 
@@ -76,4 +76,4 @@ Each outbound CTA gets `utm_source=threads`, `utm_medium=social`, `utm_campaign=
 
 The web selector joins question intent and card signals to a theme before choosing a verified product. Current pool coverage is relationship, self-care, rest, and new-start. Work, money, and organization categories skip the interstitial until a matching product URL and licensed image are verified. Results always remain available without clicking.
 
-Set `COUPANG_PARTNERS_API_ENABLED=true`, `COUPANG_PARTNERS_ACCESS_KEY`, and `COUPANG_PARTNERS_SECRET_KEY` only in Vercel. Then run `Refresh Coupang affiliate pool` manually once from GitHub Actions and confirm the response reports `mode: refreshed`. The web ritual reads the sanitized pool from `/api/affiliate/pool`, with the existing local product as a fallback. Do not send raw tarot questions and do not enable ADID-based `/products/reco` without a new privacy decision.
+Set `COUPANG_PARTNERS_API_ENABLED=true`, `COUPANG_PARTNERS_ACCESS_KEY`, and `COUPANG_PARTNERS_SECRET_KEY` only in Vercel. Then run `Refresh Coupang affiliate pool` manually once from GitHub Actions and confirm the response reports `mode: refreshed`. A `401` response means the key pair is not authorized for the Partners API or the signing timestamp is rejected; issue a new Partners API key pair in Coupang before retrying. The web ritual reads the sanitized pool from `/api/affiliate/pool`, with the existing local product as a fallback. Do not send raw tarot questions and do not enable ADID-based `/products/reco` without a new privacy decision.

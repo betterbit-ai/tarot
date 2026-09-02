@@ -122,7 +122,7 @@ export async function searchCoupangProducts(config: CoupangApiConfig, keyword: s
 }
 
 export async function createCoupangDeepLink(config: CoupangApiConfig, originalUrl: string, subId: string): Promise<string> {
-  const payload = await requestJson<CoupangDeepLinkResponse>(config, "POST", "/links/deeplink", "", { coupangUrls: [originalUrl], subId });
+  const payload = await requestJson<CoupangDeepLinkResponse>(config, "POST", "/deeplink", "", { coupangUrls: [originalUrl], subId });
   const link = payload.data?.[0]?.shortenUrl ?? payload.data?.[0]?.landingUrl;
   const valid = validHttpsUrl(link);
   if (!valid) throw new Error("Coupang API returned an invalid partner link");
