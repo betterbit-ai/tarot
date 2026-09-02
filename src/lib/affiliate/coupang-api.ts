@@ -102,7 +102,7 @@ function validProductImage(value: string | undefined): string | undefined {
   const url = validHttpsUrl(value);
   if (!url) return undefined;
   const hostname = new URL(url).hostname.toLowerCase();
-  return hostname.endsWith(".coupangcdn.com") ? url : undefined;
+  return hostname.endsWith(".coupangcdn.com") || hostname === "ads-partners.coupang.com" ? url : undefined;
 }
 
 function validProductUrl(value: string | undefined): string | undefined {

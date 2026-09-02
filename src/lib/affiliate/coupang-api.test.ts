@@ -17,7 +17,7 @@ describe("Coupang Partners adapter", () => {
       const url = String(input);
       if (url.includes("/products/search")) {
         const keyword = new URL(url).searchParams.get("keyword") ?? "상품";
-        return new Response(JSON.stringify({ rCode: "0", data: { landingUrl: "https://www.coupang.com/np/search", productData: [{ productId: keyword, productName: `${keyword} 추천 상품`, productImage: "https://thumbnail.coupangcdn.com/example.jpg", productUrl: "https://www.coupang.com/vp/products/example" }] } }), { status: 200, headers: { "content-type": "application/json" } });
+        return new Response(JSON.stringify({ rCode: "0", data: { landingUrl: "https://www.coupang.com/np/search", productData: [{ productId: keyword, productName: `${keyword} 추천 상품`, productImage: "https://ads-partners.coupang.com/example.jpg", productUrl: "https://link.coupang.com/a/example" }] } }), { status: 200, headers: { "content-type": "application/json" } });
       }
       expect(init?.method).toBe("POST");
       return new Response(JSON.stringify({ rCode: "0", data: [{ shortenUrl: "https://link.coupang.com/a/example" }] }), { status: 200, headers: { "content-type": "application/json" } });

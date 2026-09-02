@@ -9,7 +9,7 @@ function isUsableProduct(value: unknown): value is AffiliateProduct {
   if (!product.id || !product.title || !product.imageSrc || !product.imageAlt || !product.ctaLabel || !product.disclosure || !product.active || !Array.isArray(product.categories)) return false;
   try {
     const image = new URL(product.imageSrc);
-    const imageAllowed = image.protocol === "https:" && (image.hostname === "localhost" || image.hostname.endsWith(".coupangcdn.com"));
+    const imageAllowed = image.protocol === "https:" && (image.hostname.endsWith(".coupangcdn.com") || image.hostname === "ads-partners.coupang.com");
     if (!imageAllowed) return false;
     if (product.partnerUrl) {
       const partner = new URL(product.partnerUrl);
