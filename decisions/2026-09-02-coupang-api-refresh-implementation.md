@@ -9,7 +9,7 @@ source: official-coupang-partners-api
 
 ## Decision
 
-Use the Coupang Partners affiliate Open API only from a protected, scheduled Vercel route. The route searches six operator-owned theme keywords, validates the returned product image and Coupang URL, converts the URL through `/links/deeplink`, and stores a small sanitized pool in Upstash. The browser reads that pool without sending the visitor's question.
+Use the Coupang Partners affiliate Open API only from a protected, scheduled Vercel route. The route searches six operator-owned theme keywords, validates the returned product image and Coupang URL, converts the URL through `/deeplink`, and stores a small sanitized pool in Upstash. The browser reads that pool without sending the visitor's question.
 
 ## Constraints
 
