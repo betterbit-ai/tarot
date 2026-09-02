@@ -1,4 +1,4 @@
-import { refreshCoupangPool } from "@/lib/affiliate/coupang-api";
+import { refreshCoupangPoolWithStats } from "@/lib/affiliate/coupang-api";
 import { schedulerRequestIsAuthorized } from "@/lib/content/scheduler-auth";
 import { AFFILIATE_POOL_KEY, createUpstashJsonStore } from "@/lib/content/upstash-store";
 
@@ -16,10 +16,10 @@ export async function POST(request: Request) {
   if (!accessKey || !secretKey || !store) return new Response("Coupang refresh is not configured", { status: 503 });
 
   try {
-    const products = await refreshCoupangPool({ accessKey, secretKey });
-    if (!products.length) return new Response("Coupang returned no verified products", { status: 502 });
-    await store.set(AFFILIATE_POOL_KEY, products);
-    return Response.json({ mode: "refreshed", count: products.length });
+    const result = await refreshCoupangPoolWithStats({ accessKey, secretKey });
+    if (!result.products.length) return Response.json({ mode: "failed", error: "Coupang returned no verified products", stats: result.stats }, { status: 502 });
+    await store.set(AFFILIATE_POOL_KEY, result.products);
+    return Response.json({ mode: "refreshed", count: result.products.length, stats: result.stats });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Coupang refresh failed";
     return Response.json({ mode: "failed", error: message }, { status: 502 });

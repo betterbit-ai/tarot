@@ -11,6 +11,14 @@ export type CoupangApiConfig = {
   now?: Date;
 };
 
+export type CoupangRefreshStats = {
+  themes: number;
+  searched: number;
+  arrayResponses: number;
+  objectResponses: number;
+  verified: number;
+};
+
 type CoupangProduct = {
   productId?: number | string;
   productName?: string;
@@ -133,14 +141,23 @@ export async function createCoupangDeepLink(config: CoupangApiConfig, originalUr
 }
 
 export async function refreshCoupangPool(config: CoupangApiConfig, refreshedAt = new Date().toISOString()): Promise<AffiliateProduct[]> {
+  return (await refreshCoupangPoolWithStats(config, refreshedAt)).products;
+}
+
+export async function refreshCoupangPoolWithStats(config: CoupangApiConfig, refreshedAt = new Date().toISOString()): Promise<{ products: AffiliateProduct[]; stats: CoupangRefreshStats }> {
   const themes = Object.entries(COUPANG_THEME_KEYWORDS) as Array<[AffiliateTheme, string]>;
+  const stats: CoupangRefreshStats = { themes: themes.length, searched: 0, arrayResponses: 0, objectResponses: 0, verified: 0 };
   const products: Array<AffiliateProduct | null> = await Promise.all(themes.map(async ([theme, keyword]): Promise<AffiliateProduct | null> => {
     const candidates = await searchCoupangProducts(config, keyword, 5);
+    stats.searched += candidates.length;
+    if (candidates.length) stats.arrayResponses += 1;
+    else stats.objectResponses += 1;
     const candidate = candidates.find((item) => item.productName && validProductImage(item.productImage) && validProductUrl(item.productUrl));
     if (!candidate || !candidate.productName || !candidate.productId) return null;
     const partnerUrl = await createCoupangDeepLink(config, candidate.productUrl as string, `mr-tarot-${theme}`);
     const imageSrc = validProductImage(candidate.productImage);
     if (!imageSrc) return null;
+    stats.verified += 1;
     return {
       id: `coupang-${String(candidate.productId)}`,
       categories: [theme],
@@ -156,5 +173,5 @@ export async function refreshCoupangPool(config: CoupangApiConfig, refreshedAt =
       refreshedAt,
     } satisfies AffiliateProduct;
   }));
-  return products.filter((product): product is AffiliateProduct => Boolean(product));
+  return { products: products.filter((product): product is AffiliateProduct => Boolean(product)), stats };
 }
