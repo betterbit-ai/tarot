@@ -1,6 +1,6 @@
 import { createHmac } from "node:crypto";
 import { describe, expect, it, vi } from "vitest";
-import { createCoupangAuthorization, refreshCoupangPool } from "./coupang-api";
+import { createCoupangAuthorization, refreshCoupangPool, searchCoupangProducts } from "./coupang-api";
 
 describe("Coupang Partners adapter", () => {
   it("creates the documented HMAC authorization string", () => {
@@ -27,5 +27,22 @@ describe("Coupang Partners adapter", () => {
     expect(products).toHaveLength(6);
     expect(products.every((product) => product.partnerUrl?.startsWith("https://link.coupang.com/"))).toBe(true);
     expect(fetcher).toHaveBeenCalledTimes(12);
+  });
+
+  it("signs the full provider path, including the openapi/v1 prefix", async () => {
+    const fetcher = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      void input;
+      void init;
+      return new Response(JSON.stringify({ rCode: "0", data: [] }), { status: 200 });
+    });
+    const now = new Date("2026-09-02T01:02:03.000Z");
+    await searchCoupangProducts({ accessKey: "access", secretKey: "secret", fetcher, now }, "다이어리", 1);
+    const request = fetcher.mock.calls[0];
+    const requestUrl = String(request?.[0]);
+    const query = new URL(requestUrl).search.slice(1);
+    const datetime = "260902T010203Z";
+    const fullPath = "/v2/providers/affiliate_open_api/apis/openapi/v1/products/search";
+    const signature = createHmac("sha256", "secret").update(`${datetime}GET${fullPath}${query}`).digest("hex");
+    expect((request?.[1] as RequestInit).headers).toMatchObject({ authorization: `CEA algorithm=HmacSHA256, access-key=access, signed-date=${datetime}, signature=${signature}` });
   });
 });

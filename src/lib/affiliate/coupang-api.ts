@@ -101,10 +101,11 @@ function validProductUrl(value: string | undefined): string | undefined {
 async function requestJson<T>(config: CoupangApiConfig, method: "GET" | "POST", path: string, query: string, body?: unknown): Promise<T> {
   const fetcher = config.fetcher ?? fetch;
   const baseUrl = config.baseUrl ?? COUPANG_AFFILIATE_BASE_URL;
+  const requestPath = new URL(`${baseUrl}${path}`).pathname;
   const response = await fetcher(`${baseUrl}${path}${query ? `?${query}` : ""}`, {
     method,
     headers: {
-      authorization: createCoupangAuthorization(method, path, query, config.accessKey, config.secretKey, config.now),
+      authorization: createCoupangAuthorization(method, requestPath, query, config.accessKey, config.secretKey, config.now),
       "content-type": "application/json;charset=UTF-8",
     },
     ...(body === undefined ? {} : { body: JSON.stringify(body) }),
