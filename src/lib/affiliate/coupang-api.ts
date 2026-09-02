@@ -175,7 +175,10 @@ export async function refreshCoupangPoolWithStats(config: CoupangApiConfig, refr
       if (deeplinkAttempts >= 2) break;
       deeplinkAttempts += 1;
       try {
-        partnerUrl = await createCoupangDeepLink(config, option.productUrl as string, `mr-tarot-${theme}`);
+        const productUrl = validProductUrl(option.productUrl) as string;
+        partnerUrl = new URL(productUrl).hostname === "link.coupang.com"
+          ? productUrl
+          : await createCoupangDeepLink(config, productUrl, `mr-tarot-${theme}`);
         candidate = option;
         break;
       } catch {
