@@ -21,6 +21,7 @@ export type CoupangRefreshStats = {
   missingIds: number;
   invalidImages: number;
   invalidUrls: number;
+  deeplinkFailures: number;
   imageHosts: string[];
   productHosts: string[];
 };
@@ -152,7 +153,7 @@ export async function refreshCoupangPool(config: CoupangApiConfig, refreshedAt =
 
 export async function refreshCoupangPoolWithStats(config: CoupangApiConfig, refreshedAt = new Date().toISOString()): Promise<{ products: AffiliateProduct[]; stats: CoupangRefreshStats }> {
   const themes = Object.entries(COUPANG_THEME_KEYWORDS) as Array<[AffiliateTheme, string]>;
-  const stats: CoupangRefreshStats = { themes: themes.length, searched: 0, arrayResponses: 0, objectResponses: 0, verified: 0, missingNames: 0, missingIds: 0, invalidImages: 0, invalidUrls: 0, imageHosts: [], productHosts: [] };
+  const stats: CoupangRefreshStats = { themes: themes.length, searched: 0, arrayResponses: 0, objectResponses: 0, verified: 0, missingNames: 0, missingIds: 0, invalidImages: 0, invalidUrls: 0, deeplinkFailures: 0, imageHosts: [], productHosts: [] };
   const products: Array<AffiliateProduct | null> = await Promise.all(themes.map(async ([theme, keyword]): Promise<AffiliateProduct | null> => {
     const candidates = await searchCoupangProducts(config, keyword, 5);
     stats.searched += candidates.length;
@@ -166,9 +167,22 @@ export async function refreshCoupangPoolWithStats(config: CoupangApiConfig, refr
     }
     stats.imageHosts = [...new Set(stats.imageHosts)].slice(0, 10);
     stats.productHosts = [...new Set(stats.productHosts)].slice(0, 10);
-    const candidate = candidates.find((item) => item.productName && validProductImage(item.productImage) && validProductUrl(item.productUrl));
-    if (!candidate || !candidate.productName || !candidate.productId) return null;
-    const partnerUrl = await createCoupangDeepLink(config, candidate.productUrl as string, `mr-tarot-${theme}`);
+    let candidate: CoupangProduct | undefined;
+    let partnerUrl: string | undefined;
+    let deeplinkAttempts = 0;
+    for (const option of candidates) {
+      if (!option.productName || !option.productId || !validProductImage(option.productImage) || !validProductUrl(option.productUrl)) continue;
+      if (deeplinkAttempts >= 2) break;
+      deeplinkAttempts += 1;
+      try {
+        partnerUrl = await createCoupangDeepLink(config, option.productUrl as string, `mr-tarot-${theme}`);
+        candidate = option;
+        break;
+      } catch {
+        stats.deeplinkFailures += 1;
+      }
+    }
+    if (!candidate || !candidate.productName || !candidate.productId || !partnerUrl) return null;
     const imageSrc = validProductImage(candidate.productImage);
     if (!imageSrc) return null;
     stats.verified += 1;

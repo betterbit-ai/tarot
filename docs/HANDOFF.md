@@ -197,7 +197,7 @@ UX v2 verification on 2026-08-28:
 - `pnpm typecheck`, `pnpm lint`, `pnpm build`, `pnpm content:validate`, `git diff --check`: pass after Threads hook refresh
 - Coupang adapter tests cover HMAC signing, six-theme refresh mapping, and refreshed-pool selection.
 - Manual Coupang refresh workflow: route authorization succeeded, provider returned HTTP 401 (`Coupang API request failed: 401`); no pool data was written.
-- Manual Coupang refresh after full-path signing: provider authentication succeeded, search returned a valid envelope, but zero candidates passed product/image/URL verification. The next run will include non-sensitive result counts.
+- Manual Coupang refresh after full-path signing: provider authentication succeeded, 30 candidates and partner image hosts were returned, then the first deeplink conversion failed with `url convert failed`. The refresh now skips delisted candidates and tries a bounded second candidate per theme.
 - `pnpm tarot:audit`: added editorial-layer, redundant-visual, and awkward-flow checks; all 76,076 rows still pass with zero failures
 - `pnpm tarot:generate --from 1 --to 381`: regenerated all 76,076 prose rows with suit-specific minor meanings
 - Growth Engine checks: `pnpm content:generate --count 105`, `pnpm content:images`, `pnpm content:validate`, `pnpm content:status`, `pnpm content:publish-next`, `pnpm content:sync-metrics`, `pnpm content:refresh-token`, 25 test files / 62 tests, typecheck, lint, and build all pass
