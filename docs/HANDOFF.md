@@ -201,9 +201,11 @@ UX v2 verification on 2026-08-28:
 - `pnpm tarot:audit`: 76,076 rows, zero mismatches and zero failures
 - `pnpm tarot:evaluate`: 51 cases, average 4.90/5, failure distribution empty
 - Manual Coupang refresh workflow: HTTP 200, `mode: refreshed`, `count: 6`, `verified: 6`, `deeplinkFailures: 0`; Upstash key `mr-tarot:affiliate-pool:v1` is present.
+- `pnpm test`, `pnpm typecheck`, `pnpm lint`, `pnpm build`: pass after removing card names from the three result sections
 - Affiliate sheet now permits `ads-partners.coupang.com` in Next image optimization and gives every theme a product-specific sentence; no fallback copy says a product is being prepared.
 - Interpretation renderer v3 now varies `세 장의 흐름`, `질문에 대입하면`, and `가져갈 태도` by ordered card relationships, direction, progression, question action, and final-card meaning instead of fixed generic copy.
 - All 76,076 prose rows were regenerated after the v3 renderer update; `pnpm tarot:audit` reports zero corpus mismatches, malformed particles, awkward flow markers, or AI-tell phrases.
+- The three result sections no longer repeat card names already shown above; they explain the movement, concrete situation, and next attitude using card-derived meaning only.
 - `pnpm tarot:audit`: added editorial-layer, redundant-visual, and awkward-flow checks; all 76,076 rows still pass with zero failures
 - `pnpm tarot:generate --from 1 --to 381`: regenerated all 76,076 prose rows with suit-specific minor meanings
 - Growth Engine checks: `pnpm content:generate --count 105`, `pnpm content:images`, `pnpm content:validate`, `pnpm content:status`, `pnpm content:publish-next`, `pnpm content:sync-metrics`, `pnpm content:refresh-token`, 25 test files / 62 tests, typecheck, lint, and build all pass

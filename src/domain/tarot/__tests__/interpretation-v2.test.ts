@@ -79,7 +79,9 @@ describe("interpretation v2", () => {
     expect(reading.cardInsights).toHaveLength(3);
     expect(reading.cardInsights[1]?.visualEvidence).toContain("서로를 마주 봐요");
     expect(reading.cardInsights.every((insight) => !insight.visualEvidence.includes("카드의 숫자와 배치"))).toBe(true);
-    expect(reading.flow).not.toMatch(/소드 5이|소드 2가|연인가/);
+    for (const card of getTarotCards([51, 6, 54])) {
+      expect(`${reading.flow} ${reading.application} ${reading.mindset}`).not.toContain(card.name);
+    }
     expect(reading.flow).not.toContain("시선을 옮겨요");
     expect(reading.flow).toContain("쪽으로 기울어요");
     expect(reading.application).toContain("상대의 마음");
