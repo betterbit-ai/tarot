@@ -94,6 +94,7 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - Publish workflow #19 created the first live Threads post and six replies for `mr-tarot-0001`; the public `@mr._.tarot` profile shows the post and `답글 6`. Upstash runtime state is `PUBLISHED` with the main post id and all six reply ids.
 - GitHub's previous 25-second curl limit caused a false timeout after the serverless publisher completed; the workflow limit is now 55 seconds.
 - The missing `3번` reply on `mr-tarot-0002` was manually posted under the user's `wanderer_0528` comment. Threads shows the parent reply count increased from 3 to 4 and the new author reply is visible.
+- The scheduled run for `mr-tarot-0002` did not complete because its image container was still processing. A manual retry later published a second copy because the original manually posted thread was not represented in Upstash runtime state. The profile currently shows both `DcwLK_CG8HH` (original, 1 day old) and `DcyhweEnPRI` (retry copy, newly published), each with four replies.
 - Coupang Partners refresh integration is implemented: HMAC-SHA256 signing, theme-keyword product search, CDN/product URL validation, `/deeplink` conversion, Upstash pool storage, public sanitized pool fallback, and a protected GitHub schedule.
 - Manual `Refresh Coupang affiliate pool` now succeeds with HTTP 200 and `mode: refreshed`, storing six verified theme products in Upstash. Search returned 30 records, all six themes produced a product, and no deeplink failures remained.
 - Threads hook research added at `docs/content/THREADS_HOOK_RESEARCH.md`: 30 original Korean hook candidates based on public archetype research, with a note that no official cross-account top-30 ranking exists.
@@ -221,7 +222,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Verify a live Vercel ritual with several card combinations and questions to confirm the three narrative sections read as one coherent result. Also verify a refreshed Coupang product image, its product-specific reason sentence, and the skip path in the same live flow. Do not regenerate the two preserved published Threads items.
+Resolve the duplicate `mr-tarot-0002` Threads post by choosing which public copy to retain, then reconcile the other post in runtime state before the next scheduled publish. After that, verify a live Vercel ritual with several card combinations and questions to confirm the three narrative sections read as one coherent result, including the refreshed Coupang product and skip path.
 
 ## Last Commit
 
