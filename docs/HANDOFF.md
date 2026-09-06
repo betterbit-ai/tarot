@@ -271,4 +271,4 @@ Latest interpretation checkpoint: `982c021` — combination-aware flow, question
 
 Latest Threads reliability checkpoint: `7b9f9b9` — KST idempotency marker, recovery schedule, Vercel fallback, and atomic Upstash publishing lease.
 
-Latest Threads format checkpoint: pending commit — every future card-choice post uses the three-card ritual entry format.
+Latest Threads format checkpoint: `6725bb8` — every future card-choice post uses the three-card ritual entry format.
