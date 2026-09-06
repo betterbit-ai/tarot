@@ -3,6 +3,7 @@ import { EMPTY_RUNTIME_QUEUE, type ContentRuntimeQueue, type ContentStateStore }
 const RUNTIME_STATE_KEY = "mr-tarot:threads-runtime-state:v1";
 const TOKEN_STATE_KEY = "mr-tarot:threads-token:v1";
 const DAILY_PUBLISH_KEY = "mr-tarot:threads-daily-publish:v1";
+const DAILY_PUBLISH_LOCK_KEY = "mr-tarot:threads-daily-publish-lock:v1";
 export const AFFILIATE_POOL_KEY = "mr-tarot:affiliate-pool:v1";
 
 type Fetcher = typeof fetch;
@@ -16,6 +17,8 @@ type UpstashResponse = {
 export type UpstashJsonStore = {
   get: <Value>(key: string) => Promise<Value | null>;
   set: (key: string, value: unknown) => Promise<void>;
+  setIfAbsent: (key: string, value: unknown, expirationSeconds: number) => Promise<boolean>;
+  delete: (key: string) => Promise<void>;
 };
 
 function configFrom(env: Environment) {
@@ -54,6 +57,13 @@ export function createUpstashJsonStore(env: Environment = process.env, fetcher: 
     async set(key: string, value: unknown): Promise<void> {
       await command<string>(["SET", key, JSON.stringify(value)]);
     },
+    async setIfAbsent(key: string, value: unknown, expirationSeconds: number): Promise<boolean> {
+      const result = await command<string | null>(["SET", key, JSON.stringify(value), "NX", "EX", String(expirationSeconds)]);
+      return result === "OK";
+    },
+    async delete(key: string): Promise<void> {
+      await command<number>(["DEL", key]);
+    },
   };
 }
 
@@ -72,3 +82,4 @@ export function createUpstashContentStateStore(env: Environment = process.env, f
 
 export const UPSTASH_TOKEN_STATE_KEY = TOKEN_STATE_KEY;
 export const UPSTASH_DAILY_PUBLISH_KEY = DAILY_PUBLISH_KEY;
+export const UPSTASH_DAILY_PUBLISH_LOCK_KEY = DAILY_PUBLISH_LOCK_KEY;

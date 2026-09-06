@@ -1,12 +1,14 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-02 02:00 KST
+Last updated: 2026-09-06 22:45 KST
 
 ## Current Phase
 
 V1 + INTERPRETATION V3: COMBINATION-AWARE STORY, APPLICATION AND MINDSET RENDERER COMPLETE
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
+
+Threads publishing reliability is being hardened after a container-readiness failure caused a missed scheduled item. The product queue remains live; no tarot UX or interpretation work is pending in this checkpoint.
 
 ## Completed
 
@@ -95,7 +97,8 @@ V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 opera
 - GitHub's previous 25-second curl limit caused a false timeout after the serverless publisher completed; the workflow limit is now 55 seconds.
 - The missing `3번` reply on `mr-tarot-0002` was manually posted under the user's `wanderer_0528` comment. Threads shows the parent reply count increased from 3 to 4 and the new author reply is visible.
 - The scheduled run for `mr-tarot-0002` did not complete because its image container was still processing. A manual retry later published a second copy because the original manually posted thread was not represented in Upstash runtime state. The profile currently shows both `DcwLK_CG8HH` (original, 1 day old) and `DcyhweEnPRI` (retry copy, newly published), each with four replies.
-- The single GitHub schedule had no same-day recovery path and treated the route's `mode: failed` body as a successful workflow. Daily publishing now uses a KST idempotency marker, GitHub recovery attempts, and an independent Vercel Cron fallback. `CRON_SECRET` still must be set in Vercel before the Vercel fallback becomes active.
+- The single GitHub schedule had no same-day recovery path and treated the route's `mode: failed` body as a successful workflow. Daily publishing now uses a KST idempotency marker, an Upstash lease, GitHub recovery attempts, and an independent Vercel Cron fallback. On Vercel Hobby the fallback runs once per day within the scheduled hour, so GitHub remains the retry mechanism. `CRON_SECRET` still must be set in Vercel before the fallback becomes active.
+- The daily route now acquires a 15-minute atomic Upstash lease before publishing and rechecks the KST marker after acquiring it. Concurrent GitHub and Vercel triggers return `publish-in-progress` or `already-published`, never a second post. A failed provider attempt releases the lease so a later recovery trigger can retry.
 - Coupang Partners refresh integration is implemented: HMAC-SHA256 signing, theme-keyword product search, CDN/product URL validation, `/deeplink` conversion, Upstash pool storage, public sanitized pool fallback, and a protected GitHub schedule.
 - Manual `Refresh Coupang affiliate pool` now succeeds with HTTP 200 and `mode: refreshed`, storing six verified theme products in Upstash. Search returned 30 records, all six themes produced a product, and no deeplink failures remained.
 - Threads hook research added at `docs/content/THREADS_HOOK_RESEARCH.md`: 30 original Korean hook candidates based on public archetype research, with a note that no official cross-account top-30 ranking exists.
@@ -203,6 +206,7 @@ UX v2 verification on 2026-08-28:
 - `pnpm tarot:evaluate`: 51 cases, average 4.90/5, failure distribution empty
 - Manual Coupang refresh workflow: HTTP 200, `mode: refreshed`, `count: 6`, `verified: 6`, `deeplinkFailures: 0`; Upstash key `mr-tarot:affiliate-pool:v1` is present.
 - `pnpm test`, `pnpm typecheck`, `pnpm lint`, `pnpm build`: pass after removing card names from the three result sections
+- Daily-publish lease checkpoint: `pnpm test` (32 files, 87 tests), `pnpm typecheck`, `pnpm lint`, `pnpm build`, and `git diff --check` pass.
 - Affiliate sheet now permits `ads-partners.coupang.com` in Next image optimization and gives every theme a product-specific sentence; no fallback copy says a product is being prepared.
 - Interpretation renderer v3 now varies `세 장의 흐름`, `질문에 대입하면`, and `가져갈 태도` by ordered card relationships, direction, progression, question action, and final-card meaning instead of fixed generic copy.
 - All 76,076 prose rows were regenerated after the v3 renderer update; `pnpm tarot:audit` reports zero corpus mismatches, malformed particles, awkward flow markers, or AI-tell phrases.
@@ -225,7 +229,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Set `CRON_SECRET` in Vercel Production and Preview, then redeploy and verify the Vercel Cron Job appears in Project Settings. Resolve the duplicate `mr-tarot-0002` Threads post by choosing which public copy to retain, then reconcile the other post in runtime state before the next scheduled publish. After that, verify a live Vercel ritual with several card combinations and questions to confirm the three narrative sections read as one coherent result, including the refreshed Coupang product and skip path.
+Set `CRON_SECRET` in Vercel Production and Preview, redeploy, and verify the single Vercel Cron Job appears in Project Settings. Confirm the latest GitHub Actions `Publish prepared Threads content` run's returned mode, then verify the associated public post and replies on `@mr._.tarot`. Resolve the duplicate `mr-tarot-0002` Threads post only after choosing which public copy to retain.
 
 ## Last Commit
 
@@ -262,3 +266,5 @@ Vercel project rename/domain record: current `HEAD` — `mr-tarot` / `mr-tarot.v
 Scheduler diagnostic checkpoint: current `HEAD` — GitHub reaches Vercel; first automated content is published, and the missing `3번` reply was manually completed.
 
 Latest interpretation checkpoint: `982c021` — combination-aware flow, question application, mindset, and regenerated 76,076-row corpus.
+
+Latest Threads reliability checkpoint: pending commit — KST idempotency marker, recovery schedule, Vercel fallback, and atomic Upstash publishing lease.

@@ -26,6 +26,17 @@ describe("Upstash JSON store", () => {
     }));
   });
 
+  it("can acquire a short-lived lock without overwriting another publisher", async () => {
+    const fetcher = vi.fn().mockResolvedValue(new Response(JSON.stringify({ result: "OK" }), { status: 200 }));
+    const store = createUpstashJsonStore(env, fetcher)!;
+
+    await expect(store.setIfAbsent("daily-lock", { startedAt: "2026-09-06T00:00:00.000Z" }, 900)).resolves.toBe(true);
+
+    expect(fetcher).toHaveBeenCalledWith(env.UPSTASH_REDIS_REST_URL, expect.objectContaining({
+      body: JSON.stringify(["SET", "daily-lock", JSON.stringify({ startedAt: "2026-09-06T00:00:00.000Z" }), "NX", "EX", "900"]),
+    }));
+  });
+
   it("hydrates an empty content queue when no runtime state has been written", async () => {
     const fetcher = vi.fn().mockResolvedValue(new Response(JSON.stringify({ result: null }), { status: 200 }));
     const store = createUpstashContentStateStore(env, fetcher)!;
