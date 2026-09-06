@@ -31,7 +31,9 @@ pnpm content:refresh-hooks
 
 ## Production schedule
 
-GitHub Actions triggers protected Vercel routes. `refresh-threads-token.yml` runs at 09:05 Asia/Seoul, `publish-threads.yml` at 20:30, `sync-threads-metrics.yml` at 21:10, and `refresh-coupang-pool.yml` at 04:30. Korea has no daylight saving time.
+GitHub Actions triggers protected Vercel routes. `refresh-threads-token.yml` runs at 09:05 Asia/Seoul, `publish-threads.yml` starts at 20:30 with several same-evening recovery attempts plus a morning catch-up, `sync-threads-metrics.yml` at 21:10, and `refresh-coupang-pool.yml` at 04:30. Korea has no daylight saving time.
+
+The daily publisher is idempotent by KST calendar day. Once it records a successful post in Upstash, every later GitHub or Vercel Cron attempt that day returns `already-published` instead of publishing another item. Failed image processing remains retryable in the recovery window.
 
 GitHub schedules run in UTC and can be delayed. The publisher is intentionally sequential: main post, result replies, then CTA reply.
 
@@ -42,6 +44,7 @@ Set these in Vercel project environment variables, never in Git:
 - `THREADS_ACCESS_TOKEN`: long-lived Threads user access token
 - `THREADS_USER_ID`: Threads user id from Meta OAuth
 - `CONTENT_SCHEDULER_SECRET`: random secret accepted only by the Vercel publisher routes
+- `CRON_SECRET`: a separate random secret for the Vercel daily cron fallback
 - `NEXT_PUBLIC_SITE_URL`: verified Vercel production origin
 - `UPSTASH_REDIS_REST_URL`: Upstash database REST endpoint
 - `UPSTASH_REDIS_REST_TOKEN`: Upstash standard REST token
@@ -52,6 +55,8 @@ Set these in Vercel project environment variables, never in Git:
 - `COUPANG_PARTNERS_SECRET_KEY`: Coupang Partners SecretKey
 
 Set the exact same random value as `GROWTH_SCHEDULER_SECRET` in GitHub Actions secrets. Set `VERCEL_GROWTH_BASE_URL` as a GitHub Actions variable to the Vercel production origin without a trailing slash. GitHub only uses the secret to trigger Vercel; it never receives a Threads or Upstash token.
+
+Set `CRON_SECRET` only in Vercel Production and Preview. `vercel.json` invokes `/api/content/publish-daily` once a day at the evening production window; Vercel authenticates the request with a Bearer token. This is an independent fallback for a missed GitHub schedule, while the KST guard prevents double posts.
 
 Before switching those two final values, confirm the Meta token has `threads_basic`, `threads_content_publish`, `threads_read_replies`, `threads_manage_replies`, and `threads_manage_insights` as applicable to the chosen features. Run one manual GitHub Actions invocation while watching Vercel function logs.
 

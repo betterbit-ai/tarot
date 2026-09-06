@@ -2,6 +2,7 @@ import { EMPTY_RUNTIME_QUEUE, type ContentRuntimeQueue, type ContentStateStore }
 
 const RUNTIME_STATE_KEY = "mr-tarot:threads-runtime-state:v1";
 const TOKEN_STATE_KEY = "mr-tarot:threads-token:v1";
+const DAILY_PUBLISH_KEY = "mr-tarot:threads-daily-publish:v1";
 export const AFFILIATE_POOL_KEY = "mr-tarot:affiliate-pool:v1";
 
 type Fetcher = typeof fetch;
@@ -70,3 +71,4 @@ export function createUpstashContentStateStore(env: Environment = process.env, f
 }
 
 export const UPSTASH_TOKEN_STATE_KEY = TOKEN_STATE_KEY;
+export const UPSTASH_DAILY_PUBLISH_KEY = DAILY_PUBLISH_KEY;

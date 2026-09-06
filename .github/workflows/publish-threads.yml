@@ -3,11 +3,23 @@ name: Publish prepared Threads content
 on:
   workflow_dispatch:
   schedule:
-    # 20:30 Asia/Seoul = 11:30 UTC. Korea has no daylight saving time.
+    # Korea has no daylight saving time. The daily route allows one successful
+    # publish per KST calendar day, so these are safe recovery attempts.
     - cron: "30 11 * * *"
+    - cron: "0 12 * * *"
+    - cron: "30 12 * * *"
+    - cron: "0 13 * * *"
+    - cron: "30 13 * * *"
+    - cron: "0 14 * * *"
+    # Morning recovery if every prior evening trigger was delayed or failed.
+    - cron: "0 0 * * *"
 
 permissions:
   contents: read
+
+concurrency:
+  group: mr-tarot-daily-publish
+  cancel-in-progress: false
 
 jobs:
   publish-next:
@@ -17,7 +29,7 @@ jobs:
       CONTENT_SCHEDULER_SECRET: ${{ secrets.CONTENT_SCHEDULER_SECRET }}
       VERCEL_GROWTH_BASE_URL: ${{ vars.VERCEL_GROWTH_BASE_URL }}
     steps:
-      - name: Trigger the protected Vercel publisher
+      - name: Trigger the protected daily Vercel publisher
         run: |
           if [ -z "$CONTENT_SCHEDULER_SECRET" ] || [ -z "$VERCEL_GROWTH_BASE_URL" ]; then
             echo "Vercel publisher settings are incomplete; no post was attempted."
@@ -27,7 +39,7 @@ jobs:
           http_status="$(curl --silent --show-error --max-time 55 \
             --output "$response_file" \
             --write-out "%{http_code}" \
-            --request POST "$VERCEL_GROWTH_BASE_URL/api/content/publish-next" \
+            --request POST "$VERCEL_GROWTH_BASE_URL/api/content/publish-daily" \
             --header "x-mr-tarot-scheduler: $CONTENT_SCHEDULER_SECRET" \
             --header "content-type: application/json")"
           echo "Vercel publisher HTTP status: $http_status"
