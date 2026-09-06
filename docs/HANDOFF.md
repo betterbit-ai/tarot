@@ -267,4 +267,4 @@ Scheduler diagnostic checkpoint: current `HEAD` — GitHub reaches Vercel; first
 
 Latest interpretation checkpoint: `982c021` — combination-aware flow, question application, mindset, and regenerated 76,076-row corpus.
 
-Latest Threads reliability checkpoint: pending commit — KST idempotency marker, recovery schedule, Vercel fallback, and atomic Upstash publishing lease.
+Latest Threads reliability checkpoint: `7b9f9b9` — KST idempotency marker, recovery schedule, Vercel fallback, and atomic Upstash publishing lease.
