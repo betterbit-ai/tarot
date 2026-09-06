@@ -2,6 +2,12 @@ name: Publish prepared Threads content
 
 on:
   workflow_dispatch:
+    inputs:
+      force_additional_post:
+        description: "Publish one additional queued post even if today's daily post already exists"
+        required: false
+        default: false
+        type: boolean
   schedule:
     # Korea has no daylight saving time. The daily route allows one successful
     # publish per KST calendar day, so these are safe recovery attempts.
@@ -29,17 +35,22 @@ jobs:
       CONTENT_SCHEDULER_SECRET: ${{ secrets.CONTENT_SCHEDULER_SECRET }}
       VERCEL_GROWTH_BASE_URL: ${{ vars.VERCEL_GROWTH_BASE_URL }}
     steps:
-      - name: Trigger the protected daily Vercel publisher
+      - name: Trigger the protected Vercel publisher
         run: |
           if [ -z "$CONTENT_SCHEDULER_SECRET" ] || [ -z "$VERCEL_GROWTH_BASE_URL" ]; then
             echo "Vercel publisher settings are incomplete; no post was attempted."
             exit 0
           fi
+          endpoint="/api/content/publish-daily"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force_additional_post }}" = "true" ]; then
+            endpoint="/api/content/publish-next"
+            echo "Explicit additional-post override enabled."
+          fi
           response_file="$(mktemp)"
           http_status="$(curl --silent --show-error --max-time 55 \
             --output "$response_file" \
             --write-out "%{http_code}" \
-            --request POST "$VERCEL_GROWTH_BASE_URL/api/content/publish-daily" \
+            --request POST "$VERCEL_GROWTH_BASE_URL$endpoint" \
             --header "x-mr-tarot-scheduler: $CONTENT_SCHEDULER_SECRET" \
             --header "content-type: application/json")"
           echo "Vercel publisher HTTP status: $http_status"
