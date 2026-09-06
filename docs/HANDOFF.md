@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-06 22:45 KST
+Last updated: 2026-09-06 22:56 KST
 
 ## Current Phase
 
@@ -99,6 +99,7 @@ Threads publishing reliability is being hardened after a container-readiness fai
 - The scheduled run for `mr-tarot-0002` did not complete because its image container was still processing. A manual retry later published a second copy because the original manually posted thread was not represented in Upstash runtime state. The profile currently shows both `DcwLK_CG8HH` (original, 1 day old) and `DcyhweEnPRI` (retry copy, newly published), each with four replies.
 - The single GitHub schedule had no same-day recovery path and treated the route's `mode: failed` body as a successful workflow. Daily publishing now uses a KST idempotency marker, an Upstash lease, GitHub recovery attempts, and an independent Vercel Cron fallback. On Vercel Hobby the fallback runs once per day within the scheduled hour, so GitHub remains the retry mechanism. `CRON_SECRET` still must be set in Vercel before the fallback becomes active.
 - The daily route now acquires a 15-minute atomic Upstash lease before publishing and rechecks the KST marker after acquiring it. Concurrent GitHub and Vercel triggers return `publish-in-progress` or `already-published`, never a second post. A failed provider attempt releases the lease so a later recovery trigger can retry.
+- Manual recovery workflow run `34037533563` succeeded on 2026-09-06: `mr-tarot-0005` was published with its two prepared replies. The protected daily route returned HTTP 200 and recorded KST date `2026-09-06`.
 - Coupang Partners refresh integration is implemented: HMAC-SHA256 signing, theme-keyword product search, CDN/product URL validation, `/deeplink` conversion, Upstash pool storage, public sanitized pool fallback, and a protected GitHub schedule.
 - Manual `Refresh Coupang affiliate pool` now succeeds with HTTP 200 and `mode: refreshed`, storing six verified theme products in Upstash. Search returned 30 records, all six themes produced a product, and no deeplink failures remained.
 - Threads hook research added at `docs/content/THREADS_HOOK_RESEARCH.md`: 30 original Korean hook candidates based on public archetype research, with a note that no official cross-account top-30 ranking exists.
