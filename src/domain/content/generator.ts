@@ -14,12 +14,12 @@ const TOPIC_PLAN: readonly TopicPlan[] = [
 ];
 
 const TOPIC_FORMATS: Record<ContentTopic, readonly ContentFormat[]> = {
-  LOVE: ["PICK_5", "PICK_3", "YES_NO_NOT_YET", "LOVE", "ONE_CARD", "CONVERSATION"],
-  GENERAL: ["PICK_5", "PICK_3", "YES_NO_NOT_YET", "ONE_CARD", "CONVERSATION"],
-  CAREER: ["PICK_3", "YES_NO_NOT_YET", "CAREER", "ONE_CARD", "CONVERSATION"],
-  MONEY: ["PICK_3", "YES_NO_NOT_YET", "MONEY", "ONE_CARD"],
-  DECISION: ["YES_NO_NOT_YET", "PICK_3", "ONE_CARD", "CONVERSATION"],
-  EXPERIMENTAL: ["CONVERSATION", "ONE_CARD", "PICK_3"],
+  LOVE: ["PICK_3", "YES_NO_NOT_YET", "LOVE", "CONVERSATION"],
+  GENERAL: ["PICK_3", "YES_NO_NOT_YET", "CONVERSATION"],
+  CAREER: ["PICK_3", "YES_NO_NOT_YET", "CAREER", "CONVERSATION"],
+  MONEY: ["PICK_3", "YES_NO_NOT_YET", "MONEY"],
+  DECISION: ["YES_NO_NOT_YET", "PICK_3", "CONVERSATION"],
+  EXPERIMENTAL: ["CONVERSATION", "PICK_3"],
 };
 
 const TOPIC_PROMPTS: Record<ContentTopic, readonly string[]> = {
@@ -115,13 +115,7 @@ const THREADS_HOOK_BUILDERS: readonly ((context: HookContext) => string)[] = [
 ] as const;
 
 function hookFor(format: ContentFormat, prompt: string, index: number): string {
-  const selection = format === "PICK_5"
-    ? "다섯 장 중 하나"
-    : format === "ONE_CARD"
-      ? "카드 한 장"
-      : format === "CONVERSATION"
-        ? "한 단어"
-        : "세 장 중 하나";
+  const selection = format === "CONVERSATION" ? "한 단어" : "세 장 중 하나";
   const context: HookContext = {
     prompt,
     subject: `${prompt}${subjectParticle(prompt)}`,
@@ -134,7 +128,9 @@ function hookFor(format: ContentFormat, prompt: string, index: number): string {
 
 function cardIdsFor(seed: number, format: ContentFormat): number[] {
   if (format === "CONVERSATION") return [];
-  const count = format === "PICK_5" ? 5 : format === "ONE_CARD" ? 1 : 3;
+  // Every card-choice post leads into Mr. Tarot's core three-card ritual.
+  // Keep legacy format values safe if old queue data is ever regenerated.
+  const count = 3;
   const start = (seed * 17 + 6) % 78;
   const step = 11 + (seed % 5) * 2;
   const ids: number[] = [];
@@ -166,15 +162,15 @@ function resultLine(cardId: number, topic: ContentTopic): string {
 }
 
 function mainPost(format: ContentFormat, prompt: string, hook: string, number: number): string {
-  const label = String(number).padStart(2, "0");
+  void number;
   switch (format) {
-    case "PICK_5": return `${hook}\n다섯 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3  4  5`;
+    case "PICK_5": return `${hook}\n세 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3`;
     case "PICK_3": return `${hook}\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3`;
     case "YES_NO_NOT_YET": return `${hook}\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO`;
     case "LOVE": return `${hook}\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3`;
     case "CAREER": return `${hook}\n\n더 버틸지, 다른 곳을 볼지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3`;
     case "MONEY": return `${hook}\n\n돈 이야기는 숫자만으로 끝나지 않아요.\n세 장 중 하나를 골라보세요.\n\n1  2  3`;
-    case "ONE_CARD": return `${hook}\n\n${prompt}${objectParticle(prompt)} 떠올리고\n카드 하나를 골라보세요.\n\n${label}`;
+    case "ONE_CARD": return `${hook}\n\n${prompt}${objectParticle(prompt)} 떠올리고\n세 장 중 하나를 골라보세요.\n\n1  2  3`;
     case "CONVERSATION": return `${hook}\n\n답을 정해드리기보다\n${CONVERSATION_FRAMES[number % CONVERSATION_FRAMES.length]} 같이 볼게요.\n${CONVERSATION_CLOSINGS[number % CONVERSATION_CLOSINGS.length]}`;
   }
 }

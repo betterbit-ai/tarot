@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-06 22:56 KST
+Last updated: 2026-09-06 23:03 KST
 
 ## Current Phase
 
@@ -100,6 +100,7 @@ Threads publishing reliability is being hardened after a container-readiness fai
 - The single GitHub schedule had no same-day recovery path and treated the route's `mode: failed` body as a successful workflow. Daily publishing now uses a KST idempotency marker, an Upstash lease, GitHub recovery attempts, and an independent Vercel Cron fallback. On Vercel Hobby the fallback runs once per day within the scheduled hour, so GitHub remains the retry mechanism. `CRON_SECRET` still must be set in Vercel before the fallback becomes active.
 - The daily route now acquires a 15-minute atomic Upstash lease before publishing and rechecks the KST marker after acquiring it. Concurrent GitHub and Vercel triggers return `publish-in-progress` or `already-published`, never a second post. A failed provider attempt releases the lease so a later recovery trigger can retry.
 - Manual recovery workflow run `34037533563` succeeded on 2026-09-06: `mr-tarot-0005` was published with its two prepared replies. The protected daily route returned HTTP 200 and recorded KST date `2026-09-06`.
+- The published `mr-tarot-0005` was a one-card legacy queue item, which breaks the core three-card ritual expectation. All future card-choice queue formats now create exactly three cards, three numbered result replies, and matching 1·2·3 images. The regenerated next item is `mr-tarot-0006`.
 - Coupang Partners refresh integration is implemented: HMAC-SHA256 signing, theme-keyword product search, CDN/product URL validation, `/deeplink` conversion, Upstash pool storage, public sanitized pool fallback, and a protected GitHub schedule.
 - Manual `Refresh Coupang affiliate pool` now succeeds with HTTP 200 and `mode: refreshed`, storing six verified theme products in Upstash. Search returned 30 records, all six themes produced a product, and no deeplink failures remained.
 - Threads hook research added at `docs/content/THREADS_HOOK_RESEARCH.md`: 30 original Korean hook candidates based on public archetype research, with a note that no official cross-account top-30 ranking exists.
@@ -269,3 +270,5 @@ Scheduler diagnostic checkpoint: current `HEAD` — GitHub reaches Vercel; first
 Latest interpretation checkpoint: `982c021` — combination-aware flow, question application, mindset, and regenerated 76,076-row corpus.
 
 Latest Threads reliability checkpoint: `7b9f9b9` — KST idempotency marker, recovery schedule, Vercel fallback, and atomic Upstash publishing lease.
+
+Latest Threads format checkpoint: pending commit — every future card-choice post uses the three-card ritual entry format.
