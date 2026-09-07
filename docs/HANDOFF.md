@@ -278,6 +278,6 @@ Latest Threads format checkpoint: `6725bb8` — every future card-choice post us
 
 Latest manual corrective-publish checkpoint: `0ef9e8a` — only an explicit workflow dispatch can bypass the daily guard for a requested corrective post.
 
-Latest scheduler-observability checkpoint: pending commit — unexpected 2xx modes fail the GitHub run and surface for recovery.
+Latest scheduler-observability checkpoint: `a524cd9` — unexpected 2xx modes fail the GitHub run and surface for recovery.
 
-Latest schedule-window checkpoint: pending commit — all automated Threads attempts are constrained to 22:00-22:59 KST.
+Latest schedule-window checkpoint: `2ebf56b` — all automated Threads attempts are constrained to 22:00-22:59 KST.
