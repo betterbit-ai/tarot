@@ -20,7 +20,7 @@ Sources:
 
 ## Scheduler and queue storage
 
-The initial Netlify implementation is retained only as a rollback adapter. The active migration runs protected Next.js/Vercel routes, triggered by GitHub Actions at UTC cron expressions. A daily 20:30 Asia/Seoul run is `30 11 * * *` UTC because Korea has no daylight saving time.
+The initial Netlify implementation is retained only as a rollback adapter. The active migration runs protected Next.js/Vercel routes, triggered by GitHub Actions at UTC cron expressions. The production window is 22:00-22:59 Asia/Seoul: Vercel Cron uses `0 13 * * *`, while GitHub recovery triggers run from `5 13 * * *` through `55 13 * * *`. Korea has no daylight saving time.
 
 Upstash Redis REST stores the site-wide JSON runtime state and refreshed token. Its HTTPS REST endpoint works from serverless code with native `fetch`; its standard token stays server-side. The queue remains single-writer, retains persisted container IDs, and uses manual reconciliation for unknown publish outcomes.
 
@@ -31,7 +31,7 @@ Sources:
 
 ## GitHub Actions trigger
 
-GitHub Actions schedules run from the default branch and can be delayed or dropped under high load. Public repositories can have scheduled workflows automatically disabled after 60 days of inactivity. At the operator's request, Actions is the visible daily trigger at 20:30 KST, but it does not own queue state or Threads credentials. It calls one protected Vercel publisher endpoint; Upstash remains the durable idempotency and reconciliation store. The workflow also supports manual dispatch for recovery.
+GitHub Actions schedules run from the default branch and can be delayed or dropped under high load. Public repositories can have scheduled workflows automatically disabled after 60 days of inactivity. Vercel Cron is the independent once-daily publisher inside the requested 22:00-22:59 KST window; GitHub supplies the same-window recovery attempts but does not own queue state or Threads credentials. Upstash remains the durable idempotency and reconciliation store. The workflow also supports manual dispatch for recovery.
 
 Source:
 

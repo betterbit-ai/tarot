@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-07 23:18 KST
+Last updated: 2026-09-07 23:24 KST
 
 ## Current Phase
 
@@ -56,7 +56,7 @@ Threads publishing reliability is being hardened after a container-readiness fai
 - Growth Engine research completed for Meta Threads API, Netlify Scheduled Functions/Blobs, GitHub Actions limitations, and Coupang official surfaces
 - Active Growth Engine spec and runtime decisions recorded in `spec/spec.md`, `docs/GROWTH_ENGINE_RESEARCH.md`, `decisions/2026-08-30-growth-engine-runtime.md`, and `decisions/2026-08-31-github-actions-publish-trigger.md`
 - Affiliate selector now combines question intent and card signals, selects only verified pool items, and skips the interstitial when no relevant verified product exists
-- Generated a 105-item READY content queue across 8 formats and 6 planned topics under `data/content/threads-queue.json`
+- Generated a 105-item READY content queue across six active formats and 6 planned topics under `data/content/threads-queue.json`; every card-choice post uses three cards
 - Generated 105 programmatic 1080x1350 Threads PNG images and SVG source assets under `public/threads/generated/`
 - Threads publisher creates/persists containers before publish, appends per-content UTM CTA links, publishes result replies sequentially, and marks unknown external outcomes for manual reconciliation rather than retrying
 - `netlify/functions/publish-next.mts` schedules daily at 20:30 KST (`30 11 * * *` UTC) and stores runtime state in a strong-consistency Netlify Blob store
@@ -103,6 +103,7 @@ Threads publishing reliability is being hardened after a container-readiness fai
 - The published `mr-tarot-0005` was a one-card legacy queue item, which breaks the core three-card ritual expectation. All future card-choice queue formats now create exactly three cards, three numbered result replies, and matching 1·2·3 images. The regenerated next item is `mr-tarot-0006`.
 - The operator explicitly requested a same-day corrective post. Manual workflow run `34039266277` used the protected `force_additional_post` override and published `mr-tarot-0006` with three visible cards and three numbered reading replies. Scheduled runs still use the daily KST guard.
 - Scheduled workflow run `34043705013` published `mr-tarot-0007` at 2026-09-07 00:53 KST with three visible cards and three numbered reading replies. Later runs correctly returned `already-published`. The workflow now fails rather than falsely succeeding unless the protected route returns `published` or `already-published`.
+- The publication window was moved at the operator's request: Vercel Cron runs once during 22:00-22:59 KST and GitHub's recovery attempts are limited to 22:05-22:55 KST. The next-morning catch-up was removed so a delayed GitHub trigger cannot create a morning post.
 - Coupang Partners refresh integration is implemented: HMAC-SHA256 signing, theme-keyword product search, CDN/product URL validation, `/deeplink` conversion, Upstash pool storage, public sanitized pool fallback, and a protected GitHub schedule.
 - Manual `Refresh Coupang affiliate pool` now succeeds with HTTP 200 and `mode: refreshed`, storing six verified theme products in Upstash. Search returned 30 records, all six themes produced a product, and no deeplink failures remained.
 - Threads hook research added at `docs/content/THREADS_HOOK_RESEARCH.md`: 30 original Korean hook candidates based on public archetype research, with a note that no official cross-account top-30 ranking exists.
@@ -278,3 +279,5 @@ Latest Threads format checkpoint: `6725bb8` — every future card-choice post us
 Latest manual corrective-publish checkpoint: `0ef9e8a` — only an explicit workflow dispatch can bypass the daily guard for a requested corrective post.
 
 Latest scheduler-observability checkpoint: pending commit — unexpected 2xx modes fail the GitHub run and surface for recovery.
+
+Latest schedule-window checkpoint: pending commit — all automated Threads attempts are constrained to 22:00-22:59 KST.

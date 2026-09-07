@@ -15,12 +15,12 @@
 ### Required behavior
 
 1. 콘텐츠 모델은 id, format, topic, hook, main post, card ids, result replies, CTA, image asset, queue status, schedule/publish metadata, retry metadata, metrics를 가진다.
-2. generator는 8개 이상의 format과 계획된 topic mix를 사용해 100건 이상을 batch로 생성하고, 실제 RWS card catalog만 참조한다.
+2. generator는 계획된 topic mix와 여섯 개의 active format을 사용해 100건 이상을 batch로 생성하고, 모든 card-choice format을 정확히 세 장으로 구성하며 실제 RWS card catalog만 참조한다.
 3. generator와 validator는 AI 관용구, 길이, 카드 id, duplicate hook/format/card set/normalized semantic signature를 검사한다. 실패 항목은 READY가 될 수 없다.
 4. 기존 SVG/PNG 방식의 programmatic image composition으로 콘텐츠 이미지를 생성한다. AI raster generation을 사용하지 않는다.
 5. publisher는 Threads text/image main post와 `reply_to_id` result reply chain을 지원한다. container id와 published id를 queue state에 남기며, 불확실한 publish 결과는 자동 재시도하지 않는다.
 6. queue는 `DRAFT`, `READY`, `SCHEDULED`, `PUBLISHING`, `PUBLISHED`, `FAILED`, `SKIPPED` 상태를 지원한다. `REVIEW` 모드에서는 READY 전환에 운영자의 명시적 approval이 필요하다.
-7. GitHub Actions는 Asia/Seoul 20:30 기본 시간을 UTC cron으로 변환해 Vercel의 보호된 publisher route를 하루 한 번 호출한다. state는 Upstash Redis REST에 저장하고, local/CI에서는 file store와 DRY RUN으로 같은 publisher contract를 검증한다.
+7. Vercel Cron은 Asia/Seoul 22시 안에서 독립적으로 하루 한 번 protected publisher route를 호출하고, GitHub Actions는 22:05-22:55 KST 안에서 recovery attempts를 보낸다. state는 Upstash Redis REST에 저장하고, local/CI에서는 file store와 DRY RUN으로 같은 publisher contract를 검증한다.
 8. scheduler, CLI, publisher는 idempotency key와 persisted container id를 사용한다. publish response가 불확실하면 `FAILED` + reconciliation metadata로 멈춰 duplicate post를 방지한다.
 9. metrics sync는 Threads API가 제공하는 profile/media metrics만 저장하며, API가 제공하지 않는 클릭·reply rate는 추정하지 않는다.
 10. affiliate engine은 QuestionProfile + ReadingSkeleton signals에서 affiliate theme을 만든 뒤 curated product pool을 rotation한다. price/live product search/무단 product image scraping은 하지 않는다.
@@ -30,13 +30,13 @@
 
 | Criterion | Evidence |
 | --- | --- |
-| 100개 이상, 8 formats, topic mix를 가진 queue 생성 | `pnpm content:generate --count 100`, validator summary |
+| 100개 이상, 6 active formats, topic mix와 3장 선택 규칙을 가진 queue 생성 | `pnpm content:generate --count 100`, validator summary |
 | duplicate/AI tell/card validation 실패 0건 | `pnpm content:validate` |
 | ready/scheduled/published/failed/status transitions | domain and store unit tests |
 | review mode에서 approval 없이는 publisher가 외부 호출하지 않음 | publisher unit test + dry-run log |
 | dry run은 게시 대상, image, replies, CTA를 출력하고 상태를 기록 | `pnpm content:publish-next --dry-run` |
 | missing credentials/invalid response/timeout이 duplicate publish를 만들지 않음 | publisher tests with mocked HTTP |
-| scheduler는 20:30 KST에 해당하는 UTC schedule이며 protected Vercel publish route를 직접 외부 공개하지 않음 | workflow and auth unit test |
+| scheduler는 22:00-22:59 KST에만 발행을 시도하며 protected Vercel publish route를 직접 외부 공개하지 않음 | workflow and auth unit test |
 | affiliate mapping은 질문 intent와 cards theme을 함께 사용하고 skip path를 보존 | affiliate tests/component test |
 | Threads UTM을 가진 CTA가 생성됨 | generator tests |
 | lint/typecheck/test/build/content validation pass | harness verification |

@@ -9,16 +9,14 @@ on:
         default: false
         type: boolean
   schedule:
-    # Korea has no daylight saving time. The daily route allows one successful
-    # publish per KST calendar day, so these are safe recovery attempts.
-    - cron: "30 11 * * *"
-    - cron: "0 12 * * *"
-    - cron: "30 12 * * *"
-    - cron: "0 13 * * *"
-    - cron: "30 13 * * *"
-    - cron: "0 14 * * *"
-    # Morning recovery if every prior evening trigger was delayed or failed.
-    - cron: "0 0 * * *"
+    # Korea has no daylight saving time. Keep all GitHub retries inside the
+    # requested 22:00–22:59 KST window. The daily route permits only one post.
+    - cron: "5 13 * * *"
+    - cron: "15 13 * * *"
+    - cron: "25 13 * * *"
+    - cron: "35 13 * * *"
+    - cron: "45 13 * * *"
+    - cron: "55 13 * * *"
 
 permissions:
   contents: read
