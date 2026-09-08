@@ -70,6 +70,7 @@ The Coupang refresh route is separate from the visitor request. It maps each int
 - An API timeout or non-2xx response marks the item `FAILED` with `requiresReconciliation=true`.
 - It is not automatically retried after an ambiguous result because an automatic retry could duplicate a Threads post.
 - Inspect the Threads account and the Upstash runtime state before manually resolving the item.
+- If a historical post is confirmed published but its three numbered readings are missing, run the protected `Repair missing Threads reading replies` GitHub workflow with its exact `mr-tarot-####` id. It appends only the three prepared readings to that existing post, records each reply id, and fails closed on an uncertain outcome. Do not use it for normal scheduled publishing.
 
 ## Queue and assets
 

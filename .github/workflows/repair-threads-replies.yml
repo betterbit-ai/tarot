@@ -1,0 +1,50 @@
+name: Repair missing Threads reading replies
+
+on:
+  workflow_dispatch:
+    inputs:
+      content_id:
+        description: "Published mr-tarot content id needing exactly three numbered reading replies"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  repair-replies:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      CONTENT_SCHEDULER_SECRET: ${{ secrets.CONTENT_SCHEDULER_SECRET }}
+      VERCEL_GROWTH_BASE_URL: ${{ vars.VERCEL_GROWTH_BASE_URL }}
+      CONTENT_ID: ${{ inputs.content_id }}
+    steps:
+      - name: Trigger the protected reading-reply repair
+        run: |
+          if [ -z "$CONTENT_SCHEDULER_SECRET" ] || [ -z "$VERCEL_GROWTH_BASE_URL" ]; then
+            echo "Vercel publisher settings are incomplete; no repair was attempted."
+            exit 1
+          fi
+          case "$CONTENT_ID" in
+            mr-tarot-[0-9][0-9][0-9][0-9]) ;;
+            *) echo "Invalid content id"; exit 1 ;;
+          esac
+          response_file="$(mktemp)"
+          http_status="$(curl --silent --show-error --max-time 55 \
+            --output "$response_file" \
+            --write-out "%{http_code}" \
+            --request POST "$VERCEL_GROWTH_BASE_URL/api/content/repair-reading-replies" \
+            --header "x-mr-tarot-scheduler: $CONTENT_SCHEDULER_SECRET" \
+            --header "content-type: application/json" \
+            --data "$(printf '{\"contentId\":\"%s\"}' "$CONTENT_ID")")"
+          echo "Vercel repair HTTP status: $http_status"
+          sed -E 's/(accessToken|token|secret|authorization)[^,}]*/\1=[redacted]/gi' "$response_file"
+          if [ "$http_status" -ge 400 ]; then
+            exit 22
+          fi
+          mode="$(grep -oE '"mode":"[^"]+"' "$response_file" | head -n 1 || true)"
+          if [ "$mode" != '"mode":"repaired"' ] && [ "$mode" != '"mode":"already-repaired"' ]; then
+            echo "Unexpected repair result: ${mode:-missing mode}"
+            exit 23
+          fi

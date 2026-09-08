@@ -10,6 +10,8 @@ export type ContentRuntimeState = {
   publishedAt?: string;
   replyContainerIds?: string[];
   replyPostIds?: string[];
+  supplementalReplyPostIds?: string[];
+  supplementalRepairRequiresReconciliation?: boolean;
   attemptCount: number;
   lastError?: string;
   requiresReconciliation?: boolean;
@@ -41,6 +43,13 @@ export type PublishPreview = {
   mode: "dry-run" | "review" | "published" | "failed" | "nothing-ready";
   main: string;
   imageUrl: string | null;
+  replies: string[];
+  error?: string;
+};
+
+export type ReplyRepairPreview = {
+  id: string;
+  mode: "dry-run" | "review" | "repaired" | "already-repaired" | "failed";
   replies: string[];
   error?: string;
 };
@@ -223,5 +232,58 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
     queue = applyState(queue, item.id, runtime);
     await store.write(queue);
     return { id: item.id, mode: "failed", main: item.mainPost, imageUrl, replies, error: message };
+  }
+}
+
+/** Add only the three missing numbered readings to an already-published post. */
+export async function repairMissingReadingReplies(
+  source: readonly ThreadsContent[],
+  contentId: string,
+  store: ContentStateStore,
+  config: ThreadsPublisherConfig,
+): Promise<ReplyRepairPreview> {
+  let queue = await store.read();
+  const item = source.find((candidate) => candidate.id === contentId);
+  if (!item) return { id: contentId, mode: "failed", replies: [], error: "Unknown content item" };
+
+  const readingError = readingThreadValidationError(item);
+  if (readingError) return { id: item.id, mode: "failed", replies: [], error: `Refusing to repair incomplete reading: ${readingError}` };
+  const runtime = stateFor(queue, item);
+  const replies = item.replies.slice(0, 3);
+  if (runtime.status !== "PUBLISHED" || !runtime.mainPostId) {
+    return { id: item.id, mode: "failed", replies, error: "The main Threads post is not confirmed as published" };
+  }
+  if (runtime.supplementalRepairRequiresReconciliation) {
+    return { id: item.id, mode: "failed", replies, error: "Previous repair outcome requires manual reconciliation" };
+  }
+  const existingIds = [...(runtime.supplementalReplyPostIds ?? [])];
+  if (existingIds.length === replies.length) return { id: item.id, mode: "already-repaired", replies };
+
+  if (config.dryRun || config.mode === "review") {
+    return { id: item.id, mode: config.dryRun ? "dry-run" : "review", replies };
+  }
+  if (!config.accessToken || !config.userId) {
+    return { id: item.id, mode: "failed", replies, error: "Missing Threads credentials" };
+  }
+
+  try {
+    for (let index = existingIds.length; index < replies.length; index += 1) {
+      const replyId = await requestContainer(config, replies[index] ?? "", runtime.mainPostId);
+      existingIds[index] = replyId;
+      queue = applyState(queue, item.id, { ...runtime, supplementalReplyPostIds: existingIds, updatedAt: now() });
+      await store.write(queue);
+    }
+    return { id: item.id, mode: "repaired", replies };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    queue = applyState(queue, item.id, {
+      ...runtime,
+      supplementalReplyPostIds: existingIds,
+      supplementalRepairRequiresReconciliation: true,
+      lastError: `Reading-reply repair failed: ${message}`,
+      updatedAt: now(),
+    });
+    await store.write(queue);
+    return { id: item.id, mode: "failed", replies, error: message };
   }
 }

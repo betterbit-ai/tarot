@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from "vitest";
 import type { ThreadsContent } from "@/domain/content";
-import { applyRuntimeState, EMPTY_RUNTIME_QUEUE, publishNextContent, type ContentRuntimeQueue } from "./publisher";
+import { applyRuntimeState, EMPTY_RUNTIME_QUEUE, publishNextContent, repairMissingReadingReplies, type ContentRuntimeQueue } from "./publisher";
 
 const item: ThreadsContent = {
   id: "mr-tarot-test", status: "READY", format: "PICK_3", topic: "LOVE", hook: "test", mainPost: "main", cardIds: [0, 1, 2], replies: ["1번\n\nreading one", "2번\n\nreading two", "3번\n\nreading three", "visit"], cta: "visit", imageAsset: "/threads/generated/mr-tarot-test.svg", altText: "test image", createdAt: "2026-08-30T00:00:00.000Z", scheduledAt: null, publishedAt: null, threadsPostId: null, threadsContainerId: null, replyPostIds: [], attemptCount: 0, lastError: null, metrics: {}, semanticSignature: "test",
 };
 
-function memoryStore() {
-  let state: ContentRuntimeQueue = EMPTY_RUNTIME_QUEUE;
+function memoryStore(initialState: ContentRuntimeQueue = EMPTY_RUNTIME_QUEUE) {
+  let state: ContentRuntimeQueue = initialState;
   return { read: async () => state, write: async (next: ContentRuntimeQueue) => { state = next; }, state: () => state };
 }
 
@@ -72,6 +72,22 @@ describe("Threads publisher", () => {
 
     expect(preview).toMatchObject({ mode: "failed", error: "Refusing to publish incomplete reading: expected 3 selectable cards, received 2" });
     expect(fetchMock).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
+  });
+
+  it("adds only the three missing readings to a confirmed published post", async () => {
+    const store = memoryStore({ version: 1, items: { [item.id]: { status: "PUBLISHED", updatedAt: "2026-09-08T00:00:00.000Z", mainPostId: "existing-main", attemptCount: 1 } } });
+    const responses = [
+      new Response(JSON.stringify({ id: "repair-one" }), { status: 200 }),
+      new Response(JSON.stringify({ id: "repair-two" }), { status: 200 }),
+      new Response(JSON.stringify({ id: "repair-three" }), { status: 200 }),
+    ];
+    vi.stubGlobal("fetch", vi.fn(async () => responses.shift()));
+
+    const preview = await repairMissingReadingReplies([item], item.id, store, { apiBaseUrl: "https://graph.threads.net/v1.0", mode: "auto", dryRun: false, maxAttempts: 2, siteUrl: "https://mr-tarot.netlify.app", accessToken: "token", userId: "user" });
+
+    expect(preview).toMatchObject({ mode: "repaired", replies: item.replies.slice(0, 3) });
+    expect(store.state().items[item.id]?.supplementalReplyPostIds).toEqual(["repair-one", "repair-two", "repair-three"]);
     vi.unstubAllGlobals();
   });
 

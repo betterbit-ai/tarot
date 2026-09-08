@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-08 23:27 KST
+Last updated: 2026-09-08 23:40 KST
 
 ## Current Phase
 
@@ -105,6 +105,7 @@ Threads publishing reliability is being hardened after a container-readiness fai
 - Scheduled workflow run `34043705013` published `mr-tarot-0007` at 2026-09-07 00:53 KST with three visible cards and three numbered reading replies. Later runs correctly returned `already-published`. The workflow now fails rather than falsely succeeding unless the protected route returns `published` or `already-published`.
 - The publication window was moved at the operator's request: Vercel Cron runs once during 22:00-22:59 KST and GitHub's recovery attempts are limited to 22:05-22:55 KST. The next-morning catch-up was removed so a delayed GitHub trigger cannot create a morning post.
 - The 2026-09-08 post exposed an invalid legacy `CONVERSATION` queue item: it displayed cards but deliberately had no prepared readings and waited for a comment. Active one-card, five-card, and conversation formats have now been deleted. The validator and the publisher both fail closed unless the item has exactly three cards, three numbered reading replies, and one CTA; no malformed item can reach the Threads API.
+- The historical `mr-tarot-0008` post needs its three prepared numbered readings appended beneath the existing post. A protected, idempotent repair route and manual GitHub workflow now exist for that narrowly scoped recovery; it records appended reply ids and fails closed after an uncertain provider outcome.
 - Coupang Partners refresh integration is implemented: HMAC-SHA256 signing, theme-keyword product search, CDN/product URL validation, `/deeplink` conversion, Upstash pool storage, public sanitized pool fallback, and a protected GitHub schedule.
 - Manual `Refresh Coupang affiliate pool` now succeeds with HTTP 200 and `mode: refreshed`, storing six verified theme products in Upstash. Search returned 30 records, all six themes produced a product, and no deeplink failures remained.
 - Threads hook research added at `docs/content/THREADS_HOOK_RESEARCH.md`: 30 original Korean hook candidates based on public archetype research, with a note that no official cross-account top-30 ranking exists.
@@ -284,3 +285,5 @@ Latest scheduler-observability checkpoint: `a524cd9` — unexpected 2xx modes fa
 Latest schedule-window checkpoint: `2ebf56b` — all automated Threads attempts are constrained to 22:00-22:59 KST.
 
 Latest reading-completeness checkpoint: `590df38` — every auto-published post requires three prepared readings before an external API call. Production `/threads` was checked after deployment: no conversation format is visible, selecting `mr-tarot-0009` shows all three result replies, and the 390px view has no horizontal overflow or console errors.
+
+Latest missing-reply repair checkpoint: pending commit — a protected manual workflow can append only the three prepared readings to an already-published post.
