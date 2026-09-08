@@ -1,5 +1,54 @@
 # Executable Product Spec
 
+## Active iteration: Scene hook + daily funnel observability
+
+### Outcome
+
+예약된 Threads 글은 막연한 질문 대신 독자가 자기 기억을 즉시 떠올릴 수 있는 구체적인 시간·숫자·행동 장면으로 시작한다. 운영자는 최근 7일 동안 게시물 노출에서 미스터 타로 방문, 리딩 시작, 결과 도달, 쿠팡 클릭까지 어디서 이탈했는지 `/threads`에서 매일 확인하고 다음 훅을 개선할 수 있다.
+
+### Required behavior
+
+1. 모든 예약 글의 첫 줄은 구체적인 시간/숫자와 관찰 가능한 행동 또는 상황을 포함하고, 답을 첫 줄에서 공개하지 않는 정보 간극을 만든다.
+2. generator와 validator는 장면 단서가 없는 막연한 훅, 카드 3장/해석 3개가 없는 글, 중복 signature를 READY로 만들지 않는다.
+3. Threads CTA의 `utm_content`를 같은 브라우저 세션 동안 보존하고, 질문 원문·카드 배열·개인 식별자를 전송하지 않은 채 방문, 리딩 시작, 카드 확정, 결과 도달, 제휴 노출/건너뛰기/클릭, 공유를 집계한다.
+4. 이벤트 수집 route는 허용된 이벤트와 존재하는 `mr-tarot-####` 콘텐츠 id만 받고, Upstash hash counter를 사용해 KST 일자별 전체/콘텐츠별 합계를 원자적으로 증가시킨다.
+5. `/threads`는 source queue에 Upstash runtime state를 적용하고 최근 7일의 Threads 게시 성과와 웹 퍼널을 함께 보여준다. 이벤트는 세션 안에서 단계별 한 번만 집계한다.
+6. Threads insights sync는 매일 게시 이후에 실행해 views, likes, replies, reposts, quotes를 갱신한다. 이 값은 게시물 누적치임을 UI에서 명확히 표시한다.
+7. Coupang outbound click은 `affiliate_clicked`로 측정한다. 주문·취소·수수료는 Partners report API 권한과 응답 계약을 별도 확인하기 전까지 추정하거나 전환으로 표시하지 않는다.
+
+### Acceptance criteria
+
+- [ ] 생성된 105개 훅 전부에 숫자/시간과 구체 행동·장면이 있고, 정보 간극 금칙어 검증을 통과한다.
+- [ ] Threads UTM 방문에서 결과와 쿠팡 클릭까지 허용 이벤트만 Upstash에 저장되며 질문 원문은 요청 body와 key에 없다.
+- [ ] 동일 세션의 동일 단계 이벤트는 한 번만 전송된다.
+- [ ] `/threads`에 최근 7일 방문→시작→결과→쿠팡 클릭 수와 단계별 전환율, 게시물 누적 views/engagement가 표시된다.
+- [ ] Upstash가 없거나 읽기 실패해도 리추얼은 계속 동작하고 dashboard는 0/미수집 상태로 안전하게 렌더링된다.
+- [ ] metrics workflow가 23:30 KST에 실행된다.
+- [ ] lint, typecheck, tests, build, content validation, browser mobile/desktop checks가 통과한다.
+
+### Constraints
+
+- 질문 원문, 카드 배열, IP, User-Agent, 쿠키 식별자, 개인 식별자는 저장하지 않는다.
+- 새로운 분석 SaaS나 클라이언트 SDK를 추가하지 않고 현재 Upstash REST adapter를 확장한다.
+- Threads API 값은 공급자가 반환한 수치만 표시하고 클릭·주문을 추정하지 않는다.
+- 분석 수집 실패는 사용자 리추얼이나 쿠팡 이동을 막지 않는다.
+
+### Verification
+
+- Automated: generator/validator, analytics route/store, attribution dedupe, dashboard component tests; full project verification.
+- Manual: production `/threads` desktop/390px, UTM visit event appearance, console errors, protected metrics sync result.
+
+### Out of scope
+
+- 사용자 단위 추적, cross-device attribution, 질문별 분석, 광고 네트워크 픽셀.
+- Coupang 주문·취소·수수료 수치의 구현 완료. 이는 공식 report API 응답을 운영 계정에서 확인한 뒤 후속 slice로 진행한다.
+
+### Risks and rollback
+
+- 공개 이벤트 endpoint가 오염되면 same-origin 검사를 강화하거나 수집을 비활성화하고 기존 dataLayer만 유지한다.
+- Upstash 호출량이 커지면 콘텐츠별 counter를 중단하고 일자별 total만 유지한다.
+- 훅이 과도하게 자극적으로 보이면 scene validator는 유지한 채 copy library만 이전 버전으로 되돌린다.
+
 ## Active iteration: Growth Engine
 
 ### Outcome
