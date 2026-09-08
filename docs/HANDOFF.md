@@ -283,4 +283,4 @@ Latest scheduler-observability checkpoint: `a524cd9` — unexpected 2xx modes fa
 
 Latest schedule-window checkpoint: `2ebf56b` — all automated Threads attempts are constrained to 22:00-22:59 KST.
 
-Latest reading-completeness checkpoint: pending commit — every auto-published post requires three prepared readings before an external API call.
+Latest reading-completeness checkpoint: `590df38` — every auto-published post requires three prepared readings before an external API call. Production `/threads` was checked after deployment: no conversation format is visible, selecting `mr-tarot-0009` shows all three result replies, and the 390px view has no horizontal overflow or console errors.
