@@ -1,7 +1,7 @@
 export const CONTENT_STATUSES = ["DRAFT", "READY", "SCHEDULED", "PUBLISHING", "PUBLISHED", "FAILED", "SKIPPED"] as const;
 export type ContentStatus = (typeof CONTENT_STATUSES)[number];
 
-export const CONTENT_FORMATS = ["PICK_5", "PICK_3", "YES_NO_NOT_YET", "LOVE", "CAREER", "MONEY", "ONE_CARD", "CONVERSATION"] as const;
+export const CONTENT_FORMATS = ["PICK_3", "YES_NO_NOT_YET", "LOVE", "CAREER", "MONEY"] as const;
 export type ContentFormat = (typeof CONTENT_FORMATS)[number];
 
 export const CONTENT_TOPICS = ["LOVE", "GENERAL", "CAREER", "MONEY", "DECISION", "EXPERIMENTAL"] as const;

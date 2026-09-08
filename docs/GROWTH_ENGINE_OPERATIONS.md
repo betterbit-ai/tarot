@@ -73,7 +73,7 @@ The Coupang refresh route is separate from the visitor request. It maps each int
 
 ## Queue and assets
 
-The repository starts with 105 `READY` items: 37 relationship, 26 general, 16 career, 11 money, 10 decision, and 5 experimental items. It uses six active formats. Every card-choice item uses exactly three cards; the legacy one-card and five-card format values remain only for backwards-compatible historical data and are never generated. Every item has a generated 1080×1350 PNG plus an SVG source; conversation posts use the same quiet card-back composition with an invitation to comment.
+The repository starts with 105 `READY` items: 37 relationship, 26 general, 16 career, 11 money, 10 decision, and 5 experimental items. It uses five active formats. Every item has exactly three cards, three numbered reading replies, and one CTA reply. One-card, five-card, and comment-only conversation formats have been removed from the active queue. The publisher repeats the same completeness check immediately before the Threads API call and refuses malformed source data. Every item has a generated 1080×1350 PNG plus an SVG source.
 
 Each outbound CTA gets `utm_source=threads`, `utm_medium=social`, `utm_campaign=growth-engine`, and the content id as `utm_content`.
 

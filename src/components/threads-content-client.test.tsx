@@ -10,8 +10,8 @@ const queue: ContentQueue = {
   version: 1,
   generatedAt: "2026-08-30T00:00:00.000Z",
   items: [
-    { id: "mr-tarot-0001", status: "READY", format: "PICK_3", topic: "LOVE", hook: "첫 번째 카드", mainPost: "첫 번째 본문", cardIds: [0, 1, 2], replies: ["첫 번째 결과", "첫 번째 CTA"], cta: "첫 번째 CTA", imageAsset: "/threads/generated/mr-tarot-0001.png", altText: "첫 번째 이미지", createdAt: "2026-08-30T00:00:00.000Z", scheduledAt: null, publishedAt: null, threadsPostId: null, threadsContainerId: null, replyPostIds: [], attemptCount: 0, lastError: null, metrics: {}, semanticSignature: "one" },
-    { id: "mr-tarot-0002", status: "READY", format: "CONVERSATION", topic: "GENERAL", hook: "두 번째 카드", mainPost: "두 번째 본문", cardIds: [], replies: ["두 번째 CTA"], cta: "두 번째 CTA", imageAsset: null, altText: null, createdAt: "2026-08-30T00:00:00.000Z", scheduledAt: null, publishedAt: null, threadsPostId: null, threadsContainerId: null, replyPostIds: [], attemptCount: 0, lastError: null, metrics: {}, semanticSignature: "two" },
+    { id: "mr-tarot-0001", status: "READY", format: "PICK_3", topic: "LOVE", hook: "첫 번째 카드", mainPost: "첫 번째 본문", cardIds: [0, 1, 2], replies: ["1번\n\n첫 번째 결과", "2번\n\n두 번째 결과", "3번\n\n세 번째 결과", "첫 번째 CTA"], cta: "첫 번째 CTA", imageAsset: "/threads/generated/mr-tarot-0001.png", altText: "첫 번째 이미지", createdAt: "2026-08-30T00:00:00.000Z", scheduledAt: null, publishedAt: null, threadsPostId: null, threadsContainerId: null, replyPostIds: [], attemptCount: 0, lastError: null, metrics: {}, semanticSignature: "one" },
+    { id: "mr-tarot-0002", status: "READY", format: "YES_NO_NOT_YET", topic: "GENERAL", hook: "두 번째 카드", mainPost: "두 번째 본문", cardIds: [3, 4, 5], replies: ["1번\n\n두 번째 첫 해석", "2번\n\n두 번째 둘 해석", "3번\n\n두 번째 셋 해석", "두 번째 CTA"], cta: "두 번째 CTA", imageAsset: null, altText: null, createdAt: "2026-08-30T00:00:00.000Z", scheduledAt: null, publishedAt: null, threadsPostId: null, threadsContainerId: null, replyPostIds: [], attemptCount: 0, lastError: null, metrics: {}, semanticSignature: "two" },
   ],
 };
 

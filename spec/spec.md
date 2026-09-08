@@ -15,10 +15,10 @@
 ### Required behavior
 
 1. 콘텐츠 모델은 id, format, topic, hook, main post, card ids, result replies, CTA, image asset, queue status, schedule/publish metadata, retry metadata, metrics를 가진다.
-2. generator는 계획된 topic mix와 여섯 개의 active format을 사용해 100건 이상을 batch로 생성하고, 모든 card-choice format을 정확히 세 장으로 구성하며 실제 RWS card catalog만 참조한다.
-3. generator와 validator는 AI 관용구, 길이, 카드 id, duplicate hook/format/card set/normalized semantic signature를 검사한다. 실패 항목은 READY가 될 수 없다.
+2. generator는 계획된 topic mix와 다섯 개의 active format을 사용해 100건 이상을 batch로 생성하고, 모든 post를 정확히 세 장의 카드와 세 개의 준비된 해석으로 구성하며 실제 RWS card catalog만 참조한다.
+3. generator와 validator는 AI 관용구, 길이, 카드 id, duplicate hook/format/card set/normalized semantic signature, 세 카드/세 해석/CTA 완결성을 검사한다. 실패 항목은 READY가 될 수 없다.
 4. 기존 SVG/PNG 방식의 programmatic image composition으로 콘텐츠 이미지를 생성한다. AI raster generation을 사용하지 않는다.
-5. publisher는 Threads text/image main post와 `reply_to_id` result reply chain을 지원한다. container id와 published id를 queue state에 남기며, 불확실한 publish 결과는 자동 재시도하지 않는다.
+5. publisher는 Threads text/image main post와 `reply_to_id` result reply chain을 지원한다. 외부 Threads API를 호출하기 직전에 세 카드·세 해석·CTA 완결성을 다시 검사하고, 하나라도 없으면 fail-closed한다. container id와 published id를 queue state에 남기며, 불확실한 publish 결과는 자동 재시도하지 않는다.
 6. queue는 `DRAFT`, `READY`, `SCHEDULED`, `PUBLISHING`, `PUBLISHED`, `FAILED`, `SKIPPED` 상태를 지원한다. `REVIEW` 모드에서는 READY 전환에 운영자의 명시적 approval이 필요하다.
 7. Vercel Cron은 Asia/Seoul 22시 안에서 독립적으로 하루 한 번 protected publisher route를 호출하고, GitHub Actions는 22:05-22:55 KST 안에서 recovery attempts를 보낸다. state는 Upstash Redis REST에 저장하고, local/CI에서는 file store와 DRY RUN으로 같은 publisher contract를 검증한다.
 8. scheduler, CLI, publisher는 idempotency key와 persisted container id를 사용한다. publish response가 불확실하면 `FAILED` + reconciliation metadata로 멈춰 duplicate post를 방지한다.
@@ -30,7 +30,7 @@
 
 | Criterion | Evidence |
 | --- | --- |
-| 100개 이상, 6 active formats, topic mix와 3장 선택 규칙을 가진 queue 생성 | `pnpm content:generate --count 100`, validator summary |
+| 100개 이상, 5 active formats, topic mix와 3장·3해석 규칙을 가진 queue 생성 | `pnpm content:generate --count 100`, validator summary |
 | duplicate/AI tell/card validation 실패 0건 | `pnpm content:validate` |
 | ready/scheduled/published/failed/status transitions | domain and store unit tests |
 | review mode에서 approval 없이는 publisher가 외부 호출하지 않음 | publisher unit test + dry-run log |

@@ -1,4 +1,4 @@
-import type { ContentMetrics, ContentStatus, ThreadsContent } from "@/domain/content";
+import { readingThreadValidationError, type ContentMetrics, type ContentStatus, type ThreadsContent } from "@/domain/content";
 
 export type PublishMode = "review" | "auto";
 
@@ -154,6 +154,8 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
   const cta = siteCta(item, config.siteUrl);
   const replies = item.replies.map((reply, index) => index === item.replies.length - 1 ? cta : reply);
   const imageUrl = item.imageAsset && config.siteUrl ? new URL(item.imageAsset, config.siteUrl).toString() : null;
+  const readingError = readingThreadValidationError(item);
+  if (readingError) return { id: item.id, mode: "failed", main: item.mainPost, imageUrl, replies, error: `Refusing to publish incomplete reading: ${readingError}` };
 
   if (config.dryRun || config.mode === "review") {
     const status = config.dryRun ? stateFor(queue, item).status : "SCHEDULED";

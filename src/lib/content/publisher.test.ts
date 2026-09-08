@@ -3,7 +3,7 @@ import type { ThreadsContent } from "@/domain/content";
 import { applyRuntimeState, EMPTY_RUNTIME_QUEUE, publishNextContent, type ContentRuntimeQueue } from "./publisher";
 
 const item: ThreadsContent = {
-  id: "mr-tarot-test", status: "READY", format: "PICK_3", topic: "LOVE", hook: "test", mainPost: "main", cardIds: [0, 1, 2], replies: ["reply", "cta"], cta: "visit", imageAsset: "/threads/generated/mr-tarot-test.svg", altText: "test image", createdAt: "2026-08-30T00:00:00.000Z", scheduledAt: null, publishedAt: null, threadsPostId: null, threadsContainerId: null, replyPostIds: [], attemptCount: 0, lastError: null, metrics: {}, semanticSignature: "test",
+  id: "mr-tarot-test", status: "READY", format: "PICK_3", topic: "LOVE", hook: "test", mainPost: "main", cardIds: [0, 1, 2], replies: ["1번\n\nreading one", "2번\n\nreading two", "3번\n\nreading three", "visit"], cta: "visit", imageAsset: "/threads/generated/mr-tarot-test.svg", altText: "test image", createdAt: "2026-08-30T00:00:00.000Z", scheduledAt: null, publishedAt: null, threadsPostId: null, threadsContainerId: null, replyPostIds: [], attemptCount: 0, lastError: null, metrics: {}, semanticSignature: "test",
 };
 
 function memoryStore() {
@@ -31,14 +31,16 @@ describe("Threads publisher", () => {
       new Response(JSON.stringify({ id: "main-container" }), { status: 200 }),
       new Response(JSON.stringify({ status: "FINISHED" }), { status: 200 }),
       new Response(JSON.stringify({ id: "main-post" }), { status: 200 }),
-      new Response(JSON.stringify({ id: "reply-container" }), { status: 200 }),
+      new Response(JSON.stringify({ id: "reply-one-container" }), { status: 200 }),
+      new Response(JSON.stringify({ id: "reply-two-container" }), { status: 200 }),
+      new Response(JSON.stringify({ id: "reply-three-container" }), { status: 200 }),
       new Response(JSON.stringify({ id: "cta-container" }), { status: 200 }),
     ];
     vi.stubGlobal("fetch", vi.fn(async () => responses.shift()));
     const preview = await publishNextContent([item], store, { apiBaseUrl: "https://graph.threads.net/v1.0", mode: "auto", dryRun: false, maxAttempts: 2, siteUrl: "https://mr-tarot.netlify.app", accessToken: "token", userId: "user" });
 
     expect(preview.mode).toBe("published");
-    expect(store.state().items[item.id]).toMatchObject({ status: "PUBLISHED", mainContainerId: "main-container", mainPostId: "main-post", replyPostIds: ["reply-container", "cta-container"], requiresReconciliation: false });
+    expect(store.state().items[item.id]).toMatchObject({ status: "PUBLISHED", mainContainerId: "main-container", mainPostId: "main-post", replyPostIds: ["reply-one-container", "reply-two-container", "reply-three-container", "cta-container"], requiresReconciliation: false });
     expect(store.state().items[item.id]?.lastError).toBeUndefined();
     vi.unstubAllGlobals();
   });
@@ -57,6 +59,19 @@ describe("Threads publisher", () => {
     expect(preview.mode).toBe("failed");
     expect(preview.error).toBe("media container is still processing");
     expect(store.state().items[item.id]).toMatchObject({ status: "READY", attemptCount: 0, requiresReconciliation: false, mainContainerId: "main-container" });
+    vi.unstubAllGlobals();
+  });
+
+  it("refuses an incomplete reading before making an external call", async () => {
+    const store = memoryStore();
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const incomplete = { ...item, cardIds: [0, 1], replies: ["1번\n\nreading one", "visit"] };
+
+    const preview = await publishNextContent([incomplete], store, { apiBaseUrl: "https://graph.threads.net/v1.0", mode: "auto", dryRun: false, maxAttempts: 2, siteUrl: "https://mr-tarot.netlify.app", accessToken: "token", userId: "user" });
+
+    expect(preview).toMatchObject({ mode: "failed", error: "Refusing to publish incomplete reading: expected 3 selectable cards, received 2" });
+    expect(fetchMock).not.toHaveBeenCalled();
     vi.unstubAllGlobals();
   });
 

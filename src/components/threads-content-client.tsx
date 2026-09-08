@@ -26,7 +26,7 @@ const TOPIC_LABELS: Record<ThreadsContent["topic"], string> = {
 };
 
 const FORMAT_LABELS: Record<ThreadsContent["format"], string> = {
-  PICK_5: "PICK 5", PICK_3: "PICK 3", YES_NO_NOT_YET: "YES / NO", LOVE: "LOVE", CAREER: "CAREER", MONEY: "MONEY", ONE_CARD: "ONE CARD", CONVERSATION: "CONVERSATION",
+  PICK_3: "PICK 3", YES_NO_NOT_YET: "YES / NO", LOVE: "LOVE", CAREER: "CAREER", MONEY: "MONEY",
 };
 
 export function ThreadsContentClient({ queue }: ThreadsContentClientProps) {

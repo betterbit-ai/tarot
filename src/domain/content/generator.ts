@@ -14,12 +14,12 @@ const TOPIC_PLAN: readonly TopicPlan[] = [
 ];
 
 const TOPIC_FORMATS: Record<ContentTopic, readonly ContentFormat[]> = {
-  LOVE: ["PICK_3", "YES_NO_NOT_YET", "LOVE", "CONVERSATION"],
-  GENERAL: ["PICK_3", "YES_NO_NOT_YET", "CONVERSATION"],
-  CAREER: ["PICK_3", "YES_NO_NOT_YET", "CAREER", "CONVERSATION"],
+  LOVE: ["PICK_3", "YES_NO_NOT_YET", "LOVE"],
+  GENERAL: ["PICK_3", "YES_NO_NOT_YET"],
+  CAREER: ["PICK_3", "YES_NO_NOT_YET", "CAREER"],
   MONEY: ["PICK_3", "YES_NO_NOT_YET", "MONEY"],
-  DECISION: ["YES_NO_NOT_YET", "PICK_3", "CONVERSATION"],
-  EXPERIMENTAL: ["CONVERSATION", "PICK_3"],
+  DECISION: ["YES_NO_NOT_YET", "PICK_3"],
+  EXPERIMENTAL: ["PICK_3"],
 };
 
 const TOPIC_PROMPTS: Record<ContentTopic, readonly string[]> = {
@@ -32,28 +32,6 @@ const TOPIC_PROMPTS: Record<ContentTopic, readonly string[]> = {
 };
 
 const CTA = "세 장을 직접 고르고 싶다면 프로필의 미스터 타로에서 이어서 봐요.";
-const CONVERSATION_FRAMES = [
-  "왜 그 단어가 남았는지",
-  "그 단어를 떠올릴 때 가장 먼저 보이는 장면이 무엇인지",
-  "그 단어를 피하고 싶은지 붙잡고 싶은지",
-  "그 단어를 누구에게도 말하지 못한 이유가 있는지",
-  "그 단어가 오늘의 선택과 어떤 관계가 있는지",
-] as const;
-
-const CONVERSATION_CLOSINGS = [
-  "오늘은 한 단어면 충분해요.",
-  "길게 설명하지 않아도 괜찮아요.",
-  "지금 떠오른 말 그대로면 돼요.",
-  "답을 찾기 전에 이름부터 붙여봐요.",
-  "그 단어를 적는 것부터 시작해요.",
-  "마음이 먼저 고른 말을 남겨주세요.",
-  "생각이 길어지기 전에 적어봐요.",
-  "아무에게도 말하지 못한 단어여도 괜찮아요.",
-  "그 단어가 오늘의 시작점이 될 수 있어요.",
-  "한 번 적고 나서 천천히 봐도 돼요.",
-  "정답 대신 그 단어부터 꺼내봐요.",
-] as const;
-
 function hasFinalConsonant(value: string): boolean {
   const last = value.charCodeAt(value.length - 1);
   return last >= 0xac00 && last <= 0xd7a3 ? (last - 0xac00) % 28 !== 0 : false;
@@ -115,7 +93,7 @@ const THREADS_HOOK_BUILDERS: readonly ((context: HookContext) => string)[] = [
 ] as const;
 
 function hookFor(format: ContentFormat, prompt: string, index: number): string {
-  const selection = format === "CONVERSATION" ? "한 단어" : "세 장 중 하나";
+  const selection = "세 장 중 하나";
   const context: HookContext = {
     prompt,
     subject: `${prompt}${subjectParticle(prompt)}`,
@@ -126,10 +104,8 @@ function hookFor(format: ContentFormat, prompt: string, index: number): string {
   return builder(context);
 }
 
-function cardIdsFor(seed: number, format: ContentFormat): number[] {
-  if (format === "CONVERSATION") return [];
-  // Every card-choice post leads into Mr. Tarot's core three-card ritual.
-  // Keep legacy format values safe if old queue data is ever regenerated.
+function cardIdsFor(seed: number): number[] {
+  // Every generated Threads post leads into Mr. Tarot's core three-card ritual.
   const count = 3;
   const start = (seed * 17 + 6) % 78;
   const step = 11 + (seed % 5) * 2;
@@ -161,27 +137,36 @@ function resultLine(cardId: number, topic: ContentTopic): string {
   return `${card.name}\n${variants[cardId % variants.length]}`;
 }
 
-function mainPost(format: ContentFormat, prompt: string, hook: string, number: number): string {
-  void number;
+function mainPost(format: ContentFormat, hook: string): string {
   switch (format) {
-    case "PICK_5": return `${hook}\n세 장 중 하나를 골라보세요.\n\n오래 고르지 말고, 먼저 멈춘 숫자로요.\n결과는 댓글에 남겨둘게요.\n\n1  2  3`;
     case "PICK_3": return `${hook}\n1, 2, 3 중 하나를 골라보세요.\n\n이번에는 큰 예언보다\n지금 눈에 걸리는 한 가지를 볼게요.\n\n1  2  3`;
     case "YES_NO_NOT_YET": return `${hook}\nYES / NO / NOT YET 중 하나만 고른다면?\n\n카드가 말하는 건 정답보다\n지금 덜 무리한 방향이에요.\n\n1 YES  2 NOT YET  3 NO`;
     case "LOVE": return `${hook}\n\n마음이 먼저인지, 행동이 먼저인지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3`;
     case "CAREER": return `${hook}\n\n더 버틸지, 다른 곳을 볼지\n세 장 중 하나를 고르며 살펴봐요.\n\n1  2  3`;
     case "MONEY": return `${hook}\n\n돈 이야기는 숫자만으로 끝나지 않아요.\n세 장 중 하나를 골라보세요.\n\n1  2  3`;
-    case "ONE_CARD": return `${hook}\n\n${prompt}${objectParticle(prompt)} 떠올리고\n세 장 중 하나를 골라보세요.\n\n1  2  3`;
-    case "CONVERSATION": return `${hook}\n\n답을 정해드리기보다\n${CONVERSATION_FRAMES[number % CONVERSATION_FRAMES.length]} 같이 볼게요.\n${CONVERSATION_CLOSINGS[number % CONVERSATION_CLOSINGS.length]}`;
   }
 }
 
-function replyLines(cardIds: readonly number[], topic: ContentTopic, format: ContentFormat): string[] {
-  if (format === "CONVERSATION") return ["남겨준 단어를 보고 다음 글의 카드를 고를게요.", CTA];
+function replyLines(cardIds: readonly number[], topic: ContentTopic): string[] {
   return [...cardIds.map((cardId, index) => `${index + 1}번\n\n${resultLine(cardId, topic)}`), CTA];
 }
 
-function imageAsset(id: string, format: ContentFormat): string | null {
-  void format;
+/**
+ * A Threads card-choice post is only useful when a reader can select one of
+ * three cards and immediately receive all three prepared reading replies.
+ * The publisher repeats this check directly before the external API call.
+ */
+export function readingThreadValidationError(item: Pick<ThreadsContent, "cardIds" | "replies" | "cta">): string | null {
+  if (item.cardIds.length !== 3) return `expected 3 selectable cards, received ${item.cardIds.length}`;
+  if (item.replies.length !== 4) return `expected 3 reading replies and one CTA, received ${item.replies.length}`;
+  for (let index = 0; index < 3; index += 1) {
+    if (!item.replies[index]?.startsWith(`${index + 1}번\n\n`)) return `missing prepared reading for choice ${index + 1}`;
+  }
+  if (item.replies[3] !== item.cta) return "final reply must be the configured CTA";
+  return null;
+}
+
+function imageAsset(id: string): string | null {
   return `/threads/generated/${id}.png`;
 }
 
@@ -195,10 +180,10 @@ export function generateContentQueue(count = 105, createdAt = new Date().toISOSt
     const formats = TOPIC_FORMATS[topic];
     const format = formats[index % formats.length] ?? "PICK_3";
     const id = `mr-tarot-${String(index + 1).padStart(4, "0")}`;
-    const cardIds = cardIdsFor(index + 1, format);
+    const cardIds = cardIdsFor(index + 1);
     const prompt = TOPIC_PROMPTS[topic][Math.floor(index / 6) % TOPIC_PROMPTS[topic].length] ?? "지금 떠오르는 일";
     const hook = hookFor(format, prompt, index);
-    const main = mainPost(format, prompt, hook, index + 1);
+    const main = mainPost(format, hook);
     const item: ThreadsContent = {
       id,
       status: "READY",
@@ -207,9 +192,9 @@ export function generateContentQueue(count = 105, createdAt = new Date().toISOSt
       hook,
       mainPost: main,
       cardIds,
-      replies: replyLines(cardIds, topic, format),
+      replies: replyLines(cardIds, topic),
       cta: CTA,
-      imageAsset: imageAsset(id, format),
+      imageAsset: imageAsset(id),
       altText: cardIds.length ? `${topic} 주제의 미스터 타로 선택 카드 ${cardIds.length}장` : null,
       createdAt,
       scheduledAt: null,
@@ -241,7 +226,8 @@ export function validateContentQueue(queue: ContentQueue): string[] {
     if (!item.hook || !item.mainPost || !item.cta) errors.push(`${item.id}: missing required copy`);
     if (item.status !== "READY") errors.push(`${item.id}: generated item is not READY`);
     if (item.mainPost.length > 500) errors.push(`${item.id}: main post too long`);
-    if (item.format === "CONVERSATION" ? item.cardIds.length !== 0 : item.cardIds.length === 0) errors.push(`${item.id}: invalid card count`);
+    const readingError = readingThreadValidationError(item);
+    if (readingError) errors.push(`${item.id}: ${readingError}`);
     for (const cardId of item.cardIds) {
       try { getTarotCard(cardId); } catch { errors.push(`${item.id}: invalid card id ${cardId}`); }
     }
