@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { generateContentQueue, validateContentQueue } from "./generator";
+import { generateContentQueue, hookQualityError, validateContentQueue } from "./generator";
 
 describe("content generator", () => {
   it("creates a varied, ready-to-publish queue without duplicate signatures", () => {
@@ -13,5 +13,9 @@ describe("content generator", () => {
     expect(queue.items.every((item) => item.hook.length <= 100)).toBe(true);
     expect(queue.items.every((item) => item.cardIds.length === 3 && item.replies.length === 4)).toBe(true);
     expect(validateContentQueue(queue)).toEqual([]);
+  });
+
+  it("rejects a vague first line without a concrete scene", () => {
+    expect(hookQualityError("요즘 고민이 있으신가요?")).toBe("hook must contain a concrete number or time");
   });
 });

@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-08 23:43 KST
+Last updated: 2026-09-09 07:26 KST
 
 ## Current Phase
 
@@ -111,6 +111,7 @@ Threads publishing reliability is being hardened after a container-readiness fai
 - Manual `Refresh Coupang affiliate pool` now succeeds with HTTP 200 and `mode: refreshed`, storing six verified theme products in Upstash. Search returned 30 records, all six themes produced a product, and no deeplink failures remained.
 - Threads hook research added at `docs/content/THREADS_HOOK_RESEARCH.md`: 30 original Korean hook candidates based on public archetype research, with a note that no official cross-account top-30 ranking exists.
 - The content generator now rotates 30 curiosity, tension, direct-question, warning, reversal and participation hooks. `pnpm content:refresh-hooks` upgraded 103 queued items while preserving the two already-published items, and `pnpm content:images` regenerated matching PNG/SVG assets.
+- A referenced 80K-view Threads experiment showed that concrete time, number and observable action scenes outperform abstract category hooks, while delayed information improves completion. The active 30-hook library is now topic-specific and every hook must contain a numeric/time cue plus an observable scene before validation can pass. All 105 queue items and images were regenerated; the next unposted ids use the new copy.
 
 ## In Progress
 
