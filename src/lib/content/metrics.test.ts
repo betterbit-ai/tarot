@@ -30,7 +30,7 @@ describe("Threads metrics sync", () => {
       .mockResolvedValueOnce(new Response(JSON.stringify({ data: [{ name: "views", values: [{ value: 12 }] }] }), { status: 200 }))
       .mockResolvedValueOnce(new Response("rate limited", { status: 429 })));
 
-    await expect(syncThreadsMetrics({ read: async () => state, write: async (next) => { state = next; } }, { apiBaseUrl: "https://graph.threads.net/v1.0", accessToken: "token", metrics: ["views"], dryRun: false })).resolves.toEqual({ mode: "partial", updated: 1, failed: ["two"] });
+    await expect(syncThreadsMetrics({ read: async () => state, write: async (next) => { state = next; } }, { apiBaseUrl: "https://graph.threads.net/v1.0", accessToken: "token", metrics: ["views"], dryRun: false })).resolves.toEqual({ mode: "partial", updated: 1, failed: [{ contentId: "two", status: 429 }] });
     vi.unstubAllGlobals();
   });
 });

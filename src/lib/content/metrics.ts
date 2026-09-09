@@ -8,7 +8,8 @@ export type ThreadsMetricsConfig = {
   dryRun: boolean;
 };
 
-export type MetricsSyncResult = { mode: "dry-run" | "skipped" | "synced" | "partial"; updated: number; failed: string[]; reason?: string };
+export type MetricsFailure = { contentId: string; status: number };
+export type MetricsSyncResult = { mode: "dry-run" | "skipped" | "synced" | "partial"; updated: number; failed: MetricsFailure[]; reason?: string };
 
 function metricValue(payload: unknown): ContentMetrics {
   const data = (payload as { data?: Array<{ name?: string; values?: Array<{ value?: number }> }> }).data ?? [];
@@ -31,11 +32,11 @@ export async function syncThreadsMetrics(store: ContentStateStore, config: Threa
   const published = Object.entries(queue.items).filter(([, state]) => state.status === "PUBLISHED" && state.mainPostId);
   let next: ContentRuntimeQueue = queue;
   let updated = 0;
-  const failed: string[] = [];
+  const failed: MetricsFailure[] = [];
   for (const [id, state] of published) {
     const response = await fetch(`${config.apiBaseUrl}/${state.mainPostId}/insights?metric=${encodeURIComponent(config.metrics.join(","))}`, { headers: { authorization: `Bearer ${config.accessToken}` } });
     if (!response.ok) {
-      failed.push(id);
+      failed.push({ contentId: id, status: response.status });
       continue;
     }
     const metrics = { ...metricValue(await response.json()), syncedAt: new Date().toISOString() };
