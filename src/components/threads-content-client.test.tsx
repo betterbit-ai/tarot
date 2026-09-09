@@ -32,6 +32,7 @@ describe("ThreadsContentClient", () => {
     expect(screen.getByText("첫 번째 본문")).not.toBeNull();
     expect(screen.getByText("Threads → 타로 → 쿠팡")).not.toBeNull();
     expect(screen.getByText("25%")).not.toBeNull();
+    expect(screen.getByText("가장 큰 이탈은 페이지 유입 뒤예요. Threads CTA와 첫 화면 약속이 같은 장면을 말하는지 먼저 점검하세요.")).not.toBeNull();
 
     fireEvent.click(screen.getByRole("button", { name: /#0002/ }));
     expect(screen.getByText("두 번째 본문")).not.toBeNull();

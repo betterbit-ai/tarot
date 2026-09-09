@@ -12,7 +12,7 @@
 2. generator와 validator는 장면 단서가 없는 막연한 훅, 카드 3장/해석 3개가 없는 글, 중복 signature를 READY로 만들지 않는다.
 3. Threads CTA와 프로필 링크의 validated `utm_content`를 같은 브라우저 세션 동안 보존하고, 질문 원문·카드 배열·개인 식별자를 전송하지 않은 채 방문, 리딩 시작, 카드 확정, 결과 도달, 제휴 노출/건너뛰기/클릭, 공유를 집계한다.
 4. 이벤트 수집 route는 허용된 이벤트와 존재하는 `mr-tarot-####` 콘텐츠 id 또는 `link_in_bio`만 받고, Upstash hash counter를 사용해 KST 일자별 전체/콘텐츠별 합계를 원자적으로 증가시킨다.
-5. `/threads`는 source queue에 Upstash runtime state를 적용하고 최근 7일의 Threads 게시 성과와 웹 퍼널을 함께 보여준다. 이벤트는 세션 안에서 단계별 한 번만 집계한다.
+5. `/threads`는 source queue에 Upstash runtime state를 적용하고 최근 7일의 Threads 게시 성과와 웹 퍼널을 함께 보여준다. 10개 미만 유입에서는 표본 부족을 명시하고, 그 이상이면 가장 큰 이탈 단계의 점검 방향을 제시한다. 이벤트는 세션 안에서 단계별 한 번만 집계한다.
 6. Threads insights sync는 매일 게시 이후에 실행해 views, likes, replies, reposts, quotes를 갱신한다. 이 값은 게시물 누적치임을 UI에서 명확히 표시한다.
 7. Coupang outbound click은 `affiliate_clicked`로 측정한다. 주문·취소·수수료는 Partners report API 권한과 응답 계약을 별도 확인하기 전까지 추정하거나 전환으로 표시하지 않는다.
 

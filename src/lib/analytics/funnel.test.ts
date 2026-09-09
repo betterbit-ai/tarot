@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { combineDailyGrowthReports, isFunnelEvent, isSameOriginAnalyticsRequest, isThreadsAttributionId, readRecentFunnelReports, recordFunnelEvent } from "./funnel";
+import { combineDailyGrowthReports, diagnoseFunnel, isFunnelEvent, isSameOriginAnalyticsRequest, isThreadsAttributionId, readRecentFunnelReports, recordFunnelEvent } from "./funnel";
 
 function memoryStore() {
   const hashes = new Map<string, Record<string, number>>();
@@ -58,5 +58,13 @@ describe("anonymous funnel counters", () => {
     } };
 
     expect(combineDailyGrowthReports(reports, runtime)[0]).toMatchObject({ contentIds: ["mr-tarot-0009"], threads: { views: 12, likes: 2 } });
+  });
+
+  it("waits for a meaningful sample before recommending a funnel change", () => {
+    const empty = { landing_view: 1, ritual_started: 1, cards_confirmed: 0, result_viewed: 0, affiliate_viewed: 0, affiliate_skipped: 0, affiliate_clicked: 0, result_shared: 0 };
+    const drop = { landing_view: 20, ritual_started: 5, cards_confirmed: 4, result_viewed: 4, affiliate_viewed: 3, affiliate_skipped: 2, affiliate_clicked: 1, result_shared: 0 };
+
+    expect(diagnoseFunnel([{ date: "2026-09-09", counts: empty }]).kind).toBe("insufficient");
+    expect(diagnoseFunnel([{ date: "2026-09-09", counts: drop }]).kind).toBe("landing_to_start");
   });
 });

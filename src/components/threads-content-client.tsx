@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import type { ContentQueue, ThreadsContent } from "@/domain/content";
-import type { DailyGrowthReport } from "@/lib/analytics/funnel";
+import { diagnoseFunnel, type DailyGrowthReport } from "@/lib/analytics/funnel";
 
 type ThreadsContentClientProps = { queue: ContentQueue; funnelReports?: readonly DailyGrowthReport[] };
 
@@ -41,6 +41,7 @@ export function ThreadsContentClient({ queue, funnelReports = [] }: ThreadsConte
   if (!item) return null;
   const counts = queue.items.reduce<Record<string, number>>((all, content) => ({ ...all, [content.status]: (all[content.status] ?? 0) + 1 }), {});
   const visibleItems = queue.items.slice(0, 24);
+  const diagnosis = diagnoseFunnel(funnelReports);
 
   async function handleCopy(label: string, text: string) {
     await copyText(text);
@@ -92,6 +93,7 @@ export function ThreadsContentClient({ queue, funnelReports = [] }: ThreadsConte
               </table>
             </div>
           ) : <p className="mt-4 text-sm text-[#a99478]">아직 저장된 Threads 유입 데이터가 없어요. 새 UTM 방문부터 집계합니다.</p>}
+          <p className="mt-4 border-t border-[#a88b5f]/12 pt-4 text-sm leading-6 text-[#cbbba3]" data-diagnosis={diagnosis.kind}>{diagnosis.message}</p>
         </section>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[220px_1fr]">
