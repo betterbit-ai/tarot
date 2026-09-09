@@ -276,6 +276,10 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
   const affiliateProduct = reading ? selectAffiliateProduct(state.question, reading.cards, reading.signals, affiliateProducts) : null;
 
   useEffect(() => {
+    trackTarotEvent({ type: "landing_view" });
+  }, []);
+
+  useEffect(() => {
     if (!affiliateConfig.enabled || typeof fetch === "undefined") return undefined;
     let cancelled = false;
     fetch("/api/affiliate/pool")
@@ -357,6 +361,10 @@ export function TarotRitual({ affiliateConfig }: TarotRitualProps) {
 
     return () => window.clearTimeout(timer);
   }, [affiliateConfig.enabled, affiliateConfig.outHref, affiliateProduct, prefersReducedMotion, state.stage]);
+
+  useEffect(() => {
+    if (state.stage === "result") trackTarotEvent({ type: "result_viewed" });
+  }, [state.stage]);
 
   const stageContent = (() => {
     switch (state.stage) {

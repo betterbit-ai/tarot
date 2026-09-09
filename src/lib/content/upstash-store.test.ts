@@ -43,4 +43,19 @@ describe("Upstash JSON store", () => {
 
     await expect(store.read()).resolves.toEqual(EMPTY_RUNTIME_QUEUE);
   });
+
+  it("increments expiring hash counters and reads numeric fields", async () => {
+    const fetcher = vi.fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify([{ result: 2 }, { result: 1 }]), { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ result: ["landing_view", "2", "result_viewed", "1"] }), { status: 200 }));
+    const store = createUpstashJsonStore(env, fetcher)!;
+
+    await expect(store.incrementHash("funnel", "landing_view", 1, 3600)).resolves.toBe(2);
+    await expect(store.readHash("funnel")).resolves.toEqual({ landing_view: 2, result_viewed: 1 });
+    expect(fetcher.mock.calls[0]).toEqual([
+      `${env.UPSTASH_REDIS_REST_URL}/multi-exec`,
+      expect.objectContaining({ body: JSON.stringify([["HINCRBY", "funnel", "landing_view", "1"], ["EXPIRE", "funnel", "3600"]]) }),
+    ]);
+    expect(fetcher.mock.calls[1]?.[1]?.body).toBe(JSON.stringify(["HGETALL", "funnel"]));
+  });
 });

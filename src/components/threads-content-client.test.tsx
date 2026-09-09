@@ -3,6 +3,7 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ThreadsContentClient } from "./threads-content-client";
 import type { ContentQueue } from "@/domain/content";
+import type { DailyGrowthReport } from "@/lib/analytics/funnel";
 
 vi.mock("next/image", () => ({ default: ({ alt, ...props }: HTMLAttributes<HTMLDivElement> & { alt?: string }) => <div aria-label={alt} {...props} /> }));
 
@@ -15,13 +16,22 @@ const queue: ContentQueue = {
   ],
 };
 
+const funnelReports: DailyGrowthReport[] = [{
+  date: "2026-09-09",
+  counts: { landing_view: 10, ritual_started: 6, cards_confirmed: 5, result_viewed: 4, affiliate_viewed: 3, affiliate_skipped: 2, affiliate_clicked: 1, result_shared: 1 },
+  contentIds: ["mr-tarot-0009"],
+  threads: { views: 120, likes: 8, replies: 4 },
+}];
+
 describe("ThreadsContentClient", () => {
   afterEach(() => cleanup());
 
   it("shows queue status and changes the selected content", () => {
-    render(<ThreadsContentClient queue={queue} />);
+    render(<ThreadsContentClient queue={queue} funnelReports={funnelReports} />);
     expect(screen.getByText("READY 2")).not.toBeNull();
     expect(screen.getByText("첫 번째 본문")).not.toBeNull();
+    expect(screen.getByText("Threads → 타로 → 쿠팡")).not.toBeNull();
+    expect(screen.getByText("25%")).not.toBeNull();
 
     fireEvent.click(screen.getByRole("button", { name: /#0002/ }));
     expect(screen.getByText("두 번째 본문")).not.toBeNull();

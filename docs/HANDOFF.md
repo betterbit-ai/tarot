@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-09 07:26 KST
+Last updated: 2026-09-09 13:45 KST
 
 ## Current Phase
 
@@ -56,7 +56,7 @@ Threads publishing reliability is being hardened after a container-readiness fai
 - Growth Engine research completed for Meta Threads API, Netlify Scheduled Functions/Blobs, GitHub Actions limitations, and Coupang official surfaces
 - Active Growth Engine spec and runtime decisions recorded in `spec/spec.md`, `docs/GROWTH_ENGINE_RESEARCH.md`, `decisions/2026-08-30-growth-engine-runtime.md`, and `decisions/2026-08-31-github-actions-publish-trigger.md`
 - Affiliate selector now combines question intent and card signals, selects only verified pool items, and skips the interstitial when no relevant verified product exists
-- Generated a 105-item READY content queue across six active formats and 6 planned topics under `data/content/threads-queue.json`; every card-choice post uses three cards
+- Generated a 105-item READY content queue across five active formats and 6 planned topics under `data/content/threads-queue.json`; every post uses three cards and three prepared readings
 - Generated 105 programmatic 1080x1350 Threads PNG images and SVG source assets under `public/threads/generated/`
 - Threads publisher creates/persists containers before publish, appends per-content UTM CTA links, publishes result replies sequentially, and marks unknown external outcomes for manual reconciliation rather than retrying
 - `netlify/functions/publish-next.mts` schedules daily at 20:30 KST (`30 11 * * *` UTC) and stores runtime state in a strong-consistency Netlify Blob store
@@ -112,6 +112,8 @@ Threads publishing reliability is being hardened after a container-readiness fai
 - Threads hook research added at `docs/content/THREADS_HOOK_RESEARCH.md`: 30 original Korean hook candidates based on public archetype research, with a note that no official cross-account top-30 ranking exists.
 - The content generator now rotates 30 curiosity, tension, direct-question, warning, reversal and participation hooks. `pnpm content:refresh-hooks` upgraded 103 queued items while preserving the two already-published items, and `pnpm content:images` regenerated matching PNG/SVG assets.
 - A referenced 80K-view Threads experiment showed that concrete time, number and observable action scenes outperform abstract category hooks, while delayed information improves completion. The active 30-hook library is now topic-specific and every hook must contain a numeric/time cue plus an observable scene before validation can pass. All 105 queue items and images were regenerated; the next unposted ids use the new copy.
+- Anonymous first-party funnel collection now attributes only a validated `utm_content` for the browser session and increments KST-day Upstash counters for landing, start, selection, result, affiliate and share steps. `/threads` applies live runtime state, displays recent seven-day funnel conversion, and labels per-post Threads metrics as cumulative. No question, card array, IP, user agent, cookie id or persistent visitor identifier is stored.
+- Threads metrics sync moved from 21:10 to 23:30 KST so it runs after the 22:00-22:59 publish window.
 
 ## In Progress
 

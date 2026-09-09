@@ -56,6 +56,6 @@ Variable: VERCEL_GROWTH_BASE_URL=https://<verified-project>.vercel.app
 
 - 09:05 KST: Threads token refresh
 - 22:00-22:59 KST: 다음 READY 콘텐츠 publish
-- 21:10 KST: Threads metrics sync
+- 23:30 KST: Threads metrics sync after the publish window
 
 GitHub Actions의 scheduled 실행은 지연될 수 있다. publisher는 queue state와 container id를 저장하고, 불확실한 결과에서는 자동 재시도 대신 reconciliation을 요구한다.

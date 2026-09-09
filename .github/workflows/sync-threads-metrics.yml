@@ -3,8 +3,8 @@ name: Sync Threads metrics
 on:
   workflow_dispatch:
   schedule:
-    # 21:10 Asia/Seoul = 12:10 UTC. Korea has no daylight saving time.
-    - cron: "10 12 * * *"
+    # 23:30 Asia/Seoul = 14:30 UTC, after the 22:00 publishing window.
+    - cron: "30 14 * * *"
 
 permissions:
   contents: read

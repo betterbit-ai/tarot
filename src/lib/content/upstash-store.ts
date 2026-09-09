@@ -19,6 +19,8 @@ export type UpstashJsonStore = {
   set: (key: string, value: unknown) => Promise<void>;
   setIfAbsent: (key: string, value: unknown, expirationSeconds: number) => Promise<boolean>;
   delete: (key: string) => Promise<void>;
+  incrementHash: (key: string, field: string, amount: number, expirationSeconds: number) => Promise<number>;
+  readHash: (key: string) => Promise<Record<string, number>>;
 };
 
 function configFrom(env: Environment) {
@@ -48,6 +50,25 @@ export function createUpstashJsonStore(env: Environment = process.env, fetcher: 
     return payload.result as Result;
   }
 
+  async function transaction<Result>(inputs: unknown[][]): Promise<Result[]> {
+    const endpoint = `${url.replace(/\/$/, "")}/multi-exec`;
+    const response = await fetcher(endpoint, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${token}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(inputs),
+    });
+    const payload = await response.json() as UpstashResponse[] | UpstashResponse;
+    if (!response.ok || !Array.isArray(payload)) {
+      throw new Error(Array.isArray(payload) ? `Upstash transaction failed: ${response.status}` : payload.error ?? `Upstash transaction failed: ${response.status}`);
+    }
+    const error = payload.find((item) => item.error)?.error;
+    if (error) throw new Error(error);
+    return payload.map((item) => item.result as Result);
+  }
+
   return {
     async get<Value>(key: string): Promise<Value | null> {
       const result = await command<string | null>(["GET", key]);
@@ -63,6 +84,29 @@ export function createUpstashJsonStore(env: Environment = process.env, fetcher: 
     },
     async delete(key: string): Promise<void> {
       await command<number>(["DEL", key]);
+    },
+    async incrementHash(key: string, field: string, amount: number, expirationSeconds: number): Promise<number> {
+      const [result] = await transaction<number>([
+        ["HINCRBY", key, field, String(amount)],
+        ["EXPIRE", key, String(expirationSeconds)],
+      ]);
+      return result ?? 0;
+    },
+    async readHash(key: string): Promise<Record<string, number>> {
+      const result = await command<string[] | Record<string, string> | null>(["HGETALL", key]);
+      if (!result) return {};
+      if (!Array.isArray(result)) {
+        return Object.fromEntries(Object.entries(result).map(([field, raw]) => [field, Number(raw)]).filter(([, value]) => Number.isFinite(value)));
+      }
+      const output: Record<string, number> = {};
+      for (let index = 0; index < result.length; index += 2) {
+        const field = result[index];
+        const raw = result[index + 1];
+        if (!field || raw === undefined) continue;
+        const value = Number(raw);
+        if (Number.isFinite(value)) output[field] = value;
+      }
+      return output;
     },
   };
 }

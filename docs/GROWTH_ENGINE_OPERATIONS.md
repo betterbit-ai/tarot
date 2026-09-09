@@ -31,7 +31,7 @@ pnpm content:refresh-hooks
 
 ## Production schedule
 
-GitHub Actions triggers protected Vercel routes. `refresh-threads-token.yml` runs at 09:05 Asia/Seoul, `publish-threads.yml` sends recovery attempts only from 22:05 through 22:55, `sync-threads-metrics.yml` at 21:10, and `refresh-coupang-pool.yml` at 04:30. Vercel Cron is the independent once-daily publisher inside the 22:00-22:59 window. Korea has no daylight saving time.
+GitHub Actions triggers protected Vercel routes. `refresh-threads-token.yml` runs at 09:05 Asia/Seoul, `publish-threads.yml` sends recovery attempts only from 22:05 through 22:55, `sync-threads-metrics.yml` at 23:30 after publishing, and `refresh-coupang-pool.yml` at 04:30. Vercel Cron is the independent once-daily publisher inside the 22:00-22:59 window. Korea has no daylight saving time.
 
 The daily publisher is idempotent by KST calendar day. Once it records a successful post in Upstash, every later GitHub or Vercel Cron attempt that day returns `already-published` instead of publishing another item. Failed image processing remains retryable in the recovery window.
 
@@ -77,6 +77,8 @@ The Coupang refresh route is separate from the visitor request. It maps each int
 The repository starts with 105 `READY` items: 37 relationship, 26 general, 16 career, 11 money, 10 decision, and 5 experimental items. It uses five active formats. Every item has exactly three cards, three numbered reading replies, and one CTA reply. One-card, five-card, and comment-only conversation formats have been removed from the active queue. The publisher repeats the same completeness check immediately before the Threads API call and refuses malformed source data. Every item has a generated 1080×1350 PNG plus an SVG source.
 
 Each outbound CTA gets `utm_source=threads`, `utm_medium=social`, `utm_campaign=growth-engine`, and the content id as `utm_content`.
+
+The client retains only that validated content id for the browser session. `/api/analytics/event` stores no raw question, cards, IP, user agent, cookie id, or persistent visitor id; it atomically increments KST-day aggregate counters for landing, ritual start, card confirmation, result, affiliate view/skip/click, and share. `/threads` reads the last seven days and labels Threads provider metrics separately from first-party funnel counts.
 
 ## Affiliate pool
 

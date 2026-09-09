@@ -33,3 +33,9 @@ The app ships with curated sample overrides and deterministic fallback. Bulk mod
 ## Runtime
 
 The normal browser flow does not call an external model. It creates `QuestionProfile -> ReadingSkeleton -> Judgment/Stance -> Renderer` locally after fetching only the selected canonical skeleton from the Node route `/api/tarot-skeleton`. That endpoint accepts card ids only, returns one skeleton, and never receives the question. The skeleton corpus is not sent wholesale to the browser.
+
+## Anonymous growth funnel
+
+Threads CTA links carry only `utm_content=mr-tarot-####`. The browser retains that validated content id in session storage and sends only an allowlisted funnel event name plus the id to `/api/analytics/event`. The server increments KST-day total and per-content Redis hash counters with a 120-day expiry. It does not store raw questions, card arrays, IP, User-Agent, cookie ids or persistent visitor ids.
+
+Threads provider metrics remain separate cumulative snapshots on each published runtime item. `/threads` joins those snapshots to recent KST-day anonymous funnel totals for operations review; it never treats outbound Coupang clicks as orders or commission.
