@@ -34,6 +34,8 @@ export type ThreadsContent = {
   threadsPostId: string | null;
   threadsContainerId: string | null;
   replyPostIds: string[];
+  metricsUnavailableStatus?: number;
+  metricsUnavailableAt?: string;
   attemptCount: number;
   lastError: string | null;
   metrics: ContentMetrics;

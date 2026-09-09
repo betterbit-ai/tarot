@@ -116,6 +116,7 @@ Threads publishing reliability is being hardened after a container-readiness fai
 - Threads metrics sync moved from 21:10 to 23:30 KST so it runs after the 22:00-22:59 publish window.
 - Profile-link traffic using the existing `utm_content=link_in_bio` is included as a distinct anonymous Threads attribution id, so total page clicks are not limited to individual post CTAs. Metrics sync now reports failed content ids and responds with partial failure instead of silently treating unavailable provider insights as success.
 - Manual metrics sync on 2026-09-09 updated 8 posts and surfaced `mr-tarot-0005` as the only provider failure. The sync result now records the provider HTTP status per content id for diagnosis; do not remove the item or infer a reason until the next protected run reports its status.
+- The reported provider status for `mr-tarot-0005` is 400. It is now recorded as an unavailable-insight historical post and excluded from future sync attempts, while current valid posts keep syncing. The operations UI distinguishes this state from ordinary uncollected metrics.
 
 ## In Progress
 

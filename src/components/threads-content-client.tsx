@@ -116,7 +116,9 @@ export function ThreadsContentClient({ queue, funnelReports = [] }: ThreadsConte
                 <h2 className="mt-2 font-serif text-[1.7rem]">{item.hook}</h2>
                 <p className="mt-1 text-sm text-[#a99478]">{item.id} · {TOPIC_LABELS[item.topic]}</p>
                 <p className="mt-2 text-xs text-[#91816b]">
-                  Threads 누적 · 조회 {item.metrics.views ?? "미수집"} · 좋아요 {item.metrics.likes ?? "미수집"} · 답글 {item.metrics.replies ?? "미수집"}
+                  {item.metricsUnavailableStatus
+                    ? `Threads 인사이트 제공 불가 (${item.metricsUnavailableStatus})`
+                    : `Threads 누적 · 조회 ${item.metrics.views ?? "미수집"} · 좋아요 ${item.metrics.likes ?? "미수집"} · 답글 ${item.metrics.replies ?? "미수집"}`}
                 </p>
               </div>
               {item.imageAsset ? <a href={item.imageAsset} download className="rounded-full border border-[#a88b5f]/30 px-4 py-2 text-xs text-[#e6d5bb] hover:bg-[#18261f]">이미지 저장</a> : null}

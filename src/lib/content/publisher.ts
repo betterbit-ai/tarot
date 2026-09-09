@@ -16,6 +16,8 @@ export type ContentRuntimeState = {
   lastError?: string;
   requiresReconciliation?: boolean;
   metrics?: ContentMetrics;
+  metricsUnavailableStatus?: number;
+  metricsUnavailableAt?: string;
 };
 
 export type ContentRuntimeQueue = {
@@ -67,6 +69,8 @@ export function applyRuntimeState(source: readonly ThreadsContent[], runtime: Co
       threadsPostId: state.mainPostId ?? item.threadsPostId,
       threadsContainerId: state.mainContainerId ?? item.threadsContainerId,
       replyPostIds: state.replyPostIds ?? item.replyPostIds,
+      metricsUnavailableStatus: state.metricsUnavailableStatus ?? item.metricsUnavailableStatus,
+      metricsUnavailableAt: state.metricsUnavailableAt ?? item.metricsUnavailableAt,
       attemptCount: state.attemptCount,
       lastError: state.lastError ?? item.lastError,
       metrics: state.metrics ?? item.metrics,

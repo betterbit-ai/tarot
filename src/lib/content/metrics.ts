@@ -9,7 +9,7 @@ export type ThreadsMetricsConfig = {
 };
 
 export type MetricsFailure = { contentId: string; status: number };
-export type MetricsSyncResult = { mode: "dry-run" | "skipped" | "synced" | "partial"; updated: number; failed: MetricsFailure[]; reason?: string };
+export type MetricsSyncResult = { mode: "dry-run" | "skipped" | "synced" | "partial"; updated: number; failed: MetricsFailure[]; quarantined: MetricsFailure[]; reason?: string };
 
 function metricValue(payload: unknown): ContentMetrics {
   const data = (payload as { data?: Array<{ name?: string; values?: Array<{ value?: number }> }> }).data ?? [];
@@ -26,17 +26,24 @@ function metricValue(payload: unknown): ContentMetrics {
 }
 
 export async function syncThreadsMetrics(store: ContentStateStore, config: ThreadsMetricsConfig): Promise<MetricsSyncResult> {
-  if (config.dryRun) return { mode: "dry-run", updated: 0, failed: [] };
-  if (!config.accessToken) return { mode: "skipped", updated: 0, failed: [], reason: "Missing THREADS_ACCESS_TOKEN" };
+  if (config.dryRun) return { mode: "dry-run", updated: 0, failed: [], quarantined: [] };
+  if (!config.accessToken) return { mode: "skipped", updated: 0, failed: [], quarantined: [], reason: "Missing THREADS_ACCESS_TOKEN" };
   const queue = await store.read();
-  const published = Object.entries(queue.items).filter(([, state]) => state.status === "PUBLISHED" && state.mainPostId);
+  const published = Object.entries(queue.items).filter(([, state]) => state.status === "PUBLISHED" && state.mainPostId && !state.metricsUnavailableStatus);
   let next: ContentRuntimeQueue = queue;
   let updated = 0;
   const failed: MetricsFailure[] = [];
+  const quarantined: MetricsFailure[] = [];
   for (const [id, state] of published) {
     const response = await fetch(`${config.apiBaseUrl}/${state.mainPostId}/insights?metric=${encodeURIComponent(config.metrics.join(","))}`, { headers: { authorization: `Bearer ${config.accessToken}` } });
     if (!response.ok) {
-      failed.push({ contentId: id, status: response.status });
+      const failure = { contentId: id, status: response.status };
+      if (response.status === 400) {
+        quarantined.push(failure);
+        next = { ...next, items: { ...next.items, [id]: { ...state, metricsUnavailableStatus: response.status, metricsUnavailableAt: new Date().toISOString(), updatedAt: new Date().toISOString() } } };
+      } else {
+        failed.push(failure);
+      }
       continue;
     }
     const metrics = { ...metricValue(await response.json()), syncedAt: new Date().toISOString() };
@@ -44,5 +51,5 @@ export async function syncThreadsMetrics(store: ContentStateStore, config: Threa
     updated += 1;
   }
   if (updated) await store.write(next);
-  return { mode: failed.length ? "partial" : "synced", updated, failed };
+  return { mode: failed.length ? "partial" : "synced", updated, failed, quarantined };
 }
