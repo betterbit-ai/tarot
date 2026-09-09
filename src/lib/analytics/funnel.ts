@@ -13,6 +13,8 @@ export const FUNNEL_EVENTS = [
   "result_shared",
 ] as const;
 
+export const THREADS_PROFILE_CONTENT_ID = "link_in_bio";
+
 export type FunnelEvent = (typeof FUNNEL_EVENTS)[number];
 export type FunnelCounts = Record<FunnelEvent, number>;
 export type DailyFunnelReport = { date: string; counts: FunnelCounts };
@@ -43,8 +45,8 @@ export function isFunnelEvent(value: unknown): value is FunnelEvent {
   return typeof value === "string" && EVENT_SET.has(value);
 }
 
-export function isThreadsContentId(value: unknown): value is string {
-  return typeof value === "string" && /^mr-tarot-\d{4}$/.test(value);
+export function isThreadsAttributionId(value: unknown): value is string {
+  return typeof value === "string" && (value === THREADS_PROFILE_CONTENT_ID || /^mr-tarot-\d{4}$/.test(value));
 }
 
 export function isSameOriginAnalyticsRequest(request: Request): boolean {

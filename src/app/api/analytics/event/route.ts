@@ -1,6 +1,6 @@
 import sourceQueue from "../../../../../data/content/threads-queue.json";
 import type { ContentQueue } from "@/domain/content";
-import { isFunnelEvent, isSameOriginAnalyticsRequest, isThreadsContentId, recordFunnelEvent } from "@/lib/analytics/funnel";
+import { isFunnelEvent, isSameOriginAnalyticsRequest, isThreadsAttributionId, recordFunnelEvent } from "@/lib/analytics/funnel";
 import { createUpstashJsonStore } from "@/lib/content/upstash-store";
 
 export const runtime = "nodejs";
@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   if (!isSameOriginAnalyticsRequest(request)) return new Response("Forbidden", { status: 403 });
 
   const payload = await request.json().catch(() => null) as { event?: unknown; contentId?: unknown } | null;
-  if (!isFunnelEvent(payload?.event) || !isThreadsContentId(payload?.contentId) || !CONTENT_IDS.has(payload.contentId)) {
+  if (!isFunnelEvent(payload?.event) || !isThreadsAttributionId(payload?.contentId) || (payload.contentId !== "link_in_bio" && !CONTENT_IDS.has(payload.contentId))) {
     return new Response("Invalid analytics event", { status: 400 });
   }
 

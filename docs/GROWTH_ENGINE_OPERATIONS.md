@@ -78,7 +78,7 @@ The repository starts with 105 `READY` items: 37 relationship, 26 general, 16 ca
 
 Each outbound CTA gets `utm_source=threads`, `utm_medium=social`, `utm_campaign=growth-engine`, and the content id as `utm_content`.
 
-The client retains only that validated content id for the browser session. `/api/analytics/event` stores no raw question, cards, IP, user agent, cookie id, or persistent visitor id; it atomically increments KST-day aggregate counters for landing, ritual start, card confirmation, result, affiliate view/skip/click, and share. `/threads` reads the last seven days and labels Threads provider metrics separately from first-party funnel counts.
+The client retains only a validated post id or the distinct `link_in_bio` profile-link id for the browser session. `/api/analytics/event` stores no raw question, cards, IP, user agent, cookie id, or persistent visitor id; it atomically increments KST-day aggregate counters for landing, ritual start, card confirmation, result, affiliate view/skip/click, and share. `/threads` reads the last seven days and labels Threads provider metrics separately from first-party funnel counts. A `partial` or `skipped` Threads metrics sync now fails the protected route so the GitHub workflow does not silently report a healthy daily report.
 
 ## Affiliate pool
 

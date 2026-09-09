@@ -32,6 +32,13 @@ describe("Threads session attribution", () => {
     await expect((sendBeaconMock.mock.calls[1]?.[1] as Blob).text()).resolves.toBe(JSON.stringify({ event: "result_viewed", contentId: "mr-tarot-0009" }));
   });
 
+  it("counts the Threads profile link without pretending it is a post id", async () => {
+    window.history.replaceState({}, "", "/?utm_source=threads&utm_content=link_in_bio");
+    trackTarotEvent({ type: "landing_view" });
+
+    await expect((sendBeaconMock.mock.calls[0]?.[1] as Blob).text()).resolves.toBe(JSON.stringify({ event: "landing_view", contentId: "link_in_bio" }));
+  });
+
   it("does not send unattributed direct traffic or question contents", () => {
     window.history.replaceState({}, "", "/");
 

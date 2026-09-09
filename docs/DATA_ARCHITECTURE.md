@@ -36,6 +36,6 @@ The normal browser flow does not call an external model. It creates `QuestionPro
 
 ## Anonymous growth funnel
 
-Threads CTA links carry only `utm_content=mr-tarot-####`. The browser retains that validated content id in session storage and sends only an allowlisted funnel event name plus the id to `/api/analytics/event`. The server increments KST-day total and per-content Redis hash counters with a 120-day expiry. It does not store raw questions, card arrays, IP, User-Agent, cookie ids or persistent visitor ids.
+Threads CTA links carry `utm_content=mr-tarot-####`; the profile link uses the distinct aggregate id `link_in_bio`. The browser retains only that validated attribution id in session storage and sends an allowlisted funnel event name plus the id to `/api/analytics/event`. The server increments KST-day total and per-content Redis hash counters with a 120-day expiry. It does not store raw questions, card arrays, IP, User-Agent, cookie ids or persistent visitor ids.
 
 Threads provider metrics remain separate cumulative snapshots on each published runtime item. `/threads` joins those snapshots to recent KST-day anonymous funnel totals for operations review; it never treats outbound Coupang clicks as orders or commission.

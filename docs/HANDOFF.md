@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-09 13:58 KST
+Last updated: 2026-09-09 20:37 KST
 
 ## Current Phase
 
@@ -114,6 +114,7 @@ Threads publishing reliability is being hardened after a container-readiness fai
 - A referenced 80K-view Threads experiment showed that concrete time, number and observable action scenes outperform abstract category hooks, while delayed information improves completion. The active 30-hook library is now topic-specific and every hook must contain a numeric/time cue plus an observable scene before validation can pass. All 105 queue items and images were regenerated; the next unposted ids use the new copy.
 - Anonymous first-party funnel collection now attributes only a validated `utm_content` for the browser session and increments KST-day Upstash counters for landing, start, selection, result, affiliate and share steps. `/threads` applies live runtime state, displays recent seven-day funnel conversion, and labels per-post Threads metrics as cumulative. No question, card array, IP, user agent, cookie id or persistent visitor identifier is stored.
 - Threads metrics sync moved from 21:10 to 23:30 KST so it runs after the 22:00-22:59 publish window.
+- Profile-link traffic using the existing `utm_content=link_in_bio` is included as a distinct anonymous Threads attribution id, so total page clicks are not limited to individual post CTAs. Metrics sync now reports failed content ids and responds with partial failure instead of silently treating unavailable provider insights as success.
 
 ## In Progress
 
@@ -240,7 +241,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Read `docs/tasks/active/2026-09-09-growth-funnel-handoff.md`, review the three local commits plus the remaining research/handoff diff, run full verification, push `main`, then verify production `/threads`, `/privacy`, one real UTM funnel event, and a manual Threads metrics sync. Do not infer historical website/Coupang clicks because collection begins only after this deployment.
+Review and push the current local commits, then verify production `/threads`, `/privacy`, one real UTM funnel event, and a manual Threads metrics sync. Do not infer historical website/Coupang clicks because collection begins only after this deployment. Keep `link_in_bio` separate from per-post CTA attribution.
 
 ## Last Commit
 

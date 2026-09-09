@@ -18,7 +18,7 @@ declare global {
 
 const ATTRIBUTION_KEY = "mr-tarot:threads-attribution";
 const SENT_EVENT_PREFIX = "mr-tarot:funnel-sent";
-const CONTENT_ID_PATTERN = /^mr-tarot-\d{4}$/;
+const CONTENT_ID_PATTERN = /^(mr-tarot-\d{4}|link_in_bio)$/;
 const FUNNEL_EVENT_TYPES = new Set([
   "landing_view",
   "ritual_started",

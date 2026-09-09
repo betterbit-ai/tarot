@@ -13,5 +13,6 @@ export async function POST(request: Request) {
   if (!store || !tokenStore) return new Response("Upstash runtime state is not configured", { status: 503 });
 
   const refreshed = await tokenStore.get<ThreadsTokenState>(UPSTASH_TOKEN_STATE_KEY);
-  return Response.json(await syncThreadsMetrics(store, withStoredThreadsToken(getThreadsMetricsConfig(), refreshed)));
+  const result = await syncThreadsMetrics(store, withStoredThreadsToken(getThreadsMetricsConfig(), refreshed));
+  return Response.json(result, { status: result.mode === "partial" || result.mode === "skipped" ? 502 : 200 });
 }

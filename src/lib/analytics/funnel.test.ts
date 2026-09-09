@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { combineDailyGrowthReports, isFunnelEvent, isSameOriginAnalyticsRequest, isThreadsContentId, readRecentFunnelReports, recordFunnelEvent } from "./funnel";
+import { combineDailyGrowthReports, isFunnelEvent, isSameOriginAnalyticsRequest, isThreadsAttributionId, readRecentFunnelReports, recordFunnelEvent } from "./funnel";
 
 function memoryStore() {
   const hashes = new Map<string, Record<string, number>>();
@@ -19,8 +19,9 @@ describe("anonymous funnel counters", () => {
   it("accepts only known events and prepared content ids", () => {
     expect(isFunnelEvent("result_viewed")).toBe(true);
     expect(isFunnelEvent("question_text")).toBe(false);
-    expect(isThreadsContentId("mr-tarot-0009")).toBe(true);
-    expect(isThreadsContentId("../../token")).toBe(false);
+    expect(isThreadsAttributionId("mr-tarot-0009")).toBe(true);
+    expect(isThreadsAttributionId("link_in_bio")).toBe(true);
+    expect(isThreadsAttributionId("../../token")).toBe(false);
   });
 
   it("accepts only same-origin browser requests", () => {
