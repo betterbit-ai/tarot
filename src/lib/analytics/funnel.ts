@@ -80,6 +80,13 @@ export async function readRecentFunnelReports(store: FunnelCounterStore, days = 
   }));
 }
 
+export async function readDailyFunnelReport(store: FunnelCounterStore, date: string): Promise<DailyFunnelReport> {
+  const stored = await store.readHash(totalKey(date));
+  const counts = emptyCounts();
+  for (const event of FUNNEL_EVENTS) counts[event] = stored[event] ?? 0;
+  return { date, counts };
+}
+
 export function combineDailyGrowthReports(reports: readonly DailyFunnelReport[], runtime: ContentRuntimeQueue): DailyGrowthReport[] {
   return reports.map((report) => {
     const published = Object.entries(runtime.items).filter(([, state]) => state.status === "PUBLISHED" && state.publishedAt && kstCalendarDate(new Date(state.publishedAt)) === report.date);

@@ -37,6 +37,15 @@ describe("Upstash JSON store", () => {
     }));
   });
 
+  it("stores an expiring JSON marker", async () => {
+    const fetcher = vi.fn().mockResolvedValue(new Response(JSON.stringify({ result: "OK" }), { status: 200 }));
+    const store = createUpstashJsonStore(env, fetcher)!;
+
+    await store.setWithExpiration("marker", { sent: true }, 3600);
+
+    expect(fetcher).toHaveBeenCalledWith(env.UPSTASH_REDIS_REST_URL, expect.objectContaining({ body: JSON.stringify(["SET", "marker", JSON.stringify({ sent: true }), "EX", "3600"]) }));
+  });
+
   it("hydrates an empty content queue when no runtime state has been written", async () => {
     const fetcher = vi.fn().mockResolvedValue(new Response(JSON.stringify({ result: null }), { status: 200 }));
     const store = createUpstashContentStateStore(env, fetcher)!;

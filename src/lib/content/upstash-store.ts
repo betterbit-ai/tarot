@@ -17,6 +17,7 @@ type UpstashResponse = {
 export type UpstashJsonStore = {
   get: <Value>(key: string) => Promise<Value | null>;
   set: (key: string, value: unknown) => Promise<void>;
+  setWithExpiration: (key: string, value: unknown, expirationSeconds: number) => Promise<void>;
   setIfAbsent: (key: string, value: unknown, expirationSeconds: number) => Promise<boolean>;
   delete: (key: string) => Promise<void>;
   incrementHash: (key: string, field: string, amount: number, expirationSeconds: number) => Promise<number>;
@@ -77,6 +78,9 @@ export function createUpstashJsonStore(env: Environment = process.env, fetcher: 
     },
     async set(key: string, value: unknown): Promise<void> {
       await command<string>(["SET", key, JSON.stringify(value)]);
+    },
+    async setWithExpiration(key: string, value: unknown, expirationSeconds: number): Promise<void> {
+      await command<string>(["SET", key, JSON.stringify(value), "EX", String(expirationSeconds)]);
     },
     async setIfAbsent(key: string, value: unknown, expirationSeconds: number): Promise<boolean> {
       const result = await command<string | null>(["SET", key, JSON.stringify(value), "NX", "EX", String(expirationSeconds)]);

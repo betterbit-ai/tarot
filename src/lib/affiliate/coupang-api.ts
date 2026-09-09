@@ -1,5 +1,6 @@
 import { createHmac } from "node:crypto";
 import type { AffiliateProduct, AffiliateTheme } from "./products";
+import { kstCalendarDate } from "@/lib/content/daily-publish";
 
 export const COUPANG_AFFILIATE_BASE_URL = "https://api-gateway.coupang.com/v2/providers/affiliate_open_api/apis/openapi/v1";
 
@@ -26,6 +27,16 @@ export type CoupangRefreshStats = {
   productHosts: string[];
 };
 
+export type CoupangCommissionSummary = {
+  date: string;
+  click: number;
+  order: number;
+  cancel: number;
+  gmv: number;
+  commission: number;
+  rows: number;
+};
+
 type CoupangProduct = {
   productId?: number | string;
   productName?: string;
@@ -43,6 +54,21 @@ type CoupangDeepLinkResponse = {
   rCode?: string | number;
   rMessage?: string;
   data?: Array<{ originalUrl?: string; shortenUrl?: string; landingUrl?: string }>;
+};
+
+type CoupangCommissionRow = {
+  date?: string;
+  click?: number;
+  order?: number;
+  cancel?: number;
+  gmv?: number;
+  commission?: number;
+};
+
+type CoupangCommissionResponse = {
+  rCode?: string | number;
+  rMessage?: string;
+  data?: CoupangCommissionRow[];
 };
 
 export const COUPANG_THEME_KEYWORDS: Readonly<Record<AffiliateTheme, string>> = {
@@ -145,6 +171,36 @@ export async function createCoupangDeepLink(config: CoupangApiConfig, originalUr
   const hostname = new URL(valid).hostname.toLowerCase();
   if (!hostname.endsWith(".coupang.com") && hostname !== "coupang.com") throw new Error("Coupang API returned an invalid partner link");
   return valid;
+}
+
+export function previousKstReportDate(now = new Date()): string {
+  const [year, month, day] = kstCalendarDate(now).split("-").map(Number);
+  const previous = new Date(Date.UTC(year, month - 1, day - 1));
+  return previous.toISOString().slice(0, 10).replaceAll("-", "");
+}
+
+function reportNumber(value: unknown): number {
+  return typeof value === "number" && Number.isFinite(value) ? value : 0;
+}
+
+export async function getCoupangCommissionSummary(config: CoupangApiConfig, date: string): Promise<CoupangCommissionSummary> {
+  if (!/^\d{8}$/.test(date)) throw new Error("Coupang report date must use yyyyMMdd");
+  const summary: CoupangCommissionSummary = { date, click: 0, order: 0, cancel: 0, gmv: 0, commission: 0, rows: 0 };
+  for (let page = 0; page < 20; page += 1) {
+    const query = new URLSearchParams({ startDate: date, endDate: date, page: String(page) }).toString();
+    const payload = await requestJson<CoupangCommissionResponse>(config, "GET", "/reports/commission", query);
+    const rows = payload.data ?? [];
+    for (const row of rows) {
+      summary.click += reportNumber(row.click);
+      summary.order += reportNumber(row.order);
+      summary.cancel += reportNumber(row.cancel);
+      summary.gmv += reportNumber(row.gmv);
+      summary.commission += reportNumber(row.commission);
+      summary.rows += 1;
+    }
+    if (rows.length < 1000) break;
+  }
+  return summary;
 }
 
 export async function refreshCoupangPool(config: CoupangApiConfig, refreshedAt = new Date().toISOString()): Promise<AffiliateProduct[]> {

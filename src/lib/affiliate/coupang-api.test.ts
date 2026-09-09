@@ -1,6 +1,6 @@
 import { createHmac } from "node:crypto";
 import { describe, expect, it, vi } from "vitest";
-import { createCoupangAuthorization, refreshCoupangPool, searchCoupangProducts } from "./coupang-api";
+import { createCoupangAuthorization, getCoupangCommissionSummary, previousKstReportDate, refreshCoupangPool, searchCoupangProducts } from "./coupang-api";
 
 describe("Coupang Partners adapter", () => {
   it("creates the documented HMAC authorization string", () => {
@@ -44,5 +44,21 @@ describe("Coupang Partners adapter", () => {
     const fullPath = "/v2/providers/affiliate_open_api/apis/openapi/v1/products/search";
     const signature = createHmac("sha256", "secret").update(`${datetime}GET${fullPath}${query}`).digest("hex");
     expect((request?.[1] as RequestInit).headers).toMatchObject({ authorization: `CEA algorithm=HmacSHA256, access-key=access, signed-date=${datetime}, signature=${signature}` });
+  });
+
+  it("aggregates only the official commission report fields", async () => {
+    const fetcher = vi.fn(async (input: RequestInfo | URL) => {
+      expect(String(input)).toContain("/reports/commission?startDate=20260908&endDate=20260908&page=0");
+      return new Response(JSON.stringify({ rCode: "0", data: [
+        { date: "20260908", click: 10, order: 2, cancel: 1, gmv: 12000, commission: 360 },
+        { date: "20260908", click: 3, order: 1, cancel: 0, gmv: 4000, commission: 120 },
+      ] }), { status: 200 });
+    });
+
+    await expect(getCoupangCommissionSummary({ accessKey: "access", secretKey: "secret", fetcher }, "20260908")).resolves.toEqual({ date: "20260908", click: 13, order: 3, cancel: 1, gmv: 16000, commission: 480, rows: 2 });
+  });
+
+  it("uses the previous Seoul calendar day for the daily report", () => {
+    expect(previousKstReportDate(new Date("2026-09-09T00:30:00.000Z"))).toBe("20260908");
   });
 });

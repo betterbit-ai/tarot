@@ -1,5 +1,42 @@
 # Executable Product Spec
 
+## Active iteration: Coupang daily report to Slack
+
+### Outcome
+
+운영자는 매일 오후 쿠팡 파트너스의 확정된 전날 클릭·주문·취소·거래액·수수료를 Slack에서 받고, 같은 날짜의 미스터 타로 유입 퍼널과 혼동하지 않은 채 확인할 수 있다.
+
+### Required behavior
+
+1. Vercel protected route는 쿠팡 파트너스 공식 `/reports/commission` endpoint를 전날 KST 날짜로 요청하고, 날짜·클릭·주문·취소·GMV·수수료만 집계한다.
+2. Slack webhook은 Vercel server-only secret으로만 사용한다. route, GitHub workflow, 로그, Git에는 webhook URL 또는 쿠팡 키를 노출하지 않는다.
+3. Upstash daily marker/lease는 같은 기준일 리포트가 중복 전송되지 않게 하며, Slack 실패는 marker를 남기지 않아 다음 수동/예약 시도에서 재전송할 수 있다.
+4. GitHub Actions는 15:10 KST 이후에 protected route를 호출하며, 누락된 Slack/Coupang 설정 또는 API/Slack 실패를 성공으로 숨기지 않는다.
+5. Slack 메시지는 쿠팡 집계와 미스터 타로 웹 퍼널을 별도 라벨로 보여주며, outbound click을 주문 또는 수수료로 표현하지 않는다.
+
+### Acceptance criteria
+
+- [ ] 쿠팡 commission response의 다중 row를 click/order/cancel/gmv/commission 합계로 정확히 합친다.
+- [ ] 같은 보고 기준일을 두 번 호출해도 Slack 전송은 한 번만 이뤄진다.
+- [ ] Slack 전송 실패 시 marker가 남지 않아 수동 재시도가 가능하다.
+- [ ] report workflow는 15:10 KST 스케줄이며 실패 JSON을 비밀값 없이 출력한다.
+- [ ] lint, typecheck, tests, build, diff check가 통과한다.
+
+### Constraints
+
+- 개별 orderId, productName, 쿠팡 키, Slack webhook URL은 Slack 메시지·Upstash·Git·로그에 저장하지 않는다.
+- 주문·취소 데이터 endpoint를 별도 호출하지 않고 공식 commission aggregate만 사용한다.
+- 쿠팡 API의 일별 성적 갱신 시각이 15:00 KST이므로 보고 기준일은 전날이다.
+
+### Out of scope
+
+- Slack 채널 생성/권한 설정, 주문 단위 분석, 재고/가격 추적, 쿠팡 광고 보고서.
+
+### Risks and rollback
+
+- Slack webhook이 없거나 비활성화되면 report route는 fail-closed하고 다른 타로/제휴 흐름은 계속 동작한다.
+- API response contract가 달라지면 report scheduler를 비활성화하고 기존 first-party click funnel만 유지한다.
+
 ## Active iteration: Scene hook + daily funnel observability
 
 ### Outcome
