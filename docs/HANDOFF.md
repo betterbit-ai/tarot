@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-09 13:45 KST
+Last updated: 2026-09-09 13:58 KST
 
 ## Current Phase
 
@@ -240,7 +240,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Set `CRON_SECRET` in Vercel Production and Preview, redeploy, and verify the single Vercel Cron Job appears in Project Settings. Confirm the latest GitHub Actions `Publish prepared Threads content` run's returned mode, then verify the associated public post and replies on `@mr._.tarot`. Resolve the duplicate `mr-tarot-0002` Threads post only after choosing which public copy to retain.
+Read `docs/tasks/active/2026-09-09-growth-funnel-handoff.md`, review the three local commits plus the remaining research/handoff diff, run full verification, push `main`, then verify production `/threads`, `/privacy`, one real UTM funnel event, and a manual Threads metrics sync. Do not infer historical website/Coupang clicks because collection begins only after this deployment.
 
 ## Last Commit
 
