@@ -27,20 +27,29 @@ const TOPIC_LABELS: Record<ThreadsContent["topic"], string> = {
 };
 
 const FORMAT_LABELS: Record<ThreadsContent["format"], string> = {
-  PICK_3: "PICK 3", YES_NO_NOT_YET: "YES / NO", LOVE: "LOVE", CAREER: "CAREER", MONEY: "MONEY",
+  PICK_3: "PICK 3", YES_NO_NOT_YET: "YES / NO", LOVE: "LOVE", CAREER: "CAREER", MONEY: "MONEY", THREE_CARD_SETS: "3세트 리딩",
 };
+
+const AFFILIATE_THEME_LABELS = {
+  relationship: "관계", "self-care": "셀프케어", rest: "휴식", focus: "집중", "new-start": "새 출발", organization: "정리",
+} as const;
 
 function conversionRate(numerator: number, denominator: number): string {
   return denominator > 0 ? `${Math.round((numerator / denominator) * 100)}%` : "-";
 }
 
 export function ThreadsContentClient({ queue, funnelReports = [] }: ThreadsContentClientProps) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const firstReadyIndex = queue.items.findIndex((content) => content.status === "READY");
+  const [selectedIndex, setSelectedIndex] = useState(firstReadyIndex >= 0 ? firstReadyIndex : 0);
   const [message, setMessage] = useState("");
   const item = queue.items[selectedIndex] ?? queue.items[0];
   if (!item) return null;
   const counts = queue.items.reduce<Record<string, number>>((all, content) => ({ ...all, [content.status]: (all[content.status] ?? 0) + 1 }), {});
-  const visibleItems = queue.items.slice(0, 24);
+  const activeEntries = queue.items
+    .map((content, index) => ({ content, index }))
+    .filter(({ content }) => content.status === "READY" || content.status === "PUBLISHED");
+  const visibleEntries = (activeEntries.length ? activeEntries : queue.items.map((content, index) => ({ content, index })))
+    .slice(0, 24);
   const diagnosis = diagnoseFunnel(funnelReports);
 
   async function handleCopy(label: string, text: string) {
@@ -73,15 +82,16 @@ export function ThreadsContentClient({ queue, funnelReports = [] }: ThreadsConte
           </div>
           {funnelReports.length ? (
             <div className="mt-4 overflow-x-auto">
-              <table className="min-w-[840px] w-full text-left text-xs">
+              <table className="min-w-[940px] w-full text-left text-xs">
                 <thead className="text-[#a99478]">
-                  <tr><th className="pb-2 pr-4">날짜·콘텐츠</th><th className="pb-2 pr-4">Threads 조회</th><th className="pb-2 pr-4">사이트 유입</th><th className="pb-2 pr-4">리딩 시작</th><th className="pb-2 pr-4">결과 도달</th><th className="pb-2 pr-4">쿠팡 클릭</th><th className="pb-2">전환</th></tr>
+                  <tr><th className="pb-2 pr-4">날짜·콘텐츠</th><th className="pb-2 pr-4">Threads 조회</th><th className="pb-2 pr-4">직접 상품 클릭</th><th className="pb-2 pr-4">사이트 유입</th><th className="pb-2 pr-4">리딩 시작</th><th className="pb-2 pr-4">결과 도달</th><th className="pb-2 pr-4">사이트 내 상품 클릭</th><th className="pb-2">전환</th></tr>
                 </thead>
                 <tbody className="divide-y divide-[#a88b5f]/12 text-[#e4d3b9]">
                   {funnelReports.map(({ date, counts, contentIds, threads }) => (
                     <tr key={date}>
                       <td className="py-3 pr-4">{date.slice(5)} <span className="text-[#8f806c]">{contentIds.join(", ") || "게시 없음"}</span></td>
                       <td className="py-3 pr-4">{threads.views ?? "미수집"}</td>
+                      <td className="py-3 pr-4">{counts.threads_affiliate_clicked}</td>
                       <td className="py-3 pr-4">{counts.landing_view}</td>
                       <td className="py-3 pr-4">{counts.ritual_started} <span className="text-[#8f806c]">({conversionRate(counts.ritual_started, counts.landing_view)})</span></td>
                       <td className="py-3 pr-4">{counts.result_viewed} <span className="text-[#8f806c]">({conversionRate(counts.result_viewed, counts.ritual_started)})</span></td>
@@ -98,7 +108,7 @@ export function ThreadsContentClient({ queue, funnelReports = [] }: ThreadsConte
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[220px_1fr]">
           <nav aria-label="콘텐츠 큐" className="flex gap-2 overflow-x-auto pb-1 lg:max-h-[72vh] lg:flex-col lg:overflow-y-auto lg:pr-2">
-            {visibleItems.map((content, index) => (
+            {visibleEntries.map(({ content, index }) => (
               <button
                 key={content.id}
                 type="button"
@@ -129,7 +139,11 @@ export function ThreadsContentClient({ queue, funnelReports = [] }: ThreadsConte
             <div className="mt-5 grid gap-5 xl:grid-cols-[1fr_280px]">
               <div className="space-y-4">
                 <CopyBlock title="본문" text={item.mainPost} onCopy={() => handleCopy("본문", item.mainPost)} />
-                {item.replies.slice(0, -1).map((reply, index) => <CopyBlock key={`${item.id}-${index}`} title={`결과 댓글 ${index + 1}`} text={reply} onCopy={() => handleCopy(`결과 댓글 ${index + 1}`, reply)} />)}
+                {item.replies.slice(0, -1).map((reply, index) => {
+                  const set = item.readingSets?.[index];
+                  const title = set ? `${set.key} ${set.symbol} · ${AFFILIATE_THEME_LABELS[set.affiliateTheme]} 상품 연결` : `결과 댓글 ${index + 1}`;
+                  return <CopyBlock key={`${item.id}-${index}`} title={title} text={reply} onCopy={() => handleCopy(`${set?.key ?? `결과 댓글 ${index + 1}`} 해석`, reply)} />;
+                })}
                 <CopyBlock title="마지막 CTA 댓글" text={item.cta} onCopy={() => handleCopy("CTA", item.cta)} />
               </div>
               {item.imageAsset ? <div className="order-first xl:order-last">

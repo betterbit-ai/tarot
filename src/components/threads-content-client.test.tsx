@@ -18,7 +18,7 @@ const queue: ContentQueue = {
 
 const funnelReports: DailyGrowthReport[] = [{
   date: "2026-09-09",
-  counts: { landing_view: 10, ritual_started: 6, cards_confirmed: 5, result_viewed: 4, affiliate_viewed: 3, affiliate_skipped: 2, affiliate_clicked: 1, result_shared: 1 },
+  counts: { landing_view: 10, ritual_started: 6, cards_confirmed: 5, result_viewed: 4, affiliate_viewed: 3, affiliate_skipped: 2, affiliate_clicked: 1, threads_affiliate_clicked: 2, result_shared: 1 },
   contentIds: ["mr-tarot-0009"],
   threads: { views: 120, likes: 8, replies: 4 },
 }];
@@ -31,11 +31,28 @@ describe("ThreadsContentClient", () => {
     expect(screen.getByText("READY 2")).not.toBeNull();
     expect(screen.getByText("첫 번째 본문")).not.toBeNull();
     expect(screen.getByText("Threads → 타로 → 쿠팡")).not.toBeNull();
+    expect(screen.getByText("직접 상품 클릭")).not.toBeNull();
     expect(screen.getByText("25%")).not.toBeNull();
     expect(screen.getByText("가장 큰 이탈은 페이지 유입 뒤예요. Threads CTA와 첫 화면 약속이 같은 장면을 말하는지 먼저 점검하세요.")).not.toBeNull();
 
     fireEvent.click(screen.getByRole("button", { name: /#0002/ }));
     expect(screen.getByText("두 번째 본문")).not.toBeNull();
     expect(screen.queryByText("첫 번째 이미지")).toBeNull();
+  });
+
+  it("selects and exposes the first ready pilot after skipped history", () => {
+    const historyFirst: ContentQueue = {
+      ...queue,
+      items: [
+        { ...queue.items[0]!, id: "mr-tarot-0046", status: "SKIPPED", mainPost: "지난 본문" },
+        { ...queue.items[1]!, id: "mr-tarot-0047", status: "READY", format: "THREE_CARD_SETS", mainPost: "새 파일럿 본문" },
+      ],
+    };
+
+    render(<ThreadsContentClient queue={historyFirst} />);
+
+    expect(screen.getByText("새 파일럿 본문")).not.toBeNull();
+    expect(screen.getByRole("button", { name: /#0047/ })).not.toBeNull();
+    expect(screen.queryByRole("button", { name: /#0046/ })).toBeNull();
   });
 });

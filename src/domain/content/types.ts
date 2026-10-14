@@ -1,7 +1,7 @@
 export const CONTENT_STATUSES = ["DRAFT", "READY", "SCHEDULED", "PUBLISHING", "PUBLISHED", "FAILED", "SKIPPED"] as const;
 export type ContentStatus = (typeof CONTENT_STATUSES)[number];
 
-export const CONTENT_FORMATS = ["PICK_3", "YES_NO_NOT_YET", "LOVE", "CAREER", "MONEY"] as const;
+export const CONTENT_FORMATS = ["PICK_3", "YES_NO_NOT_YET", "LOVE", "CAREER", "MONEY", "THREE_CARD_SETS"] as const;
 export type ContentFormat = (typeof CONTENT_FORMATS)[number];
 
 export const CONTENT_TOPICS = ["LOVE", "GENERAL", "CAREER", "MONEY", "DECISION", "EXPERIMENTAL"] as const;
@@ -14,6 +14,20 @@ export type ContentMetrics = {
   reposts?: number;
   quotes?: number;
   syncedAt?: string;
+};
+
+export const CONTENT_AFFILIATE_THEMES = ["relationship", "self-care", "rest", "focus", "new-start", "organization"] as const;
+export type ContentAffiliateTheme = (typeof CONTENT_AFFILIATE_THEMES)[number];
+
+export type ThreadsReadingSet = {
+  key: "A" | "B" | "C";
+  symbol: string;
+  cardIds: [number, number, number];
+  reading: string;
+  signal: string;
+  action: string;
+  affiliateTheme: ContentAffiliateTheme;
+  productReason: string;
 };
 
 export type ThreadsContent = {
@@ -40,6 +54,7 @@ export type ThreadsContent = {
   lastError: string | null;
   metrics: ContentMetrics;
   semanticSignature: string;
+  readingSets?: ThreadsReadingSet[];
 };
 
 export type ContentQueue = {

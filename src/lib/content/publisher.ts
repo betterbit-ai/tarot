@@ -1,4 +1,5 @@
 import { readingThreadValidationError, type ContentMetrics, type ContentStatus, type ThreadsContent } from "@/domain/content";
+import { isCoupangPartnerUrl, type AffiliateProduct } from "@/lib/affiliate/products";
 
 export type PublishMode = "review" | "auto";
 
@@ -38,6 +39,7 @@ export type ThreadsPublisherConfig = {
   mode: PublishMode;
   dryRun: boolean;
   maxAttempts: number;
+  affiliateProducts?: readonly AffiliateProduct[];
 };
 
 export type PublishPreview = {
@@ -94,6 +96,36 @@ function siteCta(item: ThreadsContent, siteUrl?: string): string {
   url.searchParams.set("utm_campaign", "growth-engine");
   url.searchParams.set("utm_content", item.id);
   return `${item.cta}\n${url.toString()}`;
+}
+
+export function materializeThreadReplies(item: ThreadsContent, config: Pick<ThreadsPublisherConfig, "affiliateProducts" | "siteUrl">): { replies: string[]; error?: string } {
+  const cta = siteCta(item, config.siteUrl);
+  if (!item.readingSets?.length) {
+    return { replies: item.replies.map((reply, index) => index === item.replies.length - 1 ? cta : reply) };
+  }
+
+  const products = config.affiliateProducts ?? [];
+  const replies: string[] = [];
+  for (let index = 0; index < item.readingSets.length; index += 1) {
+    const set = item.readingSets[index];
+    if (!set) return { replies, error: `missing reading set ${index + 1}` };
+    const candidates = products.filter((product) => product.active && product.categories.includes(set.affiliateTheme) && isCoupangPartnerUrl(product.partnerUrl));
+    if (!candidates.length) return { replies, error: `missing verified affiliate product for choice ${set.key} (${set.affiliateTheme})` };
+    const numericId = Number(item.id.match(/\d+$/)?.[0] ?? 0);
+    const product = candidates[(numericId + index) % candidates.length] ?? candidates[0];
+    if (!product?.partnerUrl) return { replies, error: `missing partner URL for choice ${set.key}` };
+    if (!config.siteUrl) return { replies, error: "missing site URL for affiliate redirect" };
+    const redirect = new URL("/out/coupang", config.siteUrl);
+    redirect.searchParams.set("product", product.id);
+    redirect.searchParams.set("content", item.id);
+    redirect.searchParams.set("choice", set.key);
+    const baseReply = item.replies[index] ?? "";
+    const reply = `${baseReply}\n\n${set.productReason}\n${product.title}\n${redirect.toString()}\n\n${product.disclosure}`;
+    if (reply.length > 500) return { replies, error: `materialized reply for choice ${set.key} exceeds 500 characters` };
+    replies.push(reply);
+  }
+  replies.push(cta);
+  return { replies };
 }
 
 function applyState(queue: ContentRuntimeQueue, id: string, next: ContentRuntimeState): ContentRuntimeQueue {
@@ -164,11 +196,12 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
   const item = source.find((candidate) => stateFor(queue, candidate).status === "READY");
   if (!item) return { id: "", mode: "nothing-ready", main: "", imageUrl: null, replies: [] };
 
-  const cta = siteCta(item, config.siteUrl);
-  const replies = item.replies.map((reply, index) => index === item.replies.length - 1 ? cta : reply);
+  const materialized = materializeThreadReplies(item, config);
+  const replies = materialized.replies;
   const imageUrl = item.imageAsset && config.siteUrl ? new URL(item.imageAsset, config.siteUrl).toString() : null;
   const readingError = readingThreadValidationError(item);
   if (readingError) return { id: item.id, mode: "failed", main: item.mainPost, imageUrl, replies, error: `Refusing to publish incomplete reading: ${readingError}` };
+  if (materialized.error) return { id: item.id, mode: "failed", main: item.mainPost, imageUrl, replies, error: `Refusing to publish incomplete commerce reading: ${materialized.error}` };
 
   if (config.dryRun || config.mode === "review") {
     const status = config.dryRun ? stateFor(queue, item).status : "SCHEDULED";
@@ -252,8 +285,10 @@ export async function repairMissingReadingReplies(
 
   const readingError = readingThreadValidationError(item);
   if (readingError) return { id: item.id, mode: "failed", replies: [], error: `Refusing to repair incomplete reading: ${readingError}` };
+  const materialized = materializeThreadReplies(item, config);
+  if (materialized.error) return { id: item.id, mode: "failed", replies: materialized.replies, error: `Refusing to repair incomplete commerce reading: ${materialized.error}` };
   const runtime = stateFor(queue, item);
-  const replies = item.replies.slice(0, 3);
+  const replies = materialized.replies.slice(0, 3);
   if (runtime.status !== "PUBLISHED" || !runtime.mainPostId) {
     return { id: item.id, mode: "failed", replies, error: "The main Threads post is not confirmed as published" };
   }

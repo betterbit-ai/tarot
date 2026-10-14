@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getCardsByIds } from "@/lib/tarot/cards";
-import { inferAffiliateCategory, inferAffiliateThemes, selectAffiliateProduct } from "@/lib/affiliate/products";
+import { inferAffiliateCategory, inferAffiliateThemes, resolveStoredAffiliateTarget, selectAffiliateProduct } from "@/lib/affiliate/products";
 
 describe("affiliate products", () => {
   it("combines question and card themes instead of mapping one keyword to one product", () => {
@@ -36,5 +36,14 @@ describe("affiliate products", () => {
 
     expect(product?.id).toBe("coupang-focus");
     expect(product?.partnerUrl).toContain("link.coupang.com");
+  });
+
+  it("resolves only an active allowlisted stored partner target", () => {
+    const product = { id: "safe", categories: ["focus"], title: "정리함", imageSrc: "https://thumbnail.coupangcdn.com/example.jpg", imageAlt: "상품", disclosure: "제휴 안내", ctaLabel: "보기", weight: 1, active: true, partnerUrl: "https://link.coupang.com/a/example" };
+
+    expect(resolveStoredAffiliateTarget([product], "safe")).toBe("https://link.coupang.com/a/example");
+    expect(resolveStoredAffiliateTarget([{ ...product, partnerUrl: "https://evil.example/product" }], "safe")).toBeNull();
+    expect(resolveStoredAffiliateTarget([{ ...product, active: false }], "safe")).toBeNull();
+    expect(resolveStoredAffiliateTarget([product], "missing")).toBeNull();
   });
 });

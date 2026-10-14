@@ -7,6 +7,7 @@ export type TarotAnalyticsEvent =
   | { type: "affiliate_viewed"; hasTarget: boolean }
   | { type: "affiliate_skipped" }
   | { type: "affiliate_clicked" }
+  | { type: "threads_affiliate_clicked" }
   | { type: "result_shared"; method: "native-share" | "copy-link" }
   | { type: "ritual_restarted"; source: "result" | "shared" };
 

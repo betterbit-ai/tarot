@@ -52,7 +52,7 @@ describe("anonymous funnel counters", () => {
   });
 
   it("joins each KST day with provider-returned post metrics", () => {
-    const reports = [{ date: "2026-09-09", counts: { landing_view: 1, ritual_started: 0, cards_confirmed: 0, result_viewed: 0, affiliate_viewed: 0, affiliate_skipped: 0, affiliate_clicked: 0, result_shared: 0 } }];
+    const reports = [{ date: "2026-09-09", counts: { landing_view: 1, ritual_started: 0, cards_confirmed: 0, result_viewed: 0, affiliate_viewed: 0, affiliate_skipped: 0, affiliate_clicked: 0, threads_affiliate_clicked: 0, result_shared: 0 } }];
     const runtime = { version: 1 as const, items: {
       "mr-tarot-0009": { status: "PUBLISHED" as const, updatedAt: "2026-09-08T15:30:00.000Z", publishedAt: "2026-09-08T15:30:00.000Z", attemptCount: 1, metrics: { views: 12, likes: 2 } },
     } };
@@ -61,8 +61,8 @@ describe("anonymous funnel counters", () => {
   });
 
   it("waits for a meaningful sample before recommending a funnel change", () => {
-    const empty = { landing_view: 1, ritual_started: 1, cards_confirmed: 0, result_viewed: 0, affiliate_viewed: 0, affiliate_skipped: 0, affiliate_clicked: 0, result_shared: 0 };
-    const drop = { landing_view: 20, ritual_started: 5, cards_confirmed: 4, result_viewed: 4, affiliate_viewed: 3, affiliate_skipped: 2, affiliate_clicked: 1, result_shared: 0 };
+    const empty = { landing_view: 1, ritual_started: 1, cards_confirmed: 0, result_viewed: 0, affiliate_viewed: 0, affiliate_skipped: 0, affiliate_clicked: 0, threads_affiliate_clicked: 0, result_shared: 0 };
+    const drop = { landing_view: 20, ritual_started: 5, cards_confirmed: 4, result_viewed: 4, affiliate_viewed: 3, affiliate_skipped: 2, affiliate_clicked: 1, threads_affiliate_clicked: 0, result_shared: 0 };
 
     expect(diagnoseFunnel([{ date: "2026-09-09", counts: empty }]).kind).toBe("insufficient");
     expect(diagnoseFunnel([{ date: "2026-09-09", counts: drop }]).kind).toBe("landing_to_start");

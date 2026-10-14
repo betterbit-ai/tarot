@@ -4,8 +4,9 @@ import { getThreadsPublisherConfig, withStoredThreadsToken } from "@/lib/content
 import { kstCalendarDate, publishedContentForKstDate, type DailyPublishMarker } from "@/lib/content/daily-publish";
 import { publishNextContent } from "@/lib/content/publisher";
 import { schedulerRequestIsAuthorized, vercelCronRequestIsAuthorized } from "@/lib/content/scheduler-auth";
-import { createUpstashContentStateStore, createUpstashJsonStore, UPSTASH_DAILY_PUBLISH_KEY, UPSTASH_DAILY_PUBLISH_LOCK_KEY, UPSTASH_TOKEN_STATE_KEY } from "@/lib/content/upstash-store";
+import { AFFILIATE_POOL_KEY, createUpstashContentStateStore, createUpstashJsonStore, UPSTASH_DAILY_PUBLISH_KEY, UPSTASH_DAILY_PUBLISH_LOCK_KEY, UPSTASH_TOKEN_STATE_KEY } from "@/lib/content/upstash-store";
 import type { ThreadsTokenState } from "@/lib/content/token";
+import { isStoredAffiliateProduct } from "@/lib/affiliate/products";
 
 export const runtime = "nodejs";
 
@@ -32,10 +33,11 @@ async function publishDaily(request: Request) {
   try {
     // Re-read after the atomic lease. A parallel request can finish between the
     // initial guard and this request acquiring the lease.
-    const [lockedRuntimeState, lockedMarker, refreshed] = await Promise.all([
+    const [lockedRuntimeState, lockedMarker, refreshed, storedProducts] = await Promise.all([
       contentStore.read(),
       jsonStore.get<DailyPublishMarker>(UPSTASH_DAILY_PUBLISH_KEY),
       jsonStore.get<ThreadsTokenState>(UPSTASH_TOKEN_STATE_KEY),
+      jsonStore.get<unknown>(AFFILIATE_POOL_KEY),
     ]);
     const lockedRuntimePublishedId = publishedContentForKstDate(lockedRuntimeState, today);
     if (lockedMarker?.publishedKstDate === today || lockedRuntimePublishedId) {
@@ -46,6 +48,7 @@ async function publishDaily(request: Request) {
     const result = await publishNextContent((sourceQueue as ContentQueue).items, contentStore, {
       ...withStoredThreadsToken(config, refreshed),
       userId: refreshed?.userId ?? config.userId,
+      affiliateProducts: Array.isArray(storedProducts) ? storedProducts.filter(isStoredAffiliateProduct) : [],
     });
     if (result.mode === "published") {
       const publishedAt = new Date().toISOString();

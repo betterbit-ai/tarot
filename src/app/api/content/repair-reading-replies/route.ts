@@ -3,8 +3,9 @@ import type { ContentQueue } from "@/domain/content";
 import { getThreadsPublisherConfig, withStoredThreadsToken } from "@/lib/content/config";
 import { repairMissingReadingReplies } from "@/lib/content/publisher";
 import { schedulerRequestIsAuthorized } from "@/lib/content/scheduler-auth";
-import { createUpstashContentStateStore, createUpstashJsonStore, UPSTASH_TOKEN_STATE_KEY } from "@/lib/content/upstash-store";
+import { AFFILIATE_POOL_KEY, createUpstashContentStateStore, createUpstashJsonStore, UPSTASH_TOKEN_STATE_KEY } from "@/lib/content/upstash-store";
 import type { ThreadsTokenState } from "@/lib/content/token";
+import { isStoredAffiliateProduct } from "@/lib/affiliate/products";
 
 export const runtime = "nodejs";
 
@@ -18,11 +19,15 @@ export async function POST(request: Request) {
   const tokenStore = createUpstashJsonStore();
   if (!store || !tokenStore) return new Response("Upstash runtime state is not configured", { status: 503 });
 
-  const refreshed = await tokenStore.get<ThreadsTokenState>(UPSTASH_TOKEN_STATE_KEY);
+  const [refreshed, storedProducts] = await Promise.all([
+    tokenStore.get<ThreadsTokenState>(UPSTASH_TOKEN_STATE_KEY),
+    tokenStore.get<unknown>(AFFILIATE_POOL_KEY),
+  ]);
   const config = getThreadsPublisherConfig();
   const result = await repairMissingReadingReplies((sourceQueue as ContentQueue).items, contentId, store, {
     ...withStoredThreadsToken(config, refreshed),
     userId: refreshed?.userId ?? config.userId,
+    affiliateProducts: Array.isArray(storedProducts) ? storedProducts.filter(isStoredAffiliateProduct) : [],
   });
   return Response.json(result, { status: result.mode === "failed" ? 502 : 200 });
 }

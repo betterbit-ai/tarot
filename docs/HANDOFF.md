@@ -1,14 +1,30 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-09-09 20:37 KST
+Last updated: 2026-10-15 10:12 KST
 
 ## Current Phase
 
-V1 + INTERPRETATION V3: COMBINATION-AWARE STORY, APPLICATION AND MINDSET RENDERER COMPLETE
+V1 + INTERPRETATION V3 COMPLETE / THREADS THREE-SET COMMERCE PILOT READY TO SHIP
 
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
 Threads publishing reliability is being hardened after a container-readiness failure caused a missed scheduled item. The product queue remains live; no tarot UX or interpretation work is pending in this checkpoint.
+
+### 2026-10-15 delivery checkpoint
+
+- Completed: replaced the next 12 Threads drafts (`mr-tarot-0047`–`0058`) with A/B/C choices where every choice owns a complete, authored three-card reading.
+- Completed: every reply now connects its three cards, names a recognizable near-term scene, gives one concrete action, and explains the selected product's relevance before showing a verified Coupang Partners link and disclosure.
+- Completed: direct Threads-to-Coupang clicks use the first-party `/out/coupang` redirect, accept only active products from the Upstash affiliate pool, and record a separate anonymous `threads_affiliate_clicked` count.
+- Completed: publisher and repair paths fail closed before any Threads API call when a choice lacks a verified product or a complete reading.
+- Completed: all 93 non-pilot legacy drafts are `SKIPPED`; previously published runtime items remain visible and unchanged. The operations dashboard prioritizes the first READY item instead of hiding the pilot behind historical drafts.
+- Completed: 12 matching A/B/C image pairs (PNG and SVG) regenerated; existing RWS fronts, reader and card-back assets were not changed.
+- Current UX: local production `/threads` checked at 390px and 1440px. READY 12 and NEXT `mr-tarot-0047` are visible; the first selected card is the new three-set pilot.
+- Interpretation generation: unchanged at 76,076 validated rows. This pilot uses 36 bounded, human-authored social readings and does not regenerate the corpus.
+- Last successful commands: `pnpm content:validate` (105 items, 12 READY), `pnpm lint`, `pnpm typecheck`, `pnpm test` (35 files, 113 tests), `pnpm build`, `pnpm tarot:validate`, `pnpm tarot:status`, `git diff --check`. Live six-product pool materialization covered all 12 posts / 48 replies; longest reply is 447 characters and none exceeds Threads' 500-character limit.
+- In progress: commit, push, Vercel production verification, then manual same-day publication of `mr-tarot-0047` through the protected GitHub workflow.
+- Remaining: collect real impressions and direct product clicks for the 12-post pilot; do not expand the batch or declare conversion success before real data exists.
+- Known issue: three products appear in one post, so product-pool availability is now a hard publishing dependency by design. A missing theme product stops the entire post rather than publishing an incomplete sales path.
+- Exact recommended next task: after `mr-tarot-0047` is confirmed live with all four replies, verify that the next nightly run selects `mr-tarot-0048` and review real direct-click counts after at least one week.
 
 ## Completed
 
@@ -247,7 +263,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Review and push the current local commits, then verify production `/threads`, `/privacy`, one real UTM funnel event, and a manual Threads metrics sync. Do not infer historical website/Coupang clicks because collection begins only after this deployment. Keep `link_in_bio` separate from per-post CTA attribution.
+Confirm the first live three-set post `mr-tarot-0047` contains its A/B/C reading replies, contextual Coupang links and final site CTA. Then leave the 22:00–22:59 KST scheduler to publish `mr-tarot-0048`; do not force another same-day post. Review direct product clicks and official Partners outcomes only after real traffic exists.
 
 ## Last Commit
 
@@ -298,3 +314,5 @@ Latest schedule-window checkpoint: `2ebf56b` — all automated Threads attempts 
 Latest reading-completeness checkpoint: `590df38` — every auto-published post requires three prepared readings before an external API call. Production `/threads` was checked after deployment: no conversation format is visible, selecting `mr-tarot-0009` shows all three result replies, and the 390px view has no horizontal overflow or console errors.
 
 Latest missing-reply repair checkpoint: `eefb5de` — a protected manual workflow can append only the three prepared readings to an already-published post; successful live repair is run `34239915987`.
+
+Three-set commerce pilot checkpoint: pending this handoff commit — 12 READY posts, 36 authored readings, verified server-side product resolution, direct click attribution, and fail-closed publication.

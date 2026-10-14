@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { formatCoupangDailySlackReport, sendCoupangDailySlackReport } from "./coupang-report";
 
-const funnel = { landing_view: 10, ritual_started: 6, cards_confirmed: 5, result_viewed: 4, affiliate_viewed: 3, affiliate_skipped: 2, affiliate_clicked: 1, result_shared: 0 };
+const funnel = { landing_view: 10, ritual_started: 6, cards_confirmed: 5, result_viewed: 4, affiliate_viewed: 3, affiliate_skipped: 2, affiliate_clicked: 1, threads_affiliate_clicked: 2, result_shared: 0 };
 
 describe("Coupang Slack report", () => {
   it("formats aggregate values without order or product details", () => {
@@ -9,6 +9,7 @@ describe("Coupang Slack report", () => {
 
     expect(text).toContain("클릭 13 · 주문 3 · 취소 1");
     expect(text).toContain("거래액 16,000원 · 수수료 480원");
+    expect(text).toContain("Threads 직접 상품 클릭 2");
     expect(text).toContain("쿠팡 클릭은 주문이나 수수료를 뜻하지 않습니다.");
     expect(text).not.toContain("orderId");
   });

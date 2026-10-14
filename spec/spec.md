@@ -1,5 +1,45 @@
 # Executable Product Spec
 
+## Active iteration: Three-set Threads commerce pilot
+
+### Outcome
+
+Threads에서 하나의 단일 카드나 `YES / NO / NOT YET`을 고르게 하지 않는다. 독자는 A/B/C 상징 중 하나를 고르고, 선택지마다 미리 검수된 세 장의 연결형 리딩과 현실에서 확인할 수 있는 변화, 바로 할 행동, 그 행동을 돕는 쿠팡 상품을 함께 받는다. 첫 12개 파일럿은 Threads 조회수가 아니라 공식 쿠팡 클릭·주문·수수료로 수익 가능성을 검증한다.
+
+### Required behavior
+
+1. 다음 발행 항목 `mr-tarot-0047`부터 12개는 `THREE_CARD_SETS` 형식이며, 각 항목은 A/B/C 세 선택지와 선택지별 서로 다른 3장 조합을 가진다.
+2. 본문은 한 장의 4:5 선택 이미지와 함께 게시한다. 사이트 URL은 본문에 넣지 않아 선택 이미지가 링크 미리보기와 함께 캐러셀이 되지 않게 한다.
+3. 각 선택지 답글은 카드 이름을 한 번만 밝히고, 세 장을 하나의 원인·변화·결과로 연결한다. 현실에서 알아볼 수 있는 사건 또는 신호와 지금 할 행동을 포함한다.
+4. 각 답글은 검증된 쿠팡 상품 pool에서 지정된 theme의 상품 하나를 붙인다. 상품명, HTTPS 파트너 링크, 맥락이 분명한 추천 이유, 제휴 고지를 모두 포함한다.
+5. 지정 theme에 활성 파트너 링크가 있는 검증 상품이 없으면 게시 직전 실패로 닫고 Threads API를 호출하지 않는다. 무관한 fallback 상품이나 일반 제휴 URL을 대신 게시하지 않는다.
+6. 마지막 답글만 미스터 타로 사이트의 UTM 링크를 붙인다. 상품 CTA와 사이트 CTA를 한 문단에 섞지 않는다.
+7. 이미 발행된 1~46번 원문과 runtime 상태는 보존한다. 기존 미발행 47~105번은 파일럿 47~58번으로 대체하고, 나머지는 검증 결과가 나올 때까지 `SKIPPED`로 멈춘다.
+8. 선택 이미지는 숫자만 표시하지 않고 A/B/C와 주제에 맞는 상징 이름을 함께 보여준다.
+
+### Acceptance criteria
+
+- [ ] 12개 파일럿 모두 선택지 3개, 선택지별 카드 3장, 해석, 관찰 신호, 행동, 상품 theme과 추천 이유를 가진다.
+- [ ] 생성·검증 결과에 `YES / NO / NOT YET`이 없고, 준비된 파일럿 외 미발행 레거시 글이 자동 게시 대상이 아니다.
+- [ ] 검증 상품이 없거나 링크 host가 쿠팡이 아니면 외부 Threads 호출 전에 실패한다.
+- [ ] materialized 답글 네 개가 Threads 500자 제한 안에 들어간다.
+- [ ] `/threads`에서 A/B/C 해석과 상품 theme을 모바일 390px와 데스크톱에서 확인할 수 있다.
+- [ ] lint, typecheck, tests, build, content validation, diff check가 통과한다.
+
+### Constraints
+
+- 제공된 YouTube 대본은 구조 참고만 하며 원문을 repository에 저장하거나 문장을 복제하지 않는다.
+- 상품을 타로가 구매하라고 지시한 것처럼 표현하지 않는다. 리딩에서 제안한 현실 행동을 돕는 상품으로 설명한다.
+- 상품 가격, 할인, 재고, 효능을 검증 없이 표시하지 않는다.
+- 질문 원문, 카드 선택, 사용자 식별정보를 분석·링크·Threads 게시물에 넣지 않는다.
+- 일반 사용자 V1 리추얼과 76,076개 해석 corpus는 변경하지 않는다.
+
+### Verification and rollback
+
+- Automated: generator/validator, publisher product materialization, fail-closed behavior, queue/dashboard tests, full project verification.
+- Manual: production `/threads` desktop/390px, 첫 파일럿 dry-run, 실제 배포 상태.
+- 문제가 생기면 파일럿 47~58번을 `SKIPPED`로 바꾸어 자동 발행을 멈춘다. 이미 발행된 1~46번과 타로 V1은 영향을 받지 않는다.
+
 ## Active iteration: Coupang daily report to Slack
 
 ### Outcome

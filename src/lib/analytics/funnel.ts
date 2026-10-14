@@ -10,6 +10,7 @@ export const FUNNEL_EVENTS = [
   "affiliate_viewed",
   "affiliate_skipped",
   "affiliate_clicked",
+  "threads_affiliate_clicked",
   "result_shared",
 ] as const;
 

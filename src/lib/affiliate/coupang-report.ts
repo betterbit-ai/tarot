@@ -22,7 +22,7 @@ export function formatCoupangDailySlackReport(summary: CoupangCommissionSummary,
     `클릭 ${formatNumber(summary.click)} · 주문 ${formatNumber(summary.order)} · 취소 ${formatNumber(summary.cancel)}`,
     `거래액 ${formatWon(summary.gmv)} · 수수료 ${formatWon(summary.commission)}`,
     "*미스터 타로 웹 퍼널*",
-    `Threads 유입 ${formatNumber(funnel.landing_view)} · 리딩 시작 ${formatNumber(funnel.ritual_started)} · 결과 ${formatNumber(funnel.result_viewed)} · 쿠팡 클릭 ${formatNumber(funnel.affiliate_clicked)}`,
+    `Threads 직접 상품 클릭 ${formatNumber(funnel.threads_affiliate_clicked)} · 사이트 유입 ${formatNumber(funnel.landing_view)} · 리딩 시작 ${formatNumber(funnel.ritual_started)} · 결과 ${formatNumber(funnel.result_viewed)} · 사이트 내 상품 클릭 ${formatNumber(funnel.affiliate_clicked)}`,
     "쿠팡 클릭은 주문이나 수수료를 뜻하지 않습니다.",
   ].join("\n");
 }

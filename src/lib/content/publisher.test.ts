@@ -1,10 +1,25 @@
 import { describe, expect, it, vi } from "vitest";
 import type { ThreadsContent } from "@/domain/content";
-import { applyRuntimeState, EMPTY_RUNTIME_QUEUE, publishNextContent, repairMissingReadingReplies, type ContentRuntimeQueue } from "./publisher";
+import { generateCommercePilot } from "@/domain/content";
+import type { AffiliateProduct } from "@/lib/affiliate/products";
+import { applyRuntimeState, EMPTY_RUNTIME_QUEUE, materializeThreadReplies, publishNextContent, repairMissingReadingReplies, type ContentRuntimeQueue } from "./publisher";
 
 const item: ThreadsContent = {
   id: "mr-tarot-test", status: "READY", format: "PICK_3", topic: "LOVE", hook: "test", mainPost: "main", cardIds: [0, 1, 2], replies: ["1번\n\nreading one", "2번\n\nreading two", "3번\n\nreading three", "visit"], cta: "visit", imageAsset: "/threads/generated/mr-tarot-test.svg", altText: "test image", createdAt: "2026-08-30T00:00:00.000Z", scheduledAt: null, publishedAt: null, threadsPostId: null, threadsContainerId: null, replyPostIds: [], attemptCount: 0, lastError: null, metrics: {}, semanticSignature: "test",
 };
+
+const affiliateProducts: AffiliateProduct[] = ["organization", "new-start", "rest", "self-care", "focus"].map((category, index) => ({
+  id: `product-${index}`,
+  categories: [category as AffiliateProduct["categories"][number]],
+  title: `${category} 추천 상품`,
+  imageSrc: "https://image1.coupangcdn.com/image/example.jpg",
+  imageAlt: "추천 상품",
+  disclosure: "이 링크는 쿠팡 파트너스 활동의 일환으로 일정액의 수수료를 제공받을 수 있습니다.",
+  ctaLabel: "쿠팡에서 보기",
+  weight: 1,
+  active: true,
+  partnerUrl: `https://link.coupang.com/a/example-${index}`,
+}));
 
 function memoryStore(initialState: ContentRuntimeQueue = EMPTY_RUNTIME_QUEUE) {
   let state: ContentRuntimeQueue = initialState;
@@ -95,5 +110,33 @@ describe("Threads publisher", () => {
     const items = applyRuntimeState([item], { version: 1, items: { [item.id]: { status: "PUBLISHED", updatedAt: "2026-08-30T00:00:00.000Z", attemptCount: 1, mainPostId: "post-1", metrics: { views: 10 } } } });
 
     expect(items[0]).toMatchObject({ status: "PUBLISHED", threadsPostId: "post-1", metrics: { views: 10 } });
+  });
+
+  it("adds a verified contextual Coupang product to every complete reading set", () => {
+    const pilot = generateCommercePilot("2026-10-15T00:00:00.000Z")[0];
+    if (!pilot) throw new Error("pilot fixture is missing");
+
+    const result = materializeThreadReplies(pilot, { siteUrl: "https://mr-tarot.vercel.app", affiliateProducts });
+
+    expect(result.error).toBeUndefined();
+    expect(result.replies).toHaveLength(4);
+    expect(result.replies.slice(0, 3).every((reply) => reply.includes("/out/coupang?") && reply.includes("content=mr-tarot-0047") && reply.includes("쿠팡 파트너스"))).toBe(true);
+    expect(result.replies.every((reply) => reply.length <= 500)).toBe(true);
+    expect(result.replies.at(-1)).toContain("utm_content=mr-tarot-0047");
+  });
+
+  it("fails closed before Threads when a complete set has no verified product", async () => {
+    const pilot = generateCommercePilot("2026-10-15T00:00:00.000Z")[0];
+    if (!pilot) throw new Error("pilot fixture is missing");
+    const store = memoryStore();
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const preview = await publishNextContent([pilot], store, { apiBaseUrl: "https://graph.threads.net/v1.0", mode: "auto", dryRun: false, maxAttempts: 2, siteUrl: "https://mr-tarot.vercel.app", accessToken: "token", userId: "user", affiliateProducts: [] });
+
+    expect(preview.mode).toBe("failed");
+    expect(preview.error).toContain("missing verified affiliate product");
+    expect(fetchMock).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
   });
 });

@@ -24,6 +24,36 @@ export type AffiliateSelection = AffiliateProduct & {
   reason: string;
 };
 
+export function isCoupangPartnerUrl(value: string | undefined): value is string {
+  if (!value) return false;
+  try {
+    const url = new URL(value);
+    const hostname = url.hostname.toLowerCase();
+    return url.protocol === "https:" && (hostname === "coupang.com" || hostname.endsWith(".coupang.com"));
+  } catch {
+    return false;
+  }
+}
+
+export function isStoredAffiliateProduct(value: unknown): value is AffiliateProduct {
+  if (!value || typeof value !== "object") return false;
+  const product = value as Partial<AffiliateProduct>;
+  if (!product.id || !product.title || !product.imageSrc || !product.imageAlt || !product.ctaLabel || !product.disclosure || !product.active || !Array.isArray(product.categories)) return false;
+  try {
+    const image = new URL(product.imageSrc);
+    const imageAllowed = image.protocol === "https:" && (image.hostname.endsWith(".coupangcdn.com") || image.hostname === "ads-partners.coupang.com");
+    if (!imageAllowed) return false;
+  } catch {
+    return false;
+  }
+  return !product.partnerUrl || isCoupangPartnerUrl(product.partnerUrl);
+}
+
+export function resolveStoredAffiliateTarget(products: readonly unknown[], productId: string): string | null {
+  const product = products.filter(isStoredAffiliateProduct).find((candidate) => candidate.id === productId && candidate.active && isCoupangPartnerUrl(candidate.partnerUrl));
+  return product?.partnerUrl ?? null;
+}
+
 const DISCLOSURE = "이 추천은 쿠팡 파트너스 활동의 일환으로, 구매 시 일정액의 수수료를 제공받습니다.";
 
 // Only operator-verified product assets and destinations may become active here.
