@@ -21,7 +21,9 @@ Threads publishing reliability is being hardened after a container-readiness fai
 - Current UX: local production `/threads` checked at 390px and 1440px. READY 12 and NEXT `mr-tarot-0047` are visible; the first selected card is the new three-set pilot.
 - Interpretation generation: unchanged at 76,076 validated rows. This pilot uses 36 bounded, human-authored social readings and does not regenerate the corpus.
 - Last successful commands: `pnpm content:validate` (105 items, 12 READY), `pnpm lint`, `pnpm typecheck`, `pnpm test` (35 files, 113 tests), `pnpm build`, `pnpm tarot:validate`, `pnpm tarot:status`, `git diff --check`. Live six-product pool materialization covered all 12 posts / 48 replies; longest reply is 447 characters and none exceeds Threads' 500-character limit.
-- In progress: commit, push, Vercel production verification, then manual same-day publication of `mr-tarot-0047` through the protected GitHub workflow.
+- Completed: commits `8276a12` and `ee888ee` are on `origin/main`; Vercel production passed and `/threads` was visually rechecked at 390px and 1440px.
+- Completed: protected workflow run `38597133044` published `mr-tarot-0047` on 2026-10-15 KST with the image, all three A/B/C commerce readings and the final site CTA. The public `@mr._.tarot` profile shows the new post.
+- Current queue: READY 11, NEXT `mr-tarot-0048`. Today's Upstash daily marker attributes `mr-tarot-0047`, so another ordinary daily run cannot duplicate it.
 - Remaining: collect real impressions and direct product clicks for the 12-post pilot; do not expand the batch or declare conversion success before real data exists.
 - Known issue: three products appear in one post, so product-pool availability is now a hard publishing dependency by design. A missing theme product stops the entire post rather than publishing an incomplete sales path.
 - Exact recommended next task: after `mr-tarot-0047` is confirmed live with all four replies, verify that the next nightly run selects `mr-tarot-0048` and review real direct-click counts after at least one week.
@@ -315,4 +317,8 @@ Latest reading-completeness checkpoint: `590df38` — every auto-published post 
 
 Latest missing-reply repair checkpoint: `eefb5de` — a protected manual workflow can append only the three prepared readings to an already-published post; successful live repair is run `34239915987`.
 
-Three-set commerce pilot checkpoint: pending this handoff commit — 12 READY posts, 36 authored readings, verified server-side product resolution, direct click attribution, and fail-closed publication.
+Three-set commerce pilot checkpoint: `8276a12` — 12 pilot posts, 36 authored readings, verified server-side product resolution, direct click attribution, and fail-closed publication.
+
+Pilot operations visibility checkpoint: `ee888ee` — READY pilot items appear before published history in the bounded dashboard list.
+
+First live commerce-pilot publication: GitHub Actions run `38597133044` published `mr-tarot-0047` with four replies; production now reports READY 11 and NEXT `mr-tarot-0048`.
