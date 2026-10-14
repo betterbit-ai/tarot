@@ -44,7 +44,7 @@ describe("ThreadsContentClient", () => {
     const historyFirst: ContentQueue = {
       ...queue,
       items: [
-        { ...queue.items[0]!, id: "mr-tarot-0046", status: "SKIPPED", mainPost: "지난 본문" },
+        { ...queue.items[0]!, id: "mr-tarot-0046", status: "PUBLISHED", mainPost: "지난 본문" },
         { ...queue.items[1]!, id: "mr-tarot-0047", status: "READY", format: "THREE_CARD_SETS", mainPost: "새 파일럿 본문" },
       ],
     };
@@ -52,7 +52,8 @@ describe("ThreadsContentClient", () => {
     render(<ThreadsContentClient queue={historyFirst} />);
 
     expect(screen.getByText("새 파일럿 본문")).not.toBeNull();
-    expect(screen.getByRole("button", { name: /#0047/ })).not.toBeNull();
-    expect(screen.queryByRole("button", { name: /#0046/ })).toBeNull();
+    const navigation = screen.getByRole("navigation", { name: "콘텐츠 큐" });
+    expect(navigation.querySelectorAll("button")[0]?.textContent).toContain("#0047");
+    expect(screen.getByRole("button", { name: /#0046/ })).not.toBeNull();
   });
 });

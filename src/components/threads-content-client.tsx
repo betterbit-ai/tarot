@@ -45,10 +45,11 @@ export function ThreadsContentClient({ queue, funnelReports = [] }: ThreadsConte
   const item = queue.items[selectedIndex] ?? queue.items[0];
   if (!item) return null;
   const counts = queue.items.reduce<Record<string, number>>((all, content) => ({ ...all, [content.status]: (all[content.status] ?? 0) + 1 }), {});
-  const activeEntries = queue.items
-    .map((content, index) => ({ content, index }))
-    .filter(({ content }) => content.status === "READY" || content.status === "PUBLISHED");
-  const visibleEntries = (activeEntries.length ? activeEntries : queue.items.map((content, index) => ({ content, index })))
+  const allEntries = queue.items.map((content, index) => ({ content, index }));
+  const readyEntries = allEntries.filter(({ content }) => content.status === "READY");
+  const publishedEntries = allEntries.filter(({ content }) => content.status === "PUBLISHED").reverse();
+  const activeEntries = [...readyEntries, ...publishedEntries];
+  const visibleEntries = (activeEntries.length ? activeEntries : allEntries)
     .slice(0, 24);
   const diagnosis = diagnoseFunnel(funnelReports);
 
