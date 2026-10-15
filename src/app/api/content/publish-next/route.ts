@@ -24,6 +24,7 @@ export async function POST(request: Request) {
     ...withStoredThreadsToken(config, refreshed),
     userId: refreshed?.userId ?? config.userId,
     affiliateProducts: Array.isArray(storedProducts) ? storedProducts.filter(isStoredAffiliateProduct) : [],
+    affiliateTargetStore: tokenStore,
   });
   return Response.json(result);
 }

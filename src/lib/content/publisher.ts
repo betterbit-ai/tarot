@@ -1,5 +1,6 @@
 import { readingThreadValidationError, type ContentMetrics, type ContentStatus, type ThreadsContent } from "@/domain/content";
 import { isCoupangPartnerUrl, type AffiliateProduct } from "@/lib/affiliate/products";
+import { persistAffiliateTargets, type AffiliateTargetStore, type PreparedAffiliateTarget } from "@/lib/affiliate/targets";
 
 export type PublishMode = "review" | "auto";
 
@@ -40,6 +41,7 @@ export type ThreadsPublisherConfig = {
   dryRun: boolean;
   maxAttempts: number;
   affiliateProducts?: readonly AffiliateProduct[];
+  affiliateTargetStore?: AffiliateTargetStore;
 };
 
 export type PublishPreview = {
@@ -98,34 +100,36 @@ function siteCta(item: ThreadsContent, siteUrl?: string): string {
   return `${item.cta}\n${url.toString()}`;
 }
 
-export function materializeThreadReplies(item: ThreadsContent, config: Pick<ThreadsPublisherConfig, "affiliateProducts" | "siteUrl">): { replies: string[]; error?: string } {
+export function materializeThreadReplies(item: ThreadsContent, config: Pick<ThreadsPublisherConfig, "affiliateProducts" | "siteUrl">): { replies: string[]; affiliateTargets: PreparedAffiliateTarget[]; error?: string } {
   const cta = siteCta(item, config.siteUrl);
   if (!item.readingSets?.length) {
-    return { replies: item.replies.map((reply, index) => index === item.replies.length - 1 ? cta : reply) };
+    return { replies: item.replies.map((reply, index) => index === item.replies.length - 1 ? cta : reply), affiliateTargets: [] };
   }
 
   const products = config.affiliateProducts ?? [];
   const replies: string[] = [];
+  const affiliateTargets: PreparedAffiliateTarget[] = [];
   for (let index = 0; index < item.readingSets.length; index += 1) {
     const set = item.readingSets[index];
-    if (!set) return { replies, error: `missing reading set ${index + 1}` };
+    if (!set) return { replies, affiliateTargets, error: `missing reading set ${index + 1}` };
     const candidates = products.filter((product) => product.active && product.categories.includes(set.affiliateTheme) && isCoupangPartnerUrl(product.partnerUrl));
-    if (!candidates.length) return { replies, error: `missing verified affiliate product for choice ${set.key} (${set.affiliateTheme})` };
+    if (!candidates.length) return { replies, affiliateTargets, error: `missing verified affiliate product for choice ${set.key} (${set.affiliateTheme})` };
     const numericId = Number(item.id.match(/\d+$/)?.[0] ?? 0);
     const product = candidates[(numericId + index) % candidates.length] ?? candidates[0];
-    if (!product?.partnerUrl) return { replies, error: `missing partner URL for choice ${set.key}` };
-    if (!config.siteUrl) return { replies, error: "missing site URL for affiliate redirect" };
+    if (!product?.partnerUrl) return { replies, affiliateTargets, error: `missing partner URL for choice ${set.key}` };
+    if (!config.siteUrl) return { replies, affiliateTargets, error: "missing site URL for affiliate redirect" };
     const redirect = new URL("/out/coupang", config.siteUrl);
     redirect.searchParams.set("product", product.id);
     redirect.searchParams.set("content", item.id);
     redirect.searchParams.set("choice", set.key);
     const baseReply = item.replies[index] ?? "";
-    const reply = `${baseReply}\n\n${set.productReason}\n${product.title}\n${redirect.toString()}\n\n${product.disclosure}`;
-    if (reply.length > 500) return { replies, error: `materialized reply for choice ${set.key} exceeds 500 characters` };
+    const reply = `${baseReply}\n\n\n${set.productReason}\n${product.title}\n${redirect.toString()}\n\n${product.disclosure}`;
+    if (reply.length > 500) return { replies, affiliateTargets, error: `materialized reply for choice ${set.key} exceeds 500 characters` };
     replies.push(reply);
+    affiliateTargets.push({ contentId: item.id, choice: set.key, productId: product.id, title: product.title, partnerUrl: product.partnerUrl });
   }
   replies.push(cta);
-  return { replies };
+  return { replies, affiliateTargets };
 }
 
 function applyState(queue: ContentRuntimeQueue, id: string, next: ContentRuntimeState): ContentRuntimeQueue {
@@ -219,6 +223,18 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
     return { id: item.id, mode: "failed", main: item.mainPost, imageUrl, replies, error: runtime.lastError ?? "Manual reconciliation required" };
   }
 
+  if (materialized.affiliateTargets.length) {
+    if (!config.affiliateTargetStore) {
+      return { id: item.id, mode: "failed", main: item.mainPost, imageUrl, replies, error: "Missing durable affiliate target store" };
+    }
+    try {
+      await persistAffiliateTargets(config.affiliateTargetStore, materialized.affiliateTargets);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return { id: item.id, mode: "failed", main: item.mainPost, imageUrl, replies, error: `Unable to preserve affiliate targets: ${message}` };
+    }
+  }
+
   runtime = { ...runtime, status: "PUBLISHING", updatedAt: now(), attemptCount: runtime.attemptCount + 1 };
   queue = applyState(queue, item.id, runtime);
   await store.write(queue);
@@ -303,6 +319,16 @@ export async function repairMissingReadingReplies(
   }
   if (!config.accessToken || !config.userId) {
     return { id: item.id, mode: "failed", replies, error: "Missing Threads credentials" };
+  }
+
+  if (materialized.affiliateTargets.length) {
+    if (!config.affiliateTargetStore) return { id: item.id, mode: "failed", replies, error: "Missing durable affiliate target store" };
+    try {
+      await persistAffiliateTargets(config.affiliateTargetStore, materialized.affiliateTargets);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return { id: item.id, mode: "failed", replies, error: `Unable to preserve affiliate targets: ${message}` };
+    }
   }
 
   try {

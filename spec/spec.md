@@ -16,6 +16,7 @@ Threads에서 하나의 단일 카드나 `YES / NO / NOT YET`을 고르게 하�
 6. 마지막 답글만 미스터 타로 사이트의 UTM 링크를 붙인다. 상품 CTA와 사이트 CTA를 한 문단에 섞지 않는다.
 7. 이미 발행된 1~46번 원문과 runtime 상태는 보존한다. 기존 미발행 47~105번은 파일럿 47~58번으로 대체하고, 나머지는 검증 결과가 나올 때까지 `SKIPPED`로 멈춘다.
 8. 선택 이미지는 숫자만 표시하지 않고 A/B/C와 주제에 맞는 상징 이름을 함께 보여준다.
+9. 게시에 사용할 상품 URL은 Threads API 호출 전에 `content id + choice` 기준으로 영구 저장한다. 이후 상품 pool이 갱신되어도 이미 게시된 `/out/coupang` 링크는 당시 검증한 쿠팡 파트너 URL로 계속 이동해야 한다.
 
 ### Acceptance criteria
 
@@ -23,6 +24,8 @@ Threads에서 하나의 단일 카드나 `YES / NO / NOT YET`을 고르게 하�
 - [ ] 생성·검증 결과에 `YES / NO / NOT YET`이 없고, 준비된 파일럿 외 미발행 레거시 글이 자동 게시 대상이 아니다.
 - [ ] 검증 상품이 없거나 링크 host가 쿠팡이 아니면 외부 Threads 호출 전에 실패한다.
 - [ ] materialized 답글 네 개가 Threads 500자 제한 안에 들어간다.
+- [ ] 상품 pool에서 기존 상품이 사라진 뒤에도 이미 게시된 상품 링크가 홈이 아니라 저장된 쿠팡 파트너 URL로 이동한다.
+- [ ] 리딩 본문과 상품 추천 문단 사이에 두 줄의 시각적 여백이 있다.
 - [ ] `/threads`에서 A/B/C 해석과 상품 theme을 모바일 390px와 데스크톱에서 확인할 수 있다.
 - [ ] lint, typecheck, tests, build, content validation, diff check가 통과한다.
 

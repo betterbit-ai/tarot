@@ -50,8 +50,12 @@ export function isStoredAffiliateProduct(value: unknown): value is AffiliateProd
 }
 
 export function resolveStoredAffiliateTarget(products: readonly unknown[], productId: string): string | null {
-  const product = products.filter(isStoredAffiliateProduct).find((candidate) => candidate.id === productId && candidate.active && isCoupangPartnerUrl(candidate.partnerUrl));
+  const product = findStoredAffiliateProduct(products, productId);
   return product?.partnerUrl ?? null;
+}
+
+export function findStoredAffiliateProduct(products: readonly unknown[], productId: string): AffiliateProduct | null {
+  return products.filter(isStoredAffiliateProduct).find((candidate) => candidate.id === productId && candidate.active && isCoupangPartnerUrl(candidate.partnerUrl)) ?? null;
 }
 
 const DISCLOSURE = "이 추천은 쿠팡 파트너스 활동의 일환으로, 구매 시 일정액의 수수료를 제공받습니다.";

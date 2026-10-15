@@ -231,6 +231,7 @@ UX v2 verification on 2026-08-28:
 - tests: 19 files, 49 tests pass
 - latest typecheck and lint: pass after narrative-pattern changes
 - `pnpm tarot:evaluate`: 51 cases, average 4.90/5, failure distribution empty
+- Affiliate-target durability verification on 2026-10-15: 36 test files / 120 tests, typecheck, lint, content validation (105 items / 12 READY), production build, and diff check pass. The publisher refuses a live commerce post until all three content/choice destinations are stored.
 - `pnpm tarot:audit`: 76,076 readings checked, zero no-question decision headlines, zero banned patterns, zero malformed particles, zero length failures
 - `pnpm typecheck`, `pnpm lint`, `pnpm test`: 20 files, 52 tests pass after result-page restructure
 - `pnpm content:refresh-hooks`, `pnpm content:images`, `pnpm content:validate`: 105 queued items, 105 READY, validation pass
@@ -265,7 +266,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-Confirm the first live three-set post `mr-tarot-0047` contains its A/B/C reading replies, contextual Coupang links and final site CTA. Then leave the 22:00–22:59 KST scheduler to publish `mr-tarot-0048`; do not force another same-day post. Review direct product clicks and official Partners outcomes only after real traffic exists.
+After deployment, verify all three `mr-tarot-0047` `/out/coupang` URLs return a Coupang partner destination with HEAD and do not increment click analytics. Then leave the 22:00–22:59 KST scheduler to publish `mr-tarot-0048`; its product targets must be snapshotted before Threads is called. Review direct product clicks and official Partners outcomes only after real traffic exists.
 
 ## Last Commit
 
@@ -322,3 +323,5 @@ Three-set commerce pilot checkpoint: `8276a12` — 12 pilot posts, 36 authored r
 Pilot operations visibility checkpoint: `ee888ee` — READY pilot items appear before published history in the bounded dashboard list.
 
 First live commerce-pilot publication: GitHub Actions run `38597133044` published `mr-tarot-0047` with four replies; production now reports READY 11 and NEXT `mr-tarot-0048`.
+
+Affiliate-link durability checkpoint in progress: the `mr-tarot-0047` A/B links exposed that the rotating product pool was incorrectly acting as storage for already-published destinations. The fix snapshots all future content/choice targets before publication, recovers only the known 0047 legacy target, adds non-counting HEAD verification, disables redirect caching, and separates each future reading from its product paragraph with two blank lines.

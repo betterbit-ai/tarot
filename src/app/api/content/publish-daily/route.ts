@@ -49,6 +49,7 @@ async function publishDaily(request: Request) {
       ...withStoredThreadsToken(config, refreshed),
       userId: refreshed?.userId ?? config.userId,
       affiliateProducts: Array.isArray(storedProducts) ? storedProducts.filter(isStoredAffiliateProduct) : [],
+      affiliateTargetStore: jsonStore,
     });
     if (result.mode === "published") {
       const publishedAt = new Date().toISOString();

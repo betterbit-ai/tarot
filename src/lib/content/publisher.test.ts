@@ -120,9 +120,50 @@ describe("Threads publisher", () => {
 
     expect(result.error).toBeUndefined();
     expect(result.replies).toHaveLength(4);
+    expect(result.affiliateTargets).toHaveLength(3);
     expect(result.replies.slice(0, 3).every((reply) => reply.includes("/out/coupang?") && reply.includes("content=mr-tarot-0047") && reply.includes("쿠팡 파트너스"))).toBe(true);
+    expect(result.replies.slice(0, 3).every((reply, index) => reply.includes(`${pilot.replies[index]}\n\n\n${pilot.readingSets?.[index]?.productReason}`))).toBe(true);
     expect(result.replies.every((reply) => reply.length <= 500)).toBe(true);
     expect(result.replies.at(-1)).toContain("utm_content=mr-tarot-0047");
+  });
+
+  it("saves every product target before a live commerce pilot reaches Threads", async () => {
+    const pilot = generateCommercePilot("2026-10-15T00:00:00.000Z")[0];
+    if (!pilot) throw new Error("pilot fixture is missing");
+    const store = memoryStore();
+    const targetStore = { get: vi.fn(async () => null), set: vi.fn(async () => undefined) };
+    const responses = [
+      new Response(JSON.stringify({ id: "main-container" }), { status: 200 }),
+      new Response(JSON.stringify({ status: "FINISHED" }), { status: 200 }),
+      new Response(JSON.stringify({ id: "main-post" }), { status: 200 }),
+      new Response(JSON.stringify({ id: "reply-a" }), { status: 200 }),
+      new Response(JSON.stringify({ id: "reply-b" }), { status: 200 }),
+      new Response(JSON.stringify({ id: "reply-c" }), { status: 200 }),
+      new Response(JSON.stringify({ id: "reply-cta" }), { status: 200 }),
+    ];
+    const fetchMock = vi.fn(async () => responses.shift());
+    vi.stubGlobal("fetch", fetchMock);
+
+    const preview = await publishNextContent([pilot], store, { apiBaseUrl: "https://graph.threads.net/v1.0", mode: "auto", dryRun: false, maxAttempts: 2, siteUrl: "https://mr-tarot.vercel.app", accessToken: "token", userId: "user", affiliateProducts, affiliateTargetStore: targetStore });
+
+    expect(preview.mode).toBe("published");
+    expect(targetStore.set).toHaveBeenCalledTimes(3);
+    expect(targetStore.set.mock.invocationCallOrder.at(-1)).toBeLessThan(fetchMock.mock.invocationCallOrder[0] ?? Infinity);
+    vi.unstubAllGlobals();
+  });
+
+  it("refuses a live commerce publish without durable target storage", async () => {
+    const pilot = generateCommercePilot("2026-10-15T00:00:00.000Z")[0];
+    if (!pilot) throw new Error("pilot fixture is missing");
+    const store = memoryStore();
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const preview = await publishNextContent([pilot], store, { apiBaseUrl: "https://graph.threads.net/v1.0", mode: "auto", dryRun: false, maxAttempts: 2, siteUrl: "https://mr-tarot.vercel.app", accessToken: "token", userId: "user", affiliateProducts });
+
+    expect(preview).toMatchObject({ mode: "failed", error: "Missing durable affiliate target store" });
+    expect(fetchMock).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
   });
 
   it("fails closed before Threads when a complete set has no verified product", async () => {
