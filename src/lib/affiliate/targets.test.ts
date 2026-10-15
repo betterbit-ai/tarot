@@ -29,14 +29,14 @@ describe("durable affiliate targets", () => {
     const store = memoryTargetStore();
     await persistAffiliateTargets(store, [{ contentId: "mr-tarot-0048", choice: "A", productId: product.id, title: product.title, partnerUrl: product.partnerUrl! }], "2026-10-15T00:00:00.000Z");
 
-    await expect(resolveAffiliateDestination({ store, products: [], contentId: "mr-tarot-0048", choice: "A", productId: product.id })).resolves.toBe(product.partnerUrl);
+    await expect(resolveAffiliateDestination({ store, contentId: "mr-tarot-0048", choice: "A", productId: product.id })).resolves.toBe(product.partnerUrl);
   });
 
-  it("snapshots a verified product from the current pool", async () => {
+  it("does not let a public lookup seed a missing snapshot", async () => {
     const store = memoryTargetStore();
 
-    await expect(resolveAffiliateDestination({ store, products: [product], contentId: "mr-tarot-0048", choice: "B", productId: product.id })).resolves.toBe(product.partnerUrl);
-    expect(store.values.has(affiliateTargetKey("mr-tarot-0048", "B"))).toBe(true);
+    await expect(resolveAffiliateDestination({ store, contentId: "mr-tarot-0048", choice: "B", productId: product.id })).resolves.toBeNull();
+    expect(store.values.has(affiliateTargetKey("mr-tarot-0048", "B"))).toBe(false);
   });
 
   it("does not trust a snapshot stored under the wrong content binding", async () => {
@@ -44,14 +44,16 @@ describe("durable affiliate targets", () => {
     await persistAffiliateTargets(store, [{ contentId: "mr-tarot-0049", choice: "A", productId: product.id, title: product.title, partnerUrl: product.partnerUrl! }]);
     store.values.set(affiliateTargetKey("mr-tarot-0048", "A"), store.values.get(affiliateTargetKey("mr-tarot-0049", "A")));
 
-    await expect(resolveAffiliateDestination({ store, products: [], contentId: "mr-tarot-0048", choice: "A", productId: product.id })).resolves.toBeNull();
+    const recoverLegacy = vi.fn(async () => "https://link.coupang.com/a/recovered");
+    await expect(resolveAffiliateDestination({ store, contentId: "mr-tarot-0048", choice: "A", productId: product.id, recoverLegacy })).resolves.toBeNull();
+    expect(recoverLegacy).not.toHaveBeenCalled();
   });
 
   it("recovers only the known legacy published target and saves it", async () => {
     const store = memoryTargetStore();
     const recoverLegacy = vi.fn(async () => "https://link.coupang.com/a/recovered");
 
-    await expect(resolveAffiliateDestination({ store, products: [], contentId: "mr-tarot-0047", choice: "A", productId: "coupang-9487213892", recoverLegacy })).resolves.toBe("https://link.coupang.com/a/recovered");
+    await expect(resolveAffiliateDestination({ store, contentId: "mr-tarot-0047", choice: "A", productId: "coupang-9487213892", recoverLegacy })).resolves.toBe("https://link.coupang.com/a/recovered");
     expect(recoverLegacy).toHaveBeenCalledOnce();
     expect(store.values.has(affiliateTargetKey("mr-tarot-0047", "A"))).toBe(true);
   });
@@ -60,7 +62,7 @@ describe("durable affiliate targets", () => {
     const store = memoryTargetStore();
     const recoverLegacy = vi.fn(async () => "https://link.coupang.com/a/unsafe");
 
-    await expect(resolveAffiliateDestination({ store, products: [], contentId: "mr-tarot-0048", choice: "A", productId: "coupang-123", recoverLegacy })).resolves.toBeNull();
+    await expect(resolveAffiliateDestination({ store, contentId: "mr-tarot-0048", choice: "A", productId: "coupang-123", recoverLegacy })).resolves.toBeNull();
     expect(recoverLegacy).not.toHaveBeenCalled();
   });
 

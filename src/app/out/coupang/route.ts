@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { resolveAffiliateTarget } from "@/lib/affiliate/config";
 import { createCoupangDeepLink } from "@/lib/affiliate/coupang-api";
+import { findStoredAffiliateProduct } from "@/lib/affiliate/products";
 import { coupangProductPageUrl, resolveAffiliateDestination, type AffiliateChoice } from "@/lib/affiliate/targets";
 import { isThreadsAttributionId, recordFunnelEvent } from "@/lib/analytics/funnel";
 import { AFFILIATE_POOL_KEY, createUpstashJsonStore } from "@/lib/content/upstash-store";
@@ -26,11 +27,12 @@ async function handle(request: NextRequest, recordClick: boolean): Promise<NextR
     const stored = await store.get<unknown>(AFFILIATE_POOL_KEY).catch(() => null);
     const target = await resolveAffiliateDestination({
       store,
-      products: Array.isArray(stored) ? stored : [],
       contentId,
       choice: choice as AffiliateChoice,
       productId,
       recoverLegacy: async (legacy) => {
+        const current = Array.isArray(stored) ? findStoredAffiliateProduct(stored, legacy.productId) : null;
+        if (current?.partnerUrl) return current.partnerUrl;
         const accessKey = process.env.COUPANG_PARTNERS_ACCESS_KEY?.trim();
         const secretKey = process.env.COUPANG_PARTNERS_SECRET_KEY?.trim();
         const sourceUrl = coupangProductPageUrl(legacy.sourceProductId);

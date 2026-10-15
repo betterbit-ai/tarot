@@ -1,4 +1,4 @@
-import { findStoredAffiliateProduct, isCoupangPartnerUrl } from "./products";
+import { isCoupangPartnerUrl } from "./products";
 
 export type AffiliateChoice = "A" | "B" | "C";
 
@@ -28,6 +28,7 @@ export type LegacyAffiliateTarget = { productId: string; sourceProductId: string
 const LEGACY_AFFILIATE_TARGETS: Readonly<Record<string, LegacyAffiliateTarget>> = {
   "mr-tarot-0047:A": { productId: "coupang-9487213892", sourceProductId: "9487213892", title: "틸하우스 틈새 다용도 정리함" },
   "mr-tarot-0047:B": { productId: "coupang-9487213892", sourceProductId: "9487213892", title: "틸하우스 틈새 다용도 정리함" },
+  "mr-tarot-0047:C": { productId: "coupang-6661849504", sourceProductId: "6661849504", title: "오가니코 A5 하드커버 스크랩 만년 다이어리" },
 };
 
 export function affiliateTargetKey(contentId: string, choice: AffiliateChoice): string {
@@ -64,23 +65,20 @@ export function coupangProductPageUrl(sourceProductId: string): string | null {
 
 export async function resolveAffiliateDestination(options: {
   store: AffiliateTargetStore;
-  products: readonly unknown[];
   contentId: string;
   choice: AffiliateChoice;
   productId: string;
   recoverLegacy?: (target: LegacyAffiliateTarget) => Promise<string>;
 }): Promise<string | null> {
-  const { store, products, contentId, choice, productId, recoverLegacy } = options;
-  const stored = await store.get<unknown>(affiliateTargetKey(contentId, choice)).catch(() => null);
-  if (isAffiliateTargetSnapshot(stored)
-    && stored.contentId === contentId
-    && stored.choice === choice
-    && stored.productId === productId) return stored.partnerUrl;
-
-  const current = findStoredAffiliateProduct(products, productId);
-  if (current?.partnerUrl && isCoupangPartnerUrl(current.partnerUrl)) {
-    await persistAffiliateTargets(store, [{ contentId, choice, productId, title: current.title, partnerUrl: current.partnerUrl }]);
-    return current.partnerUrl;
+  const { store, contentId, choice, productId, recoverLegacy } = options;
+  const stored = await store.get<unknown>(affiliateTargetKey(contentId, choice));
+  if (stored !== null) {
+    return isAffiliateTargetSnapshot(stored)
+      && stored.contentId === contentId
+      && stored.choice === choice
+      && stored.productId === productId
+      ? stored.partnerUrl
+      : null;
   }
 
   const legacy = legacyAffiliateTarget(contentId, choice, productId);

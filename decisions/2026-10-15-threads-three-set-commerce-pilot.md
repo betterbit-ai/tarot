@@ -23,7 +23,9 @@ Each choice owns:
 
 The publisher resolves the product at publish time from the server-side verified Coupang pool. A direct product recommendation is appended to each reading. If any choice cannot resolve a verified Coupang partner URL, the whole post fails closed before an external Threads call. The final reply remains a separate UTM site CTA for readers who want to draw their own cards.
 
-The resolved partner destination is snapshotted by content id and A/B/C choice before any Threads API call. The redirect route reads that immutable snapshot first, so a later affiliate-pool refresh cannot invalidate a link already printed in Threads. A narrowly enumerated recovery rule repairs the two `mr-tarot-0047` links published before snapshots existed; arbitrary product ids are not converted into deeplinks.
+The resolved partner destination is snapshotted by content id and A/B/C choice before any Threads API call. The redirect route reads that immutable snapshot first, so a later affiliate-pool refresh cannot invalidate a link already printed in Threads. A narrowly enumerated recovery rule repairs the `mr-tarot-0047` choices published before snapshots existed; arbitrary product ids are not converted into deeplinks.
+
+An existing snapshot key is terminal. A request with a different product binding fails closed and cannot replace the stored destination; a storage read error is also not treated as a cache miss. Public redirect requests never seed a target from the rotating product pool. Only the publisher or the exact three-choice `mr-tarot-0047` recovery allowlist may create a missing snapshot.
 
 The first release is a 12-post pilot. Previously published items remain unchanged, and untested legacy drafts after the pilot are skipped until revenue evidence justifies a next batch.
 

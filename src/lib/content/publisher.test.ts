@@ -166,6 +166,20 @@ describe("Threads publisher", () => {
     vi.unstubAllGlobals();
   });
 
+  it("refuses a live commerce publish when target storage fails", async () => {
+    const pilot = generateCommercePilot("2026-10-15T00:00:00.000Z")[0];
+    if (!pilot) throw new Error("pilot fixture is missing");
+    const store = memoryStore();
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const preview = await publishNextContent([pilot], store, { apiBaseUrl: "https://graph.threads.net/v1.0", mode: "auto", dryRun: false, maxAttempts: 2, siteUrl: "https://mr-tarot.vercel.app", accessToken: "token", userId: "user", affiliateProducts, affiliateTargetStore: { get: async () => null, set: async () => { throw new Error("storage unavailable"); } } });
+
+    expect(preview).toMatchObject({ mode: "failed", error: "Unable to preserve affiliate targets: storage unavailable" });
+    expect(fetchMock).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
+  });
+
   it("fails closed before Threads when a complete set has no verified product", async () => {
     const pilot = generateCommercePilot("2026-10-15T00:00:00.000Z")[0];
     if (!pilot) throw new Error("pilot fixture is missing");
