@@ -231,7 +231,7 @@ UX v2 verification on 2026-08-28:
 - tests: 19 files, 49 tests pass
 - latest typecheck and lint: pass after narrative-pattern changes
 - `pnpm tarot:evaluate`: 51 cases, average 4.90/5, failure distribution empty
-- Affiliate-target durability verification on 2026-10-15: 36 test files / 120 tests, typecheck, lint, content validation (105 items / 12 READY), production build, and diff check pass. The publisher refuses a live commerce post until all three content/choice destinations are stored.
+- Affiliate-target durability verification on 2026-10-15: 37 test files / 125 tests, typecheck, lint, content validation (105 items / 12 READY), production build, and diff check pass. The publisher refuses a live commerce post until all three content/choice destinations are stored. Production A/B/C HEAD redirects, tamper resistance, cache headers, 390px/1440px layout and zero browser-console errors were verified after Vercel deployed `b0eff14`.
 - `pnpm tarot:audit`: 76,076 readings checked, zero no-question decision headlines, zero banned patterns, zero malformed particles, zero length failures
 - `pnpm typecheck`, `pnpm lint`, `pnpm test`: 20 files, 52 tests pass after result-page restructure
 - `pnpm content:refresh-hooks`, `pnpm content:images`, `pnpm content:validate`: 105 queued items, 105 READY, validation pass
@@ -266,7 +266,7 @@ The status command is read-only and leaves the worktree unchanged.
 
 ## Exact Recommended Next Task
 
-After deployment, verify all three `mr-tarot-0047` `/out/coupang` URLs return a Coupang partner destination with HEAD and do not increment click analytics. Then leave the 22:00–22:59 KST scheduler to publish `mr-tarot-0048`; its product targets must be snapshotted before Threads is called. Review direct product clicks and official Partners outcomes only after real traffic exists.
+Leave the 22:00–22:59 KST scheduler to publish `mr-tarot-0048`; then confirm its three saved destination keys resolve after an affiliate-pool refresh. Do not force another same-day post. Review direct product clicks and official Partners outcomes only after real traffic exists.
 
 ## Last Commit
 
@@ -324,4 +324,4 @@ Pilot operations visibility checkpoint: `ee888ee` — READY pilot items appear b
 
 First live commerce-pilot publication: GitHub Actions run `38597133044` published `mr-tarot-0047` with four replies; production now reports READY 11 and NEXT `mr-tarot-0048`.
 
-Affiliate-link durability checkpoint in progress: the `mr-tarot-0047` A/B links exposed that the rotating product pool was incorrectly acting as storage for already-published destinations. The fix snapshots all future content/choice targets before publication, recovers only the exact three 0047 legacy choices, rejects mismatched or unreadable snapshots without overwriting them, adds non-counting HEAD verification, disables redirect caching, and separates each future reading from its product paragraph with two blank lines.
+Affiliate-link durability checkpoint: `6f1a7b3` and `b0eff14` snapshot all future content/choice targets before publication, recover only the exact three 0047 legacy choices, reject mismatched or unreadable snapshots without overwriting them, add non-counting HEAD verification, disable redirect caching, and separate each future reading from its product paragraph with two blank lines. Vercel deployed `b0eff14`; production HEAD checks returned `link.coupang.com` for A/B/C, a tampered A binding returned home, and the correct A link still resolved afterward. Production `/threads` returned 200 at 390px and 1440px with zero console errors and zero horizontal overflow.
