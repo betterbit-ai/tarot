@@ -14,11 +14,13 @@ Threads publishing reliability is being hardened after a container-readiness fai
 
 - Actual state: `mr-tarot-0049` published its main post plus A/B/C replies, then the final site CTA failed with Meta HTTP 400. The next recovery attempt incorrectly skipped it and fully published `mr-tarot-0050`, leaving two main posts on the same KST day.
 - Root cause: `publishNextContent` selected only `READY` items. It did not prioritize a `FAILED` item with a confirmed `mainPostId` and an incomplete persisted reply chain.
-- Fixed locally: confirmed partial posts now block later READY items. Explicit 4xx container failures resume from the first missing reply; ambiguous remote outcomes fail closed without another provider call or queue advancement.
+- Completed: confirmed partial posts now block later READY items. Explicit 4xx container failures resume from the first missing reply; ambiguous remote outcomes fail closed without another provider call or queue advancement.
 - Recovery path: protected `/api/content/reconcile-thread` and the `Reconcile an incomplete Threads post` workflow repair one specified partial content id without creating another main post.
 - Verification: `npm run lint`, `npm run typecheck`, `npm test -- --run` (37 files, 128 tests), `npm run build`, `npm run content:validate` (105 items, 12 READY), and `git diff --check` pass.
-- In progress: deploy this checkpoint, run reconciliation for `mr-tarot-0049`, and confirm its runtime state contains four normal reply ids with status `PUBLISHED`.
-- Exact recommended next task: after production deployment, dispatch `reconcile-threads-content.yml` with `content_id=mr-tarot-0049`; do not trigger the ordinary daily publisher again today.
+- Live recovery: commit `ab6bc16` deployed successfully. Workflow run `38950017272` returned `mode: repaired` for `mr-tarot-0049` without creating another main post.
+- Production evidence: `mr-tarot-0049` is `PUBLISHED`, retains main post id `18131559376811882`, and has four normal reply ids. Metrics sync run `38950099689` updated 47 posts with zero failures; official metrics report four replies for both `0049` and `0050`.
+- Current UX/status: today's public output contains two main posts because the pre-fix scheduler already published `0050` after the partial `0049`. Both threads are now complete. Do not trigger another ordinary daily publish today.
+- Exact recommended next task: let the next scheduled window run normally and verify it does not bypass any future partial item. Evaluate the 12-post commerce pilot only from real clicks and official Coupang outcomes.
 
 ### 2026-10-15 delivery checkpoint
 
