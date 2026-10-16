@@ -1,6 +1,6 @@
 # CURRENT PROJECT STATE
 
-Last updated: 2026-10-15 10:12 KST
+Last updated: 2026-10-17 03:45 KST
 
 ## Current Phase
 
@@ -9,6 +9,16 @@ V1 + INTERPRETATION V3 COMPLETE / THREADS THREE-SET COMMERCE PILOT READY TO SHIP
 V1 remains the stable checkpoint. Growth Engine is now an approved Phase 2 operational extension; it must preserve V1 tarot UX, use no runtime LLM, default to review/dry-run, and never publish externally during automated tests.
 
 Threads publishing reliability is being hardened after a container-readiness failure caused a missed scheduled item. The product queue remains live; no tarot UX or interpretation work is pending in this checkpoint.
+
+### 2026-10-17 partial-publication incident
+
+- Actual state: `mr-tarot-0049` published its main post plus A/B/C replies, then the final site CTA failed with Meta HTTP 400. The next recovery attempt incorrectly skipped it and fully published `mr-tarot-0050`, leaving two main posts on the same KST day.
+- Root cause: `publishNextContent` selected only `READY` items. It did not prioritize a `FAILED` item with a confirmed `mainPostId` and an incomplete persisted reply chain.
+- Fixed locally: confirmed partial posts now block later READY items. Explicit 4xx container failures resume from the first missing reply; ambiguous remote outcomes fail closed without another provider call or queue advancement.
+- Recovery path: protected `/api/content/reconcile-thread` and the `Reconcile an incomplete Threads post` workflow repair one specified partial content id without creating another main post.
+- Verification: `npm run lint`, `npm run typecheck`, `npm test -- --run` (37 files, 128 tests), `npm run build`, `npm run content:validate` (105 items, 12 READY), and `git diff --check` pass.
+- In progress: deploy this checkpoint, run reconciliation for `mr-tarot-0049`, and confirm its runtime state contains four normal reply ids with status `PUBLISHED`.
+- Exact recommended next task: after production deployment, dispatch `reconcile-threads-content.yml` with `content_id=mr-tarot-0049`; do not trigger the ordinary daily publisher again today.
 
 ### 2026-10-15 delivery checkpoint
 

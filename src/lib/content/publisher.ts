@@ -136,6 +136,10 @@ function applyState(queue: ContentRuntimeQueue, id: string, next: ContentRuntime
   return { ...queue, items: { ...queue.items, [id]: next } };
 }
 
+function isDeterministicReplyFailure(runtime: ContentRuntimeState): boolean {
+  return /^container request failed: 4\d\d(?:\b|:)/.test(runtime.lastError ?? "");
+}
+
 async function threadsError(response: Response, fallback: string): Promise<Error> {
   const raw = await response.text();
   try {
@@ -197,7 +201,14 @@ async function publishContainer(config: ThreadsPublisherConfig, containerId: str
 
 export async function publishNextContent(source: readonly ThreadsContent[], store: ContentStateStore, config: ThreadsPublisherConfig): Promise<PublishPreview> {
   let queue = await store.read();
-  const item = source.find((candidate) => stateFor(queue, candidate).status === "READY");
+  // A published main post with an unfinished reply chain must be resolved before
+  // a later READY item is considered. Otherwise one failed CTA can create two
+  // main posts on the same publishing day.
+  const partialItem = source.find((candidate) => {
+    const runtime = stateFor(queue, candidate);
+    return Boolean(runtime.mainPostId) && runtime.status !== "PUBLISHED";
+  });
+  const item = partialItem ?? source.find((candidate) => stateFor(queue, candidate).status === "READY");
   if (!item) return { id: "", mode: "nothing-ready", main: "", imageUrl: null, replies: [] };
 
   const materialized = materializeThreadReplies(item, config);
@@ -219,7 +230,9 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
   }
 
   let runtime = stateFor(queue, item);
-  if (runtime.requiresReconciliation || runtime.attemptCount >= config.maxAttempts) {
+  const hasAllReplies = (runtime.replyPostIds?.length ?? 0) >= replies.length;
+  const canResumeReplies = Boolean(runtime.mainPostId) && !hasAllReplies && isDeterministicReplyFailure(runtime);
+  if ((runtime.requiresReconciliation && !canResumeReplies && !hasAllReplies) || (runtime.attemptCount >= config.maxAttempts && !hasAllReplies)) {
     return { id: item.id, mode: "failed", main: item.mainPost, imageUrl, replies, error: runtime.lastError ?? "Manual reconciliation required" };
   }
 
@@ -267,7 +280,7 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
       await store.write(queue);
     }
 
-    runtime = { ...runtime, status: "PUBLISHED", updatedAt: now(), publishedAt: now(), replyContainerIds, replyPostIds, lastError: undefined, requiresReconciliation: false };
+    runtime = { ...runtime, status: "PUBLISHED", updatedAt: now(), publishedAt: runtime.publishedAt ?? now(), replyContainerIds, replyPostIds, lastError: undefined, requiresReconciliation: false };
     queue = applyState(queue, item.id, runtime);
     await store.write(queue);
     return { id: item.id, mode: "published", main: item.mainPost, imageUrl, replies };
@@ -286,6 +299,30 @@ export async function publishNextContent(source: readonly ThreadsContent[], stor
     await store.write(queue);
     return { id: item.id, mode: "failed", main: item.mainPost, imageUrl, replies, error: message };
   }
+}
+
+/** Resume a known partial thread without ever creating a second main post. */
+export async function repairIncompletePublishedThread(
+  source: readonly ThreadsContent[],
+  contentId: string,
+  store: ContentStateStore,
+  config: ThreadsPublisherConfig,
+): Promise<ReplyRepairPreview> {
+  const item = source.find((candidate) => candidate.id === contentId);
+  if (!item) return { id: contentId, mode: "failed", replies: [], error: "Unknown content item" };
+
+  const queue = await store.read();
+  const runtime = stateFor(queue, item);
+  const materialized = materializeThreadReplies(item, config);
+  if (materialized.error) return { id: item.id, mode: "failed", replies: materialized.replies, error: `Refusing to repair incomplete commerce reading: ${materialized.error}` };
+  if (!runtime.mainPostId) return { id: item.id, mode: "failed", replies: materialized.replies, error: "The main Threads post is not confirmed as published" };
+  if (runtime.status === "PUBLISHED" && (runtime.replyPostIds?.length ?? 0) >= materialized.replies.length) {
+    return { id: item.id, mode: "already-repaired", replies: materialized.replies };
+  }
+
+  const result = await publishNextContent([item], store, config);
+  if (result.mode === "published") return { id: item.id, mode: "repaired", replies: result.replies };
+  return { id: item.id, mode: result.mode === "dry-run" || result.mode === "review" ? result.mode : "failed", replies: result.replies, error: result.error };
 }
 
 /** Add only the three missing numbered readings to an already-published post. */

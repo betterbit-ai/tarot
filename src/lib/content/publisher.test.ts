@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { ThreadsContent } from "@/domain/content";
 import { generateCommercePilot } from "@/domain/content";
 import type { AffiliateProduct } from "@/lib/affiliate/products";
-import { applyRuntimeState, EMPTY_RUNTIME_QUEUE, materializeThreadReplies, publishNextContent, repairMissingReadingReplies, type ContentRuntimeQueue } from "./publisher";
+import { applyRuntimeState, EMPTY_RUNTIME_QUEUE, materializeThreadReplies, publishNextContent, repairIncompletePublishedThread, repairMissingReadingReplies, type ContentRuntimeQueue } from "./publisher";
 
 const item: ThreadsContent = {
   id: "mr-tarot-test", status: "READY", format: "PICK_3", topic: "LOVE", hook: "test", mainPost: "main", cardIds: [0, 1, 2], replies: ["1번\n\nreading one", "2번\n\nreading two", "3번\n\nreading three", "visit"], cta: "visit", imageAsset: "/threads/generated/mr-tarot-test.svg", altText: "test image", createdAt: "2026-08-30T00:00:00.000Z", scheduledAt: null, publishedAt: null, threadsPostId: null, threadsContainerId: null, replyPostIds: [], attemptCount: 0, lastError: null, metrics: {}, semanticSignature: "test",
@@ -74,6 +74,78 @@ describe("Threads publisher", () => {
     expect(preview.mode).toBe("failed");
     expect(preview.error).toBe("media container is still processing");
     expect(store.state().items[item.id]).toMatchObject({ status: "READY", attemptCount: 0, requiresReconciliation: false, mainContainerId: "main-container" });
+    vi.unstubAllGlobals();
+  });
+
+  it("finishes a deterministic partial thread before considering the next ready item", async () => {
+    const next = { ...item, id: "mr-tarot-next", mainPost: "next main" };
+    const store = memoryStore({ version: 1, items: {
+      [item.id]: {
+        status: "FAILED",
+        updatedAt: "2026-10-17T00:00:00.000Z",
+        mainContainerId: "existing-main-container",
+        mainPostId: "existing-main-post",
+        replyContainerIds: ["reply-one", "reply-two", "reply-three"],
+        replyPostIds: ["reply-one", "reply-two", "reply-three"],
+        attemptCount: 1,
+        lastError: "container request failed: 400: Fatal",
+        requiresReconciliation: true,
+      },
+    } });
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ id: "repaired-cta" }), { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const preview = await publishNextContent([item, next], store, { apiBaseUrl: "https://graph.threads.net/v1.0", mode: "auto", dryRun: false, maxAttempts: 3, siteUrl: "https://mr-tarot.vercel.app", accessToken: "token", userId: "user" });
+
+    expect(preview).toMatchObject({ id: item.id, mode: "published" });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(store.state().items[item.id]).toMatchObject({ status: "PUBLISHED", replyPostIds: ["reply-one", "reply-two", "reply-three", "repaired-cta"], requiresReconciliation: false });
+    expect(store.state().items[next.id]).toBeUndefined();
+    vi.unstubAllGlobals();
+  });
+
+  it("blocks the next ready item when a partial reply outcome is ambiguous", async () => {
+    const next = { ...item, id: "mr-tarot-next", mainPost: "next main" };
+    const store = memoryStore({ version: 1, items: {
+      [item.id]: {
+        status: "FAILED",
+        updatedAt: "2026-10-17T00:00:00.000Z",
+        mainPostId: "existing-main-post",
+        replyPostIds: ["reply-one", "reply-two", "reply-three"],
+        attemptCount: 1,
+        lastError: "fetch failed",
+        requiresReconciliation: true,
+      },
+    } });
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const preview = await publishNextContent([item, next], store, { apiBaseUrl: "https://graph.threads.net/v1.0", mode: "auto", dryRun: false, maxAttempts: 3, siteUrl: "https://mr-tarot.vercel.app", accessToken: "token", userId: "user" });
+
+    expect(preview).toMatchObject({ id: item.id, mode: "failed", error: "fetch failed" });
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(store.state().items[next.id]).toBeUndefined();
+    vi.unstubAllGlobals();
+  });
+
+  it("repairs a selected partial thread without creating another main post", async () => {
+    const store = memoryStore({ version: 1, items: {
+      [item.id]: {
+        status: "FAILED",
+        updatedAt: "2026-10-17T00:00:00.000Z",
+        mainPostId: "existing-main-post",
+        replyPostIds: ["reply-one", "reply-two", "reply-three"],
+        attemptCount: 1,
+        lastError: "container request failed: 400: Fatal",
+        requiresReconciliation: true,
+      },
+    } });
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ id: "repaired-cta" }), { status: 200 })));
+
+    const preview = await repairIncompletePublishedThread([item], item.id, store, { apiBaseUrl: "https://graph.threads.net/v1.0", mode: "auto", dryRun: false, maxAttempts: 3, siteUrl: "https://mr-tarot.vercel.app", accessToken: "token", userId: "user" });
+
+    expect(preview).toMatchObject({ id: item.id, mode: "repaired" });
+    expect(store.state().items[item.id]).toMatchObject({ status: "PUBLISHED", replyPostIds: ["reply-one", "reply-two", "reply-three", "repaired-cta"] });
     vi.unstubAllGlobals();
   });
 
